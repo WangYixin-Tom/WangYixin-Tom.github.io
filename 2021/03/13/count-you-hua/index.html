@@ -4,16 +4,13 @@
 
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="rabbitmq消息重复, Python rabbitmq redis flask">
+    <meta name="keywords" content="count优化, Python rabbitmq redis flask">
     <meta name="baidu-site-verification" content="code-KoKq36g1n2">
     <meta name="google-site-verification" content="yCy2azpds5XSuGZvis6OuA-XIGF5GuGpYRAaGfD6o48">
     <meta name="360-site-verification" content="b7c11a830ef90fd1464ad6206bb7b6e7">
-    <meta name="description" content="场景
-可靠性投递机制：mq收到生产者消息，mq在返回confirm的时候网络出现闪断，导致broker未收到应答，导致发送两次。
-MQ Broker服务与消费端传输消息的过程中出现网络抖动。
-消费端故障、异常。
-
-解决方案可靠性投递解决对每">
+    <meta name="description" content="count说明count(a) 和 count(*)当 count() 统计某一列时，比如 count(a)，a 表示列名，是不统计 null 的。
+而 count(*) 无论是否包含空值，都会统计。
+MyISAM 引擎和 InnoDB 引">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -21,7 +18,7 @@ MQ Broker服务与消费端传输消息的过程中出现网络抖动。
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>rabbitmq消息重复 | wangyixin-tom的博客</title>
+    <title>count优化 | wangyixin-tom的博客</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -271,13 +268,13 @@ MQ Broker服务与消费端传输消息的过程中出现网络抖动。
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/18.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/10.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        rabbitmq消息重复
+                        count优化
                     </div>
                 </div>
             </div>
@@ -388,8 +385,8 @@ MQ Broker服务与消费端传输消息的过程中出现网络抖动。
                     
                     <div class="article-tag">
                         
-                        <a href="/tags/rabbitmq/" target="_blank">
-                            <span class="chip bg-color">rabbitmq</span>
+                        <a href="/tags/mysql/" target="_blank">
+                            <span class="chip bg-color">mysql</span>
                         </a>
                         
                     </div>
@@ -400,8 +397,8 @@ MQ Broker服务与消费端传输消息的过程中出现网络抖动。
                     <div class="post-cate">
                         <i class="fa fa-bookmark fa-fw icon-category"></i>
                         
-                        <a href="/categories/rabbitmq/" class="post-category" target="_blank">
-                            rabbitmq
+                        <a href="/categories/mysql/" class="post-category" target="_blank">
+                            mysql
                         </a>
                         
                     </div>
@@ -412,7 +409,7 @@ MQ Broker服务与消费端传输消息的过程中出现网络抖动。
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-10-26
+                    2021-03-13
                 </div>
 
                 <div class="post-author info-break-policy">
@@ -426,7 +423,7 @@ MQ Broker服务与消费端传输消息的过程中出现网络抖动。
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    277
+                    334
                 </div>
                 
 
@@ -444,13 +441,21 @@ MQ Broker服务与消费端传输消息的过程中出现网络抖动。
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h2><ul>
-<li>可靠性投递机制：mq收到生产者消息，mq在返回confirm的时候网络出现闪断，导致broker未收到应答，导致发送两次。</li>
-<li>MQ Broker服务与消费端传输消息的过程中出现网络抖动。</li>
-<li>消费端故障、异常。</li>
-</ul>
-<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><h3 id="可靠性投递解决"><a href="#可靠性投递解决" class="headerlink" title="可靠性投递解决"></a>可靠性投递解决</h3><p>对每条消息，MQ系统内部必须生成一个inner-msg-id，作为去重和幂等的依据，这个内部消息ID的特性是：<br>（1）全局唯一<br>（2）MQ生成，具备业务无关性，对消息发送方和消息接收方屏蔽<br>有了这个inner-msg-id，就能保证上半场重发，也只有1条消息落到MQ-server的DB中，实现上半场幂等。</p>
-<h3 id="消费抖动解决"><a href="#消费抖动解决" class="headerlink" title="消费抖动解决"></a>消费抖动解决</h3><p>业务消息体中，必须有一个biz-id，作为去重和幂等的依据，这个业务ID的特性是：<br>（1）对于同一个业务场景，全局唯一<br>（2）由业务消息发送方生成，业务相关，对MQ透明<br>（3）由业务消息消费方负责判重，以保证幂等</p>
+                <h2 id="count说明"><a href="#count说明" class="headerlink" title="count说明"></a>count说明</h2><h3 id="count-a-和-count"><a href="#count-a-和-count" class="headerlink" title="count(a) 和 count(*)"></a>count(a) 和 count(*)</h3><p>当 count() 统计某一列时，比如 count(a)，a 表示列名，是不统计 null 的。</p>
+<p>而 count(*) 无论是否包含空值，都会统计。</p>
+<h3 id="MyISAM-引擎和-InnoDB-引擎-count-的区别"><a href="#MyISAM-引擎和-InnoDB-引擎-count-的区别" class="headerlink" title="MyISAM 引擎和 InnoDB 引擎 count(*) 的区别"></a>MyISAM 引擎和 InnoDB 引擎 count(*) 的区别</h3><p>对于 MyISAM 引擎，如果没有 where 子句，也没检索其它列，那么 count(*) 将会非常快。因为 MyISAM 引擎会把<br>表的总行数存在磁盘上。</p>
+<p>InnoDB 并不会保留表中的行数，因为并发事务可能同时读取到不同的行数。所以执行 count(*) 时都是临时去<br>计算的，会比 MyISAM 引擎慢很多。</p>
+<h3 id="MySQL-5-7-18-前后-count-的区别"><a href="#MySQL-5-7-18-前后-count-的区别" class="headerlink" title="MySQL 5.7.18 前后 count(*) 的区别"></a>MySQL 5.7.18 前后 count(*) 的区别</h3><p>MySQL 5.7.18 之前，InnoDB 通过扫描聚簇索引来处理 count(*) 语句。</p>
+<p>MySQL 5.7.18 开始，通过遍历最小的可用二级索引来处理 count(*) 语句。</p>
+<p>优化器基于成本的考虑，优先选择的是二级索引。所以 count(主键) 其实没 count (*)快。</p>
+<h3 id="count-1-count"><a href="#count-1-count" class="headerlink" title="count(1)   count(*)"></a>count(1)   count(*)</h3><p>执行计划相同，速度没有明显差别</p>
+<h2 id="count-优化"><a href="#count-优化" class="headerlink" title="count 优化"></a>count 优化</h2><p>1、show table status,Rows 这列就表示这张表的行数。</p>
+<pre class="line-numbers language-mysql"><code class="language-mysql">show table status like 't1';<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>估算值，可能与实际值相差 40% 到 50%。</p>
+<p>2、用 Redis 做计数器</p>
+<p>redis 和数据库访问存在时间先后，可能会读到错误的值。</p>
+<p>3、增加计数表</p>
+<p>维持了计数的准确性</p>
 
             </div>
             <hr />
@@ -609,9 +614,9 @@ MQ Broker服务与消费端传输消息的过程中出现网络抖动。
             <br/>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
                   property="dct:title" rel="dct:type">
-                    《rabbitmq消息重复》
+                    《count优化》
                 </span> 由
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2020/10/26/rabbitmq-xiao-xi-chong-fu/" property="cc:attributionName"
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2021/03/13/count-you-hua/" property="cc:attributionName"
                rel="cc:attributionURL">
                 wangyixin-tom
             </a> 采用
@@ -652,7 +657,7 @@ MQ Broker服务与消费端传输消息的过程中出现网络抖动。
         repo: 'wangyixin-tom.github.io',
         owner: 'WangYixin-Tom',
         admin: "WangYixin-Tom",
-        id: '2020/10/26/rabbitmq-xiao-xi-chong-fu/',
+        id: '2021/03/13/count-you-hua/',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -935,49 +940,50 @@ MQ Broker服务与消费端传输消息的过程中出现网络抖动。
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2020/10/26/rabbitmq-xiao-xi-ke-kao-xing/">
+                <a href="/2021/03/13/count-you-hua/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="rabbitmq消息可靠性">
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="count优化">
                         
-                        <span class="card-title">rabbitmq消息可靠性</span>
+                        <span class="card-title">count优化</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            消息丢失场景消息从生产者写入到消息队列的过程问题原因：网络抖动
-解决办法：
-
-事务在生产者发送消息之前，通过channel.txSelect开启一个事务，接着发送消息， 如果消息投递失败，进行事务回滚channel.txRollback，然
+                            count说明count(a) 和 count(*)当 count() 统计某一列时，比如 count(a)，a 表示列名，是不统计 null 的。
+而 count(*) 无论是否包含空值，都会统计。
+MyISAM 引擎和 InnoDB 引
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2020-10-26
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-03-13
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/rabbitmq/" class="post-category" target="_blank">
-                                    rabbitmq
+                            <a href="/categories/mysql/" class="post-category" target="_blank">
+                                    mysql
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/rabbitmq/" target="_blank">
-                        <span class="chip bg-color">rabbitmq</span>
+                    <a href="/tags/mysql/" target="_blank">
+                        <span class="chip bg-color">mysql</span>
                     </a>
                     
                 </div>
@@ -991,34 +997,31 @@ MQ Broker服务与消费端传输消息的过程中出现网络抖动。
                 下一篇&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/10/26/rabbitmq-ji-qun/">
+                <a href="/2021/03/13/join-you-hua/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="rabbitmq集群">
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="join优化">
                         
-                        <span class="card-title">rabbitmq集群</span>
+                        <span class="card-title">join优化</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            集群概述
-集群节点类型
-磁盘节点：运行时状态信息（集群、队列、绑定虚拟主机、用户、策略等）存储在内存和磁盘中。集群至少有一个磁盘节点。关闭集群后，重启时需要按照一定顺序启动。
-内存节点：运行时状态信息（集群、队列、绑定虚拟主机、用户、策略等
+                            关联查询Nested-Loop Join思想：一次一行循环：从驱动表中读取行并取到关联字段，根据关联字段在被驱动表取出满足条件的行，然后取两张表的结果合集。[manual][https://dev.mysql.com/doc/refman/
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-10-26
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-03-13
                             </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/rabbitmq/" class="post-category" target="_blank">
-                                    rabbitmq
+                            <a href="/categories/mysql/" class="post-category" target="_blank">
+                                    mysql
                                 </a>
                             
                             
@@ -1028,8 +1031,8 @@ MQ Broker服务与消费端传输消息的过程中出现网络抖动。
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/rabbitmq/" target="_blank">
-                        <span class="chip bg-color">rabbitmq</span>
+                    <a href="/tags/mysql/" target="_blank">
+                        <span class="chip bg-color">mysql</span>
                     </a>
                     
                 </div>
