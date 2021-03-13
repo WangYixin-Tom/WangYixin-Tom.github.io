@@ -4,13 +4,12 @@
 
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="order/group by优化, Python rabbitmq redis flask">
+    <meta name="keywords" content="分页查询优化, Python rabbitmq redis flask">
     <meta name="baidu-site-verification" content="code-KoKq36g1n2">
     <meta name="google-site-verification" content="yCy2azpds5XSuGZvis6OuA-XIGF5GuGpYRAaGfD6o48">
     <meta name="360-site-verification" content="b7c11a830ef90fd1464ad6206bb7b6e7">
-    <meta name="description" content="order by 原理按照排序原理分[manual][https://dev.mysql.com/doc/refman/5.7/en/order-by-optimization.html]，MySQL 排序方式分两种：
-
-通过有序索引直接返">
+    <meta name="description" content="自增且连续主键的分页查询避免前n条记录的读取[mysql manual][https://dev.mysql.com/doc/refman/5.7/en/limit-optimization.html]，可以采用：
+select * fro">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -18,7 +17,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>order/group by优化 | wangyixin-tom的博客</title>
+    <title>分页查询优化 | wangyixin-tom的博客</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -268,13 +267,13 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/28.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/8.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        order/group by优化
+                        分页查询优化
                     </div>
                 </div>
             </div>
@@ -423,14 +422,14 @@
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    695
+                    163
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    2 分
+                    1 分
                 </div>
                 
                 
@@ -441,41 +440,13 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="order-by-原理"><a href="#order-by-原理" class="headerlink" title="order by 原理"></a>order by 原理</h2><p>按照排序原理分[manual][<a href="https://dev.mysql.com/doc/refman/5.7/en/order-by-optimization.html]，MySQL" target="_blank" rel="noopener">https://dev.mysql.com/doc/refman/5.7/en/order-by-optimization.html]，MySQL</a> 排序方式分两种：</p>
-<ul>
-<li>通过有序索引直接返回有序数据：Using index</li>
-<li>通过 Filesort 进行的排序：Using filesort</li>
-</ul>
-<p>Filesort是内存排序还是磁盘排序取决于排序的数据大小和 sort_buffer_size 配置的大小：</p>
-<ul>
-<li>如果 “排序的数据大小” &lt; sort_buffer_size: 内存排序</li>
-<li>如果 “排序的数据大小” &gt; sort_buffer_size: 磁盘排序</li>
-</ul>
-<p>通过trace中的number_of_tmp_files，等于 0，则表示排序过程没使用临时文件，在内存中就能完成排序。</p>
-<p><strong>Filesort 下的排序模式</strong></p>
-<ul>
-<li>&lt; sort_key, rowid &gt;双路排序（又叫回表排序模式）：是首先根据相应的条件取出相应的排序字段和可以直接定<br>位行数据的行 ID，然后在 sort buffer 中进行排序，排序完后需要再次取回其它需要的字段；</li>
-<li>&lt; sort_key, additional_fields &gt;单路排序：是一次性取出满足条件行的所有字段，然后在sort buffer中进行排序；</li>
-<li>&lt; sort_key, packed_additional_fields &gt;打包数据排序模式：与单路排序相似，区别是将 char 和 varchar 字段存到<br>sort buffer 中时，更加紧缩。</li>
-</ul>
-<p>单路和双路的选择：</p>
-<ul>
-<li>如果 max_length_for_sort_data 比查询字段的总长度大，那么使用 &lt; sort_key, additional_fields &gt;排序模式；</li>
-<li>如果 max_length_for_sort_data 比查询字段的总长度小，那么使用 &lt;sort_key, rowid&gt; 排序模式。</li>
-</ul>
-<p>如果 MySQL 排序内存有条件可以配置比较大，可以适当增大 max_length_for_sort_data 的值，让优化器优先选择<br>全字段排序，把需要的字段放到 sort_buffer 中，这样排序后就会直接从内存里返回查询结果了。</p>
-<h2 id="order-by-优化"><a href="#order-by-优化" class="headerlink" title="order by 优化"></a>order by 优化</h2><h3 id="添加合适索引"><a href="#添加合适索引" class="headerlink" title="添加合适索引"></a>添加合适索引</h3><p>1、 排序字段添加索引</p>
-<p>2、多个字段排序添加联合索引</p>
-<p>3、先等值查询再排序，在条件字段和排序字段添加联合索引</p>
-<h3 id="去掉不必要的返回字段"><a href="#去掉不必要的返回字段" class="headerlink" title="去掉不必要的返回字段"></a>去掉不必要的返回字段</h3><p>过多返回字段可能需要扫描索引再回表，成本全表扫描更高。</p>
-<pre class="line-numbers language-mysql"><code class="language-mysql">select id,a,b from t1 order by a,b; /* 根据a和b字段排序查出id,a,b字段的值 */<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h3 id="修改参数"><a href="#修改参数" class="headerlink" title="修改参数"></a>修改参数</h3><p>max_length_for_sort_data：如果觉得排序效率比较低，可以适当加大 max_length_for_sort_data 的值</p>
-<p>sort_buffer_size：适当加大 sort_buffer_size 的值，尽可能让排序在内存中完成。</p>
-<h3 id="无法使用索引"><a href="#无法使用索引" class="headerlink" title="无法使用索引"></a>无法使用索引</h3><p>1、 使用范围查询再排序：</p>
-<pre class="line-numbers language-mysql"><code class="language-mysql">select id,a,b from t1 where a>9000 order by b;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>2、ASC 和 DESC 混合使用</p>
-<pre class="line-numbers language-mysql"><code class="language-mysql">select id,a,b from t1 order by a asc,b desc;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h2 id="group-by优化"><a href="#group-by优化" class="headerlink" title="group by优化"></a>group by优化</h2><p>默认情况，会对 group by 字段排序，因此优化方式与 order by 基本一致，如果目的只是分组而不用排序，可以指定 order by null 禁止排序。</p>
+                <h2 id="自增且连续主键的分页查询"><a href="#自增且连续主键的分页查询" class="headerlink" title="自增且连续主键的分页查询"></a>自增且连续主键的分页查询</h2><p>避免前n条记录的读取[mysql manual][<a href="https://dev.mysql.com/doc/refman/5.7/en/limit-optimization.html]，可以采用：" target="_blank" rel="noopener">https://dev.mysql.com/doc/refman/5.7/en/limit-optimization.html]，可以采用：</a></p>
+<pre class="line-numbers language-mysql"><code class="language-mysql">select * from t1 where id >99000 limit 2;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>要求主链连续且自增，否则很多时候不适用。</p>
+<h2 id="非主键字段排序的分页查询"><a href="#非主键字段排序的分页查询" class="headerlink" title="非主键字段排序的分页查询"></a>非主键字段排序的分页查询</h2><p>可能不走索引</p>
+<pre class="line-numbers language-mysql"><code class="language-mysql">select * from t1 order by a limit 99000,2;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>优化：关键是让排序时返回的字段尽可能少，所以可以让排序和分页操作先查出主键，然后根据主键查到对应的记<br>录</p>
+<pre class="line-numbers language-mysql"><code class="language-mysql">select * from t1 f inner join (select id from t1 order by a limit 99000,2)g on f.id = g.id;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
             </div>
             <hr />
@@ -634,9 +605,9 @@
             <br/>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
                   property="dct:title" rel="dct:type">
-                    《order/group by优化》
+                    《分页查询优化》
                 </span> 由
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2021/03/13/order-group-by-you-hua/" property="cc:attributionName"
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2021/03/13/fen-ye-cha-xun-you-hua/" property="cc:attributionName"
                rel="cc:attributionURL">
                 wangyixin-tom
             </a> 采用
@@ -677,7 +648,7 @@
         repo: 'wangyixin-tom.github.io',
         owner: 'WangYixin-Tom',
         admin: "WangYixin-Tom",
-        id: '2021/03/13/order-group-by-you-hua/',
+        id: '2021/03/13/fen-ye-cha-xun-you-hua/',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -960,9 +931,10 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2021/03/13/fen-ye-cha-xun-you-hua/">
                     <div class="card-image">
@@ -981,9 +953,9 @@ select * fro
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2021-03-13
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-03-13
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
@@ -996,6 +968,7 @@ select * fro
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -1014,23 +987,21 @@ select * fro
                 下一篇&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/03/13/pi-liang-shu-ju-dao-ru-you-hua/">
+                <a href="/2021/03/13/order-group-by-you-hua/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/27.jpg" class="responsive-img" alt="批量数据导入优化">
+                        <img src="/medias/featureimages/28.jpg" class="responsive-img" alt="order/group by优化">
                         
-                        <span class="card-title">批量数据导入优化</span>
+                        <span class="card-title">order/group by优化</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            插入行所需的时间由以下因素决定([mysql manual][https://dev.mysql.com/doc/refman/5.7/en/insert-optimization.html])
+                            order by 原理按照排序原理分[manual][https://dev.mysql.com/doc/refman/5.7/en/order-by-optimization.html]，MySQL 排序方式分两种：
 
-连接：30%
-向服务器发送查询：20%
-解
+通过有序索引直接返
                         
                     </div>
                     <div class="publish-info">

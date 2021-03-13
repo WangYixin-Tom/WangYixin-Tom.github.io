@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://wangyixin-tom.github.io/"/>
-  <updated>2021-03-13T09:05:04.167Z</updated>
+  <updated>2021-03-13T09:28:42.477Z</updated>
   <id>https://wangyixin-tom.github.io/</id>
   
   <author>
@@ -17,11 +17,37 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>分页查询优化</title>
+    <link href="https://wangyixin-tom.github.io/2021/03/13/fen-ye-cha-xun-you-hua/"/>
+    <id>https://wangyixin-tom.github.io/2021/03/13/fen-ye-cha-xun-you-hua/</id>
+    <published>2021-03-13T09:15:47.000Z</published>
+    <updated>2021-03-13T09:28:42.477Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;自增且连续主键的分页查询&quot;&gt;&lt;a href=&quot;#自增且连续主键的分页查询&quot; class=&quot;headerlink&quot; title=&quot;自增且连续主键的分页查询&quot;&gt;&lt;/a&gt;自增且连续主键的分页查询&lt;/h2&gt;&lt;p&gt;避免前n条记录的读取[mysql manual][&lt;a
+        
+      
+    
+    </summary>
+    
+      <category term="mysql" scheme="https://wangyixin-tom.github.io/categories/mysql/"/>
+    
+    
+      <category term="mysql" scheme="https://wangyixin-tom.github.io/tags/mysql/"/>
+    
+  </entry>
+  
+  <entry>
     <title>order/group by优化</title>
     <link href="https://wangyixin-tom.github.io/2021/03/13/order-group-by-you-hua/"/>
     <id>https://wangyixin-tom.github.io/2021/03/13/order-group-by-you-hua/</id>
     <published>2021-03-13T07:45:38.000Z</published>
-    <updated>2021-03-13T09:05:04.167Z</updated>
+    <updated>2021-03-13T09:14:39.952Z</updated>
     
     <summary type="html">
     
@@ -507,33 +533,6 @@
     
     
       <category term="rabbitmq" scheme="https://wangyixin-tom.github.io/tags/rabbitmq/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>redis RBD机制</title>
-    <link href="https://wangyixin-tom.github.io/2020/10/26/redis-rdb-ji-zhi/"/>
-    <id>https://wangyixin-tom.github.io/2020/10/26/redis-rdb-ji-zhi/</id>
-    <published>2020-10-26T14:09:31.000Z</published>
-    <updated>2020-10-26T14:10:13.293Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;RDB 就是 Redis DataBase，内存中的全量数据在某一个时刻的状态记录。&lt;/p&gt;
-&lt;h2 id=&quot;快照机制&quot;&gt;&lt;a href=&quot;#快照机制&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-      <category term="redis" scheme="https://wangyixin-tom.github.io/categories/redis/"/>
-    
-    
-      <category term="redis" scheme="https://wangyixin-tom.github.io/tags/redis/"/>
     
   </entry>
   
