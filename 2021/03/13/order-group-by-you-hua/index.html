@@ -4,14 +4,13 @@
 
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="redis主从同步, Python rabbitmq redis flask">
+    <meta name="keywords" content="order/group by优化, Python rabbitmq redis flask">
     <meta name="baidu-site-verification" content="code-KoKq36g1n2">
     <meta name="google-site-verification" content="yCy2azpds5XSuGZvis6OuA-XIGF5GuGpYRAaGfD6o48">
     <meta name="360-site-verification" content="b7c11a830ef90fd1464ad6206bb7b6e7">
-    <meta name="description" content="[toc]
-主从库之间采用读写分离。读操作：主库、从库都可以接收；写操作：首先到主库执行，然后，主库将写操作同步给从库。
-同步机制通过 replicaof（Redis 5.0 之前使用 slaveof）命令形成主库和从库的关系。
-1、主从库">
+    <meta name="description" content="order by 原理按照排序原理分[manual][https://dev.mysql.com/doc/refman/5.7/en/order-by-optimization.html]，MySQL 排序方式分两种：
+
+通过有序索引直接返">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -19,7 +18,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>redis主从同步 | wangyixin-tom的博客</title>
+    <title>order/group by优化 | wangyixin-tom的博客</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -269,13 +268,13 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/14.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/28.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        redis主从同步
+                        order/group by优化
                     </div>
                 </div>
             </div>
@@ -386,8 +385,8 @@
                     
                     <div class="article-tag">
                         
-                        <a href="/tags/redis/" target="_blank">
-                            <span class="chip bg-color">redis</span>
+                        <a href="/tags/mysql/" target="_blank">
+                            <span class="chip bg-color">mysql</span>
                         </a>
                         
                     </div>
@@ -398,8 +397,8 @@
                     <div class="post-cate">
                         <i class="fa fa-bookmark fa-fw icon-category"></i>
                         
-                        <a href="/categories/redis/" class="post-category" target="_blank">
-                            redis
+                        <a href="/categories/mysql/" class="post-category" target="_blank">
+                            mysql
                         </a>
                         
                     </div>
@@ -410,7 +409,7 @@
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-10-25
+                    2021-03-13
                 </div>
 
                 <div class="post-author info-break-policy">
@@ -424,14 +423,14 @@
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.4k
+                    696
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    4 分
+                    2 分
                 </div>
                 
                 
@@ -442,65 +441,41 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>[toc]</p>
-<p>主从库之间采用读写分离。<br>读操作：主库、从库都可以接收；<br>写操作：首先到主库执行，然后，主库将写操作同步给从库。<br><img src="duxiefenli.jpg" alt="读写分离"></p>
-<h2 id="同步机制"><a href="#同步机制" class="headerlink" title="同步机制"></a>同步机制</h2><p>通过 <code>replicaof</code>（Redis 5.0 之前使用 <code>slaveof</code>）命令形成主库和从库的关系。</p>
-<p>1、主从库间建立连接、协商同步，为全量复制做准备。<br><strong>从库和主库建立起连接，发送 psync 命令</strong>，表示要进行数据同步，<strong>主库确认回复</strong>，FULLRESYNC响应表示第一次复制采用的全量复制。<br>psync 命令包含了主库的 runID 和复制进度 offset 两个参数。</p>
-<p>2、主库将所有数据同步给从库。从库收到数据后，在本地完成数据加载。<br>主库执行 bgsave 命令，生成 RDB 文件，接着将文件发给从库。<br>从库接收到 RDB 文件后，会先清空当前数据库（避免之前数据的影响），然后加载 RDB 文件。</p>
-<p>3、主库会把第二阶段执行过程中新收到的写命令(replication buffer中的修改操作)，再发送给从库。<br>主库会在内存中使用 replication buffer，记录 RDB 文件生成后收到的所有写操作。</p>
-<p><img src="zhucongtongbu.jpg" alt="主从第一次同步"></p>
-<h2 id="主从级联"><a href="#主从级联" class="headerlink" title="主从级联"></a>主从级联</h2><h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><ul>
-<li><p>从库数量很多且都要和主库进行全量复制时，会导致主库忙于 fork 子进程生成 RDB 文件，进行数据全量同步。fork 会阻塞主线程处理正常请求，从而导致主库响应应用程序的请求速度变慢。</p>
-</li>
-<li><p>传输 RDB 文件也会占用主库的网络带宽，同样会给主库的资源使用带来压力。</p>
-</li>
-</ul>
-<h3 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h3><p>通过“主 - 从 - 从”模式将主库生成 RDB 和传输 RDB 的压力，以级联的方式分散到从库上</p>
-<p><img src="master_slave_slave.jpg" alt="级联的“主-从-从”模式"></p>
-<h2 id="网络闪断"><a href="#网络闪断" class="headerlink" title="网络闪断"></a>网络闪断</h2><p>网络闪断后，主从库会采用增量复制的方式继续同步。</p>
-<h3 id="增量复制机制"><a href="#增量复制机制" class="headerlink" title="增量复制机制"></a>增量复制机制</h3><ul>
-<li><p>主库把断连期间收到的写操作命令写入 repl_backlog_buffer 缓冲区</p>
-</li>
-<li><p>repl_backlog_buffer 是一个环形缓冲区，主库会记录写到的位置，从库会记录已经读到的位置。</p>
-</li>
-<li><p>连接恢复后，从库给主库发送 psync 命令，并把自己当前的 slave_repl_offset 发给主库，主库会判断 master_repl_offset 和 slave_repl_offset 之间的差距。把 master_repl_offset 和 slave_repl_offset 之间的命令操作同步给从库。</p>
-</li>
-<li><p>库还未读取的操作被主库新写的操作覆盖，需要全量复制</p>
-</li>
-</ul>
-<h3 id="应对"><a href="#应对" class="headerlink" title="应对"></a>应对</h3><ul>
-<li><p>repl_backlog_size 设置一个合理的值</p>
-</li>
-<li><p>使用切片集群来分担单个主库的请求压力</p>
-</li>
-</ul>
-<h2 id="主从数据不一致"><a href="#主从数据不一致" class="headerlink" title="主从数据不一致"></a>主从数据不一致</h2><p>根本原因：主从库间的命令复制是异步进行的</p>
-<p>直接原因：</p>
+                <h2 id="order-by-原理"><a href="#order-by-原理" class="headerlink" title="order by 原理"></a>order by 原理</h2><p>按照排序原理分[manual][<a href="https://dev.mysql.com/doc/refman/5.7/en/order-by-optimization.html]，MySQL" target="_blank" rel="noopener">https://dev.mysql.com/doc/refman/5.7/en/order-by-optimization.html]，MySQL</a> 排序方式分两种：</p>
 <ul>
-<li>主从库间的网络可能会有传输延迟</li>
-<li>处理其它复杂度高的命令（例如集合操作命令）而阻塞同步</li>
-<li>主从库设置的 maxmemory 不同，如果 slave 比 master 小，那么 slave 内存就会优先达到 maxmemroy，然后开始淘汰数据，此时主从库也会产生不一致</li>
+<li>通过有序索引直接返回有序数据：Using index</li>
+<li>通过 Filesort 进行的排序：Using filesort</li>
 </ul>
-<p>解决方法</p>
+<p>Filesort是内存排序还是磁盘排序取决于排序的数据大小和 sort_buffer_size 配置的大小：</p>
 <ul>
-<li>尽量保证主从库间的网络连接状况良好</li>
-<li>外部程序监控主从库间的复制进度（INFO replication ），依据从库和主库间的复制进度，设置客户端从库连接</li>
+<li>如果 “排序的数据大小” &lt; sort_buffer_size: 内存排序</li>
+<li>如果 “排序的数据大小” &gt; sort_buffer_size: 磁盘排序</li>
 </ul>
-<h2 id="读取数据过期"><a href="#读取数据过期" class="headerlink" title="读取数据过期"></a>读取数据过期</h2><h3 id="过期策略"><a href="#过期策略" class="headerlink" title="过期策略"></a>过期策略</h3><p>定期删除策略：Redis 每隔一段时间（默认 100ms），就会随机选出一定数量的数据，检查它们是否过期，并把其中过期的数据删除</p>
-<p><strong>惰性删除策略</strong>：数据只有被再次访问时，才会被实际删除。从库本身不会执行删除操作，如果客户端在从库中访问留存的过期数据，从库并不会触发数据删除。<strong>在 3.2 版本后</strong>，如果读取的数据已经过期了，从库虽然不会删除，但是会返回空值。</p>
-<h3 id="过期命令"><a href="#过期命令" class="headerlink" title="过期命令"></a>过期命令</h3><ul>
-<li>EXPIRE 和 PEXPIRE：它们给数据设置的是从命令执行时开始计算的存活时间；</li>
-<li><strong>EXPIREAT 和 PEXPIREA</strong>：它们会直接把数据的过期时间设置为具体的一个时间点</li>
+<p>通过trace中的number_of_tmp_files，等于 0，则表示排序过程没使用临时文件，在内存中就能完成排序。</p>
+<p><strong>Filesort 下的排序模式</strong></p>
+<ul>
+<li>&lt; sort_key, rowid &gt;双路排序（又叫回表排序模式）：是首先根据相应的条件取出相应的排序字段和可以直接定<br>位行数据的行 ID，然后在 sort buffer 中进行排序，排序完后需要再次取回其它需要的字段；</li>
+<li>&lt; sort_key, additional_fields &gt;单路排序：是一次性取出满足条件行的所有字段，然后在sort buffer中进行排序；</li>
+<li>&lt; sort_key, packed_additional_fields &gt;打包数据排序模式：与单路排序相似，区别是将 char 和 varchar 字段存到<br>sort buffer 中时，更加紧缩。</li>
 </ul>
-<p>当主从库全量同步时，如果主库接收到了一条 EXPIRE 命令，那么，主库会直接执行这条命令。这条命令会在全量同步完成后，发给从库执行。而从库在执行时，就会在<strong>当前时间的基础上加上数据的存活时间</strong>，从库上数据的过期时间就会比主库上延后了</p>
-<h3 id="解决-1"><a href="#解决-1" class="headerlink" title="解决"></a>解决</h3><ul>
-<li>使用 Redis 3.2 及以上版本和惰性删除策略</li>
-<li>在业务应用中使用 EXPIREAT/PEXPIREAT 命令，把数据的过期时间设置为具体的时间点，避免读到过期数据</li>
+<p>单路和双路的选择：</p>
+<ul>
+<li>如果 max_length_for_sort_data 比查询字段的总长度大，那么使用 &lt; sort_key, additional_fields &gt;排序模式；</li>
+<li>如果 max_length_for_sort_data 比查询字段的总长度小，那么使用 &lt;sort_key, rowid&gt; 排序模式。</li>
 </ul>
-<h3 id="同步异常"><a href="#同步异常" class="headerlink" title="同步异常"></a>同步异常</h3><p><code>protected-mode</code>：yes ，哨兵实例只能在部署的服务器本地进行访问。no ，其他服务器也可以访问这个哨兵实例。同时，bind 配置项设置为其它哨兵实例的 IP 地址。</p>
-<p><code>cluster-node-timeout</code>:实例响应心跳消息的超时时间。主从切换时间可能较长，就会导致实例的心跳超时（超出 cluster-node-timeout）。实例超时后，就会被 Redis Cluster 判断为异常。有半数以上的实例异常，会导致整个集群挂掉。</p>
-<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p><code>slave-serve-stale-data</code>: 从库能否处理数据读写命令，推荐设置为 no，从库只能服务 INFO、SLAVEOF 命令，避免在从库中读到不一致的数据。</p>
-<p><code>slave-read-only</code>：设置从库能否处理写命令， yes 时，从库只能处理读请求，无法处理写请求。</p>
+<p>如果 MySQL 排序内存有条件可以配置比较大，可以适当增大 max_length_for_sort_data 的值，让优化器优先选择<br>全字段排序，把需要的字段放到 sort_buffer 中，这样排序后就会直接从内存里返回查询结果了。</p>
+<h2 id="order-by-优化"><a href="#order-by-优化" class="headerlink" title="order by 优化"></a>order by 优化</h2><h3 id="添加合适索引"><a href="#添加合适索引" class="headerlink" title="添加合适索引"></a>添加合适索引</h3><p>1、 排序字段添加索引</p>
+<p>2、多个字段排序添加联合索引</p>
+<p>3、先等值查询再排序，过在条件字段和排序字段添加联合索引</p>
+<h3 id="去掉不必要的返回字段"><a href="#去掉不必要的返回字段" class="headerlink" title="去掉不必要的返回字段"></a>去掉不必要的返回字段</h3><p>过多返回字段可能需要扫描索引再回表，成本全表扫描更高。</p>
+<pre class="line-numbers language-mysql"><code class="language-mysql">select id,a,b from t1 order by a,b; /* 根据a和b字段排序查出id,a,b字段的值 */<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="修改参数"><a href="#修改参数" class="headerlink" title="修改参数"></a>修改参数</h3><p>max_length_for_sort_data：如果觉得排序效率比较低，可以适当加大 max_length_for_sort_data 的值</p>
+<p>sort_buffer_size：适当加大 sort_buffer_size 的值，尽可能让排序在内存中完成。</p>
+<h3 id="无法使用索引"><a href="#无法使用索引" class="headerlink" title="无法使用索引"></a>无法使用索引</h3><p>1、 使用范围查询再排序：</p>
+<pre class="line-numbers language-mysql"><code class="language-mysql">select id,a,b from t1 where a>9000 order by b;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>2、ASC 和 DESC 混合使用</p>
+<pre class="line-numbers language-mysql"><code class="language-mysql">select id,a,b from t1 order by a asc,b desc;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h2 id="group-by优化"><a href="#group-by优化" class="headerlink" title="group by优化"></a>group by优化</h2><p>默认情况，会对 group by 字段排序，因此优化方式与 order by 基本一致，如果目的只是分组而不用排序，可以指定 order by null 禁止排序。</p>
 
             </div>
             <hr />
@@ -659,9 +634,9 @@
             <br/>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
                   property="dct:title" rel="dct:type">
-                    《redis主从同步》
+                    《order/group by优化》
                 </span> 由
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2020/10/25/redis-zhu-cong-tong-bu/" property="cc:attributionName"
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2021/03/13/order-group-by-you-hua/" property="cc:attributionName"
                rel="cc:attributionURL">
                 wangyixin-tom
             </a> 采用
@@ -702,7 +677,7 @@
         repo: 'wangyixin-tom.github.io',
         owner: 'WangYixin-Tom',
         admin: "WangYixin-Tom",
-        id: '2020/10/25/redis-zhu-cong-tong-bu/',
+        id: '2021/03/13/order-group-by-you-hua/',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -985,53 +960,50 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2020/10/25/redis-shao-bing-ji-zhi/">
+                <a href="/2021/03/13/order-group-by-you-hua/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="redis哨兵机制">
+                        <img src="/medias/featureimages/28.jpg" class="responsive-img" alt="order/group by优化">
                         
-                        <span class="card-title">redis哨兵机制</span>
+                        <span class="card-title">order/group by优化</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            问题主库故障的相关问题：
-1、确定主库故障
-2、选择新的主库
-3、新主库信息通知
-基本功能监控
-哨兵进程周期性地给所有的主从库发送 PING 命令，检测它们是否仍然在线运行。
+                            order by 原理按照排序原理分[manual][https://dev.mysql.com/doc/refman/5.7/en/order-by-optimization.html]，MySQL 排序方式分两种：
 
-主库或从库对 PING 命令的响应超时了，哨兵会标记为“主观下
+通过有序索引直接返
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2020-10-25
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-03-13
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/redis/" class="post-category" target="_blank">
-                                    redis
+                            <a href="/categories/mysql/" class="post-category" target="_blank">
+                                    mysql
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/redis/" target="_blank">
-                        <span class="chip bg-color">redis</span>
+                    <a href="/tags/mysql/" target="_blank">
+                        <span class="chip bg-color">mysql</span>
                     </a>
                     
                 </div>
@@ -1045,31 +1017,35 @@
                 下一篇&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/02/16/sort-algorithms/">
+                <a href="/2021/03/13/pi-liang-shu-ju-dao-ru-you-hua/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="十大经典排序算法整理汇总（附代码）">
+                        <img src="/medias/featureimages/27.jpg" class="responsive-img" alt="批量数据导入优化">
                         
-                        <span class="card-title">十大经典排序算法整理汇总（附代码）</span>
+                        <span class="card-title">批量数据导入优化</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            本文整理并总结了十大经典的排序算法（冒泡排序、选择排序、插入排序、快速排序、归并排序、希尔排序、计数排序、基数排序、桶排序、堆排序）的时间复杂度、空间复杂度等性质。
+                            插入行所需的时间由以下因素决定([mysql manual][https://dev.mysql.com/doc/refman/5.7/en/insert-optimization.html])
+
+连接：30%
+向服务器发送查询：20%
+解
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-02-16
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-03-13
                             </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/编程算法/" class="post-category" target="_blank">
-                                    编程算法
+                            <a href="/categories/mysql/" class="post-category" target="_blank">
+                                    mysql
                                 </a>
                             
                             
@@ -1079,12 +1055,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/leetcode/" target="_blank">
-                        <span class="chip bg-color">leetcode</span>
-                    </a>
-                    
-                    <a href="/tags/算法/" target="_blank">
-                        <span class="chip bg-color">算法</span>
+                    <a href="/tags/mysql/" target="_blank">
+                        <span class="chip bg-color">mysql</span>
                     </a>
                     
                 </div>

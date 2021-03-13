@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://wangyixin-tom.github.io/"/>
-  <updated>2021-03-13T07:32:54.185Z</updated>
+  <updated>2021-03-13T09:05:04.167Z</updated>
   <id>https://wangyixin-tom.github.io/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>order/group by优化</title>
+    <link href="https://wangyixin-tom.github.io/2021/03/13/order-group-by-you-hua/"/>
+    <id>https://wangyixin-tom.github.io/2021/03/13/order-group-by-you-hua/</id>
+    <published>2021-03-13T07:45:38.000Z</published>
+    <updated>2021-03-13T09:05:04.167Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;order-by-原理&quot;&gt;&lt;a href=&quot;#order-by-原理&quot; class=&quot;headerlink&quot; title=&quot;order by 原理&quot;&gt;&lt;/a&gt;order by 原理&lt;/h2&gt;&lt;p&gt;按照排序原理分[manual][&lt;a
+        
+      
+    
+    </summary>
+    
+      <category term="mysql" scheme="https://wangyixin-tom.github.io/categories/mysql/"/>
+    
+    
+      <category term="mysql" scheme="https://wangyixin-tom.github.io/tags/mysql/"/>
+    
+  </entry>
   
   <entry>
     <title>批量数据导入优化</title>
@@ -499,33 +525,6 @@
         
           &lt;p&gt;RDB 就是 Redis DataBase，内存中的全量数据在某一个时刻的状态记录。&lt;/p&gt;
 &lt;h2 id=&quot;快照机制&quot;&gt;&lt;a href=&quot;#快照机制&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-      <category term="redis" scheme="https://wangyixin-tom.github.io/categories/redis/"/>
-    
-    
-      <category term="redis" scheme="https://wangyixin-tom.github.io/tags/redis/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>redis AOF机制</title>
-    <link href="https://wangyixin-tom.github.io/2020/10/26/redis-aof-ji-zhi/"/>
-    <id>https://wangyixin-tom.github.io/2020/10/26/redis-aof-ji-zhi/</id>
-    <published>2020-10-26T14:07:40.000Z</published>
-    <updated>2020-10-26T14:08:25.343Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;先写内存，在写日志。&lt;br&gt;1、命令执行成功才会被记录日志。&lt;br&gt;2、避免对当前命令的阻塞。&lt;/p&gt;
-&lt;h2 id=&quot;风险&quot;&gt;&lt;a href=&quot;#风险&quot; class=&quot;headerlink&quot;
         
       
     
