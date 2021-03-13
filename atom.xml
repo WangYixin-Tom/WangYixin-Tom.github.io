@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://wangyixin-tom.github.io/"/>
-  <updated>2021-03-13T03:40:28.816Z</updated>
+  <updated>2021-03-13T07:32:54.185Z</updated>
   <id>https://wangyixin-tom.github.io/</id>
   
   <author>
@@ -17,11 +17,37 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>批量数据导入优化</title>
+    <link href="https://wangyixin-tom.github.io/2021/03/13/pi-liang-shu-ju-dao-ru-you-hua/"/>
+    <id>https://wangyixin-tom.github.io/2021/03/13/pi-liang-shu-ju-dao-ru-you-hua/</id>
+    <published>2021-03-13T03:53:46.000Z</published>
+    <updated>2021-03-13T07:32:54.185Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;插入行所需的时间由以下因素决定([mysql manual][&lt;a href=&quot;https://dev.mysql.com/doc/refman/5.7/en/insert-optimization.html]&quot; target=&quot;_blank&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="mysql" scheme="https://wangyixin-tom.github.io/categories/mysql/"/>
+    
+    
+      <category term="mysql" scheme="https://wangyixin-tom.github.io/tags/mysql/"/>
+    
+  </entry>
+  
+  <entry>
     <title>索引失效</title>
     <link href="https://wangyixin-tom.github.io/2021/03/13/suo-yin-shi-xiao/"/>
     <id>https://wangyixin-tom.github.io/2021/03/13/suo-yin-shi-xiao/</id>
     <published>2021-03-13T03:07:49.000Z</published>
-    <updated>2021-03-13T03:40:28.816Z</updated>
+    <updated>2021-03-13T03:45:52.199Z</updated>
     
     <summary type="html">
     
@@ -500,32 +526,6 @@
         
           &lt;p&gt;先写内存，在写日志。&lt;br&gt;1、命令执行成功才会被记录日志。&lt;br&gt;2、避免对当前命令的阻塞。&lt;/p&gt;
 &lt;h2 id=&quot;风险&quot;&gt;&lt;a href=&quot;#风险&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-      <category term="redis" scheme="https://wangyixin-tom.github.io/categories/redis/"/>
-    
-    
-      <category term="redis" scheme="https://wangyixin-tom.github.io/tags/redis/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>redis网络IO模型</title>
-    <link href="https://wangyixin-tom.github.io/2020/10/26/redis-wang-luo-io-mo-xing/"/>
-    <id>https://wangyixin-tom.github.io/2020/10/26/redis-wang-luo-io-mo-xing/</id>
-    <published>2020-10-26T14:06:23.000Z</published>
-    <updated>2020-10-26T14:06:52.697Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h2 id=&quot;单线程&quot;&gt;&lt;a href=&quot;#单线程&quot; class=&quot;headerlink&quot; title=&quot;单线程&quot;&gt;&lt;/a&gt;单线程&lt;/h2&gt;&lt;p&gt;Redis 是单线程，主要是指 Redis 的网络 IO
         
       
     

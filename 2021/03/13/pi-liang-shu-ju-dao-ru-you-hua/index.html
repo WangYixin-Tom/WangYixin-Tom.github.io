@@ -4,12 +4,15 @@
 
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="redis变慢以及优化方法, Python rabbitmq redis flask">
+    <meta name="keywords" content="批量数据导入优化, Python rabbitmq redis flask">
     <meta name="baidu-site-verification" content="code-KoKq36g1n2">
     <meta name="google-site-verification" content="yCy2azpds5XSuGZvis6OuA-XIGF5GuGpYRAaGfD6o48">
     <meta name="360-site-verification" content="b7c11a830ef90fd1464ad6206bb7b6e7">
-    <meta name="description" content="确定问题1、查看 Redis 的响应延迟。2、基于当前环境下的 Redis 基线性能做判断基线性能是系统在低压力、无干扰下的基本性能，Redis 运行时延迟是其基线性能的 2 倍及以上，可认定 Redis 变慢了。
-问题定位1、通过 Red">
+    <meta name="description" content="插入行所需的时间由以下因素决定([mysql manual][https://dev.mysql.com/doc/refman/5.7/en/insert-optimization.html])
+
+连接：30%
+向服务器发送查询：20%
+解">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -17,7 +20,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>redis变慢以及优化方法 | wangyixin-tom的博客</title>
+    <title>批量数据导入优化 | wangyixin-tom的博客</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -267,13 +270,13 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/22.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/27.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        redis变慢以及优化方法
+                        批量数据导入优化
                     </div>
                 </div>
             </div>
@@ -384,8 +387,8 @@
                     
                     <div class="article-tag">
                         
-                        <a href="/tags/redis/" target="_blank">
-                            <span class="chip bg-color">redis</span>
+                        <a href="/tags/mysql/" target="_blank">
+                            <span class="chip bg-color">mysql</span>
                         </a>
                         
                     </div>
@@ -396,8 +399,8 @@
                     <div class="post-cate">
                         <i class="fa fa-bookmark fa-fw icon-category"></i>
                         
-                        <a href="/categories/redis/" class="post-category" target="_blank">
-                            redis
+                        <a href="/categories/mysql/" class="post-category" target="_blank">
+                            mysql
                         </a>
                         
                     </div>
@@ -408,7 +411,7 @@
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-10-26
+                    2021-03-13
                 </div>
 
                 <div class="post-author info-break-policy">
@@ -422,7 +425,7 @@
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    477
+                    344
                 </div>
                 
 
@@ -440,11 +443,32 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="确定问题"><a href="#确定问题" class="headerlink" title="确定问题"></a>确定问题</h2><p>1、查看 Redis 的响应延迟。<br>2、基于当前环境下的 Redis 基线性能做判断<br>基线性能是系统在低压力、无干扰下的基本性能，Redis 运行时延迟是其基线性能的 2 倍及以上，可认定 Redis 变慢了。</p>
-<h2 id="问题定位"><a href="#问题定位" class="headerlink" title="问题定位"></a>问题定位</h2><p>1、通过 Redis 日志，或者是 latency monitor 工具，查询变慢的请求，确认是否采用了复杂度高的慢查询命令。<br>2、检查业务代码在使用 EXPIREAT 命令设置 key 过期时间时，是否使用了相同的 UNIX 时间戳，有没有使用 EXPIRE 命令给批量的 key 设置相同的过期秒数。从而造成大量 key 在同一时间过期，导致性能变慢。删除操作是阻塞的（Redis 4.0 后可以用异步线程机制来减少阻塞影响）<br>3、检查是否使用了慢查询命令，KEYS *xxx</p>
-<h2 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h2><p>1.a.用其他高效命令代替。比如说，如果你需要返回一个 SET 中的所有成员时，不要使用 SMEMBERS 命令，而是要使用 SSCAN 多次迭代返回，避免一次返回大量数据，造成线程阻塞。<br>1.b.当你需要执行排序、交集、并集操作时，可以在客户端完成，而不要用 SORT、SUNION、SINTER 这些命令，以免拖慢 Redis 实例。</p>
-<p>2.如果一批 key 的确是同时过期，你还可以在 EXPIREAT 和 EXPIRE 的过期时间参数上，加上一个一定大小范围内的随机数</p>
-<p>3.获取整个实例的所有key，建议使用SCAN命令代替。客户端通过执行SCAN $cursor COUNT $count可以得到一批key以及下一个游标$cursor，然后把这个$cursor当作SCAN的参数，再次执行，以此往复，直到返回的$cursor为0时，就把整个实例中的所有key遍历出来了。</p>
+                <p>插入行所需的时间由以下因素决定([mysql manual][<a href="https://dev.mysql.com/doc/refman/5.7/en/insert-optimization.html]" target="_blank" rel="noopener">https://dev.mysql.com/doc/refman/5.7/en/insert-optimization.html]</a>)</p>
+<ul>
+<li>连接：30%</li>
+<li>向服务器发送查询：20%</li>
+<li>解析查询：20%</li>
+<li>插入行：10% * 行的大小</li>
+<li>插入索引：10% * 索引数</li>
+<li>结束：10%</li>
+</ul>
+<h2 id="一次插入多行的值"><a href="#一次插入多行的值" class="headerlink" title="一次插入多行的值"></a>一次插入多行的值</h2><p>有大批量导入时，推荐一条insert语句插入多行数据。</p>
+<p>原因：减少服务器通信时间</p>
+<h2 id="关闭自动提交"><a href="#关闭自动提交" class="headerlink" title="关闭自动提交"></a>关闭自动提交</h2><p>Autocommit 开启时会为每个插入执行提交。可以在InnoDB导入数据时，关闭自动提交。</p>
+<p>原因：合并提交可以减少客户端与服务端通信的时间，减少数据落盘的次数。</p>
+<h2 id="参数调整"><a href="#参数调整" class="headerlink" title="参数调整"></a>参数调整</h2><p>innodb_flush_log_at_trx_commit：控制重做日志刷新到磁盘的策略</p>
+<ul>
+<li>0：master线程每秒把redo log buffer写到操作系统缓存，再刷到磁盘；</li>
+<li>1：每次提交事务都将redo log buffer写到操作系统缓存，再刷到磁盘；</li>
+<li>2：每次事务提交都将redo log buffer写到操作系统缓存，由操作系统来管理刷盘。</li>
+</ul>
+<p>sync_binlog：控制binlog的刷盘时机</p>
+<ul>
+<li>0：二进制日志从不同步到磁盘，依赖OS刷盘机制；</li>
+<li>1：二进制日志每次提交都会刷盘；</li>
+<li>n(n&gt;1) : 每n次提交落盘一次。</li>
+</ul>
+<p>innodb_flush_log_at_trx_commit设置为0、同时sync_binlog设置为0时，写入数据的速度是最快的。</p>
 
             </div>
             <hr />
@@ -603,9 +627,9 @@
             <br/>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
                   property="dct:title" rel="dct:type">
-                    《redis变慢以及优化方法》
+                    《批量数据导入优化》
                 </span> 由
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2020/10/26/redis-bian-man-yi-ji-you-hua-fang-fa/" property="cc:attributionName"
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2021/03/13/pi-liang-shu-ju-dao-ru-you-hua/" property="cc:attributionName"
                rel="cc:attributionURL">
                 wangyixin-tom
             </a> 采用
@@ -646,7 +670,7 @@
         repo: 'wangyixin-tom.github.io',
         owner: 'WangYixin-Tom',
         admin: "WangYixin-Tom",
-        id: '2020/10/26/redis-bian-man-yi-ji-you-hua-fang-fa/',
+        id: '2021/03/13/pi-liang-shu-ju-dao-ru-you-hua/',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -929,64 +953,52 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2020/10/26/redis-shu-ju-jie-gou/">
+                <a href="/2021/03/13/pi-liang-shu-ju-dao-ru-you-hua/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="redis数据结构">
+                        <img src="/medias/featureimages/27.jpg" class="responsive-img" alt="批量数据导入优化">
                         
-                        <span class="card-title">redis数据结构</span>
+                        <span class="card-title">批量数据导入优化</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            基本数据结构包括：String（字符串）、List（列表）、Hash（哈希）、Set（集合）和 Sorted Set（有序集合）
+                            插入行所需的时间由以下因素决定([mysql manual][https://dev.mysql.com/doc/refman/5.7/en/insert-optimization.html])
 
-
-
-基本数据结构
-底层实现
-
-
-
-string
-动态字符串
-
-
-List
-双向链表、压缩列表
-
-
-Hash
-
+连接：30%
+向服务器发送查询：20%
+解
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2020-10-26
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-03-13
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/redis/" class="post-category" target="_blank">
-                                    redis
+                            <a href="/categories/mysql/" class="post-category" target="_blank">
+                                    mysql
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/redis/" target="_blank">
-                        <span class="chip bg-color">redis</span>
+                    <a href="/tags/mysql/" target="_blank">
+                        <span class="chip bg-color">mysql</span>
                     </a>
                     
                 </div>
@@ -1000,35 +1012,34 @@ Hash
                 下一篇&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/10/26/ji-yu-duo-cpu-duo-he-jia-gou-de-redis-xing-neng-you-hua/">
+                <a href="/2021/03/13/suo-yin-shi-xiao/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="基于多CPU多核架构的redis性能优化">
+                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="索引失效">
                         
-                        <span class="card-title">基于多CPU多核架构的redis性能优化</span>
+                        <span class="card-title">索引失效</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            CPU架构
-一个 CPU 处理器中一般有多个物理核。
-每个物理核都拥有私有的一级缓存（ L1 cache）和私有的二级缓存（L2 cache）。
-不同的物理核还会共享一个共同的三级缓存
-每个物理核通常都会运行两个超线程，也叫作逻辑核。同一个
+                            函数操作对条件字段做函数操作走不了索引。
+select * from t1 where date(c) ='2019-05-21';
+优化：改成范围查询
+select * from t1 where c>='2019-05-21 00:00
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-10-26
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-03-13
                             </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/redis/" class="post-category" target="_blank">
-                                    redis
+                            <a href="/categories/mysql/" class="post-category" target="_blank">
+                                    mysql
                                 </a>
                             
                             
@@ -1038,8 +1049,8 @@ Hash
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/redis/" target="_blank">
-                        <span class="chip bg-color">redis</span>
+                    <a href="/tags/mysql/" target="_blank">
+                        <span class="chip bg-color">mysql</span>
                     </a>
                     
                 </div>
