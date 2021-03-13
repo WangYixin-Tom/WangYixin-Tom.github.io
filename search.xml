@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>索引失效</title>
+      <link href="/2021/03/13/suo-yin-shi-xiao/"/>
+      <url>/2021/03/13/suo-yin-shi-xiao/</url>
+      
+        <content type="html"><![CDATA[<h2 id="函数操作"><a href="#函数操作" class="headerlink" title="函数操作"></a>函数操作</h2><p>对条件字段做函数操作走不了索引。</p><pre class="line-numbers language-mysql"><code class="language-mysql">select * from t1 where date(c) ='2019-05-21';<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>优化：改成范围查询</p><pre class="line-numbers language-mysql"><code class="language-mysql">select * from t1 where c>='2019-05-21 00:00:00' and c<='2019-05-21 23:59:59';<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><h2 id="隐式转换"><a href="#隐式转换" class="headerlink" title="隐式转换"></a>隐式转换</h2><p>操作符与不同类型的操作对象一起使用时，就会发生类型转换以使操作兼容。</p><pre class="line-numbers language-mysql"><code class="language-mysql">select user_name,tele_phone from user_info where tele_phone =11111111111; /* tele_phone varchar */<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>实际会做函数操作：</p><pre class="line-numbers language-mysql"><code class="language-mysql">select user_name,tele_phone from user_info where cast(tele_phone as singed int) =11111111111; <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>优化：类型统一</p><pre class="line-numbers language-mysql"><code class="language-mysql">select user_name,tele_phone from user_info where tele_phone ='11111111111';<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><h2 id="模糊查询"><a href="#模糊查询" class="headerlink" title="模糊查询"></a>模糊查询</h2><p>通配符在前面</p><pre class="line-numbers language-mysql"><code class="language-mysql">select * from t1 where a like '%1111%';<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>优化:模糊查询必须包含条件字段前面的值</p><pre class="line-numbers language-mysql"><code class="language-mysql">select * from t1 where a like '1111%';<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><h2 id="范围查询"><a href="#范围查询" class="headerlink" title="范围查询"></a>范围查询</h2><p>范围查询数据量太多，需要回表，因此不走索引。</p><pre class="line-numbers language-mysql"><code class="language-mysql">select * from t1 where b>=1 and b <=2000;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>优化：降低单次查询范围，分多次查询。（实际可能速度没得快太多,建议走索引）</p><pre><code>select * from t1 where b&gt;=1 and b &lt;=1000; show profiles;+----------+------------+------------------------------------------+| Query_ID | Duration   | Query                                    |+----------+------------+------------------------------------------+|        1 | 0.00534775 | select * from t1 where b&gt;=1 and b &lt;=1000 ||        2 | 0.00605625 | select * from t1 where b&gt;=1 and b &lt;=2000 |+----------+------------+------------------------------------------+2 rows in set, 1 warning (0.00 sec)</code></pre><h2 id="计算操作"><a href="#计算操作" class="headerlink" title="计算操作"></a>计算操作</h2><p>即使是简单的计算</p><pre class="line-numbers language-mysql"><code class="language-mysql">explain select * from t1 where b-1 =1000;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>优化：将计算操作放在等号后面</p><pre class="line-numbers language-mysql"><code class="language-mysql">explain select * from t1 where b =1000 + 1;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> mysql </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> mysql </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>慢查询定位与分析</title>
       <link href="/2021/03/11/man-cha-xun-ding-wei-yu-fen-xi/"/>
       <url>/2021/03/11/man-cha-xun-ding-wei-yu-fen-xi/</url>
@@ -13,14 +38,14 @@
       
       <categories>
           
-          <category> redis </category>
+          <category> mysql </category>
           
       </categories>
       
       
         <tags>
             
-            <tag> redis </tag>
+            <tag> mysql </tag>
             
         </tags>
       
@@ -258,7 +283,7 @@
       
         <tags>
             
-            <tag> rammitmq </tag>
+            <tag> rabbitmq </tag>
             
         </tags>
       

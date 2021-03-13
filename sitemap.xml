@@ -2,9 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://wangyixin-tom.github.io/2021/03/13/suo-yin-shi-xiao/</loc>
+    
+    <lastmod>2021-03-13T03:40:28.816Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://wangyixin-tom.github.io/2020/10/26/rabbitmq-xiao-xi-ke-kao-xing/</loc>
+    
+    <lastmod>2021-03-11T14:01:44.046Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://wangyixin-tom.github.io/2021/03/11/man-cha-xun-ding-wei-yu-fen-xi/</loc>
     
-    <lastmod>2021-03-11T13:59:14.217Z</lastmod>
+    <lastmod>2021-03-11T14:00:35.122Z</lastmod>
     
   </url>
   
@@ -114,13 +128,6 @@
   </url>
   
   <url>
-    <loc>https://wangyixin-tom.github.io/2020/10/26/rabbitmq-xiao-xi-ke-kao-xing/</loc>
-    
-    <lastmod>2020-10-26T14:20:01.589Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://wangyixin-tom.github.io/2020/10/26/rabbitmq-xiao-xi-chong-fu/</loc>
     
     <lastmod>2020-10-26T14:19:10.087Z</lastmod>
@@ -219,14 +226,14 @@
   </url>
   
   <url>
-    <loc>https://wangyixin-tom.github.io/categories/index.html</loc>
+    <loc>https://wangyixin-tom.github.io/archives/index.html</loc>
     
     <lastmod>2020-04-04T11:43:42.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://wangyixin-tom.github.io/archives/index.html</loc>
+    <loc>https://wangyixin-tom.github.io/categories/index.html</loc>
     
     <lastmod>2020-04-04T11:43:42.000Z</lastmod>
     
