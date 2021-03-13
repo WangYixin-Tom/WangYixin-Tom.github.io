@@ -445,7 +445,7 @@ select * fro">
 <p>要求主链连续且自增，否则很多时候不适用。</p>
 <h2 id="非主键字段排序的分页查询"><a href="#非主键字段排序的分页查询" class="headerlink" title="非主键字段排序的分页查询"></a>非主键字段排序的分页查询</h2><p>可能不走索引</p>
 <pre class="line-numbers language-mysql"><code class="language-mysql">select * from t1 order by a limit 99000,2;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>优化：关键是让排序时返回的字段尽可能少，所以可以让排序和分页操作先查出主键，然后根据主键查到对应的记<br>录</p>
+<p>优化：关键是让排序时返回的字段尽可能少，所以可以让排序和分页操作先查出主键，然后根据主键查到对应的记录</p>
 <pre class="line-numbers language-mysql"><code class="language-mysql">select * from t1 f inner join (select id from t1 order by a limit 99000,2)g on f.id = g.id;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
             </div>
@@ -931,31 +931,29 @@ select * fro">
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
-            </div>
+                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/03/13/fen-ye-cha-xun-you-hua/">
+                <a href="/2021/03/13/join-you-hua/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="分页查询优化">
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="join优化">
                         
-                        <span class="card-title">分页查询优化</span>
+                        <span class="card-title">join优化</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            自增且连续主键的分页查询避免前n条记录的读取[mysql manual][https://dev.mysql.com/doc/refman/5.7/en/limit-optimization.html]，可以采用：
-select * fro
+                            关联查询Nested-Loop Join思想：一次一行循环：从驱动表中读取行并取到关联字段，根据关联字段在被驱动表取出满足条件的行，然后取两张表的结果合集。[manual][https://dev.mysql.com/doc/refman/
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-03-13
-                            </span>
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2021-03-13
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
@@ -968,7 +966,6 @@ select * fro
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
@@ -1198,7 +1195,7 @@ select * fro
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">20.7k</span>
+            <span class="white-color">21.2k</span>
             
 
             <br>

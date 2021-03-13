@@ -4,11 +4,36 @@
   
     
     <entry>
+      <title>join优化</title>
+      <link href="/2021/03/13/join-you-hua/"/>
+      <url>/2021/03/13/join-you-hua/</url>
+      
+        <content type="html"><![CDATA[<h2 id="关联查询"><a href="#关联查询" class="headerlink" title="关联查询"></a>关联查询</h2><h3 id="Nested-Loop-Join"><a href="#Nested-Loop-Join" class="headerlink" title="Nested-Loop Join"></a>Nested-Loop Join</h3><p>思想：一次一行循环：从驱动表中读取行并取到关联字段，根据关联字段在被驱动表取出满足条件的行，然后取两张表的结果合集。[manual][<a href="https://dev.mysql.com/doc/refman/5.7/en/nested-loop-joins.html]" target="_blank" rel="noopener">https://dev.mysql.com/doc/refman/5.7/en/nested-loop-joins.html]</a></p><p>在关联字段有索引时，才会使用 NLJ，如果没索引，就会使用 Block Nested-Loop Join。</p><p>一般 join 语句中，没有出现Using join buffer就表示使用的join 算法是 NLJ</p><h3 id="Block-Nested-Loop-Join"><a href="#Block-Nested-Loop-Join" class="headerlink" title="Block Nested-Loop Join"></a>Block Nested-Loop Join</h3><p>思想：把驱动表的数据读入到 join_buffer 中，然后扫描被驱动表，把被驱动表每一行取出来跟 join_buffer 中的数据做对比，如果满足 join 条件，则返回结果给客户端。[manual][<a href="https://dev.mysql.com/doc/refman/5.7/en/bnl-bkaoptimization" target="_blank" rel="noopener">https://dev.mysql.com/doc/refman/5.7/en/bnl-bkaoptimization</a>. html]</p><p>join_buffer减少了磁盘扫描次数。</p><h3 id="Batched-Key-Access"><a href="#Batched-Key-Access" class="headerlink" title="Batched Key Access"></a>Batched Key Access</h3><p>思想：结合NLJ和BNL，将驱动表中相关列放入 join_buffer 中，批量将关联字段的值发送到 Multi-Range Read(MRR) 接口，MRR 通过接收到的值，根据其对应的主键 ID 进行排序，然后再进行数据的读取和操作，返回结果给客户端。</p><pre class="line-numbers language-mysql"><code class="language-mysql">set optimizer_switch='mrr=on,mrr_cost_based=off,batched_key_access=on';/*开启BKA*/<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>Extra显示Using join buffer (Batched Key Access)</p><h2 id="优化关联查询"><a href="#优化关联查询" class="headerlink" title="优化关联查询"></a>优化关联查询</h2><h3 id="关联字段添加索引"><a href="#关联字段添加索引" class="headerlink" title="关联字段添加索引"></a>关联字段添加索引</h3><p>被驱动表的关联字段上添加索引，让 BNL变成 NLJ 或者 BKA ，可明显优化关联查询。</p><h3 id="小表做驱动表"><a href="#小表做驱动表" class="headerlink" title="小表做驱动表"></a>小表做驱动表</h3><p>小表必定需要扫描，那么做举动表是小表更加合适。</p><h3 id="临时表"><a href="#临时表" class="headerlink" title="临时表"></a>临时表</h3><p>因为某条关联查询只是临时查一次，如果再去添加索引可能会浪费资源。</p><p>如果不方便在关联字段上添加索引，不妨尝试创建临时表，然后在临时表中的关联字段上添加索引，然后通过临时表来做关联查询。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> mysql </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> mysql </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>分页查询优化</title>
       <link href="/2021/03/13/fen-ye-cha-xun-you-hua/"/>
       <url>/2021/03/13/fen-ye-cha-xun-you-hua/</url>
       
-        <content type="html"><![CDATA[<h2 id="自增且连续主键的分页查询"><a href="#自增且连续主键的分页查询" class="headerlink" title="自增且连续主键的分页查询"></a>自增且连续主键的分页查询</h2><p>避免前n条记录的读取[mysql manual][<a href="https://dev.mysql.com/doc/refman/5.7/en/limit-optimization.html]，可以采用：" target="_blank" rel="noopener">https://dev.mysql.com/doc/refman/5.7/en/limit-optimization.html]，可以采用：</a></p><pre class="line-numbers language-mysql"><code class="language-mysql">select * from t1 where id >99000 limit 2;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>要求主链连续且自增，否则很多时候不适用。</p><h2 id="非主键字段排序的分页查询"><a href="#非主键字段排序的分页查询" class="headerlink" title="非主键字段排序的分页查询"></a>非主键字段排序的分页查询</h2><p>可能不走索引</p><pre class="line-numbers language-mysql"><code class="language-mysql">select * from t1 order by a limit 99000,2;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>优化：关键是让排序时返回的字段尽可能少，所以可以让排序和分页操作先查出主键，然后根据主键查到对应的记<br>录</p><pre class="line-numbers language-mysql"><code class="language-mysql">select * from t1 f inner join (select id from t1 order by a limit 99000,2)g on f.id = g.id;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>]]></content>
+        <content type="html"><![CDATA[<h2 id="自增且连续主键的分页查询"><a href="#自增且连续主键的分页查询" class="headerlink" title="自增且连续主键的分页查询"></a>自增且连续主键的分页查询</h2><p>避免前n条记录的读取[mysql manual][<a href="https://dev.mysql.com/doc/refman/5.7/en/limit-optimization.html]，可以采用：" target="_blank" rel="noopener">https://dev.mysql.com/doc/refman/5.7/en/limit-optimization.html]，可以采用：</a></p><pre class="line-numbers language-mysql"><code class="language-mysql">select * from t1 where id >99000 limit 2;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>要求主链连续且自增，否则很多时候不适用。</p><h2 id="非主键字段排序的分页查询"><a href="#非主键字段排序的分页查询" class="headerlink" title="非主键字段排序的分页查询"></a>非主键字段排序的分页查询</h2><p>可能不走索引</p><pre class="line-numbers language-mysql"><code class="language-mysql">select * from t1 order by a limit 99000,2;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>优化：关键是让排序时返回的字段尽可能少，所以可以让排序和分页操作先查出主键，然后根据主键查到对应的记录</p><pre class="line-numbers language-mysql"><code class="language-mysql">select * from t1 f inner join (select id from t1 order by a limit 99000,2)g on f.id = g.id;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>]]></content>
       
       
       <categories>
