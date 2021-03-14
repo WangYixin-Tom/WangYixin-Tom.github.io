@@ -4,12 +4,11 @@
 
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="redis AOF机制, Python rabbitmq redis flask">
+    <meta name="keywords" content="事务, Python rabbitmq redis flask">
     <meta name="baidu-site-verification" content="code-KoKq36g1n2">
     <meta name="google-site-verification" content="yCy2azpds5XSuGZvis6OuA-XIGF5GuGpYRAaGfD6o48">
     <meta name="360-site-verification" content="b7c11a830ef90fd1464ad6206bb7b6e7">
-    <meta name="description" content="先写内存，在写日志。1、命令执行成功才会被记录日志。2、避免对当前命令的阻塞。
-风险1、突然宕机，Redis用作数据库的话，命令可能没有记入日志，所以就无法用日志进行恢复了。2、AOF写磁盘，当磁盘压力大，会导致写盘慢，阻塞后续操作。3、子">
+    <meta name="description" content="事务事务就是一组原子性的SQL查询，或者说一个独立的工作单元。如果数据库引擎能够成功地对数据库应用该组查询的全部语句，那么就执行该组查询。如果其中有任何一条语句因为崩溃或其他原因无法执行，那么所有的语句都不会执行。也就是说，事务内的语句，要">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -17,7 +16,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>redis AOF机制 | wangyixin-tom的博客</title>
+    <title>事务 | wangyixin-tom的博客</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -267,13 +266,13 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/20.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/3.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        redis AOF机制
+                        事务
                     </div>
                 </div>
             </div>
@@ -384,8 +383,8 @@
                     
                     <div class="article-tag">
                         
-                        <a href="/tags/redis/" target="_blank">
-                            <span class="chip bg-color">redis</span>
+                        <a href="/tags/mysql/" target="_blank">
+                            <span class="chip bg-color">mysql</span>
                         </a>
                         
                     </div>
@@ -396,8 +395,8 @@
                     <div class="post-cate">
                         <i class="fa fa-bookmark fa-fw icon-category"></i>
                         
-                        <a href="/categories/redis/" class="post-category" target="_blank">
-                            redis
+                        <a href="/categories/mysql/" class="post-category" target="_blank">
+                            mysql
                         </a>
                         
                     </div>
@@ -408,7 +407,7 @@
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-10-26
+                    2021-03-14
                 </div>
 
                 <div class="post-author info-break-policy">
@@ -422,7 +421,7 @@
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    587
+                    695
                 </div>
                 
 
@@ -440,23 +439,40 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>先写内存，在写日志。<br>1、命令执行成功才会被记录日志。<br>2、避免对当前命令的阻塞。</p>
-<h2 id="风险"><a href="#风险" class="headerlink" title="风险"></a>风险</h2><p>1、突然宕机，Redis用作数据库的话，命令可能没有记入日志，所以就无法用日志进行恢复了。<br>2、AOF写磁盘，当磁盘压力大，会导致写盘慢，阻塞后续操作。<br>3、子进程要拷贝父进程的页表，这个过程的耗时和 Redis 实例的内存大小有关。如果 Redis 实例内存大，页表就会大，fork 执行时间就长，可能阻塞主线程。<br>4、子进程和父进程共享内存。当主线程收到新写或修改的操作时，主线程会申请新的内存空间，用来保存新写或修改的数据，如果操作的是 bigkey，也就是数据量大的集合类型数据，那么，主线程会因为申请大空间而面临阻塞风险。</p>
-<h2 id="日志写回策略与选择"><a href="#日志写回策略与选择" class="headerlink" title="日志写回策略与选择"></a>日志写回策略与选择</h2><ul>
-<li>Always，同步写回：每个写命令执行完，立马同步地将日志写回磁盘；</li>
-<li>Everysec，每秒写回：每个写命令执行完，只是先把日志写到 AOF 文件的内存缓冲区，每隔一秒把缓冲区中的内容写入磁盘；</li>
-<li>No，操作系统控制的写回：每个写命令执行完，只是先把日志写到 AOF 文件的内存缓冲区，由操作系统决定何时将缓冲区内容写回磁盘。</li>
+                <h2 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h2><p>事务就是一组原子性的SQL查询，或者说一个独立的工作单元。如果数据库引擎能够成功地对数据库应用该组查询的全部语句，那么就执行该组查询。如果其中有任何一条语句因为崩溃或其他原因无法执行，那么所有的语句都不会执行。也就是说，事务内的语句，要么全部执行成功，要么全部执行失败。</p>
+<h3 id="ACID"><a href="#ACID" class="headerlink" title="ACID"></a>ACID</h3><ul>
+<li>atomicity（原子性） ：要么全执行，要么全都不执行；</li>
+<li>consistency（一致性）：在事务开始和完成时，数据都必须保持一致状态；</li>
+<li>isolation（隔离性） ：事务处理过程中的中间状态对外部是不可见的；</li>
+<li>durability（持久性） ：事务完成之后，它对于数据的修改是永久性的。</li>
 </ul>
-<p><strong>对比如下</strong>：<br><img src="https://img2020.cnblogs.com/blog/1030146/202010/1030146-20201022202948278-1557328450.jpg" alt></p>
-<p><strong>选择如下</strong>：</p>
+<p>InnoDB 采用 redo log 机制来保证事务更新的一致性和持久性。</p>
+<h2 id="Redo-log"><a href="#Redo-log" class="headerlink" title="Redo log"></a>Redo log</h2><p>Redo log称为重做日志，用于记录事务操作变化，记录的是数据被修改之后的值。</p>
+<p>Redo log 由两部分组成：</p>
 <ul>
-<li>高性能，选择 No；</li>
-<li>高可靠性，选择 Always；</li>
-<li>允许数据丢失，同时性能较好，选择 Everysec。</li>
+<li>内存中的重做日志缓冲（redo log buffer）</li>
+<li>重做日志文件（redo log file）</li>
 </ul>
-<h2 id="重写机制"><a href="#重写机制" class="headerlink" title="重写机制"></a>重写机制</h2><p>后台线程bgwriteaof读取数据库中的所有键值对，然后对每一个键值对用一条命令记录它的写入。</p>
-<p><strong>作用</strong><br>1、避免日志文件过大。<br>2、后台线程避免阻塞主线程</p>
-<p><strong>流程</strong><br>一个拷贝，两处日志<br>1、主线程 fork 出 bgrewriteaof 子进程，把主线程的内存拷贝一份给 bgrewriteaof 子进程<br>2、正在使用的 AOF 日志，因为可能记录了最新操作，Redis 会把这个操作写到它的缓冲区<br>3、拷贝数据的所有操作记录重写完成后，重写日志记录的这些最新操作也会写入新的 AOF 文件</p>
+<p>每次数据更新会先更新 redo log buffer，然后根据 innodb_flush_log_at_trx_commit 来控制 redo log buffer 更新到redo log file 的时机。innodb_flush_log_at_trx_commit 有三个值可选：</p>
+<ul>
+<li>0：事务提交时，在事务提交时，每秒触发一次 redo log buffer 写磁盘操作，并调用操作系统 fsync 刷新 IO 缓存。</li>
+<li>1：事务提交时，InnoDB 立即将缓存中的 redo 日志写到日志文件中，并调用操作系统 fsync 刷新 IO 缓存；</li>
+<li>2：事务提交时，InnoDB 立即将缓存中的 redo 日志写到日志文件中，但不是马上调用 fsync 刷新 IO 缓存，而是每秒只做一次磁盘 IO 缓存刷新操作。<br>innodb_flush_log_at_trx_commit 参数的默认值是 1，</li>
+</ul>
+<h2 id="Binlog"><a href="#Binlog" class="headerlink" title="Binlog"></a>Binlog</h2><p>二进制日志（binlog）记录了所有的 DDL（数据定义语句）和 DML（数据操纵语句）</p>
+<p>Binlog 有以下几个作用：</p>
+<ul>
+<li>恢复：数据恢复时可以使用二进制日志</li>
+<li>复制：通过传输二进制日志到从库，然后进行恢复，以实现主从同步</li>
+<li>审计：可以通过二进制日志进行审计数据的变更操作</li>
+</ul>
+<p>sync_binlog 来控制累积多少个事务后才将二进制日志 fsync 到磁盘。</p>
+<ul>
+<li>sync_binlog=0，表示每次提交事务都只write，不fsync</li>
+<li>sync_binlog=1，表示每次提交事务都会执行fsync</li>
+<li>sync_binlog=N(N&gt;1)，表示每次提交事务都write，累积N个事务后才fsync</li>
+</ul>
+<h2 id="数据库突然断电不丢数据"><a href="#数据库突然断电不丢数据" class="headerlink" title="数据库突然断电不丢数据"></a>数据库突然断电不丢数据</h2><p>只要 innodb_flush_log_at_trx_commit 和 sync_binlog 都为 1（通常称为：双一），就能确保MySQL 机器断电重启后，数据不丢失。</p>
 
             </div>
             <hr />
@@ -615,9 +631,9 @@
             <br/>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
                   property="dct:title" rel="dct:type">
-                    《redis AOF机制》
+                    《事务》
                 </span> 由
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2020/10/26/redis-aof-ji-zhi/" property="cc:attributionName"
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2021/03/14/shi-wu/" property="cc:attributionName"
                rel="cc:attributionURL">
                 wangyixin-tom
             </a> 采用
@@ -658,7 +674,7 @@
         repo: 'wangyixin-tom.github.io',
         owner: 'WangYixin-Tom',
         admin: "WangYixin-Tom",
-        id: '2020/10/26/redis-aof-ji-zhi/',
+        id: '2021/03/14/shi-wu/',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -941,48 +957,48 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2020/10/26/redis-rdb-ji-zhi/">
+                <a href="/2021/03/14/shi-wu/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="redis RBD机制">
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="事务">
                         
-                        <span class="card-title">redis RBD机制</span>
+                        <span class="card-title">事务</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            RDB 就是 Redis DataBase，内存中的全量数据在某一个时刻的状态记录。
-快照机制引入原因：AOF日志进行故障恢复的时候，需要逐一执行操作日志。如果操作日志非常多，Redis 恢复得很慢，影响到正常使用。
-bgsave命令：主进
+                            事务事务就是一组原子性的SQL查询，或者说一个独立的工作单元。如果数据库引擎能够成功地对数据库应用该组查询的全部语句，那么就执行该组查询。如果其中有任何一条语句因为崩溃或其他原因无法执行，那么所有的语句都不会执行。也就是说，事务内的语句，要
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2020-10-26
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-03-14
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/redis/" class="post-category" target="_blank">
-                                    redis
+                            <a href="/categories/mysql/" class="post-category" target="_blank">
+                                    mysql
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/redis/" target="_blank">
-                        <span class="chip bg-color">redis</span>
+                    <a href="/tags/mysql/" target="_blank">
+                        <span class="chip bg-color">mysql</span>
                     </a>
                     
                 </div>
@@ -996,33 +1012,34 @@ bgsave命令：主进
                 下一篇&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/10/26/redis-wang-luo-io-mo-xing/">
+                <a href="/2021/03/14/suo/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="redis网络IO模型">
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="锁">
                         
-                        <span class="card-title">redis网络IO模型</span>
+                        <span class="card-title">锁</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            单线程Redis 是单线程，主要是指 Redis 的网络 IO 和键值对读写是由一个线程来完成的。持久化、异步删除、集群数据同步等，其实是由额外的线程执行的。
-避免了多线程编程模式面临的共享资源的并发访问控制问题。
-多路复用机制一个线程处理
+                            锁就是协调多个用户或者客户端并发访问某一资源的机制，保证数据并发访问时的一致性和有效性。
+全局锁MySQL 全局锁会关闭所有打开的表，并使用全局读锁锁定所有表。
+FLUSH TABLES WITH READ LOCK;
+UNLOCK TAB
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-10-26
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-03-14
                             </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/redis/" class="post-category" target="_blank">
-                                    redis
+                            <a href="/categories/mysql/" class="post-category" target="_blank">
+                                    mysql
                                 </a>
                             
                             
@@ -1032,8 +1049,8 @@ bgsave命令：主进
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/redis/" target="_blank">
-                        <span class="chip bg-color">redis</span>
+                    <a href="/tags/mysql/" target="_blank">
+                        <span class="chip bg-color">mysql</span>
                     </a>
                     
                 </div>

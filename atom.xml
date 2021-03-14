@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://wangyixin-tom.github.io/"/>
-  <updated>2021-03-14T11:02:40.313Z</updated>
+  <updated>2021-03-14T12:07:02.106Z</updated>
   <id>https://wangyixin-tom.github.io/</id>
   
   <author>
@@ -17,11 +17,37 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>事务</title>
+    <link href="https://wangyixin-tom.github.io/2021/03/14/shi-wu/"/>
+    <id>https://wangyixin-tom.github.io/2021/03/14/shi-wu/</id>
+    <published>2021-03-14T11:57:07.000Z</published>
+    <updated>2021-03-14T12:07:02.106Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;事务&quot;&gt;&lt;a href=&quot;#事务&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="mysql" scheme="https://wangyixin-tom.github.io/categories/mysql/"/>
+    
+    
+      <category term="mysql" scheme="https://wangyixin-tom.github.io/tags/mysql/"/>
+    
+  </entry>
+  
+  <entry>
     <title>锁</title>
     <link href="https://wangyixin-tom.github.io/2021/03/14/suo/"/>
     <id>https://wangyixin-tom.github.io/2021/03/14/suo/</id>
     <published>2021-03-14T03:14:09.000Z</published>
-    <updated>2021-03-14T11:02:40.313Z</updated>
+    <updated>2021-03-14T11:56:37.345Z</updated>
     
     <summary type="html">
     
@@ -48,7 +74,7 @@
     <link href="https://wangyixin-tom.github.io/2021/03/13/suo-yin/"/>
     <id>https://wangyixin-tom.github.io/2021/03/13/suo-yin/</id>
     <published>2021-03-13T14:06:54.000Z</published>
-    <updated>2021-03-14T03:06:45.835Z</updated>
+    <updated>2021-03-14T11:56:33.145Z</updated>
     
     <summary type="html">
     
@@ -492,32 +518,6 @@
         
         
           &lt;h2 id=&quot;消息丢失场景&quot;&gt;&lt;a href=&quot;#消息丢失场景&quot; class=&quot;headerlink&quot; title=&quot;消息丢失场景&quot;&gt;&lt;/a&gt;消息丢失场景&lt;/h2&gt;&lt;h3 id=&quot;消息从生产者写入到消息队列的过程&quot;&gt;&lt;a href=&quot;#消息从生产者写入到消息队列的过程&quot;
-        
-      
-    
-    </summary>
-    
-      <category term="rabbitmq" scheme="https://wangyixin-tom.github.io/categories/rabbitmq/"/>
-    
-    
-      <category term="rabbitmq" scheme="https://wangyixin-tom.github.io/tags/rabbitmq/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>rabbitmq消息重复</title>
-    <link href="https://wangyixin-tom.github.io/2020/10/26/rabbitmq-xiao-xi-chong-fu/"/>
-    <id>https://wangyixin-tom.github.io/2020/10/26/rabbitmq-xiao-xi-chong-fu/</id>
-    <published>2020-10-26T14:18:39.000Z</published>
-    <updated>2020-10-26T14:19:10.087Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h2 id=&quot;场景&quot;&gt;&lt;a href=&quot;#场景&quot; class=&quot;headerlink&quot;
         
       
     
