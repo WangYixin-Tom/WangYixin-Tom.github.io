@@ -293,11 +293,59 @@ $('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
+                    <a href="/2020/10/26/redis-aof-ji-zhi/" target="_blank">
+                        <div class="card-image">
+                            
+                            
+                            <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="redis AOF机制">
+                            
+                            <span class="card-title">redis AOF机制</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                            先写内存，在写日志。1、命令执行成功才会被记录日志。2、避免对当前命令的阻塞。
+风险1、突然宕机，Redis用作数据库的话，命令可能没有记入日志，所以就无法用日志进行恢复了。2、AOF写磁盘，当磁盘压力大，会导致写盘慢，阻塞后续操作。3、子
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-10-26
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fa fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/redis/" class="post-category" target="_blank">
+                                    redis
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/redis/" target="_blank">
+                            <span class="chip bg-color">redis</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
                     <a href="/2020/10/26/redis-wang-luo-io-mo-xing/" target="_blank">
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="redis网络IO模型">
+                            <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="redis网络IO模型">
                             
                             <span class="card-title">redis网络IO模型</span>
                         </div>
@@ -346,7 +394,7 @@ $('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="redis数据结构">
+                            <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="redis数据结构">
                             
                             <span class="card-title">redis数据结构</span>
                         </div>
@@ -411,7 +459,7 @@ Hash
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="redis变慢以及优化方法">
+                            <img src="/medias/featureimages/28.jpg" class="responsive-img" alt="redis变慢以及优化方法">
                             
                             <span class="card-title">redis变慢以及优化方法</span>
                         </div>
@@ -459,7 +507,7 @@ Hash
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="基于多CPU多核架构的redis性能优化">
+                            <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="基于多CPU多核架构的redis性能优化">
                             
                             <span class="card-title">基于多CPU多核架构的redis性能优化</span>
                         </div>
@@ -510,7 +558,7 @@ Hash
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="redis阻塞及解决办法">
+                            <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="redis阻塞及解决办法">
                             
                             <span class="card-title">redis阻塞及解决办法</span>
                         </div>
@@ -561,7 +609,7 @@ Hash
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="redis切片集群">
+                            <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="redis切片集群">
                             
                             <span class="card-title">redis切片集群</span>
                         </div>
@@ -610,7 +658,7 @@ Hash
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="redis哨兵机制">
+                            <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="redis哨兵机制">
                             
                             <span class="card-title">redis哨兵机制</span>
                         </div>
@@ -664,7 +712,7 @@ Hash
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="redis主从同步">
+                            <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="redis主从同步">
                             
                             <span class="card-title">redis主从同步</span>
                         </div>
@@ -714,7 +762,7 @@ Hash
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="十大经典排序算法整理汇总（附代码）">
+                            <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="十大经典排序算法整理汇总（附代码）">
                             
                             <span class="card-title">十大经典排序算法整理汇总（附代码）</span>
                         </div>
@@ -796,7 +844,7 @@ Hash
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">21.5k</span>
+            <span class="white-color">22.9k</span>
             
 
             <br>
