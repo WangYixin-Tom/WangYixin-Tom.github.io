@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>锁</title>
+      <link href="/2021/03/14/suo/"/>
+      <url>/2021/03/14/suo/</url>
+      
+        <content type="html"><![CDATA[<p>锁就是协调多个用户或者客户端并发访问某一资源的机制，保证数据并发访问时的一致性和有效性。</p><h2 id="全局锁"><a href="#全局锁" class="headerlink" title="全局锁"></a>全局锁</h2><p>MySQL 全局锁会关闭所有打开的表，并使用全局读锁锁定所有表。</p><pre class="line-numbers language-mysql"><code class="language-mysql">FLUSH TABLES WITH READ LOCK;UNLOCK TABLES;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><p>当执行 FTWRL 后，所有的表都变成只读状态，数据更新或者字段更新将会被阻塞。</p><p>场景</p><p>一般用在整个库（包含非事务引擎表）做备份（mysqldump 或者 xtrabackup）时。</p><p>mysqldump 包含一个参数 –single-transaction，可以在一个事务中创建一致性快照，然后进行所有表的备份。因此增加这个参数的情况下，备份期间可以进行数据修改。但是需要所有表都是事务引擎表。所以建议使用InnoDB 存储引擎。</p><h2 id="表级锁"><a href="#表级锁" class="headerlink" title="表级锁"></a>表级锁</h2><p>表级锁有两种：表锁和元数据锁。</p><h3 id="表锁"><a href="#表锁" class="headerlink" title="表锁"></a>表锁</h3><p>场景</p><ol><li>事务需要更新某张大表的大部分或全部数据。如果使用默认的行锁，不仅事务执行效率低，而且可能造成其它事务长时间锁等待和锁冲突，这种情况下可以考虑使用表锁来提高事务执行速度；</li><li>事务涉及多个表，比较复杂，可能会引起死锁，导致大量事务回滚，可以考虑表锁避免死锁。</li></ol><pre class="line-numbers language-mysql"><code class="language-mysql">lock tables t14 read;lock tables t14 write;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><p>表读锁本线程和其它线程可以读，本线程写会报错，其它线程写会等待。</p><h3 id="元数据锁"><a href="#元数据锁" class="headerlink" title="元数据锁"></a>元数据锁</h3><p>MDL 锁的出现解决了同一张表上事务和 DDL 并行执行时可能导致数据不一致的问题。</p><p>对开发而言尽量避免慢查询，事务要及时提交，避免大事务</p><p>对于 DBA 来说，也应该尽量避免在业务高峰执行 DDL 操作。</p><h2 id="行锁"><a href="#行锁" class="headerlink" title="行锁"></a>行锁</h2><p>InnoDB后来居上：</p><ul><li>InnoDB 支持事务：适合在并发条件下要求数据一致的场景。</li><li>InnoDB 支持行锁：有效降低由于删除或者更新导致的锁定。</li></ul><h3 id="两阶段锁"><a href="#两阶段锁" class="headerlink" title="两阶段锁"></a>两阶段锁</h3><p>锁操作分为两个阶段，加锁阶段和解锁阶段，并且保证加锁阶段和解锁阶段不相交。</p><h3 id="行锁-1"><a href="#行锁-1" class="headerlink" title="行锁"></a>行锁</h3><p>两种类型的行锁：</p><ul><li>共享锁（S）：允许一个事务去读一行，阻止其它事务获得相同数据集的排他锁；</li><li>排他锁（X）：允许获得排他锁的事务更新数据，阻止其它事务取得相同数据集的共享读锁和排他写锁。</li></ul><p>共享锁（S）：select <em> from table_name where … lock in share mode;<br>排他锁（X）：select </em> from table_name where … for update(当前读)。</p><h3 id="行锁算法"><a href="#行锁算法" class="headerlink" title="行锁算法"></a>行锁算法</h3><p>Record Lock：单个记录上的索引加锁。<br>Gap Lock：间隙锁，对索引项之间的间隙加锁，但不包括记录本身。<br>Next-Key Lock：Gap Lock + Record Lock，锁定一个范围，并且锁定记录本身。</p><h3 id="事务隔离级别"><a href="#事务隔离级别" class="headerlink" title="事务隔离级别"></a>事务隔离级别</h3><p>Read uncommitted（读未提交）: 在该隔离级别，所有事务都可以看到其它未提交事务的执行结果。可能会出现<br>脏读。<br><strong>Read Committed（读已提交，简称： RC）</strong>：一个事务只能看见已经提交事务所做的改变。因为同一事务的其它<br>实例在该实例处理期间可能会有新的 commit，<strong>所以可能出现幻读</strong>。<br><strong>Repeatable Read（可重复读，简称：RR）</strong>：这是 MySQL 的默认事务隔离级别，它确保同一事务的多个实例在<br>并发读取数据时，会看到同样的数据行。消除了脏读、不可重复读，<strong>默认也不会出现幻读</strong>。<br><strong>Serializable（串行）</strong>：这是最高的隔离级别，它通过强制事务排序，使之不可能相互冲突，从而解决幻读问题。</p><p>脏读：读取未提交的事务。<br>幻读：一个事务按相同的查询条件重新读取以前检索过的数据，却发现其他事务插入了满足其查询条件的新数据。</p><h4 id="非索引字段查询（RC）"><a href="#非索引字段查询（RC）" class="headerlink" title="非索引字段查询（RC）"></a>非索引字段查询（RC）</h4><p>如果一个条件无法通过索引快速过滤，那么存储引擎层面就会将所有记录加锁后返回，然后由 server 层进行过滤。</p><h4 id="唯一索引查询（RC）"><a href="#唯一索引查询（RC）" class="headerlink" title="唯一索引查询（RC）"></a>唯一索引查询（RC）</h4><p>如果查询的条件是唯一索引，那么 SQL 需要在满足条件的唯一索引上加锁，并且会在对应的聚簇索引上加锁。</p><h4 id="非唯一索引查询（RC）"><a href="#非唯一索引查询（RC）" class="headerlink" title="非唯一索引查询（RC）"></a>非唯一索引查询（RC）</h4><p>如果查询的条件是非唯一索引，那么 SQL 需要在满足条件的非唯一索引上都加上锁，并且会在它们对应的聚簇索引上加锁。</p><h4 id="非索引字段查询（RR）"><a href="#非索引字段查询（RR）" class="headerlink" title="非索引字段查询（RR）"></a>非索引字段查询（RR）</h4><p>RR 隔离级别下，非索引字段做条件的当前读不但会把每条记录都加上 X 锁，还会把每个 GAP 加上GAP 锁。（条件字段加索引的重要性！）</p><h4 id="唯一索引查询（RR）"><a href="#唯一索引查询（RR）" class="headerlink" title="唯一索引查询（RR）"></a>唯一索引查询（RR）</h4><p>如果能确保索引字段唯一，那其实一个等值查询，最多就返回一条记录，而且相同索引记录的值，一定不会再新增，因此不会出现 GAP 锁。</p><p>以唯一索引为条件的当前读，不会有 GAP 锁。</p><h4 id="非唯一索引查询-RR"><a href="#非唯一索引查询-RR" class="headerlink" title="非唯一索引查询(RR)"></a>非唯一索引查询(RR)</h4><p>新增GAP锁+对应数据的X锁</p><h2 id="死锁"><a href="#死锁" class="headerlink" title="死锁"></a>死锁</h2><p>死锁是指两个或者多个事务在同一资源上相互占用，并请求锁定对方占用的资源，从而导致恶性循环的现象。</p><p><strong>解决方法</strong></p><ol><li>检测到死锁的循环依赖，立即返回一个错误，将参数 innodb_deadlock_detect设置为 on 表示开启这个逻辑；</li><li>等查询的时间达到锁等待超时的设定后放弃锁请求。这个超时时间由 innodb_lock_wait_timeout 来控制。默认是50 秒。</li></ol><p>方案1有额外的CPU检测开销，确保无死锁时建议关闭检测。</p><p><strong>降低死锁概率</strong></p><ol><li>更新 SQL 的 where 条件尽量用索引；</li><li>基于 primary 或 unique key 更新数据；</li><li>减少范围更新，尤其非主键、非唯一索引上的范围更新；</li><li>加锁顺序一致，尽可能一次性锁定所有需要行；</li><li>将 RR 隔离级别调整为 RC 隔离级别。</li></ol><p><strong>分析死锁</strong></p><pre class="line-numbers language-mysql"><code class="language-mysql">show engine innodb status\G; //查看最后一次死锁信息<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>另外设置 innodb_print_all_deadlocks = on 可以在 err log 中记录全部死锁信息。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> mysql </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> mysql </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>索引</title>
       <link href="/2021/03/13/suo-yin/"/>
       <url>/2021/03/13/suo-yin/</url>

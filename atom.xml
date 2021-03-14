@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://wangyixin-tom.github.io/"/>
-  <updated>2021-03-14T03:06:45.835Z</updated>
+  <updated>2021-03-14T11:02:40.313Z</updated>
   <id>https://wangyixin-tom.github.io/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>锁</title>
+    <link href="https://wangyixin-tom.github.io/2021/03/14/suo/"/>
+    <id>https://wangyixin-tom.github.io/2021/03/14/suo/</id>
+    <published>2021-03-14T03:14:09.000Z</published>
+    <updated>2021-03-14T11:02:40.313Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;锁就是协调多个用户或者客户端并发访问某一资源的机制，保证数据并发访问时的一致性和有效性。&lt;/p&gt;
+&lt;h2 id=&quot;全局锁&quot;&gt;&lt;a href=&quot;#全局锁&quot; class=&quot;headerlink&quot; title=&quot;全局锁&quot;&gt;&lt;/a&gt;全局锁&lt;/h2&gt;&lt;p&gt;MySQL
+        
+      
+    
+    </summary>
+    
+      <category term="mysql" scheme="https://wangyixin-tom.github.io/categories/mysql/"/>
+    
+    
+      <category term="mysql" scheme="https://wangyixin-tom.github.io/tags/mysql/"/>
+    
+  </entry>
   
   <entry>
     <title>索引</title>
@@ -491,33 +518,6 @@
         
         
           &lt;h2 id=&quot;场景&quot;&gt;&lt;a href=&quot;#场景&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-      <category term="rabbitmq" scheme="https://wangyixin-tom.github.io/categories/rabbitmq/"/>
-    
-    
-      <category term="rabbitmq" scheme="https://wangyixin-tom.github.io/tags/rabbitmq/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>rabbitmq集群</title>
-    <link href="https://wangyixin-tom.github.io/2020/10/26/rabbitmq-ji-qun/"/>
-    <id>https://wangyixin-tom.github.io/2020/10/26/rabbitmq-ji-qun/</id>
-    <published>2020-10-26T14:17:41.000Z</published>
-    <updated>2020-10-26T14:18:16.538Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h2 id=&quot;集群概述&quot;&gt;&lt;a href=&quot;#集群概述&quot; class=&quot;headerlink&quot; title=&quot;集群概述&quot;&gt;&lt;/a&gt;集群概述&lt;/h2&gt;&lt;hr&gt;
-&lt;h3 id=&quot;集群节点类型&quot;&gt;&lt;a href=&quot;#集群节点类型&quot; class=&quot;headerlink&quot;
         
       
     
