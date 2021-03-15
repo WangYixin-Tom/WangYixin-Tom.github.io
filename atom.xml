@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://wangyixin-tom.github.io/"/>
-  <updated>2021-03-14T12:07:02.106Z</updated>
+  <updated>2021-03-15T11:52:19.892Z</updated>
   <id>https://wangyixin-tom.github.io/</id>
   
   <author>
@@ -17,11 +17,89 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>分库分表</title>
+    <link href="https://wangyixin-tom.github.io/2021/03/15/fen-ku-fen-biao/"/>
+    <id>https://wangyixin-tom.github.io/2021/03/15/fen-ku-fen-biao/</id>
+    <published>2021-03-15T11:41:26.000Z</published>
+    <updated>2021-03-15T11:52:19.892Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;垂直拆分&quot;&gt;&lt;a href=&quot;#垂直拆分&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="mysql" scheme="https://wangyixin-tom.github.io/categories/mysql/"/>
+    
+    
+      <category term="mysql" scheme="https://wangyixin-tom.github.io/tags/mysql/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>读写分离</title>
+    <link href="https://wangyixin-tom.github.io/2021/03/15/du-xie-fen-chi/"/>
+    <id>https://wangyixin-tom.github.io/2021/03/15/du-xie-fen-chi/</id>
+    <published>2021-03-15T11:27:16.000Z</published>
+    <updated>2021-03-15T11:39:57.471Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;主从复制&quot;&gt;&lt;a href=&quot;#主从复制&quot; class=&quot;headerlink&quot; title=&quot;主从复制&quot;&gt;&lt;/a&gt;主从复制&lt;/h2&gt;&lt;h3 id=&quot;异步复制&quot;&gt;&lt;a href=&quot;#异步复制&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="mysql" scheme="https://wangyixin-tom.github.io/categories/mysql/"/>
+    
+    
+      <category term="mysql" scheme="https://wangyixin-tom.github.io/tags/mysql/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>MVCC</title>
+    <link href="https://wangyixin-tom.github.io/2021/03/14/mvcc/"/>
+    <id>https://wangyixin-tom.github.io/2021/03/14/mvcc/</id>
+    <published>2021-03-14T12:14:27.000Z</published>
+    <updated>2021-03-14T13:31:44.194Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;MVCC&quot;&gt;&lt;a href=&quot;#MVCC&quot; class=&quot;headerlink&quot; title=&quot;MVCC&quot;&gt;&lt;/a&gt;MVCC&lt;/h2&gt;&lt;p&gt;多版本并发控制。MVCC
+        
+      
+    
+    </summary>
+    
+      <category term="mysql" scheme="https://wangyixin-tom.github.io/categories/mysql/"/>
+    
+    
+      <category term="mysql" scheme="https://wangyixin-tom.github.io/tags/mysql/"/>
+    
+  </entry>
+  
+  <entry>
     <title>事务</title>
     <link href="https://wangyixin-tom.github.io/2021/03/14/shi-wu/"/>
     <id>https://wangyixin-tom.github.io/2021/03/14/shi-wu/</id>
     <published>2021-03-14T11:57:07.000Z</published>
-    <updated>2021-03-14T12:07:02.106Z</updated>
+    <updated>2021-03-14T14:19:20.281Z</updated>
     
     <summary type="html">
     
@@ -47,7 +125,7 @@
     <link href="https://wangyixin-tom.github.io/2021/03/14/suo/"/>
     <id>https://wangyixin-tom.github.io/2021/03/14/suo/</id>
     <published>2021-03-14T03:14:09.000Z</published>
-    <updated>2021-03-14T11:56:37.345Z</updated>
+    <updated>2021-03-14T14:20:33.745Z</updated>
     
     <summary type="html">
     
@@ -74,7 +152,7 @@
     <link href="https://wangyixin-tom.github.io/2021/03/13/suo-yin/"/>
     <id>https://wangyixin-tom.github.io/2021/03/13/suo-yin/</id>
     <published>2021-03-13T14:06:54.000Z</published>
-    <updated>2021-03-14T11:56:33.145Z</updated>
+    <updated>2021-03-15T11:26:13.677Z</updated>
     
     <summary type="html">
     
@@ -447,86 +525,6 @@
     
     
       <category term="redis" scheme="https://wangyixin-tom.github.io/tags/redis/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>redis分布式锁</title>
-    <link href="https://wangyixin-tom.github.io/2020/10/29/redis-fen-bu-shi-suo/"/>
-    <id>https://wangyixin-tom.github.io/2020/10/29/redis-fen-bu-shi-suo/</id>
-    <published>2020-10-29T15:52:36.000Z</published>
-    <updated>2020-11-01T05:25:04.898Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;为了保证并发访问的正确性，Redis 提供了两种方法，分别是加锁和原子操作。&lt;/p&gt;
-&lt;h2 id=&quot;redis原子操作&quot;&gt;&lt;a href=&quot;#redis原子操作&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-      <category term="redis" scheme="https://wangyixin-tom.github.io/categories/redis/"/>
-    
-    
-      <category term="redis" scheme="https://wangyixin-tom.github.io/tags/redis/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>redis缓存</title>
-    <link href="https://wangyixin-tom.github.io/2020/10/27/redis-huan-cun/"/>
-    <id>https://wangyixin-tom.github.io/2020/10/27/redis-huan-cun/</id>
-    <published>2020-10-27T12:04:59.000Z</published>
-    <updated>2021-03-08T14:04:39.698Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h2 id=&quot;redis缓存&quot;&gt;&lt;a href=&quot;#redis缓存&quot; class=&quot;headerlink&quot; title=&quot;redis缓存&quot;&gt;&lt;/a&gt;redis缓存&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;应用读取数据时，需要先读取
-        
-      
-    
-    </summary>
-    
-      <category term="redis" scheme="https://wangyixin-tom.github.io/categories/redis/"/>
-    
-    
-      <category term="redis" scheme="https://wangyixin-tom.github.io/tags/redis/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>rabbitmq消息可靠性</title>
-    <link href="https://wangyixin-tom.github.io/2020/10/26/rabbitmq-xiao-xi-ke-kao-xing/"/>
-    <id>https://wangyixin-tom.github.io/2020/10/26/rabbitmq-xiao-xi-ke-kao-xing/</id>
-    <published>2020-10-26T14:19:29.000Z</published>
-    <updated>2021-03-11T14:01:44.046Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h2 id=&quot;消息丢失场景&quot;&gt;&lt;a href=&quot;#消息丢失场景&quot; class=&quot;headerlink&quot; title=&quot;消息丢失场景&quot;&gt;&lt;/a&gt;消息丢失场景&lt;/h2&gt;&lt;h3 id=&quot;消息从生产者写入到消息队列的过程&quot;&gt;&lt;a href=&quot;#消息从生产者写入到消息队列的过程&quot;
-        
-      
-    
-    </summary>
-    
-      <category term="rabbitmq" scheme="https://wangyixin-tom.github.io/categories/rabbitmq/"/>
-    
-    
-      <category term="rabbitmq" scheme="https://wangyixin-tom.github.io/tags/rabbitmq/"/>
     
   </entry>
   

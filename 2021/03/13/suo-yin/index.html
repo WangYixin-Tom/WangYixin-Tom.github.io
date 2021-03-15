@@ -268,7 +268,7 @@ B+ 树
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/17.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/18.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -423,7 +423,7 @@ B+ 树
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.4k
+                    1.5k
                 </div>
                 
 
@@ -502,6 +502,7 @@ select id from t11 where a=1 and b=1 and c=1;
 /*不能使用联合索引*/
 select * from t11 where b=1; //联合索引最左匹配
 select * from t11 order by b;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="主键"><a href="#主键" class="headerlink" title="主键"></a>主键</h3><p>如果设置主键是自增，那么每一次都是在聚集索引的最后增加，当一页写满，就会自动开辟一个新页，不会有聚集索引树分裂这一步，效率会比随机主键高很多。这也是很多建表规范要求主键自增的原因。</p>
 <h3 id="优化器索引选择"><a href="#优化器索引选择" class="headerlink" title="优化器索引选择"></a>优化器索引选择</h3><p><code>show index</code>可以看到索引的Cardinality，即索引中不重复记录数量的预估值。</p>
 <p>Cardinality 统计信息的更新时机：</p>
 <ul>
@@ -1012,7 +1013,7 @@ select * from t11 order by b;<span aria-hidden="true" class="line-numbers-rows">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="锁">
+                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="锁">
                         
                         <span class="card-title">锁</span>
                     </div>
@@ -1064,7 +1065,7 @@ UNLOCK TAB
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="count优化">
+                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="count优化">
                         
                         <span class="card-title">count优化</span>
                     </div>
@@ -1271,7 +1272,7 @@ MyISAM 引擎和 InnoDB 引
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">25.1k</span>
+            <span class="white-color">26.3k</span>
             
 
             <br>

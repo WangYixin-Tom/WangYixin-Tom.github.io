@@ -266,7 +266,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/3.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/4.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -421,14 +421,14 @@
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    695
+                    955
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    2 分
+                    3 分
                 </div>
                 
                 
@@ -473,6 +473,19 @@
 <li>sync_binlog=N(N&gt;1)，表示每次提交事务都write，累积N个事务后才fsync</li>
 </ul>
 <h2 id="数据库突然断电不丢数据"><a href="#数据库突然断电不丢数据" class="headerlink" title="数据库突然断电不丢数据"></a>数据库突然断电不丢数据</h2><p>只要 innodb_flush_log_at_trx_commit 和 sync_binlog 都为 1（通常称为：双一），就能确保MySQL 机器断电重启后，数据不丢失。</p>
+<h2 id="事务建议"><a href="#事务建议" class="headerlink" title="事务建议"></a>事务建议</h2><ul>
+<li>循环写入的情况，如果循环次数不是太多，建议在循环前开启一个事务，循环结束后统一提交。</li>
+<li>优化事务里的语句顺序，减少锁时间。</li>
+<li>关注不同事务访问资源的顺序，避免死锁。</li>
+<li>创建事务之前，关注事务隔离级别。</li>
+<li>不在事务中混合使用存储引擎（MyISAM无法回滚）</li>
+</ul>
+<h2 id="分布式事务"><a href="#分布式事务" class="headerlink" title="分布式事务"></a>分布式事务</h2><p>分布式事务使用两阶段提交协议：<br>第一阶段：所有分支事务都开始准备，告诉事务管理器自己已经准备好了；<br>第二阶段：确定是 rollback 还是 commit，如果有一个节点不能提交，则所有节点都要回滚。</p>
+<h3 id="MySQL-自带的分布式事务"><a href="#MySQL-自带的分布式事务" class="headerlink" title="MySQL 自带的分布式事务"></a>MySQL 自带的分布式事务</h3><pre class="line-numbers language-mysql"><code class="language-mysql">xa start 'a','a_1'; //启动分支事务
+xa end 'a','a_1'; //结束分支事务
+xa prepare 'a','a_1'; //进入准备状态
+xa commit 'a','a_1';  //提交分支事务
+xa recover;  //返回当前数据库中处于 prepare 状态的分支事务的详细信息<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
             </div>
             <hr />
@@ -957,30 +970,31 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
-            </div>
+                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/03/14/shi-wu/">
+                <a href="/2021/03/14/mvcc/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="事务">
+                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="MVCC">
                         
-                        <span class="card-title">事务</span>
+                        <span class="card-title">MVCC</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            事务事务就是一组原子性的SQL查询，或者说一个独立的工作单元。如果数据库引擎能够成功地对数据库应用该组查询的全部语句，那么就执行该组查询。如果其中有任何一条语句因为崩溃或其他原因无法执行，那么所有的语句都不会执行。也就是说，事务内的语句，要
+                            MVCC多版本并发控制。MVCC 的实现，是通过保存数据在某个时间点的快照来实现的。
+不管需要执行多长时间，每个事务看到的数据都是一致的。根据事务开始的时间不同，每个事务对同一张表，同一时刻看到的数据可能是不一样的。
+MCCC 只在 RC 
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-03-14
-                            </span>
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2021-03-14
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
@@ -993,7 +1007,6 @@
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
@@ -1016,7 +1029,7 @@
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="锁">
+                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="锁">
                         
                         <span class="card-title">锁</span>
                     </div>
@@ -1224,7 +1237,7 @@ UNLOCK TAB
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">25.1k</span>
+            <span class="white-color">26.3k</span>
             
 
             <br>

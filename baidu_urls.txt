@@ -1,3 +1,6 @@
+https://wangyixin-tom.github.io/2021/03/15/fen-ku-fen-biao/
+https://wangyixin-tom.github.io/2021/03/15/du-xie-fen-chi/
+https://wangyixin-tom.github.io/2021/03/14/mvcc/
 https://wangyixin-tom.github.io/2021/03/14/shi-wu/
 https://wangyixin-tom.github.io/2021/03/14/suo/
 https://wangyixin-tom.github.io/2021/03/13/suo-yin/
