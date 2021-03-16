@@ -269,7 +269,7 @@ UNLOCK TAB">
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/11.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -424,14 +424,14 @@ UNLOCK TAB">
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.6k
+                    2.2k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    5 分
+                    7 分
                 </div>
                 
                 
@@ -484,7 +484,16 @@ lock tables t14 write;<span aria-hidden="true" class="line-numbers-rows"><span><
 <h4 id="唯一索引查询（RR）"><a href="#唯一索引查询（RR）" class="headerlink" title="唯一索引查询（RR）"></a>唯一索引查询（RR）</h4><p>如果能确保索引字段唯一，那其实一个等值查询，最多就返回一条记录，而且相同索引记录的值，一定不会再新增，因此不会出现 GAP 锁。</p>
 <p>以唯一索引为条件的当前读，不会有 GAP 锁。</p>
 <h4 id="非唯一索引查询-RR"><a href="#非唯一索引查询-RR" class="headerlink" title="非唯一索引查询(RR)"></a>非唯一索引查询(RR)</h4><p>新增GAP锁+对应数据的X锁</p>
+<h2 id="悲观锁"><a href="#悲观锁" class="headerlink" title="悲观锁"></a>悲观锁</h2><p>当我们要对数据库中的一条数据进行修改的时候，为了避免同时被其他人修改，最好的办法就是直接对该数据进行加锁以防止并发。这种借助数据库锁机制在修改数据之前锁定，再修改的方式被称为悲观并发控制</p>
+<p>优点：利用锁机制保证了数据的顺序执行，不需要自己控制，加锁、释放完全由数据库代劳<br>缺点：一旦一个事务获取了锁，其他的事务必须等待，势必会影响系统的吞吐量</p>
+<p>悲观锁的适用场景：写入操作比较频繁的场景</p>
+<h2 id="乐观锁"><a href="#乐观锁" class="headerlink" title="乐观锁"></a>乐观锁</h2><p>乐观锁是相对悲观锁而言的，乐观锁假设数据一般情况下不会造成冲突，所以在数据进行提交更新的时候，才会正式对数据的冲突与否进行检测。</p>
+<p>优点：由于不需要加锁，其他的事务可以同时操作数据，相比于悲观锁，系统吞吐量会提高<br>缺点：锁机制，如果并发度较高，失败重试的情况会成为系统瓶颈</p>
+<p>乐观锁的适用场景：读取操作比较频繁的场景</p>
 <h2 id="死锁"><a href="#死锁" class="headerlink" title="死锁"></a>死锁</h2><p>死锁是指两个或者多个事务在同一资源上相互占用，并请求锁定对方占用的资源，从而导致恶性循环的现象。</p>
+<p><strong>“唯一键”引起的死锁</strong></p>
+<p>会话 A获取了排它锁开始插入，之后的事务（“会话 B”，“会话 C”）再去执行时会出现 Duplicate Key（重复的值）问题，此时它们都会去申请该行记录的共享锁。如果这个时候，占据排它锁的事务出现回滚（“会话 A”），另外的两个事务会同时去申请排它锁。但是，在数据库中，排它锁和共享锁是互斥资源，也就导致了死锁。</p>
+<p>之所以在出现 Duplicate Key 时会加上共享锁，是因为冲突检测是读操作，所以，冲突之后的轮询仍然会有共享限制。</p>
 <p><strong>解决方法</strong></p>
 <ol>
 <li>检测到死锁的循环依赖，立即返回一个错误，将参数 innodb_deadlock_detect设置为 on 表示开启这个逻辑；</li>
@@ -500,8 +509,12 @@ lock tables t14 write;<span aria-hidden="true" class="line-numbers-rows"><span><
 <li>将 RR 隔离级别调整为 RC 隔离级别。</li>
 </ol>
 <p><strong>分析死锁</strong></p>
-<pre class="line-numbers language-mysql"><code class="language-mysql">show engine innodb status\G; //查看最后一次死锁信息<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-mysql"><code class="language-mysql">SHOW FULL PROCESSLIST; //State字段，waiting for ... lock
+show engine innodb status\G; //查看最后一次死锁信息<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <p>另外设置 innodb_print_all_deadlocks = on 可以在 err log 中记录全部死锁信息。</p>
+<p>INNODB_TRX 表记录了当前处于运行状态的所有事务，包含非常详细的信息，例如：事务是否正在等待一个锁、事务是否正在执行等等。</p>
+<p>INNODB_LOCKS 记录的是 InnoDB 事务去请求但没有获取到的锁信息和事务阻塞其他事务的锁信息。</p>
+<p>INNODB_LOCK_WAITS记录了事务的锁等待状态。</p>
 
             </div>
             <hr />
@@ -994,7 +1007,7 @@ lock tables t14 write;<span aria-hidden="true" class="line-numbers-rows"><span><
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="事务">
+                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="事务">
                         
                         <span class="card-title">事务</span>
                     </div>
@@ -1043,7 +1056,7 @@ lock tables t14 write;<span aria-hidden="true" class="line-numbers-rows"><span><
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="索引">
+                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="索引">
                         
                         <span class="card-title">索引</span>
                     </div>
@@ -1250,7 +1263,7 @@ B+ 树
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">26.3k</span>
+            <span class="white-color">27.5k</span>
             
 
             <br>

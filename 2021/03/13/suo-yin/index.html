@@ -268,7 +268,7 @@ B+ 树
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/18.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/19.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -423,7 +423,7 @@ B+ 树
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.5k
+                    1.6k
                 </div>
                 
 
@@ -448,7 +448,8 @@ B+ 树
 <li>非叶子节点上只存储 key 的信息，这样相对 B 树，可以增加每一页中存储 key 的数量。</li>
 <li>B 树是纵向扩展，最终变成一个“瘦高个”，而 B+ 树是横向扩展的，最终会变成一个“矮胖子”</li>
 </ul>
-<h2 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h2><h3 id="聚集索引"><a href="#聚集索引" class="headerlink" title="聚集索引"></a>聚集索引</h3><p>InnoDB 的数据是按照主键顺序存放的，而聚集索引就是按照每张表的主键构造一颗 B+ 树，它的叶子节点存放的是整行数据。</p>
+<h2 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h2><h3 id="聚集索引"><a href="#聚集索引" class="headerlink" title="聚集索引"></a>聚集索引</h3><p>实际上并不是一种索引类型，而是一种存储数据的方式，且是将索引和数据存储在一起。</p>
+<p>InnoDB 的数据是按照主键顺序存放的，而聚集索引就是按照每张表的主键构造一颗 B+ 树，它的叶子节点存放的是整行数据。</p>
 <h3 id="辅助索引"><a href="#辅助索引" class="headerlink" title="辅助索引"></a>辅助索引</h3><p>InnoDB 存储引擎辅助索引的叶子节点存放的是键值和主键 ID。</p>
 <p>当通过辅助索引来寻找数据时，InnoDB 存储引擎会查找到对应记录的主键，然后通过主键索引来找到对应的行数据。</p>
 <h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><ul>
@@ -502,6 +503,8 @@ select id from t11 where a=1 and b=1 and c=1;
 /*不能使用联合索引*/
 select * from t11 where b=1; //联合索引最左匹配
 select * from t11 order by b;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="前缀索引"><a href="#前缀索引" class="headerlink" title="前缀索引"></a>前缀索引</h3><p>当表中的数据列是字符型，且大多数长度都比较长时，就可以考虑使用列值的一部分前缀作为索引，这也就被称作是前缀索引。</p>
+<p>根据“索引选择性”（Index Selectivity）确定前缀长度。</p>
 <h3 id="主键"><a href="#主键" class="headerlink" title="主键"></a>主键</h3><p>如果设置主键是自增，那么每一次都是在聚集索引的最后增加，当一页写满，就会自动开辟一个新页，不会有聚集索引树分裂这一步，效率会比随机主键高很多。这也是很多建表规范要求主键自增的原因。</p>
 <h3 id="优化器索引选择"><a href="#优化器索引选择" class="headerlink" title="优化器索引选择"></a>优化器索引选择</h3><p><code>show index</code>可以看到索引的Cardinality，即索引中不重复记录数量的预估值。</p>
 <p>Cardinality 统计信息的更新时机：</p>
@@ -1013,7 +1016,7 @@ select * from t11 order by b;<span aria-hidden="true" class="line-numbers-rows">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="锁">
+                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="锁">
                         
                         <span class="card-title">锁</span>
                     </div>
@@ -1065,7 +1068,7 @@ UNLOCK TAB
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="count优化">
+                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="count优化">
                         
                         <span class="card-title">count优化</span>
                     </div>
@@ -1272,7 +1275,7 @@ MyISAM 引擎和 InnoDB 引
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">26.3k</span>
+            <span class="white-color">27.5k</span>
             
 
             <br>
