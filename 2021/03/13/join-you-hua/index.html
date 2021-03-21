@@ -8,7 +8,7 @@
     <meta name="baidu-site-verification" content="code-KoKq36g1n2">
     <meta name="google-site-verification" content="yCy2azpds5XSuGZvis6OuA-XIGF5GuGpYRAaGfD6o48">
     <meta name="360-site-verification" content="b7c11a830ef90fd1464ad6206bb7b6e7">
-    <meta name="description" content="关联查询Nested-Loop Join思想：一次一行循环：从驱动表中读取行并取到关联字段，根据关联字段在被驱动表取出满足条件的行，然后取两张表的结果合集。[manual][https://dev.mysql.com/doc/refman/">
+    <meta name="description" content="关联查询Nested-Loop Join思想：一次一行循环：从驱动表中读取行并取到关联字段，根据关联字段在被驱动表取出满足条件的行（使用索引），然后取两张表的结果合集。[manual][https://dev.mysql.com/doc/r">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -266,7 +266,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/8.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/10.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -421,14 +421,14 @@
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    468
+                    680
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    2 分
                 </div>
                 
                 
@@ -439,12 +439,21 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="关联查询"><a href="#关联查询" class="headerlink" title="关联查询"></a>关联查询</h2><h3 id="Nested-Loop-Join"><a href="#Nested-Loop-Join" class="headerlink" title="Nested-Loop Join"></a>Nested-Loop Join</h3><p>思想：一次一行循环：从驱动表中读取行并取到关联字段，根据关联字段在被驱动表取出满足条件的行，然后取两张表的结果合集。[manual][<a href="https://dev.mysql.com/doc/refman/5.7/en/nested-loop-joins.html]" target="_blank" rel="noopener">https://dev.mysql.com/doc/refman/5.7/en/nested-loop-joins.html]</a></p>
+                <h2 id="关联查询"><a href="#关联查询" class="headerlink" title="关联查询"></a>关联查询</h2><h3 id="Nested-Loop-Join"><a href="#Nested-Loop-Join" class="headerlink" title="Nested-Loop Join"></a>Nested-Loop Join</h3><p>思想：一次一行循环：从驱动表中读取行并取到关联字段，根据关联字段在被驱动表取出满足条件的行（使用索引），然后取两张表的结果合集。[manual][<a href="https://dev.mysql.com/doc/refman/5.7/en/nested-loop-joins.html]" target="_blank" rel="noopener">https://dev.mysql.com/doc/refman/5.7/en/nested-loop-joins.html]</a></p>
 <p>在关联字段有索引时，才会使用 NLJ，如果没索引，就会使用 Block Nested-Loop Join。</p>
 <p>一般 join 语句中，没有出现Using join buffer就表示使用的join 算法是 NLJ</p>
 <h3 id="Block-Nested-Loop-Join"><a href="#Block-Nested-Loop-Join" class="headerlink" title="Block Nested-Loop Join"></a>Block Nested-Loop Join</h3><p>思想：把驱动表的数据读入到 join_buffer 中，然后扫描被驱动表，把被驱动表每一行取出来跟 join_buffer 中的数据做对比，如果满足 join 条件，则返回结果给客户端。[manual][<a href="https://dev.mysql.com/doc/refman/5.7/en/bnl-bkaoptimization" target="_blank" rel="noopener">https://dev.mysql.com/doc/refman/5.7/en/bnl-bkaoptimization</a>. html]</p>
 <p>join_buffer减少了磁盘扫描次数。</p>
-<h3 id="Batched-Key-Access"><a href="#Batched-Key-Access" class="headerlink" title="Batched Key Access"></a>Batched Key Access</h3><p>思想：结合NLJ和BNL，将驱动表中相关列放入 join_buffer 中，批量将关联字段的值发送到 Multi-Range Read(MRR) 接口，MRR 通过接收到的值，根据其对应的主键 ID 进行排序，然后再进行数据的读取和操作，返回结果给客户端。</p>
+<p>主要影响</p>
+<ol>
+<li>可能会多次扫描被驱动表，占用磁盘IO资源；</li>
+<li>判断join条件需要执行M*N次对比（M、N分别是两张表的行数），如果是大表就会占用非常多的CPU资源；</li>
+<li>可能会导致Buffer Pool的热数据被淘汰，影响内存命中率。</li>
+</ol>
+<h3 id="Batched-Key-Access"><a href="#Batched-Key-Access" class="headerlink" title="Batched Key Access"></a>Batched Key Access</h3><p><strong>MRR</strong></p>
+<p>尽量使用顺序读盘。如果按照主键的递增顺序查询的话，对磁盘的读比较接近顺序读，能够提升读性能。</p>
+<p>MRR能够提升性能的核心在于，这条查询语句在索引a上做的是一个范围查询（也就是说，这是一个多值查询），可以得到足够多的主键id。这样通过排序以后，再去主键索引查数据，才能体现出“顺序性”的优势。</p>
+<p>思想：结合NLJ和BNL，将驱动表中相关列放入 join_buffer 中，批量将关联字段的值发送到 Multi-Range Read(MRR) 接口，MRR 通过接收到的值，根据其对应的主键 ID 进行排序，然后再进行数据的读取和操作，返回结果给客户端。</p>
 <pre class="line-numbers language-mysql"><code class="language-mysql">set optimizer_switch='mrr=on,mrr_cost_based=off,batched_key_access=on';/*开启BKA*/<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>Extra显示Using join buffer (Batched Key Access)</p>
 <h2 id="优化关联查询"><a href="#优化关联查询" class="headerlink" title="优化关联查询"></a>优化关联查询</h2><h3 id="关联字段添加索引"><a href="#关联字段添加索引" class="headerlink" title="关联字段添加索引"></a>关联字段添加索引</h3><p>被驱动表的关联字段上添加索引，让 BNL变成 NLJ 或者 BKA ，可明显优化关联查询。</p>
@@ -943,7 +952,7 @@
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="count优化">
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="count优化">
                         
                         <span class="card-title">count优化</span>
                     </div>
@@ -994,7 +1003,7 @@ MyISAM 引擎和 InnoDB 引
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="分页查询优化">
+                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="分页查询优化">
                         
                         <span class="card-title">分页查询优化</span>
                     </div>
@@ -1200,7 +1209,7 @@ select * fro
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">27.5k</span>
+            <span class="white-color">32.9k</span>
             
 
             <br>

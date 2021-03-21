@@ -268,7 +268,7 @@ B+ 树
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/19.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/17.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -423,14 +423,14 @@ B+ 树
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.6k
+                    2k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    5 分
+                    7 分
                 </div>
                 
                 
@@ -452,6 +452,7 @@ B+ 树
 <p>InnoDB 的数据是按照主键顺序存放的，而聚集索引就是按照每张表的主键构造一颗 B+ 树，它的叶子节点存放的是整行数据。</p>
 <h3 id="辅助索引"><a href="#辅助索引" class="headerlink" title="辅助索引"></a>辅助索引</h3><p>InnoDB 存储引擎辅助索引的叶子节点存放的是键值和主键 ID。</p>
 <p>当通过辅助索引来寻找数据时，InnoDB 存储引擎会查找到对应记录的主键，然后通过主键索引来找到对应的行数据。</p>
+<h3 id="覆盖索引"><a href="#覆盖索引" class="headerlink" title="覆盖索引"></a>覆盖索引</h3><p>辅助索引可以直接提供查询结果，不需要回表。称为覆盖索引。</p>
 <h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><ul>
 <li>数据检索</li>
 <li>聚合函数（max/count）</li>
@@ -459,17 +460,19 @@ B+ 树
 <li>避免回表（覆盖索引）</li>
 <li>关联查询</li>
 </ul>
-<h3 id="普通索引和唯一索引"><a href="#普通索引和唯一索引" class="headerlink" title="普通索引和唯一索引"></a>普通索引和唯一索引</h3><p><strong>Insert Buffer</strong>：对于非聚集索引的插入时，先判断插入的非聚集索引页是否在缓冲池（Buffer Pool）中。如果在，则直接插入；如果不在，则先放<br>入 Insert Buffer 中，然后再以一定频率和情况进行 Insert Buffer 和辅助索引页子节点的 merge 操作。<strong>要求不是唯一索引</strong></p>
+<h3 id="普通索引和唯一索引"><a href="#普通索引和唯一索引" class="headerlink" title="普通索引和唯一索引"></a>普通索引和唯一索引</h3><p><strong>Insert Buffer</strong>：对于非聚集索引的插入时，先判断插入的非聚集索引页是否在缓冲池（Buffer Pool）中。如果在，则直接插入；如果不在，则先放入 Insert Buffer 中，然后再以一定频率和情况进行 Insert Buffer 和辅助索引页子节点的 merge 操作。<strong>要求不是唯一索引</strong></p>
 <p>意义：将多个插入合并到一个操作中，大大提高了非聚集索引的插入性能。</p>
-<p><strong>Change Buffer</strong>：Insert Buffer 的升级，，InnoDB 存储引擎可以对 insert、delete、update 都进行缓存。<strong>要求不是唯一索引</strong></p>
+<p><strong>Change Buffer</strong>：Insert Buffer 的升级，InnoDB 存储引擎可以对 insert、delete、update<strong>操作</strong>都进行缓存。<strong>要求不是唯一索引</strong></p>
 <p>参数：</p>
 <ul>
-<li><p>innodb_change_buffering：确定哪些场景使用 Change Buffer，它的值包含：none、inserts、deletes、<br>changes、purges、all。默认为 all，表示启用所有。</p>
+<li><p>innodb_change_buffering：确定哪些场景使用 Change Buffer，它的值包含：none、inserts、deletes、changes、purges、all。默认为 all，表示启用所有。</p>
 </li>
-<li><p>innodb_change_buffer_max_size：控制 Change Buffer 最大使用内存占总 buffer pool 的百分比。默认25，表示<br>最多可以使用 buffer pool 的 25%，最大值50。</p>
+<li><p>innodb_change_buffer_max_size：控制 Change Buffer 最大使用内存占总 buffer pool 的百分比。默认25，表示最多可以使用 buffer pool 的 25%，最大值50。</p>
 </li>
 </ul>
 <p>原因：唯一索引必须要将数据页读入内存才能判断是否违反唯一性约束。如果都已经读入到内存了，那直接更新内存会更快，就没必要使用 Change Buffer 了。</p>
+<p><strong>Change Buffer</strong>适用场景：</p>
+<p>对于写多读少的业务来说，页面在写完以后马上被访问到的概率比较小，此时changebuffer的使用效果最好。这种业务模型常见的就是账单类、日志类的系统。<br>反过来，假设一个业务的更新模式是写入之后马上会做查询，那么即使满足了条件，将更新先记录在change buffer，但之后由于马上要访问这个数据页，会立即触发merge过程。这样随机访问IO的次数不会减少，反而增加了change buffer的维护代价。</p>
 <p><strong>区别</strong></p>
 <p>1、有普通索引的字段可以写入重复的值，而有唯一索引的字段不可以写入重复的值。</p>
 <p>2、如果对数据有修改操作，则普通索引可以用 Change Buffer，而唯一索引不行。</p>
@@ -505,8 +508,12 @@ select * from t11 where b=1; //联合索引最左匹配
 select * from t11 order by b;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h3 id="前缀索引"><a href="#前缀索引" class="headerlink" title="前缀索引"></a>前缀索引</h3><p>当表中的数据列是字符型，且大多数长度都比较长时，就可以考虑使用列值的一部分前缀作为索引，这也就被称作是前缀索引。</p>
 <p>根据“索引选择性”（Index Selectivity）确定前缀长度。</p>
+<p><strong>其他方式</strong></p>
+<p>第一种方式是使用倒序存储。把有选择性的字符提到前面来。不支持范围查询。</p>
+<p>第二种方式是使用hash字段。不支持范围查询。</p>
+<h3 id="最左前缀"><a href="#最左前缀" class="headerlink" title="最左前缀"></a>最左前缀</h3><p>不只是索引的全部定义，只要满足最左前缀，就可以利用索引来加速检索。这个最左前缀可以是联合索引的最左N个字段，也可以是字符串索引的最左M个字符。</p>
 <h3 id="主键"><a href="#主键" class="headerlink" title="主键"></a>主键</h3><p>如果设置主键是自增，那么每一次都是在聚集索引的最后增加，当一页写满，就会自动开辟一个新页，不会有聚集索引树分裂这一步，效率会比随机主键高很多。这也是很多建表规范要求主键自增的原因。</p>
-<h3 id="优化器索引选择"><a href="#优化器索引选择" class="headerlink" title="优化器索引选择"></a>优化器索引选择</h3><p><code>show index</code>可以看到索引的Cardinality，即索引中不重复记录数量的预估值。</p>
+<h3 id="优化器索引选择"><a href="#优化器索引选择" class="headerlink" title="优化器索引选择"></a>优化器索引选择</h3><p><code>show index from t</code>可以看到索引的Cardinality，即索引中不重复记录数量的预估值。</p>
 <p>Cardinality 统计信息的更新时机：</p>
 <ul>
 <li>表中 1/16 的数据已经发生过变化</li>
@@ -524,6 +531,9 @@ select * from t11 order by b;<span aria-hidden="true" class="line-numbers-rows">
 <p><strong>应对</strong></p>
 <p>force index 来强制走索引</p>
 <pre class="line-numbers language-mysql"><code class="language-mysql">select a from t13 force index(idx_a) where a>70000 limit 1000;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p><strong>其他应对</strong></p>
+<p>1、考虑修改语句，引导MySQL使用我们期望的索引。比如，把“order by b limit 1” 改成 “order by b,a limit 1” ，语义的逻辑是相同的。</p>
+<p>2、新建一个更合适的索引，来提供给优化器做选择，或删掉误用的索引。</p>
 
             </div>
             <hr />
@@ -1016,7 +1026,7 @@ select * from t11 order by b;<span aria-hidden="true" class="line-numbers-rows">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="锁">
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="锁">
                         
                         <span class="card-title">锁</span>
                     </div>
@@ -1068,7 +1078,7 @@ UNLOCK TAB
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="count优化">
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="count优化">
                         
                         <span class="card-title">count优化</span>
                     </div>
@@ -1275,7 +1285,7 @@ MyISAM 引擎和 InnoDB 引
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">27.5k</span>
+            <span class="white-color">32.9k</span>
             
 
             <br>

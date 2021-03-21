@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://wangyixin-tom.github.io/"/>
-  <updated>2021-03-15T11:52:19.892Z</updated>
+  <updated>2021-03-21T12:51:41.079Z</updated>
   <id>https://wangyixin-tom.github.io/</id>
   
   <author>
@@ -15,6 +15,86 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>InnoDB LRU 优化</title>
+    <link href="https://wangyixin-tom.github.io/2021/03/21/innodb-lru-you-hua/"/>
+    <id>https://wangyixin-tom.github.io/2021/03/21/innodb-lru-you-hua/</id>
+    <published>2021-03-21T12:42:36.000Z</published>
+    <updated>2021-03-21T12:51:41.079Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;InnoDB内存管理用的是最近最少使用 (Least Recently Used,
+        
+      
+    
+    </summary>
+    
+      <category term="mysql" scheme="https://wangyixin-tom.github.io/categories/mysql/"/>
+    
+    
+      <category term="mysql" scheme="https://wangyixin-tom.github.io/tags/mysql/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>数据恢复</title>
+    <link href="https://wangyixin-tom.github.io/2021/03/21/shu-ju-hui-fu/"/>
+    <id>https://wangyixin-tom.github.io/2021/03/21/shu-ju-hui-fu/</id>
+    <published>2021-03-21T12:27:16.000Z</published>
+    <updated>2021-03-21T12:42:02.100Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;delete误删行&quot;&gt;&lt;a href=&quot;#delete误删行&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="mysql" scheme="https://wangyixin-tom.github.io/categories/mysql/"/>
+    
+    
+      <category term="mysql" scheme="https://wangyixin-tom.github.io/tags/mysql/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>基础架构</title>
+    <link href="https://wangyixin-tom.github.io/2021/03/21/ji-chu-jia-gou/"/>
+    <id>https://wangyixin-tom.github.io/2021/03/21/ji-chu-jia-gou/</id>
+    <published>2021-03-21T07:01:22.000Z</published>
+    <updated>2021-03-21T07:11:00.686Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;MySQL可以分为Server层和存储引擎层两部分。&lt;/p&gt;
+&lt;p&gt;Server层包括连接器、查询缓存、分析器、优化器、执行器等，涵盖MySQL的大多数核心服务功能，以及所有的内置函数。&lt;/p&gt;
+&lt;p&gt;存储引擎层负责数据的存储和提取。其架构模式是插件式的，支持InnoDB、
+        
+      
+    
+    </summary>
+    
+      <category term="mysql" scheme="https://wangyixin-tom.github.io/categories/mysql/"/>
+    
+    
+      <category term="mysql" scheme="https://wangyixin-tom.github.io/tags/mysql/"/>
+    
+  </entry>
   
   <entry>
     <title>分库分表</title>
@@ -47,7 +127,7 @@
     <link href="https://wangyixin-tom.github.io/2021/03/15/du-xie-fen-chi/"/>
     <id>https://wangyixin-tom.github.io/2021/03/15/du-xie-fen-chi/</id>
     <published>2021-03-15T11:27:16.000Z</published>
-    <updated>2021-03-15T11:39:57.471Z</updated>
+    <updated>2021-03-21T12:26:48.704Z</updated>
     
     <summary type="html">
     
@@ -99,7 +179,7 @@
     <link href="https://wangyixin-tom.github.io/2021/03/14/shi-wu/"/>
     <id>https://wangyixin-tom.github.io/2021/03/14/shi-wu/</id>
     <published>2021-03-14T11:57:07.000Z</published>
-    <updated>2021-03-16T12:48:16.631Z</updated>
+    <updated>2021-03-21T11:16:31.945Z</updated>
     
     <summary type="html">
     
@@ -125,7 +205,7 @@
     <link href="https://wangyixin-tom.github.io/2021/03/14/suo/"/>
     <id>https://wangyixin-tom.github.io/2021/03/14/suo/</id>
     <published>2021-03-14T03:14:09.000Z</published>
-    <updated>2021-03-16T13:26:09.556Z</updated>
+    <updated>2021-03-21T10:22:12.054Z</updated>
     
     <summary type="html">
     
@@ -152,7 +232,7 @@
     <link href="https://wangyixin-tom.github.io/2021/03/13/suo-yin/"/>
     <id>https://wangyixin-tom.github.io/2021/03/13/suo-yin/</id>
     <published>2021-03-13T14:06:54.000Z</published>
-    <updated>2021-03-16T13:12:47.013Z</updated>
+    <updated>2021-03-21T09:31:49.303Z</updated>
     
     <summary type="html">
     
@@ -204,7 +284,7 @@
     <link href="https://wangyixin-tom.github.io/2021/03/13/join-you-hua/"/>
     <id>https://wangyixin-tom.github.io/2021/03/13/join-you-hua/</id>
     <published>2021-03-13T09:35:27.000Z</published>
-    <updated>2021-03-13T10:27:06.514Z</updated>
+    <updated>2021-03-21T13:06:08.628Z</updated>
     
     <summary type="html">
     
@@ -256,7 +336,7 @@
     <link href="https://wangyixin-tom.github.io/2021/03/13/order-group-by-you-hua/"/>
     <id>https://wangyixin-tom.github.io/2021/03/13/order-group-by-you-hua/</id>
     <published>2021-03-13T07:45:38.000Z</published>
-    <updated>2021-03-13T09:14:39.952Z</updated>
+    <updated>2021-03-21T13:13:18.477Z</updated>
     
     <summary type="html">
     
@@ -308,7 +388,7 @@
     <link href="https://wangyixin-tom.github.io/2021/03/13/suo-yin-shi-xiao/"/>
     <id>https://wangyixin-tom.github.io/2021/03/13/suo-yin-shi-xiao/</id>
     <published>2021-03-13T03:07:49.000Z</published>
-    <updated>2021-03-13T03:45:52.199Z</updated>
+    <updated>2021-03-21T09:52:39.151Z</updated>
     
     <summary type="html">
     
@@ -316,7 +396,7 @@
       
         
         
-          &lt;h2 id=&quot;函数操作&quot;&gt;&lt;a href=&quot;#函数操作&quot; class=&quot;headerlink&quot; title=&quot;函数操作&quot;&gt;&lt;/a&gt;函数操作&lt;/h2&gt;&lt;p&gt;对条件字段做函数操作走不了索引。&lt;/p&gt;
+          &lt;h2 id=&quot;函数操作&quot;&gt;&lt;a href=&quot;#函数操作&quot; class=&quot;headerlink&quot; title=&quot;函数操作&quot;&gt;&lt;/a&gt;函数操作&lt;/h2&gt;&lt;p&gt;对条件字段做函数操作，可能破坏了索引值的有序性，走不了索引。&lt;/p&gt;
 &lt;pre class=&quot;line-numbers
         
       
@@ -335,7 +415,7 @@
     <link href="https://wangyixin-tom.github.io/2021/03/11/man-cha-xun-ding-wei-yu-fen-xi/"/>
     <id>https://wangyixin-tom.github.io/2021/03/11/man-cha-xun-ding-wei-yu-fen-xi/</id>
     <published>2021-03-11T13:58:12.000Z</published>
-    <updated>2021-03-11T14:00:35.122Z</updated>
+    <updated>2021-03-21T09:35:45.376Z</updated>
     
     <summary type="html">
     
@@ -450,72 +530,6 @@
         
         
           &lt;h2 id=&quot;多线程&quot;&gt;&lt;a href=&quot;#多线程&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-      <category term="redis" scheme="https://wangyixin-tom.github.io/categories/redis/"/>
-    
-    
-      <category term="redis" scheme="https://wangyixin-tom.github.io/tags/redis/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>redis消息队列</title>
-    <link href="https://wangyixin-tom.github.io/2020/11/02/redis-xiao-xi-dui-lie/"/>
-    <id>https://wangyixin-tom.github.io/2020/11/02/redis-xiao-xi-dui-lie/</id>
-    <published>2020-11-02T13:35:36.000Z</published>
-    <updated>2020-11-02T14:14:19.108Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h2 id=&quot;需求分析&quot;&gt;&lt;a href=&quot;#需求分析&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-      <category term="redis" scheme="https://wangyixin-tom.github.io/categories/redis/"/>
-    
-    
-      <category term="redis" scheme="https://wangyixin-tom.github.io/tags/redis/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>redis内存碎片</title>
-    <link href="https://wangyixin-tom.github.io/2020/11/02/redis-nei-cun-sui-pian/"/>
-    <id>https://wangyixin-tom.github.io/2020/11/02/redis-nei-cun-sui-pian/</id>
-    <published>2020-11-02T13:35:08.000Z</published>
-    <updated>2020-11-02T13:35:08.711Z</updated>
-    
-    <summary type="html">
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>redis事务</title>
-    <link href="https://wangyixin-tom.github.io/2020/11/01/redis-shi-wu/"/>
-    <id>https://wangyixin-tom.github.io/2020/11/01/redis-shi-wu/</id>
-    <published>2020-11-01T05:28:57.000Z</published>
-    <updated>2020-11-01T13:00:22.149Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h2 id=&quot;事务实现&quot;&gt;&lt;a href=&quot;#事务实现&quot; class=&quot;headerlink&quot; title=&quot;事务实现&quot;&gt;&lt;/a&gt;事务实现&lt;/h2&gt;&lt;h3 id=&quot;基本命令&quot;&gt;&lt;a href=&quot;#基本命令&quot; class=&quot;headerlink&quot;
         
       
     

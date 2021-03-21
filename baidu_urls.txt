@@ -1,3 +1,6 @@
+https://wangyixin-tom.github.io/2021/03/21/innodb-lru-you-hua/
+https://wangyixin-tom.github.io/2021/03/21/shu-ju-hui-fu/
+https://wangyixin-tom.github.io/2021/03/21/ji-chu-jia-gou/
 https://wangyixin-tom.github.io/2021/03/15/fen-ku-fen-biao/
 https://wangyixin-tom.github.io/2021/03/15/du-xie-fen-chi/
 https://wangyixin-tom.github.io/2021/03/14/mvcc/

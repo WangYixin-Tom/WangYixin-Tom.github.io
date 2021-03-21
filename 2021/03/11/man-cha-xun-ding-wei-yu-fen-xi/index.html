@@ -269,7 +269,7 @@ mysql&gt; show glo">
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/3.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/5.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -424,7 +424,7 @@ mysql&gt; show glo">
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    992
+                    1.1k
                 </div>
                 
 
@@ -454,7 +454,8 @@ User@Host: root[root] @ localhost [] Id: 8591152
 Query_time: 10.000260 Lock_time: 0.000000 Rows_sent: 1 Rows_examined: 0
 SET timestamp=1558401306;
 select sleep(10);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>可以看到查询时间、表锁时间。</p>
+<p>可以看到查询时间、表锁时间、扫描行数Rows_examined。</p>
+<p>在有些场景下，执行器调用一次，在引擎内部则扫描了多行，因此引擎扫描行数跟rows_examined并不是完全相同的。</p>
 <p>2、show processlist 查看正在执行的慢查询</p>
 <pre class="line-numbers language-mysql"><code class="language-mysql">mysql> show processlist\G`
 
@@ -670,6 +671,7 @@ mysql> select * from t1 where a >900 and b > 910 order by a;
 mysql> SELECT * FROM information_schema.OPTIMIZER_TRACE\G;
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 <p>TRACE包括准备阶段、优化阶段、执行阶段。trace中可以看到使用每个索引的成本。</p>
+<p>也可以看number_of_tmp_files中判断是否使用了临时文件。</p>
 
             </div>
             <hr />
@@ -1162,7 +1164,7 @@ mysql> SELECT * FROM information_schema.OPTIMIZER_TRACE\G;
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="索引失效">
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="索引失效">
                         
                         <span class="card-title">索引失效</span>
                     </div>
@@ -1170,10 +1172,10 @@ mysql> SELECT * FROM information_schema.OPTIMIZER_TRACE\G;
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            函数操作对条件字段做函数操作走不了索引。
+                            函数操作对条件字段做函数操作，可能破坏了索引值的有序性，走不了索引。
 select * from t1 where date(c) ='2019-05-21';
 优化：改成范围查询
-select * from t1 where c>='2019-05-21 00:00
+select * from t1 where c>='20
                         
                     </div>
                     <div class="publish-info">
@@ -1214,7 +1216,7 @@ select * from t1 where c>='2019-05-21 00:00
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/25.jpg" class="responsive-img" alt="redis应用">
+                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="redis应用">
                         
                         <span class="card-title">redis应用</span>
                     </div>
@@ -1422,7 +1424,7 @@ select * from t1 where c>='2019-05-21 00:00
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">27.5k</span>
+            <span class="white-color">32.9k</span>
             
 
             <br>

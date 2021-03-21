@@ -268,7 +268,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/24.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/22.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -454,16 +454,16 @@
 <p>通过trace中的number_of_tmp_files，等于 0，则表示排序过程没使用临时文件，在内存中就能完成排序。</p>
 <p><strong>Filesort 下的排序模式</strong></p>
 <ul>
-<li>&lt; sort_key, rowid &gt;双路排序（又叫回表排序模式）：是首先根据相应的条件取出相应的排序字段和可以直接定<br>位行数据的行 ID，然后在 sort buffer 中进行排序，排序完后需要再次取回其它需要的字段；</li>
+<li>&lt; sort_key, rowid &gt;双路排序（又叫回表排序模式）：是首先根据相应的条件取出相应的排序字段和可以直接定位行数据的行 ID，然后在 sort buffer 中进行排序，排序完后需要再次取回其它需要的字段；</li>
 <li>&lt; sort_key, additional_fields &gt;单路排序：是一次性取出满足条件行的所有字段，然后在sort buffer中进行排序；</li>
-<li>&lt; sort_key, packed_additional_fields &gt;打包数据排序模式：与单路排序相似，区别是将 char 和 varchar 字段存到<br>sort buffer 中时，更加紧缩。</li>
+<li>&lt; sort_key, packed_additional_fields &gt;打包数据排序模式：与单路排序相似，区别是将 char 和 varchar 字段存到sort buffer 中时，更加紧缩。</li>
 </ul>
 <p>单路和双路的选择：</p>
 <ul>
 <li>如果 max_length_for_sort_data 比查询字段的总长度大，那么使用 &lt; sort_key, additional_fields &gt;排序模式；</li>
 <li>如果 max_length_for_sort_data 比查询字段的总长度小，那么使用 &lt;sort_key, rowid&gt; 排序模式。</li>
 </ul>
-<p>如果 MySQL 排序内存有条件可以配置比较大，可以适当增大 max_length_for_sort_data 的值，让优化器优先选择<br>全字段排序，把需要的字段放到 sort_buffer 中，这样排序后就会直接从内存里返回查询结果了。</p>
+<p>如果 MySQL 排序内存有条件可以配置比较大，可以适当增大 max_length_for_sort_data 的值，让优化器优先选择全字段排序，把需要的字段放到 sort_buffer 中，这样排序后就会直接从内存里返回查询结果了。</p>
 <h2 id="order-by-优化"><a href="#order-by-优化" class="headerlink" title="order by 优化"></a>order by 优化</h2><h3 id="添加合适索引"><a href="#添加合适索引" class="headerlink" title="添加合适索引"></a>添加合适索引</h3><p>1、 排序字段添加索引</p>
 <p>2、多个字段排序添加联合索引</p>
 <p>3、先等值查询再排序，在条件字段和排序字段添加联合索引</p>
@@ -968,7 +968,7 @@
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="分页查询优化">
+                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="分页查询优化">
                         
                         <span class="card-title">分页查询优化</span>
                     </div>
@@ -1018,7 +1018,7 @@ select * fro
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="批量数据导入优化">
+                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="批量数据导入优化">
                         
                         <span class="card-title">批量数据导入优化</span>
                     </div>
@@ -1227,7 +1227,7 @@ select * fro
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">27.5k</span>
+            <span class="white-color">32.9k</span>
             
 
             <br>
