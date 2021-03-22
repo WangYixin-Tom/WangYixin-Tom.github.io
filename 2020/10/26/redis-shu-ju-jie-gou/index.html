@@ -284,7 +284,7 @@ Hash
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/15.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/14.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -439,14 +439,14 @@ Hash
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    574
+                    1.6k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    2 分
+                    5 分
                 </div>
                 
                 
@@ -487,8 +487,65 @@ Hash
 </tr>
 </tbody></table>
 <p>redis中的键值对采用哈希表，哈希表就是一个数组，数组的每个元素称为一个哈希桶，每个哈希桶中保存了键值对数据的指针。<br>哈希冲突采用链式哈希。同一个哈希桶中的多个元素用一个链表来保存，它们之间依次用指针连接。<br>冲突增多时，Redis 会对哈希表做渐进式 rehash操作。rehash 也就是增加现有的哈希桶数量，让逐渐增多的 entry 元素能在更多的桶之间分散保存，减少单个桶中的元素数量，从而减少单个桶中的冲突。渐进式 rehash时指拷贝数据时，Redis 仍然正常处理客户端请求，每处理一个请求时，从哈希表 1 中的第一个索引位置开始，顺带着将这个索引位置上的所有 entries 拷贝到哈希表 2 中；等处理下一个请求时，再顺带拷贝哈希表 1 中的下一个索引位置的 entries</p>
+<h2 id="RedisObject"><a href="#RedisObject" class="headerlink" title="RedisObject"></a>RedisObject</h2><pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">struct</span> RedisObject <span class="token punctuation">{</span>
+    int4 type<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 4bits</span>
+    int4 encoding<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 4bits</span>
+    int24 lru<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 24bits</span>
+    int32 refcount<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 4bytes</span>
+    <span class="token keyword">void</span> <span class="token operator">*</span>ptr<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 8bytes，64-bit system</span>
+<span class="token punctuation">}</span> robj<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>不同的对象具有不同的类型 type(4bit)，同一个类型的 type 会有不同的存储形式 encoding(4bit)，为了记录对象的 LRU 信息，使用了 24 个 bit 来记录 LRU 信息。每个对象都有个引用计数，当引用计数为零时，对象就会被销毁，内存被回收。ptr 指针将指向对象内容 (body) 的具体存储位置。这样一个 RedisObject 对象头需要占据 16 字节的存储空间。</p>
+<h2 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h2><p>Redis 的字符串叫着「SDS」，也就是Simple Dynamic String。它的结构是一个带长度信息的字节数组。</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">struct</span> SDS<span class="token operator">&lt;</span>T<span class="token operator">></span> <span class="token punctuation">{</span>
+    T capacity<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 数组容量</span>
+    T len<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 数组长度</span>
+    byte flags<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 特殊标识位，不理睬它</span>
+    byte<span class="token punctuation">[</span><span class="token punctuation">]</span> content<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 数组内容</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">struct</span> SDS <span class="token punctuation">{</span>
+    int8 capacity<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 1byte</span>
+    int8 len<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 1byte</span>
+    int8 flags<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 1byte</span>
+    byte<span class="token punctuation">[</span><span class="token punctuation">]</span> content<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 内联数组，长度为 capacity</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>embstr 存储形式是这样一种存储形式，它将 RedisObject 对象头和 SDS 对象连续存在一起，使用 malloc 方法一次分配。而 raw 存储形式不一样，它需要两次 malloc，两个对象头在内存地址上一般是不连续的。</p>
+<h3 id="扩容策略"><a href="#扩容策略" class="headerlink" title="扩容策略"></a>扩容策略</h3><p>字符串在长度小于 1M 之前，扩容空间采用加倍策略，也就是保留 100% 的冗余空间。当长度超过 1M 之后，为了避免加倍后的冗余空间过大而导致浪费，每次扩容只会多分配 1M 大小的冗余空间。</p>
+<h2 id="字典"><a href="#字典" class="headerlink" title="字典"></a>字典</h2><p>除了 hash 结构的数据会用到字典外，整个 Redis 数据库的所有 key 和 value 也组成了一个全局字典，还有带过期时间的 key 集合也是一个字典。zset 集合中存储 value 和 score 值的映射关系也是通过 dict 结构实现的。</p>
+<p>dict 结构内部包含两个 hashtable，通常情况下只有一个 hashtable 是有值的。但是在 dict 扩容缩容时，需要分配新的 hashtable，然后进行渐进式搬迁，这时候两个 hashtable 存储的分别是旧的 hashtable 和新的 hashtable。待搬迁结束后，旧的 hashtable 被删除，新的 hashtable 取而代之。</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">struct</span> dict <span class="token punctuation">{</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+    dictht ht<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">struct</span> dictEntry <span class="token punctuation">{</span>
+    <span class="token keyword">void</span><span class="token operator">*</span> key<span class="token punctuation">;</span>
+    <span class="token keyword">void</span><span class="token operator">*</span> val<span class="token punctuation">;</span>
+    dictEntry<span class="token operator">*</span> next<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 链接下一个 entry</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">struct</span> dictht <span class="token punctuation">{</span>
+    dictEntry<span class="token operator">*</span><span class="token operator">*</span> table<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 二维</span>
+    <span class="token keyword">long</span> size<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 第一维数组的长度</span>
+    <span class="token keyword">long</span> used<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// hash 表中的元素个数</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>hashtable 的结构和 Java 的 HashMap 几乎是一样的，都是通过分桶的方式解决 hash 冲突。</p>
+<h3 id="渐进式rehash"><a href="#渐进式rehash" class="headerlink" title="渐进式rehash"></a>渐进式rehash</h3><p>大字典的扩容是比较耗时间的，需要重新申请新的数组，然后将旧字典所有链表中的元素重新挂接到新的数组下面，这是一个O(n)级别的操作，作为单线程的Redis表示很难承受这样耗时的过程。</p>
+<p>Redis还会在定时任务中对字典进行主动搬迁。</p>
+<h3 id="扩容条件"><a href="#扩容条件" class="headerlink" title="扩容条件"></a>扩容条件</h3><p>当 hash 表中元素的个数等于第一维数组的长度时，就会开始扩容，扩容的新数组是原数组大小的 2 倍。不过如果 Redis 正在做 bgsave，为了减少内存页的过多分离 (Copy On Write)，Redis 尽量不去扩容 (dict_can_resize)，但是如果 hash 表已经非常满了，元素的个数已经达到了第一维数组长度的 5 倍 (dict_force_resize_ratio)，说明 hash 表已经过于拥挤了，这个时候就会强制扩容。</p>
 <h2 id="压缩列表"><a href="#压缩列表" class="headerlink" title="压缩列表"></a>压缩列表</h2><p>压缩列表实际上类似于一个数组，数组中的每一个元素都对应保存一个数据。和数组不同的是，压缩列表在表头有三个字段 zlbytes、zltail 和 zllen，分别表示列表长度、列表尾的偏移量和列表中的 entry 个数；压缩列表在表尾还有一个 zlend，表示列表结束。</p>
 <p>压缩列表是在内存中分配一块地址连续的空间，然后把集合中的元素一个接一个地放在这块空间内，非常紧凑。</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">struct</span> ziplist<span class="token operator">&lt;</span>T<span class="token operator">></span> <span class="token punctuation">{</span>
+    int32 zlbytes<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 整个压缩列表占用字节数</span>
+    int32 zltail_offset<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 最后一个元素距离压缩列表起始位置的偏移量，用于快速定位到最后一个节点</span>
+    int16 zllength<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 元素个数</span>
+    T<span class="token punctuation">[</span><span class="token punctuation">]</span> entries<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 元素内容列表，挨个挨个紧凑存储</span>
+    int8 zlend<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 标志压缩列表的结束，值恒为 0xFF</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">struct</span> entry <span class="token punctuation">{</span>
+    <span class="token keyword">int</span><span class="token operator">&lt;</span>var<span class="token operator">></span> prevlen<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 前一个 entry 的字节长度</span>
+    <span class="token keyword">int</span><span class="token operator">&lt;</span>var<span class="token operator">></span> encoding<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 元素类型编码</span>
+    optional byte<span class="token punctuation">[</span><span class="token punctuation">]</span> content<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 元素内容</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h2 id="跳表"><a href="#跳表" class="headerlink" title="跳表"></a>跳表</h2><p>跳表在链表的基础上，增加了多级索引，通过索引位置的几个跳转，实现数据的快速定位。</p>
 <h2 id="复杂度"><a href="#复杂度" class="headerlink" title="复杂度"></a>复杂度</h2><p>各个数据结构的查找时间复杂度<br>| 数据结构 | 复杂度  |<br>| ——– | ——- |<br>| 哈希表   | O(1)    |<br>| 跳表     | O(logN) |<br>| 双向链表 | O(N)    |<br>| 压缩列表 | O(N)    |<br>| 数组     | O(N)    |</p>
 
@@ -983,7 +1040,7 @@ Hash
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="redis网络IO模型">
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="redis网络IO模型">
                         
                         <span class="card-title">redis网络IO模型</span>
                     </div>
@@ -1034,7 +1091,7 @@ Hash
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/28.jpg" class="responsive-img" alt="redis变慢以及优化方法">
+                        <img src="/medias/featureimages/27.jpg" class="responsive-img" alt="redis变慢以及优化方法">
                         
                         <span class="card-title">redis变慢以及优化方法</span>
                     </div>
@@ -1240,7 +1297,7 @@ Hash
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">32.9k</span>
+            <span class="white-color">34.8k</span>
             
 
             <br>

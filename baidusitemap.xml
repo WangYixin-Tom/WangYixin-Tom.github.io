@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://wangyixin-tom.github.io/2020/10/26/redis-shu-ju-jie-gou/</loc>
+    <lastmod>2021-03-22</lastmod>
+  </url>  <url>
+    <loc>https://wangyixin-tom.github.io/2020/10/27/redis-huan-cun/</loc>
+    <lastmod>2021-03-22</lastmod>
+  </url>  <url>
+    <loc>https://wangyixin-tom.github.io/2020/10/25/redis-zhu-cong-tong-bu/</loc>
+    <lastmod>2021-03-22</lastmod>
+  </url>  <url>
+    <loc>https://wangyixin-tom.github.io/2020/11/02/redis-xiao-xi-dui-lie/</loc>
+    <lastmod>2021-03-22</lastmod>
+  </url>  <url>
+    <loc>https://wangyixin-tom.github.io/2021/03/15/du-xie-fen-chi/</loc>
+    <lastmod>2021-03-21</lastmod>
+  </url>  <url>
     <loc>https://wangyixin-tom.github.io/2021/03/13/order-group-by-you-hua/</loc>
     <lastmod>2021-03-21</lastmod>
   </url>  <url>
@@ -11,9 +26,6 @@
     <lastmod>2021-03-21</lastmod>
   </url>  <url>
     <loc>https://wangyixin-tom.github.io/2021/03/21/shu-ju-hui-fu/</loc>
-    <lastmod>2021-03-21</lastmod>
-  </url>  <url>
-    <loc>https://wangyixin-tom.github.io/2021/03/15/du-xie-fen-chi/</loc>
     <lastmod>2021-03-21</lastmod>
   </url>  <url>
     <loc>https://wangyixin-tom.github.io/2021/03/14/shi-wu/</loc>
@@ -55,9 +67,6 @@
     <loc>https://wangyixin-tom.github.io/2021/03/10/redis-ying-yong/</loc>
     <lastmod>2021-03-10</lastmod>
   </url>  <url>
-    <loc>https://wangyixin-tom.github.io/2020/10/27/redis-huan-cun/</loc>
-    <lastmod>2021-03-08</lastmod>
-  </url>  <url>
     <loc>https://wangyixin-tom.github.io/2021/03/08/redis-si-wei-dao-tu/</loc>
     <lastmod>2021-03-08</lastmod>
   </url>  <url>
@@ -73,13 +82,7 @@
     <loc>https://wangyixin-tom.github.io/2020/12/09/redis6-0/</loc>
     <lastmod>2020-12-09</lastmod>
   </url>  <url>
-    <loc>https://wangyixin-tom.github.io/2020/11/02/redis-xiao-xi-dui-lie/</loc>
-    <lastmod>2020-11-02</lastmod>
-  </url>  <url>
     <loc>https://wangyixin-tom.github.io/2020/11/02/redis-nei-cun-sui-pian/</loc>
-    <lastmod>2020-11-02</lastmod>
-  </url>  <url>
-    <loc>https://wangyixin-tom.github.io/2020/10/25/redis-zhu-cong-tong-bu/</loc>
     <lastmod>2020-11-02</lastmod>
   </url>  <url>
     <loc>https://wangyixin-tom.github.io/2020/11/01/redis-shi-wu/</loc>
@@ -110,9 +113,6 @@
     <lastmod>2020-10-26</lastmod>
   </url>  <url>
     <loc>https://wangyixin-tom.github.io/2020/10/26/redis-wang-luo-io-mo-xing/</loc>
-    <lastmod>2020-10-26</lastmod>
-  </url>  <url>
-    <loc>https://wangyixin-tom.github.io/2020/10/26/redis-shu-ju-jie-gou/</loc>
     <lastmod>2020-10-26</lastmod>
   </url>  <url>
     <loc>https://wangyixin-tom.github.io/2020/10/26/redis-bian-man-yi-ji-you-hua-fang-fa/</loc>

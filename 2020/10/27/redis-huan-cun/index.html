@@ -275,7 +275,7 @@ Redis也称为旁路缓存，因为读取缓存、读取数据库和更新缓存
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/19.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/20.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -430,14 +430,14 @@ Redis也称为旁路缓存，因为读取缓存、读取数据库和更新缓存
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.3k
+                    2.5k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    7 分
+                    8 分
                 </div>
                 
                 
@@ -500,15 +500,20 @@ Redis也称为旁路缓存，因为读取缓存、读取数据库和更新缓存
 <li>在设置了过期时间的数据中进行淘汰，包括 volatile-random、volatile-ttl、volatile-lru、volatile-lfu（Redis  4.0 后新增）。</li>
 <li>在所有数据范围内进行淘汰，包括 allkeys-lru、allkeys-random、allkeys-lfu（Redis 4.0 后新增）。</li>
 </ul>
+<p><strong>淘汰策略</strong></p>
+<ul>
+<li>volatile-lru 尝试淘汰设置了过期时间的 key，最少使用的 key 优先被淘汰。没有设置过期时间的 key 不会被淘汰，这样可以保证需要持久化的数据不会突然丢失。</li>
+<li>volatile-ttl 跟上面一样，除了淘汰的策略不是 LRU，而是 key 的剩余寿命 ttl 的值，ttl 越小越优先被淘汰。</li>
+<li>volatile-random 跟上面一样，不过淘汰的 key 是过期 key 集合中随机的 key。</li>
+<li>allkeys-lru 区别于 volatile-lru，这个策略要淘汰的 key 对象是全体的 key 集合，而不只是过期的 key 集合。这意味着没有设置过期时间的 key 也会被淘汰。</li>
+<li>allkeys-random 跟上面一样，不过淘汰的策略是随机的 key</li>
+</ul>
 <p><strong>LRU</strong></p>
 <p>Redis 中，LRU 算法被做了简化。</p>
 <ul>
-<li><p>Redis 在决定淘汰的数据时，第一次会随机选出 N 个数据，把它们作为候选集合。</p>
-</li>
-<li><p>Redis 会比较这 N 个数据的 lru 字段，把 lru 字段值最小的数据从缓存中淘汰出去。</p>
-</li>
-<li><p>再次淘汰数据时，Redis 需要挑选数据进入第一次淘汰时创建的候选集合。能进入候选集合的数据的 lru 字段值必须小于候选集合中最小的 lru 值</p>
-</li>
+<li>Redis 在决定淘汰的数据时，第一次会随机选出 N 个数据，把它们作为候选集合。</li>
+<li>Redis 会比较这 N 个数据的 lru 字段，把 lru 字段值最小的数据从缓存中淘汰出去。</li>
+<li>再次淘汰数据时，Redis 需要挑选数据进入第一次淘汰时创建的候选集合。能进入候选集合的数据的 lru 字段值必须小于候选集合中最小的 lru 值</li>
 </ul>
 <p><strong>LFU</strong></p>
 <p>从两个维度来筛选并淘汰数据：</p>
@@ -1065,7 +1070,7 @@ Redis也称为旁路缓存，因为读取缓存、读取数据库和更新缓存
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="redis分布式锁">
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="redis分布式锁">
                         
                         <span class="card-title">redis分布式锁</span>
                     </div>
@@ -1120,7 +1125,7 @@ redis原子操作
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="rabbitmq消息可靠性">
+                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="rabbitmq消息可靠性">
                         
                         <span class="card-title">rabbitmq消息可靠性</span>
                     </div>
@@ -1328,7 +1333,7 @@ redis原子操作
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">32.9k</span>
+            <span class="white-color">34.8k</span>
             
 
             <br>
