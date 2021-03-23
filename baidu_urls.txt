@@ -1,3 +1,8 @@
+https://wangyixin-tom.github.io/2021/03/23/kafka-xiao-fei-zhe/
+https://wangyixin-tom.github.io/2021/03/23/kafka-jing-que-yi-ci/
+https://wangyixin-tom.github.io/2021/03/23/kafka-lan-jie-qi/
+https://wangyixin-tom.github.io/2021/03/23/kafka-xiao-xi-diu-shi/
+https://wangyixin-tom.github.io/2021/03/23/kafka-sheng-chan-zhe/
 https://wangyixin-tom.github.io/2021/03/21/innodb-lru-you-hua/
 https://wangyixin-tom.github.io/2021/03/21/shu-ju-hui-fu/
 https://wangyixin-tom.github.io/2021/03/21/ji-chu-jia-gou/

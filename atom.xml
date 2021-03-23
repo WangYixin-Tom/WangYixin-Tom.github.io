@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://wangyixin-tom.github.io/"/>
-  <updated>2021-03-21T12:51:41.079Z</updated>
+  <updated>2021-03-23T14:51:46.911Z</updated>
   <id>https://wangyixin-tom.github.io/</id>
   
   <author>
@@ -15,6 +15,139 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>kafka消费者</title>
+    <link href="https://wangyixin-tom.github.io/2021/03/23/kafka-xiao-fei-zhe/"/>
+    <id>https://wangyixin-tom.github.io/2021/03/23/kafka-xiao-fei-zhe/</id>
+    <published>2021-03-23T13:07:18.000Z</published>
+    <updated>2021-03-23T14:51:46.911Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;消费者组&quot;&gt;&lt;a href=&quot;#消费者组&quot; class=&quot;headerlink&quot; title=&quot;消费者组&quot;&gt;&lt;/a&gt;消费者组&lt;/h2&gt;&lt;p&gt;Consumer Group 是 Kafka
+        
+      
+    
+    </summary>
+    
+      <category term="kafka" scheme="https://wangyixin-tom.github.io/categories/kafka/"/>
+    
+    
+      <category term="kafka" scheme="https://wangyixin-tom.github.io/tags/kafka/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>kafka精确一次</title>
+    <link href="https://wangyixin-tom.github.io/2021/03/23/kafka-jing-que-yi-ci/"/>
+    <id>https://wangyixin-tom.github.io/2021/03/23/kafka-jing-que-yi-ci/</id>
+    <published>2021-03-23T12:59:45.000Z</published>
+    <updated>2021-03-23T13:06:30.634Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;kafka通过幂等性（Idempotence）和事务（Transaction）实现消息精确一次（exactly once)的可靠性保障。&lt;/p&gt;
+&lt;h2 id=&quot;幂等性-Producer&quot;&gt;&lt;a href=&quot;#幂等性-Producer&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="kafka" scheme="https://wangyixin-tom.github.io/categories/kafka/"/>
+    
+    
+      <category term="kafka" scheme="https://wangyixin-tom.github.io/tags/kafka/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>kafka拦截器</title>
+    <link href="https://wangyixin-tom.github.io/2021/03/23/kafka-lan-jie-qi/"/>
+    <id>https://wangyixin-tom.github.io/2021/03/23/kafka-lan-jie-qi/</id>
+    <published>2021-03-23T11:18:48.000Z</published>
+    <updated>2021-03-23T11:32:43.702Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;Kafka
+        
+      
+    
+    </summary>
+    
+      <category term="kafka" scheme="https://wangyixin-tom.github.io/categories/kafka/"/>
+    
+    
+      <category term="kafka" scheme="https://wangyixin-tom.github.io/tags/kafka/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>kafka消息丢失</title>
+    <link href="https://wangyixin-tom.github.io/2021/03/23/kafka-xiao-xi-diu-shi/"/>
+    <id>https://wangyixin-tom.github.io/2021/03/23/kafka-xiao-xi-diu-shi/</id>
+    <published>2021-03-23T11:13:33.000Z</published>
+    <updated>2021-03-23T11:18:27.829Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;kafka 只对“已提交”的消息（committed message）做有限度的持久化保证。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;不要使用 producer.send(msg)，而要使用 producer.send(msg, callback)。记住，一定要使用带有回调通知的
+        
+      
+    
+    </summary>
+    
+      <category term="kafka" scheme="https://wangyixin-tom.github.io/categories/kafka/"/>
+    
+    
+      <category term="kafka" scheme="https://wangyixin-tom.github.io/tags/kafka/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>kafka生产者</title>
+    <link href="https://wangyixin-tom.github.io/2021/03/23/kafka-sheng-chan-zhe/"/>
+    <id>https://wangyixin-tom.github.io/2021/03/23/kafka-sheng-chan-zhe/</id>
+    <published>2021-03-23T10:45:20.000Z</published>
+    <updated>2021-03-23T12:59:41.318Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;消息分区机制&quot;&gt;&lt;a href=&quot;#消息分区机制&quot; class=&quot;headerlink&quot; title=&quot;消息分区机制&quot;&gt;&lt;/a&gt;消息分区机制&lt;/h2&gt;&lt;h3 id=&quot;为什么分区&quot;&gt;&lt;a href=&quot;#为什么分区&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="kafka" scheme="https://wangyixin-tom.github.io/categories/kafka/"/>
+    
+    
+      <category term="kafka" scheme="https://wangyixin-tom.github.io/tags/kafka/"/>
+    
+  </entry>
   
   <entry>
     <title>InnoDB LRU 优化</title>
@@ -407,138 +540,6 @@
     
     
       <category term="mysql" scheme="https://wangyixin-tom.github.io/tags/mysql/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>慢查询定位与分析</title>
-    <link href="https://wangyixin-tom.github.io/2021/03/11/man-cha-xun-ding-wei-yu-fen-xi/"/>
-    <id>https://wangyixin-tom.github.io/2021/03/11/man-cha-xun-ding-wei-yu-fen-xi/</id>
-    <published>2021-03-11T13:58:12.000Z</published>
-    <updated>2021-03-21T09:35:45.376Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h2 id=&quot;定位慢sql&quot;&gt;&lt;a href=&quot;#定位慢sql&quot; class=&quot;headerlink&quot; title=&quot;定位慢sql&quot;&gt;&lt;/a&gt;定位慢sql&lt;/h2&gt;&lt;p&gt;1、查看慢查询日志确定已经执行完的慢查询&lt;/p&gt;
-&lt;pre class=&quot;line-numbers
-        
-      
-    
-    </summary>
-    
-      <category term="mysql" scheme="https://wangyixin-tom.github.io/categories/mysql/"/>
-    
-    
-      <category term="mysql" scheme="https://wangyixin-tom.github.io/tags/mysql/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>redis应用</title>
-    <link href="https://wangyixin-tom.github.io/2021/03/10/redis-ying-yong/"/>
-    <id>https://wangyixin-tom.github.io/2021/03/10/redis-ying-yong/</id>
-    <published>2021-03-10T13:22:09.000Z</published>
-    <updated>2021-03-10T13:23:00.022Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h2 id=&quot;分布式锁&quot;&gt;&lt;a href=&quot;#分布式锁&quot; class=&quot;headerlink&quot; title=&quot;分布式锁&quot;&gt;&lt;/a&gt;分布式锁&lt;/h2&gt;&lt;p&gt;实现：set lock:codehole true ex5
-        
-      
-    
-    </summary>
-    
-      <category term="redis" scheme="https://wangyixin-tom.github.io/categories/redis/"/>
-    
-    
-      <category term="redis" scheme="https://wangyixin-tom.github.io/tags/redis/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>redis思维导图</title>
-    <link href="https://wangyixin-tom.github.io/2021/03/08/redis-si-wei-dao-tu/"/>
-    <id>https://wangyixin-tom.github.io/2021/03/08/redis-si-wei-dao-tu/</id>
-    <published>2021-03-08T00:06:00.000Z</published>
-    <updated>2021-03-08T00:09:25.459Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;&lt;img src=&quot;redis.png&quot;
-        
-      
-    
-    </summary>
-    
-      <category term="redis" scheme="https://wangyixin-tom.github.io/categories/redis/"/>
-    
-    
-      <category term="redis" scheme="https://wangyixin-tom.github.io/tags/redis/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>kafka集群配置</title>
-    <link href="https://wangyixin-tom.github.io/2020/12/10/kafka-ji-qun-pei-zhi/"/>
-    <id>https://wangyixin-tom.github.io/2020/12/10/kafka-ji-qun-pei-zhi/</id>
-    <published>2020-12-10T13:12:03.000Z</published>
-    <updated>2020-12-10T13:44:49.227Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h2 id=&quot;Broker-端参数&quot;&gt;&lt;a href=&quot;#Broker-端参数&quot; class=&quot;headerlink&quot; title=&quot;Broker 端参数&quot;&gt;&lt;/a&gt;Broker 端参数&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;log.dirs：Broker
-        
-      
-    
-    </summary>
-    
-      <category term="kafka" scheme="https://wangyixin-tom.github.io/categories/kafka/"/>
-    
-    
-      <category term="kafka" scheme="https://wangyixin-tom.github.io/tags/kafka/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>redis6.0</title>
-    <link href="https://wangyixin-tom.github.io/2020/12/09/redis6-0/"/>
-    <id>https://wangyixin-tom.github.io/2020/12/09/redis6-0/</id>
-    <published>2020-12-09T05:35:15.000Z</published>
-    <updated>2020-12-09T05:53:02.082Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h2 id=&quot;多线程&quot;&gt;&lt;a href=&quot;#多线程&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-      <category term="redis" scheme="https://wangyixin-tom.github.io/categories/redis/"/>
-    
-    
-      <category term="redis" scheme="https://wangyixin-tom.github.io/tags/redis/"/>
     
   </entry>
   
