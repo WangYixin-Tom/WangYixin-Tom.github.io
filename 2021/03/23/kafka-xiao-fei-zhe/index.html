@@ -269,7 +269,7 @@ Group ID 是一个字符串，在一个 Kafka 集群中，它标识唯">
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/5.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -424,14 +424,14 @@ Group ID 是一个字符串，在一个 Kafka 集群中，它标识唯">
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    950
+                    3.2k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    3 分
+                    13 分
                 </div>
                 
                 
@@ -462,28 +462,251 @@ Group ID 是一个字符串，在一个 Kafka 集群中，它标识唯">
 <li>订阅主题数发生变更。</li>
 <li>订阅主题的分区数发生变更。</li>
 </ul>
+<p><strong>重平衡的通知</strong></p>
+<p>通过心跳线程来完成。</p>
+<ul>
+<li>0.10.1.0 版本之前，发送心跳请求是在消费者主线程完成的，也就是你写代码调用 KafkaConsumer.poll 方法的那个线程。</li>
+<li>0.10.1.0 版本开始，社区引入了一个单独的心跳线程来专门执行心跳请求发送，避免了消费过长的“假死”触发重平衡。</li>
+</ul>
 <p><strong>Rebalance影响</strong></p>
 <p>1、stop the world，所有 Consumer 实例都会停止消费，等待 Rebalance 完成</p>
 <p>2、Rebalance 效率不高，需要重新分配所有分区</p>
 <p>3、Rebalance很慢</p>
+<p><strong>消费者组状态机</strong></p>
+<p><a href="state.jpeg"></a></p>
+<p><a href="transport.jpg"></a></p>
+<p><strong>重平衡流程(消费者端)</strong></p>
+<ul>
+<li>加入组</li>
+</ul>
+<p>向协调者发送 JoinGroup 请求，上报订阅的主题。通常情况下，第一个发送 JoinGroup 请求的成员自动成为领导者。领导者消费者的任务是收集所有成员的订阅信息，然后根据这些信息，制定具体的分区消费分配方案。</p>
+<p>协调者会把消费者组订阅信息封装进 JoinGroup 请求的响应体中，然后发给领导者。</p>
+<ul>
+<li>等待领导者消费者（Leader Consumer）分配方案</li>
+</ul>
+<p>领导者统一做出分配方案，向协调者发送 SyncGroup 请求，将刚刚做出的分配方案发给协调者。</p>
+<p>其他成员也会向协调者发送 SyncGroup 请求，让协调者接收分配方案，然后统一以 SyncGroup 响应的方式分发给所有成员，这样组内所有成员就都知道自己该消费哪些分区了。</p>
+<p><strong>重平衡流程(Broker端)</strong></p>
+<p>场景一：新成员入组</p>
+<p><a href="newadd.jpg"></a></p>
+<p>场景二：组成员主动离组。</p>
+<p><a href="leavegroup.jpg"></a></p>
+<p>场景三：组成员崩溃离组</p>
+<p><a href="comsumedown.jpg"></a></p>
 <p><strong>避免 Rebalance</strong></p>
 <p>主要针对组成员数发生减少的情况。</p>
 <p>Consumer 实例都会定期地向 Coordinator 发送心跳请求，表明它还存活着。session.timeout.ms + heartbeat.interval.ms</p>
 <p>Consumer 端应用程序两次调用 poll 方法的最大时间间隔。默认值是 5 分钟，Consumer 程序如果在 5 分钟之内无法消费完 poll 方法返回的消息，那么 Consumer 会主动发起“离开组”的请求，Coordinator 也会开启新一轮 Rebalance。max.poll.interval.ms</p>
-<h3 id="位移主题"><a href="#位移主题" class="headerlink" title="位移主题"></a>位移主题</h3><p>当 Kafka 集群中的第一个 Consumer 程序启动时，Kafka 会自动创建位移主题。自动创建的位移主题分区数是offsets.topic.num.partitions 50，副本数是offsets.topic.replication.factor 3。</p>
+<h2 id="位移主题"><a href="#位移主题" class="headerlink" title="位移主题"></a>位移主题</h2><p>当 Kafka 集群中的第一个 Consumer 程序启动时，Kafka 会自动创建位移主题。自动创建的位移主题分区数是offsets.topic.num.partitions 50，副本数是offsets.topic.replication.factor 3。</p>
 <p>1、将 Consumer 的位移数据作为一条普通的 Kafka 消息，保存到内部主题 __consumer_offsets 中。</p>
 <p>位移主题消息的 Key 中格式：&lt;Group ID，主题名，分区号 &gt;，消息体保存了<strong>位移值</strong>和位移提交的元数据，诸如时间戳和用户自定义的数据等。</p>
 <p>2、保存 Consumer Group 相关信息的消息</p>
 <p>3、用于删除 Group 过期位移甚至是删除 Group 的消息。tombstone 消息，即墓碑消息</p>
-<p><strong>提交位移</strong></p>
-<p>自动提交位移和手动提交位移。</p>
+<p><strong>消费位移</strong></p>
+<p>记录了 Consumer 要消费的下一条消息的位移。Consumer 需要为分配给它的每个分区提交各自的位移数据。提交位移主要是为了表征 Consumer 的消费进度。</p>
+<p><strong>自动提交位移和手动提交位移</strong>。</p>
 <p>enable.auto.commit + auto.commit.interval.ms 控制。</p>
-<p>自动提交位移省事，你不用操心位移提交，就能保证<strong>消息消费不会丢失</strong>。但是不可控。只要 Consumer 一直启动着，它就会无限期地向位移主题写入消息。</p>
-<p>手动提交位移，consumer.commitSync 。</p>
-<p><strong>删除位移主题中的过期消息</strong></p>
-<p>kafka 使用 Compact 策略来删除位移主题中的过期消息。</p>
+<h3 id="自动提交位移"><a href="#自动提交位移" class="headerlink" title="自动提交位移"></a><strong>自动提交位移</strong></h3><ul>
+<li><p>Kafka 会保证在开始调用 poll 方法时，提交上次 poll 返回的所有消息。</p>
+</li>
+<li><p>从顺序上来说，poll 方法的逻辑是先提交上一批消息的位移，再处理下一批消息，因此它能保证不出现消费丢失的情况。</p>
+</li>
+<li><p>问题在于，重平衡出现时可能会出现重复消费</p>
+</li>
+</ul>
+<pre class="line-numbers language-java"><code class="language-java">Properties props <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Properties</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+props<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token string">"bootstrap.servers"</span><span class="token punctuation">,</span> <span class="token string">"localhost:9092"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+props<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token string">"group.id"</span><span class="token punctuation">,</span> <span class="token string">"test"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+props<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token string">"enable.auto.commit"</span><span class="token punctuation">,</span> <span class="token string">"true"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+props<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token string">"auto.commit.interval.ms"</span><span class="token punctuation">,</span> <span class="token string">"2000"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+props<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token string">"key.deserializer"</span><span class="token punctuation">,</span> <span class="token string">"org.apache.kafka.common.serialization.StringDeserializer"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+props<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token string">"value.deserializer"</span><span class="token punctuation">,</span> <span class="token string">"org.apache.kafka.common.serialization.StringDeserializer"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+KafkaConsumer<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> String<span class="token operator">></span> consumer <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">KafkaConsumer</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span>props<span class="token punctuation">)</span><span class="token punctuation">;</span>
+consumer<span class="token punctuation">.</span><span class="token function">subscribe</span><span class="token punctuation">(</span>Arrays<span class="token punctuation">.</span><span class="token function">asList</span><span class="token punctuation">(</span><span class="token string">"foo"</span><span class="token punctuation">,</span> <span class="token string">"bar"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    ConsumerRecords<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> String<span class="token operator">></span> records <span class="token operator">=</span> consumer<span class="token punctuation">.</span><span class="token function">poll</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>ConsumerRecord<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> String<span class="token operator">></span> record <span class="token operator">:</span> records<span class="token punctuation">)</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"offset = %d, key = %s, value = %s%n"</span><span class="token punctuation">,</span> record<span class="token punctuation">.</span><span class="token function">offset</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> record<span class="token punctuation">.</span><span class="token function">key</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> record<span class="token punctuation">.</span><span class="token function">value</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="手动提交位移"><a href="#手动提交位移" class="headerlink" title="手动提交位移"></a>手动提交位移</h3><p><strong>手动提交，需要将 commitSync 和 commitAsync 组合使用。</strong></p>
+<p><code>commitSync()</code>会提交 <code>poll()</code>返回的最新位移。该方法会一直等待，直到位移被成功提交才会返回。</p>
+<p>缺陷，调用 <code>commitSync()</code>时，Consumer 程序会处于阻塞状态，直到远端的 Broker 返回提交结果，阻塞才会结束，影响整个应用程序的 TPS。</p>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    ConsumerRecords<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> String<span class="token operator">></span> records <span class="token operator">=</span>
+        consumer<span class="token punctuation">.</span><span class="token function">poll</span><span class="token punctuation">(</span>Duration<span class="token punctuation">.</span><span class="token function">ofSeconds</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">process</span><span class="token punctuation">(</span>records<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 处理消息</span>
+    <span class="token keyword">try</span> <span class="token punctuation">{</span>
+        consumer<span class="token punctuation">.</span><span class="token function">commitSync</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">CommitFailedException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">handle</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 处理提交失败异常</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><code>commitAsync()</code>，立即返回，不会阻塞，因此不会影响 Consumer 应用的 TPS。Kafka 提供了回调函数（<code>callback</code>），供你实现提交之后的逻辑，比如记录日志或处理异常等。<br>缺陷，出现问题时它不会自动重试。因为它是异步操作，倘若提交失败后自动重试，那么它重试时提交的位移值可能早已经“过期”或不是最新值了。</p>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">try</span> <span class="token punctuation">{</span>
+    <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        ConsumerRecords<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> String<span class="token operator">></span> records <span class="token operator">=</span>
+            consumer<span class="token punctuation">.</span><span class="token function">poll</span><span class="token punctuation">(</span>Duration<span class="token punctuation">.</span><span class="token function">ofSeconds</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">process</span><span class="token punctuation">(</span>records<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 处理消息</span>
+        <span class="token function">commitAysnc</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 使用异步提交规避阻塞</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span> <span class="token keyword">catch</span><span class="token punctuation">(</span>Exception e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">handle</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 处理异常</span>
+<span class="token punctuation">}</span> <span class="token keyword">finally</span> <span class="token punctuation">{</span>
+    <span class="token keyword">try</span> <span class="token punctuation">{</span>
+        consumer<span class="token punctuation">.</span><span class="token function">commitSync</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 最后一次提交使用同步阻塞式提交</span>
+    <span class="token punctuation">}</span> <span class="token keyword">finally</span> <span class="token punctuation">{</span>
+        consumer<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><code>commitSync(Map&lt;TopicPartition, OffsetAndMetadata&gt;)</code>和 <code>commitAsync(Map&lt;TopicPartition, OffsetAndMetadata&gt;)</code>。它们的参数是一个 Map 对象，键就是 TopicPartition，即消费的分区，而值是一个 <code>OffsetAndMetadata</code> 对象，保存位移数据。</p>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">private</span> Map<span class="token operator">&lt;</span>TopicPartition<span class="token punctuation">,</span> OffsetAndMetadata<span class="token operator">></span> offsets <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HashMap</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> count <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+……
+<span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    ConsumerRecords<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> String<span class="token operator">></span> records <span class="token operator">=</span>
+        consumer<span class="token punctuation">.</span><span class="token function">poll</span><span class="token punctuation">(</span>Duration<span class="token punctuation">.</span><span class="token function">ofSeconds</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>ConsumerRecord<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> String<span class="token operator">></span> record<span class="token operator">:</span> records<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">process</span><span class="token punctuation">(</span>record<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">// 处理消息</span>
+        offsets<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">TopicPartition</span><span class="token punctuation">(</span>record<span class="token punctuation">.</span><span class="token function">topic</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> record<span class="token punctuation">.</span><span class="token function">partition</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+                    <span class="token keyword">new</span> <span class="token class-name">OffsetAndMetadata</span><span class="token punctuation">(</span>record<span class="token punctuation">.</span><span class="token function">offset</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span>；
+                    <span class="token keyword">if</span>（count <span class="token operator">%</span> <span class="token number">100</span> <span class="token operator">==</span> <span class="token number">0</span>）
+                        consumer<span class="token punctuation">.</span><span class="token function">commitAsync</span><span class="token punctuation">(</span>offsets<span class="token punctuation">,</span> null<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 回调处理逻辑是null</span>
+                    count<span class="token operator">++</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="CommitFailedException"><a href="#CommitFailedException" class="headerlink" title="CommitFailedException"></a>CommitFailedException</h3><p>提交位移时出现了不可恢复的严重异常。一般原因是消费者组已经开启了 Rebalance 过程，并且将要提交位移的分区分配给了另一个消费者实例<br><strong>解决</strong></p>
+<ul>
+<li><p>缩短单条消息处理的时间增加 Consumer 端</p>
+</li>
+<li><p>允许下游系统消费一批消息的最大时长，max.poll.interval.ms 的值</p>
+</li>
+<li><p>减少下游系统一次性消费的消息总数max.poll.records </p>
+</li>
+<li><p>下游系统使用多线程来加速消费</p>
+</li>
+</ul>
+<h3 id="过期消息删除"><a href="#过期消息删除" class="headerlink" title="过期消息删除"></a><strong>过期消息删除</strong></h3><p>kafka 使用 Compact 策略来删除位移主题中的过期消息。</p>
 <p>Kafka 提供了专门的后台线程(Log Cleaner)定期地巡检待 Compact 的主题，看看是否存在满足条件的可删除数据。</p>
 <p>对于同一个 Key 的两条消息 M1 和 M2，如果 M1 的发送时间早于 M2，那么 M1 就是过期消息。Compact 的过程就是扫描日志的所有消息，剔除那些过期的消息，然后把剩下的消息整理在一起。</p>
+<h2 id="独立消费者"><a href="#独立消费者" class="headerlink" title="独立消费者"></a>独立消费者</h2><p>每个消费者实例都是独立工作的，彼此之间毫无联系。</p>
+<h2 id="KafkaConsumer"><a href="#KafkaConsumer" class="headerlink" title="KafkaConsumer"></a>KafkaConsumer</h2><p>用户主线程，启动 Consumer 应用程序 main 方法的那个线程。</p>
+<p>心跳线程（Heartbeat Thread）只负责定期给对应的 Broker 机器发送心跳请求，以标识消费者应用的存活性（liveness）</p>
+<h3 id="多线程方案"><a href="#多线程方案" class="headerlink" title="多线程方案"></a>多线程方案</h3><p>KafkaConsumer 类不是线程安全的 (thread-safe)，不能在多个线程中共享同一个 KafkaConsumer 实例，否则程序会抛出 ConcurrentModificationException 异常</p>
+<p>1.消费者程序启动多个线程，每个线程维护专属的 KafkaConsumer 实例，负责完整的消息获取、消息处理流程</p>
+<p><img src="plan1.jpg" alt></p>
+<pre class="line-numbers language-java"><code class="language-java">
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">KafkaConsumerRunner</span> <span class="token keyword">implements</span> <span class="token class-name">Runnable</span> <span class="token punctuation">{</span>
+     <span class="token keyword">private</span> <span class="token keyword">final</span> AtomicBoolean closed <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">AtomicBoolean</span><span class="token punctuation">(</span><span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+     <span class="token keyword">private</span> <span class="token keyword">final</span> KafkaConsumer consumer<span class="token punctuation">;</span>
+
+
+     <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+         <span class="token keyword">try</span> <span class="token punctuation">{</span>
+             consumer<span class="token punctuation">.</span><span class="token function">subscribe</span><span class="token punctuation">(</span>Arrays<span class="token punctuation">.</span><span class="token function">asList</span><span class="token punctuation">(</span><span class="token string">"topic"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+             <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">!</span>closed<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      ConsumerRecords records <span class="token operator">=</span> 
+        consumer<span class="token punctuation">.</span><span class="token function">poll</span><span class="token punctuation">(</span>Duration<span class="token punctuation">.</span><span class="token function">ofMillis</span><span class="token punctuation">(</span><span class="token number">10000</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                 <span class="token comment" spellcheck="true">//  执行消息处理逻辑</span>
+             <span class="token punctuation">}</span>
+         <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">WakeupException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+             <span class="token comment" spellcheck="true">// Ignore exception if closing</span>
+             <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>closed<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">throw</span> e<span class="token punctuation">;</span>
+         <span class="token punctuation">}</span> <span class="token keyword">finally</span> <span class="token punctuation">{</span>
+             consumer<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+         <span class="token punctuation">}</span>
+     <span class="token punctuation">}</span>
+
+
+     <span class="token comment" spellcheck="true">// Shutdown hook which can be called from a separate thread</span>
+     <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">shutdown</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+         closed<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+         consumer<span class="token punctuation">.</span><span class="token function">wakeup</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+     <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>2.消费者程序使用单或多线程获取消息，同时创建多个消费线程执行消息处理逻辑。</p>
+<p><img src="plan2.jpg" alt></p>
+<pre class="line-numbers language-java"><code class="language-java">
+<span class="token keyword">private</span> <span class="token keyword">final</span> KafkaConsumer<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> String<span class="token operator">></span> consumer<span class="token punctuation">;</span>
+<span class="token keyword">private</span> ExecutorService executors<span class="token punctuation">;</span>
+<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+
+
+<span class="token keyword">private</span> <span class="token keyword">int</span> workerNum <span class="token operator">=</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">;</span>
+executors <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ThreadPoolExecutor</span><span class="token punctuation">(</span>
+  workerNum<span class="token punctuation">,</span> workerNum<span class="token punctuation">,</span> 0L<span class="token punctuation">,</span> TimeUnit<span class="token punctuation">.</span>MILLISECONDS<span class="token punctuation">,</span>
+  <span class="token keyword">new</span> <span class="token class-name">ArrayBlockingQueue</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">,</span> 
+  <span class="token keyword">new</span> <span class="token class-name">ThreadPoolExecutor<span class="token punctuation">.</span>CallerRunsPolicy</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+
+<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span>  <span class="token punctuation">{</span>
+  ConsumerRecords<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> String<span class="token operator">></span> records <span class="token operator">=</span> 
+    consumer<span class="token punctuation">.</span><span class="token function">poll</span><span class="token punctuation">(</span>Duration<span class="token punctuation">.</span><span class="token function">ofSeconds</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">final</span> ConsumerRecord record <span class="token operator">:</span> records<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    executors<span class="token punctuation">.</span><span class="token function">submit</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Worker</span><span class="token punctuation">(</span>record<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token punctuation">.</span><span class="token punctuation">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><strong>方案比较</strong></p>
+<p><img src="compare.jpg" alt></p>
+<h2 id="TCP-连接"><a href="#TCP-连接" class="headerlink" title="TCP 连接"></a>TCP 连接</h2><p><strong>TCP 连接是在调用 KafkaConsumer.poll 方法时被创建的。</strong></p>
+<p>1.发起 FindCoordinator 请求时。</p>
+<p>当消费者程序首次启动调用 poll 方法时，它需要向 Kafka 集群发送一个名为 FindCoordinator 的请求，希望 Kafka 集群告诉它哪个 Broker 是管理它的协调者。</p>
+<p>2.连接协调者时。</p>
+<p>消费者知晓了真正的协调者后，会创建连向该 Broker 的 Socket 连接。只有成功连入协调者，协调者才能开启正常的组协调操作，比如加入组、等待组分配方案、心跳请求处理、位移获取、位移提交等。</p>
+<p>3.消费数据时。</p>
+<p>消费者会为每个要消费的分区创建与该分区领导者副本所在 Broker 连接的 TCP</p>
+<p><strong>消费者关闭 Socket 也分为主动关闭和 Kafka 自动关闭。</strong></p>
+<p>1、手动调用 KafkaConsumer.close() 方法，或者是执行 Kill 命令</p>
+<p>2、Kafka 自动关闭是由消费者端参数 connection.max.idle.ms 控制的，默认值是 9 分钟</p>
+<p>注：当第三类 TCP 连接成功创建后，消费者程序就会废弃第一类 TCP 连接，之后在定期请求元数据时，它会改为使用第三类 TCP 连接。也就是说，最终你会发现，第一类 TCP 连接会在后台被默默地关闭掉。对一个运行了一段时间的消费者程序来说，只会有后面两类 TCP 连接存在。</p>
+<h2 id="消费进度"><a href="#消费进度" class="headerlink" title="消费进度"></a>消费进度</h2><p>消费者 Lag 或 Consumer Lag，消费者当前落后于生产者的程度，即在某主题上，Kafka 生产者生产消息和消费消息的差。</p>
+<p><strong>监控方法</strong></p>
+<p>1、使用 Kafka 自带的命令行工具 kafka-consumer-groups 脚本。</p>
+<pre class="line-numbers language-shell"><code class="language-shell"># Kafka 连接信息就是 < 主机名：端口 > 对，而 group 名称就是你的消费者程序中设置的 group.id 值.
+$ bin/kafka-consumer-groups.sh --bootstrap-server <Kafka broker连接信息> --describe --group <group名称><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p><a href="groups_shell.png"></a></p>
+<p>2、使用 Kafka Java Consumer API 编程。</p>
+<pre class="line-numbers language-java"><code class="language-java">
+<span class="token keyword">public</span> <span class="token keyword">static</span> Map<span class="token operator">&lt;</span>TopicPartition<span class="token punctuation">,</span> Long<span class="token operator">></span> <span class="token function">lagOf</span><span class="token punctuation">(</span>String groupID<span class="token punctuation">,</span> String bootstrapServers<span class="token punctuation">)</span> <span class="token keyword">throws</span> TimeoutException <span class="token punctuation">{</span>
+    Properties props <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Properties</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    props<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>CommonClientConfigs<span class="token punctuation">.</span>BOOTSTRAP_SERVERS_CONFIG<span class="token punctuation">,</span> bootstrapServers<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">try</span> <span class="token punctuation">(</span>AdminClient client <span class="token operator">=</span> AdminClient<span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span>props<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        ListConsumerGroupOffsetsResult result <span class="token operator">=</span> client<span class="token punctuation">.</span><span class="token function">listConsumerGroupOffsets</span><span class="token punctuation">(</span>groupID<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+            <span class="token comment" spellcheck="true">//获取订阅分区的最新消息位移</span>
+            Map<span class="token operator">&lt;</span>TopicPartition<span class="token punctuation">,</span> OffsetAndMetadata<span class="token operator">></span> consumedOffsets <span class="token operator">=</span> 
+                result<span class="token punctuation">.</span><span class="token function">partitionsToOffsetAndMetadata</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">,</span> TimeUnit<span class="token punctuation">.</span>SECONDS<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            props<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>ConsumerConfig<span class="token punctuation">.</span>ENABLE_AUTO_COMMIT_CONFIG<span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 禁止自动提交位移</span>
+            props<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>ConsumerConfig<span class="token punctuation">.</span>GROUP_ID_CONFIG<span class="token punctuation">,</span> groupID<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            props<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>ConsumerConfig<span class="token punctuation">.</span>KEY_DESERIALIZER_CLASS_CONFIG<span class="token punctuation">,</span> StringDeserializer<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            props<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>ConsumerConfig<span class="token punctuation">.</span>VALUE_DESERIALIZER_CLASS_CONFIG<span class="token punctuation">,</span> StringDeserializer<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">try</span> <span class="token punctuation">(</span><span class="token keyword">final</span> KafkaConsumer<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> String<span class="token operator">></span> consumer <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">KafkaConsumer</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span>props<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token comment" spellcheck="true">//最新消费消息的位移</span>
+                Map<span class="token operator">&lt;</span>TopicPartition<span class="token punctuation">,</span> Long<span class="token operator">></span> endOffsets <span class="token operator">=</span> consumer<span class="token punctuation">.</span><span class="token function">endOffsets</span><span class="token punctuation">(</span>consumedOffsets<span class="token punctuation">.</span><span class="token function">keySet</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+                <span class="token keyword">return</span> endOffsets<span class="token punctuation">.</span><span class="token function">entrySet</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">collect</span><span class="token punctuation">(</span>Collectors<span class="token punctuation">.</span><span class="token function">toMap</span><span class="token punctuation">(</span>
+                    entry <span class="token operator">-</span><span class="token operator">></span> entry<span class="token punctuation">.</span><span class="token function">getKey</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+                    entry <span class="token operator">-</span><span class="token operator">></span> entry<span class="token punctuation">.</span><span class="token function">getValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> consumedOffsets<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>entry<span class="token punctuation">.</span><span class="token function">getKey</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">offset</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">InterruptedException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            Thread<span class="token punctuation">.</span><span class="token function">currentThread</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">interrupt</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">// 处理中断异常</span>
+            <span class="token comment" spellcheck="true">// ...</span>
+            <span class="token keyword">return</span> Collections<span class="token punctuation">.</span><span class="token function">emptyMap</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">ExecutionException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token comment" spellcheck="true">// 处理ExecutionException</span>
+            <span class="token comment" spellcheck="true">// ...</span>
+            <span class="token keyword">return</span> Collections<span class="token punctuation">.</span><span class="token function">emptyMap</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">TimeoutException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">TimeoutException</span><span class="token punctuation">(</span><span class="token string">"Timed out when getting lag for consumer group "</span> <span class="token operator">+</span> groupID<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>3、使用 Kafka 自带的 JMX 监控指标。</p>
+<p>Kafka 消费者的JMX 指标 <code>kafka.consumer:type=consumer-fetch-manager-metrics,client-id=“{client-id}”</code>，其中：<code>records-lag-max</code> 和 <code>records-lead-min</code>，分别表示此消费者在测试窗口时间内曾经达到的最大的 Lag 值和最小的 Lead 值。</p>
+<p> <strong>Lead 值是指消费者最新消费消息的位移与分区当前第一条消息位移的差值。Lag 越大的话，Lead 就越小。</strong></p>
+<p>一旦 Lead 越来越小，甚至快接近于 0 了，预示着消费者端要丢消息了。</p>
+<p>Kafka 消费者还在分区级别提供了 JMX 指标，用于监控<strong>分区级别的 Lag 和 Lead 值</strong>。JMX 名称为：<code>kafka.consumer:type=consumer-fetch-manager-metrics,partition=“{partition}”,topic=“{topic}”,client-id=“{client-id}”</code></p>
 
             </div>
             <hr />
@@ -968,33 +1191,30 @@ Group ID 是一个字符串，在一个 Kafka 集群中，它标识唯">
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
-            </div>
+                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/03/23/kafka-xiao-fei-zhe/">
+                <a href="/2021/03/28/kafka-fu-ben/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="kafka消费者">
+                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="kafka副本">
                         
-                        <span class="card-title">kafka消费者</span>
+                        <span class="card-title">kafka副本</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            消费者组Consumer Group 是 Kafka 提供的可扩展且具有容错性的消费者机制。
-
-Consumer Group 下可以有一个或多个 Consumer 实例。
-Group ID 是一个字符串，在一个 Kafka 集群中，它标识唯
+                            主题可划分成若干个分，每个分区配置有若干个副本。副本（Replica），本质是一个只能追加写消息的提交日志。
+副本分类副本分成两类：领导者副本（Leader Replica）和追随者副本（Follower Replica）。每个分区在创建时
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-03-23
-                            </span>
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2021-03-28
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
@@ -1007,7 +1227,6 @@ Group ID 是一个字符串，在一个 Kafka 集群中，它标识唯
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
@@ -1030,7 +1249,7 @@ Group ID 是一个字符串，在一个 Kafka 集群中，它标识唯
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="kafka精确一次">
+                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="kafka精确一次">
                         
                         <span class="card-title">kafka精确一次</span>
                     </div>
@@ -1236,7 +1455,7 @@ Group ID 是一个字符串，在一个 Kafka 集群中，它标识唯
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">38.9k</span>
+            <span class="white-color">43k</span>
             
 
             <br>

@@ -2,9 +2,44 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://wangyixin-tom.github.io/2021/03/28/kafka-zhu-ti-guan-li/</loc>
+    
+    <lastmod>2021-03-28T14:12:12.423Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://wangyixin-tom.github.io/2021/03/28/kafka-gao-shui-wei-he-leader-epoch/</loc>
+    
+    <lastmod>2021-03-28T13:48:15.272Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://wangyixin-tom.github.io/2021/03/28/kafka-kong-zhi-qi/</loc>
+    
+    <lastmod>2021-03-28T12:06:46.007Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://wangyixin-tom.github.io/2021/03/23/kafka-xiao-fei-zhe/</loc>
     
-    <lastmod>2021-03-23T14:51:46.911Z</lastmod>
+    <lastmod>2021-03-28T11:47:42.663Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://wangyixin-tom.github.io/2021/03/28/kafka-broker-qing-qiu-chu-li/</loc>
+    
+    <lastmod>2021-03-28T10:17:37.388Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://wangyixin-tom.github.io/2021/03/28/kafka-fu-ben/</loc>
+    
+    <lastmod>2021-03-28T09:57:34.815Z</lastmod>
     
   </url>
   

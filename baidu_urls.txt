@@ -1,3 +1,8 @@
+https://wangyixin-tom.github.io/2021/03/28/kafka-zhu-ti-guan-li/
+https://wangyixin-tom.github.io/2021/03/28/kafka-gao-shui-wei-he-leader-epoch/
+https://wangyixin-tom.github.io/2021/03/28/kafka-kong-zhi-qi/
+https://wangyixin-tom.github.io/2021/03/28/kafka-broker-qing-qiu-chu-li/
+https://wangyixin-tom.github.io/2021/03/28/kafka-fu-ben/
 https://wangyixin-tom.github.io/2021/03/23/kafka-xiao-fei-zhe/
 https://wangyixin-tom.github.io/2021/03/23/kafka-jing-que-yi-ci/
 https://wangyixin-tom.github.io/2021/03/23/kafka-lan-jie-qi/
