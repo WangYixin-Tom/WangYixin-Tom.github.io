@@ -266,7 +266,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/9.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/10.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -421,14 +421,14 @@
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    237
+                    541
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    2 分
                 </div>
                 
                 
@@ -444,8 +444,7 @@
 <h3 id="查询"><a href="#查询" class="headerlink" title="查询"></a>查询</h3><pre class="line-numbers language-shell"><code class="language-shell"># 查询所有主题的列表
 bin/kafka-topics.sh --bootstrap-server broker_host:port --list
 # 查询单个主题的详细数据
-
-bin/kafka-topics.sh --bootstrap-server broker_host:port --describe --topic <topic_name><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+bin/kafka-topics.sh --bootstrap-server broker_host:port --describe --topic <topic_name><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 <h3 id="修改"><a href="#修改" class="headerlink" title="修改"></a>修改</h3><pre class="line-numbers language-shell"><code class="language-shell"># 增加分区
 bin/kafka-topics.sh --bootstrap-server broker_host:port --alter --topic <topic_name> --partitions <新分区数>
 
@@ -453,16 +452,35 @@ bin/kafka-topics.sh --bootstrap-server broker_host:port --alter --topic <topic_n
 bin/kafka-configs.sh --zookeeper zookeeper_host:port --entity-type topics --entity-name <topic_name> --alter --add-config max.message.bytes=10485760
 
 # 变更副本数
- kafka-reassign-partitions 
+# reassign.json
+{"version":1, "partitions":[
+ {"topic":"__consumer_offsets","partition":0,"replicas":[0,1,2]}, 
+  {"topic":"__consumer_offsets","partition":1,"replicas":[0,2,1]},
+  {"topic":"__consumer_offsets","partition":2,"replicas":[1,0,2]},
+  {"topic":"__consumer_offsets","partition":3,"replicas":[1,2,0]},
+  ...
+  {"topic":"__consumer_offsets","partition":49,"replicas":[0,1,2]}
+]}` 
+bin/kafka-reassign-partitions.sh --zookeeper zookeeper_host:port --reassignment-json-file reassign.json --execute
 
  # 修改test主题限速
 bin/kafka-configs.sh --zookeeper zookeeper_host:port --alter --add-config 'leader.replication.throttled.rate=104857600,follower.replication.throttled.rate=104857600' --entity-type brokers --entity-name 0
 bin/kafka-configs.sh --zookeeper zookeeper_host:port --alter --add-config 'leader.replication.throttled.replicas=*,follower.replication.throttled.replicas=*' --entity-type topics --entity-name test
 
 # 主题分区迁移
-kafka-reassign-partitions<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h3><pre class="line-numbers language-shell"><code class="language-shell">
-bin/kafka-topics.sh --bootstrap-server broker_host:port --delete  --topic <topic_name><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+kafka-reassign-partitions<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h3><pre class="line-numbers language-shell"><code class="language-shell">bin/kafka-topics.sh --bootstrap-server broker_host:port --delete  --topic <topic_name><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h2 id="特殊主体管理"><a href="#特殊主体管理" class="headerlink" title="特殊主体管理"></a>特殊主体管理</h2><h3 id="查看消费者组提交的位移数"><a href="#查看消费者组提交的位移数" class="headerlink" title="查看消费者组提交的位移数"></a>查看消费者组提交的位移数</h3><pre class="line-numbers language-shell"><code class="language-shell">bin/kafka-console-consumer.sh --bootstrap-server kafka_host:port --topic __consumer_offsets --formatter "kafka.coordinator.group.GroupMetadataManager\$OffsetsMessageFormatter" --from-beginning<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="查看消费者组的状态信息"><a href="#查看消费者组的状态信息" class="headerlink" title="查看消费者组的状态信息"></a>查看消费者组的状态信息</h3><pre class="line-numbers language-shell"><code class="language-shell">bin/kafka-console-consumer.sh --bootstrap-server kafka_host:port --topic __consumer_offsets --formatter "kafka.coordinator.group.GroupMetadataManager\$GroupMetadataMessageFormatter" --from-beginning<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h2 id="常见主题错误处理"><a href="#常见主题错误处理" class="headerlink" title="常见主题错误处理"></a>常见主题错误处理</h2><h3 id="主题删除失败"><a href="#主题删除失败" class="headerlink" title="主题删除失败"></a>主题删除失败</h3><ul>
+<li>副本所在的 Broker 宕机了；–重启即可</li>
+<li>待删除主题的部分分区依然在执行迁移过程</li>
+</ul>
+<p><strong>解决</strong></p>
+<p>第 1 步，手动删除 ZooKeeper 节点 /admin/delete_topics 下以待删除主题为名的 znode。</p>
+<p>第 2 步，手动删除该主题在磁盘上的分区目录。</p>
+<p>第 3 步，在 ZooKeeper 中执行 rmr  /controller，触发 Controller 重选举，刷新 Controller 缓存。–非必须，可能造成大面积的分区 Leader 重选举</p>
+<h3 id="consumer-offsets-占用太多的磁盘"><a href="#consumer-offsets-占用太多的磁盘" class="headerlink" title="_consumer_offsets 占用太多的磁盘"></a>_consumer_offsets 占用太多的磁盘</h3><p> jstack 命令查看一下 kafka-log-cleaner-thread 前缀的线程状态。通常情况下，这都是因为该线程挂掉了，无法及时清理此内部主题。</p>
 
             </div>
             <hr />
@@ -947,30 +965,30 @@ bin/kafka-topics.sh --bootstrap-server broker_host:port --delete  --topic <topic
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
-            </div>
+                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/03/28/kafka-zhu-ti-guan-li/">
+                <a href="/2021/03/29/kafka-jiao-ben/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="kafka主题管理">
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="kafka脚本">
                         
-                        <span class="card-title">kafka主题管理</span>
+                        <span class="card-title">kafka脚本</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            主题增删改查创建bin/kafka-topics.sh --bootstrap-server broker_host:port --create --topic my_topic_name  --partitions 1 --replica
+                            生产消息# 使用控制台来向 Kafka 的指定主题发送消息
+$ bin/kafka-console-producer.sh --broker-list kafka-host:port --topic test-topic --request
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-03-28
-                            </span>
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2021-03-29
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
@@ -983,7 +1001,6 @@ bin/kafka-topics.sh --bootstrap-server broker_host:port --delete  --topic <topic
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
@@ -1006,7 +1023,7 @@ bin/kafka-topics.sh --bootstrap-server broker_host:port --delete  --topic <topic
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="kafka高水位和Leader Epoch">
+                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="kafka高水位和Leader Epoch">
                         
                         <span class="card-title">kafka高水位和Leader Epoch</span>
                     </div>
@@ -1217,7 +1234,7 @@ LEO(Log E
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">43k</span>
+            <span class="white-color">45.9k</span>
             
 
             <br>

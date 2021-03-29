@@ -271,7 +271,7 @@ zookeeper.connect：zookee">
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/16.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/17.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -426,14 +426,14 @@ zookeeper.connect：zookee">
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    590
+                    1.1k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    2 分
+                    4 分
                 </div>
                 
                 
@@ -492,6 +492,47 @@ $&gt; bin/kafka-server-start.sh config/server.properties</code></pre><h2 id="操
 <p>文件系统类型：最好选择xfs</p>
 <p>Swap：设置成一个比较小的值，当开始使用 swap 空间时，能够观测到 Broker 性能开始出现急剧下降，避免直接OOM，从而给你进一步调优和诊断问题的时间。</p>
 <p>提交时间（Flush 落盘时间）：适当地增加提交间隔来降低物理磁盘的写操作</p>
+<h2 id="动态-Broker-参数配置"><a href="#动态-Broker-参数配置" class="headerlink" title="动态 Broker 参数配置"></a>动态 Broker 参数配置</h2><p><strong>配置的类别</strong></p>
+<p>read-only。只有重启 Broker，才能令修改生效。</p>
+<p>per-broker。修改它之后，只会在对应的 Broker 上生效。</p>
+<p>cluster-wide。被修改它之后，会在整个集群范围内生效。</p>
+<p><strong>使用场景</strong></p>
+<ul>
+<li>动态调整 Broker 端各种线程池大小，实时应对突发流量。</li>
+<li>动态调整 Broker 端连接信息或安全配置信息。</li>
+<li>动态更新 SSL Keystore 有效期。</li>
+<li>动态调整 Broker 端 Compact 操作性能。</li>
+<li>实时变更 JMX 指标收集器 (JMX Metrics Reporter)。</li>
+</ul>
+<p><strong>实现</strong></p>
+<p>Kafka 将动态 Broker 参数保存在 ZooKeeper 中，具体的 znode 路径如下图所示。</p>
+<p><a href="atoconfig.png"></a></p>
+<p>changes 是用来实时监测动态参数变更的；</p>
+<p>topics 是用来保存 Kafka 主题级别参数的。不属于动态 Broker 端参数，但支持动态变更的。</p>
+<p>users 和 clients 则是用于动态调整客户端配额（Quota）的 znode 节点。连入集群的客户端的吞吐量或者是限定它们使用的 CPU 资源。</p>
+<p>/config/brokers znode 才是保存动态 Broker 参数。第一类子节点&lt; default &gt;，保存 cluster-wide 动态参数；另一类则以 broker.id 为名，保存 Broker 的 per-broker 范围参数。</p>
+<p><strong>设置</strong></p>
+<pre class="line-numbers language-shell"><code class="language-shell"># 设置 cluster-wide 范围值,entity-default
+$ bin/kafka-configs.sh --bootstrap-server kafka-host:port --entity-type brokers --entity-default --alter --add-config unclean.leader.election.enable=true
+# 查看设置
+$ bin/kafka-configs.sh --bootstrap-server kafka-host:port --entity-type brokers --entity-default --describe
+# 设置ID 为 1 的 Broker
+$ bin/kafka-configs.sh --bootstrap-server kafka-host:port --entity-type brokers --entity-name 1 --alter --add-config unclean.leader.election.enable=false
+# 查看设置
+$ bin/kafka-configs.sh --bootstrap-server kafka-host:port --entity-type brokers --entity-name 1 --describe
+
+
+# 删除cluster-wide范围参数，删除动态参数要指定 delete-config
+$ bin/kafka-configs.sh --bootstrap-server kafka-host:port --entity-type brokers --entity-default --alter --delete-config unclean.leader.election.enable
+
+# 删除per-broker范围参数，删除动态参数要指定 delete-config
+$ bin/kafka-configs.sh --bootstrap-server kafka-host:port --entity-type brokers --entity-name 1 --alter --delete-config unclean.leader.election.enable<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><strong>常用动态参数</strong></p>
+<ul>
+<li>log.retention.ms：日志留存时间</li>
+<li>num.io.threads 和 num.network.threads:Broker 端请求处理能力经常要按需扩容。</li>
+<li>num.replica.fetchers：执行 Follower 副本向 Leader 副本的拉取。</li>
+</ul>
 
             </div>
             <hr />
@@ -984,7 +1025,7 @@ $&gt; bin/kafka-server-start.sh config/server.properties</code></pre><h2 id="操
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="redis思维导图">
+                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="redis思维导图">
                         
                         <span class="card-title">redis思维导图</span>
                     </div>
@@ -1034,7 +1075,7 @@ $&gt; bin/kafka-server-start.sh config/server.properties</code></pre><h2 id="操
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="redis6.0">
+                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="redis6.0">
                         
                         <span class="card-title">redis6.0</span>
                     </div>
@@ -1243,7 +1284,7 @@ $&gt; bin/kafka-server-start.sh config/server.properties</code></pre><h2 id="操
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">43k</span>
+            <span class="white-color">45.9k</span>
             
 
             <br>
