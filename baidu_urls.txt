@@ -1,3 +1,4 @@
+https://wangyixin-tom.github.io/2021/03/30/kafka-diao-you/
 https://wangyixin-tom.github.io/2021/03/29/kafka-shou-quan/
 https://wangyixin-tom.github.io/2021/03/29/kafka-ren-zheng/
 https://wangyixin-tom.github.io/2021/03/29/kafkaadminclient/

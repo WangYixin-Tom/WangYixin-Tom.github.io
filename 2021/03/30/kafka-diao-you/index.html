@@ -4,15 +4,13 @@
 
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="kafka拦截器, Python rabbitmq redis flask">
+    <meta name="keywords" content="kafka调优, Python rabbitmq redis flask">
     <meta name="baidu-site-verification" content="code-KoKq36g1n2">
     <meta name="google-site-verification" content="yCy2azpds5XSuGZvis6OuA-XIGF5GuGpYRAaGfD6o48">
     <meta name="360-site-verification" content="b7c11a830ef90fd1464ad6206bb7b6e7">
-    <meta name="description" content="Kafka 拦截器分为生产者拦截器和消费者拦截器。
-生产者拦截器允许你在发送消息前以及消息提交成功后植入你的拦截器逻辑；
-而消费者拦截器支持在消费消息前以及提交位移后编写特定逻辑。
-使用
-当前 Kafka 拦截器的设置方法是通过参数配置完成">
+    <meta name="description" content="调优目标吞吐量，也就是 TPS，是指 Broker 端进程或 Client 端应用程序每秒能处理的字节数或消息数。
+延时，表示从 Producer 端发送消息到 Broker 端持久化完成之间的时间间隔。
+优化操作系统调优1、最好在挂载（M">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -20,7 +18,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>kafka拦截器 | wangyixin-tom的博客</title>
+    <title>kafka调优 | wangyixin-tom的博客</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -270,13 +268,13 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/4.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        kafka拦截器
+                        kafka调优
                     </div>
                 </div>
             </div>
@@ -411,7 +409,7 @@
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-03-23
+                    2021-03-30
                 </div>
 
                 <div class="post-author info-break-policy">
@@ -425,7 +423,7 @@
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    653
+                    685
                 </div>
                 
 
@@ -443,93 +441,26 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>Kafka 拦截器分为生产者拦截器和消费者拦截器。</p>
-<p>生产者拦截器允许你在发送消息前以及消息提交成功后植入你的拦截器逻辑；</p>
-<p>而消费者拦截器支持在消费消息前以及提交位移后编写特定逻辑。</p>
-<p><strong>使用</strong></p>
-<p>当前 Kafka 拦截器的设置方法是通过参数配置完成的。生产者和消费者两端有一个相同的参数，名字叫 interceptor.classes，它指定的是一组类的列表，每个类就是特定逻辑的拦截器实现类。</p>
-<pre class="line-numbers language-java"><code class="language-java">
-Properties props <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Properties</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-List<span class="token operator">&lt;</span>String<span class="token operator">></span> interceptors <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-interceptors<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token string">"com.yourcompany.kafkaproject.interceptors.AddTimestampInterceptor"</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 拦截器1</span>
-interceptors<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token string">"com.yourcompany.kafkaproject.interceptors.UpdateCounterInterceptor"</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 拦截器2</span>
-props<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>ProducerConfig<span class="token punctuation">.</span>INTERCEPTOR_CLASSES_CONFIG<span class="token punctuation">,</span> interceptors<span class="token punctuation">)</span><span class="token punctuation">;</span>
-……<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>AddTimeStampInterceptor 和 UpdateCounterInterceptor 这两个类以及你自己编写的所有 Producer 端拦截器实现类都要继承 org.apache.kafka.clients.producer.ProducerInterceptor 接口。该接口是 Kafka 提供的，里面有两个核心的方法。</p>
-<ul>
-<li>onSend：该方法会在消息发送之前被调用。如果你想在发送之前对消息“美美容”。</li>
-<li>onAcknowledgement：该方法会在消息成功提交或发送失败之后被调用。onAcknowledgement 的调用要早于 callback 的调用。</li>
-</ul>
-<p>消费者拦截器具体的实现类要实现 org.apache.kafka.clients.consumer.ConsumerInterceptor 接口，这里面也有两个核心方法。</p>
-<ul>
-<li>onConsume：该方法在消息返回给 Consumer 程序之前调用。也就是说在开始正式处理消息之前，拦截器会先拦一道，搞一些事情，之后再返回给你。</li>
-<li>onCommit：Consumer 在提交位移之后调用该方法。通常你可以在该方法中做一些记账类的动作，比如打日志等。</li>
-</ul>
-<p><strong>场景</strong></p>
-<p>Kafka 拦截器可以应用于包括客户端监控、端到端系统性能检测、消息审计等多种功能在内的场景。</p>
-<p>如：业务消息从被生产出来到最后被消费的平均总时长统计</p>
-<pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">// 生产者</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">AvgLatencyProducerInterceptor</span> <span class="token keyword">implements</span> <span class="token class-name">ProducerInterceptor</span><span class="token operator">&lt;</span>String<span class="token punctuation">,</span> String<span class="token operator">></span> <span class="token punctuation">{</span>
-
-
-    <span class="token keyword">private</span> Jedis jedis<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 省略Jedis初始化</span>
-
-
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> ProducerRecord<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> String<span class="token operator">></span> <span class="token function">onSend</span><span class="token punctuation">(</span>ProducerRecord<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> String<span class="token operator">></span> record<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        jedis<span class="token punctuation">.</span><span class="token function">incr</span><span class="token punctuation">(</span><span class="token string">"totalSentMessage"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">return</span> record<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-
-
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">onAcknowledgement</span><span class="token punctuation">(</span>RecordMetadata metadata<span class="token punctuation">,</span> Exception exception<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token punctuation">}</span>
-
-
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token punctuation">}</span>
-
-
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">configure</span><span class="token punctuation">(</span>Map<span class="token operator">&lt;</span>java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span>String<span class="token punctuation">,</span> <span class="token operator">?</span><span class="token operator">></span> configs<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token punctuation">}</span>
- <span class="token comment" spellcheck="true">//消费者</span>
-
-
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">AvgLatencyConsumerInterceptor</span> <span class="token keyword">implements</span> <span class="token class-name">ConsumerInterceptor</span><span class="token operator">&lt;</span>String<span class="token punctuation">,</span> String<span class="token operator">></span> <span class="token punctuation">{</span>
-
-
-    <span class="token keyword">private</span> Jedis jedis<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//省略Jedis初始化</span>
-
-
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> ConsumerRecords<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> String<span class="token operator">></span> <span class="token function">onConsume</span><span class="token punctuation">(</span>ConsumerRecords<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> String<span class="token operator">></span> records<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">long</span> lantency <span class="token operator">=</span> 0L<span class="token punctuation">;</span>
-        <span class="token keyword">for</span> <span class="token punctuation">(</span>ConsumerRecord<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> String<span class="token operator">></span> record <span class="token operator">:</span> records<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            lantency <span class="token operator">+=</span> <span class="token punctuation">(</span>System<span class="token punctuation">.</span><span class="token function">currentTimeMillis</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> record<span class="token punctuation">.</span><span class="token function">timestamp</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-        jedis<span class="token punctuation">.</span><span class="token function">incrBy</span><span class="token punctuation">(</span><span class="token string">"totalLatency"</span><span class="token punctuation">,</span> lantency<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">long</span> totalLatency <span class="token operator">=</span> Long<span class="token punctuation">.</span><span class="token function">parseLong</span><span class="token punctuation">(</span>jedis<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">"totalLatency"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">long</span> totalSentMsgs <span class="token operator">=</span> Long<span class="token punctuation">.</span><span class="token function">parseLong</span><span class="token punctuation">(</span>jedis<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">"totalSentMessage"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        jedis<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token string">"avgLatency"</span><span class="token punctuation">,</span> String<span class="token punctuation">.</span><span class="token function">valueOf</span><span class="token punctuation">(</span>totalLatency <span class="token operator">/</span> totalSentMsgs<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">return</span> records<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-
-
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">onCommit</span><span class="token punctuation">(</span>Map<span class="token operator">&lt;</span>TopicPartition<span class="token punctuation">,</span> OffsetAndMetadata<span class="token operator">></span> offsets<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token punctuation">}</span>
-
-
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token punctuation">}</span>
-
-
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">configure</span><span class="token punctuation">(</span>Map<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> <span class="token operator">?</span><span class="token operator">></span> configs<span class="token punctuation">)</span> <span class="token punctuation">{</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+                <h2 id="调优目标"><a href="#调优目标" class="headerlink" title="调优目标"></a>调优目标</h2><p>吞吐量，也就是 TPS，是指 Broker 端进程或 Client 端应用程序每秒能处理的字节数或消息数。</p>
+<p>延时，表示从 Producer 端发送消息到 Broker 端持久化完成之间的时间间隔。</p>
+<h2 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h2><h3 id="操作系统调优"><a href="#操作系统调优" class="headerlink" title="操作系统调优"></a>操作系统调优</h3><p>1、最好在挂载（Mount）文件系统时禁掉 atime 更新。atime 的全称是 access time，记录的是文件最后被访问的时间。可以避免 inode 访问时间的写入操作，减少文件系统的写操作数。</p>
+<p>2、建议将 swappiness 设置成一个很小的值，比如 1～10 之间，以防止 Linux 的 OOM Killer 开启随意杀掉进程</p>
+<p>3、ulimit -n 不宜太小</p>
+<p>4、给 Kafka 预留的页缓存越大越好，预留出一个日志段大小，至少能保证 Kafka 可以将整个日志段全部放入页缓存，这样，消费者程序在消费时能直接命中页缓存，从而避免昂贵的物理磁盘 I/O 操作。</p>
+<h3 id="JVM-层调优"><a href="#JVM-层调优" class="headerlink" title="JVM 层调优"></a>JVM 层调优</h3><ol>
+<li>设置堆大小。6～8GB</li>
+<li>GC 收集器使用 G1 收集器。</li>
+</ol>
+<h3 id="Broker-端调优"><a href="#Broker-端调优" class="headerlink" title="Broker 端调优"></a>Broker 端调优</h3><p>保持客户端版本和 Broker 端版本一致。</p>
+<h3 id="应用层调优"><a href="#应用层调优" class="headerlink" title="应用层调优"></a>应用层调优</h3><p>1、不要频繁地创建 Producer 和 Consumer 对象实例。构造这些对象的开销很大，尽量复用它们。</p>
+<p>2、用完及时关闭。这些对象底层会创建很多物理资源，如 Socket 连接、ByteBuffer 缓冲区等。不及时关闭的话，势必造成资源泄露。3、合理利用多线程来改善性能。生产者、消费者多线程。</p>
+<h2 id="性能指标调优"><a href="#性能指标调优" class="headerlink" title="性能指标调优"></a>性能指标调优</h2><h3 id="调优吞吐量"><a href="#调优吞吐量" class="headerlink" title="调优吞吐量"></a>调优吞吐量</h3><p>1、broker 端参数 num.replica.fetchers 表示的是 Follower 副本用多少个线程来拉取消息，默认使用 1 个线程。如果你的 Broker 端 CPU 资源很充足，不妨适当调大该参数值，加快 Follower 副本的同步速度。</p>
+<p>2、在 Producer 端，如果要改善吞吐量，通常的标配是增加消息批次的大小以及批次缓存时间，即 batch.size 和 linger.ms。</p>
+<p>3、压缩算法也配置上，以减少网络 I/O 传输量，从而间接提升吞吐量。当前，和 Kafka 适配最好的两个压缩算法是 LZ4 和 zstd</p>
+<p>4、Consumer端使用多线程方案</p>
+<h3 id="调优延时"><a href="#调优延时" class="headerlink" title="调优延时"></a>调优延时</h3><p>1、在 Broker 端，我们依然要增加 num.replica.fetchers 值以加快 Follower 副本的拉取速度，减少整个消息处理的延时</p>
+<p>2、设置 linger.ms=0，同时不要启用压缩。因为压缩操作本身要消耗 CPU 时间。</p>
+<p>3、Consumer 端，我们保持 fetch.min.bytes=1 即可，也就是说，只要 Broker 端有能返回的数据，立即令其返回给 Consumer，缩短 Consumer 消费延时。</p>
 
             </div>
             <hr />
@@ -688,9 +619,9 @@ props<span class="token punctuation">.</span><span class="token function">put</s
             <br/>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
                   property="dct:title" rel="dct:type">
-                    《kafka拦截器》
+                    《kafka调优》
                 </span> 由
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2021/03/23/kafka-lan-jie-qi/" property="cc:attributionName"
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2021/03/30/kafka-diao-you/" property="cc:attributionName"
                rel="cc:attributionURL">
                 wangyixin-tom
             </a> 采用
@@ -731,7 +662,7 @@ props<span class="token punctuation">.</span><span class="token function">put</s
         repo: 'wangyixin-tom.github.io',
         owner: 'WangYixin-Tom',
         admin: "WangYixin-Tom",
-        id: '2021/03/23/kafka-lan-jie-qi/',
+        id: '2021/03/30/kafka-diao-you/',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -1014,30 +945,32 @@ props<span class="token punctuation">.</span><span class="token function">put</s
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/03/23/kafka-jing-que-yi-ci/">
+                <a href="/2021/03/30/kafka-diao-you/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="kafka精确一次">
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="kafka调优">
                         
-                        <span class="card-title">kafka精确一次</span>
+                        <span class="card-title">kafka调优</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            kafka通过幂等性（Idempotence）和事务（Transaction）实现消息精确一次（exactly once)的可靠性保障。
-幂等性 Producer设置props.put(“enable.idempotence”, ture)
+                            调优目标吞吐量，也就是 TPS，是指 Broker 端进程或 Client 端应用程序每秒能处理的字节数或消息数。
+延时，表示从 Producer 端发送消息到 Broker 端持久化完成之间的时间间隔。
+优化操作系统调优1、最好在挂载（M
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2021-03-23
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-03-30
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
@@ -1050,6 +983,7 @@ props<span class="token punctuation">.</span><span class="token function">put</s
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -1068,26 +1002,27 @@ props<span class="token punctuation">.</span><span class="token function">put</s
                 下一篇&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/03/23/kafka-xiao-xi-diu-shi/">
+                <a href="/2021/03/29/kafka-shou-quan/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="kafka消息丢失">
+                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="kafka授权">
                         
-                        <span class="card-title">kafka消息丢失</span>
+                        <span class="card-title">kafka授权</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            kafka 只对“已提交”的消息（committed message）做有限度的持久化保证。
-
-不要使用 producer.send(msg)，而要使用 producer.send(msg, callback)。记住，一定要使用带有回调通知
+                            授权，一般是指对与信息安全或计算机安全相关的资源授予访问权限，特别是存取控制。
+Kafka用的是 ACL 模型，规定了什么用户对什么资源有什么样的访问权限。
+kafka-acls 脚本# Alice 增加了集群级别的所有权限
+$ kafka
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-03-23
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-03-29
                             </span>
                         <span class="publish-author">
                             
