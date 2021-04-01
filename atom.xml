@@ -182,7 +182,7 @@
     <link href="https://wangyixin-tom.github.io/2021/03/28/kafka-gao-shui-wei-he-leader-epoch/"/>
     <id>https://wangyixin-tom.github.io/2021/03/28/kafka-gao-shui-wei-he-leader-epoch/</id>
     <published>2021-03-28T12:07:34.000Z</published>
-    <updated>2021-03-28T13:48:15.272Z</updated>
+    <updated>2021-04-01T14:58:17.043Z</updated>
     
     <summary type="html">
     
@@ -208,7 +208,7 @@
     <link href="https://wangyixin-tom.github.io/2021/03/28/kafka-kong-zhi-qi/"/>
     <id>https://wangyixin-tom.github.io/2021/03/28/kafka-kong-zhi-qi/</id>
     <published>2021-03-28T11:48:00.000Z</published>
-    <updated>2021-03-28T12:06:46.007Z</updated>
+    <updated>2021-04-01T14:48:54.227Z</updated>
     
     <summary type="html">
     
@@ -235,7 +235,7 @@
     <link href="https://wangyixin-tom.github.io/2021/03/28/kafka-broker-qing-qiu-chu-li/"/>
     <id>https://wangyixin-tom.github.io/2021/03/28/kafka-broker-qing-qiu-chu-li/</id>
     <published>2021-03-28T09:58:17.000Z</published>
-    <updated>2021-03-28T10:17:37.388Z</updated>
+    <updated>2021-04-01T14:43:04.816Z</updated>
     
     <summary type="html">
     
@@ -290,7 +290,7 @@
     <link href="https://wangyixin-tom.github.io/2021/03/23/kafka-xiao-fei-zhe/"/>
     <id>https://wangyixin-tom.github.io/2021/03/23/kafka-xiao-fei-zhe/</id>
     <published>2021-03-23T13:07:18.000Z</published>
-    <updated>2021-03-29T11:50:29.931Z</updated>
+    <updated>2021-04-01T14:32:44.298Z</updated>
     
     <summary type="html">
     
@@ -316,7 +316,7 @@
     <link href="https://wangyixin-tom.github.io/2021/03/23/kafka-jing-que-yi-ci/"/>
     <id>https://wangyixin-tom.github.io/2021/03/23/kafka-jing-que-yi-ci/</id>
     <published>2021-03-23T12:59:45.000Z</published>
-    <updated>2021-03-23T13:06:30.634Z</updated>
+    <updated>2021-04-01T13:04:14.891Z</updated>
     
     <summary type="html">
     
@@ -324,8 +324,8 @@
       
         
         
-          &lt;p&gt;kafka通过幂等性（Idempotence）和事务（Transaction）实现消息精确一次（exactly once)的可靠性保障。&lt;/p&gt;
-&lt;h2 id=&quot;幂等性-Producer&quot;&gt;&lt;a href=&quot;#幂等性-Producer&quot;
+          &lt;p&gt;kafka通过&lt;strong&gt;幂等性（Idempotence）&lt;/strong&gt;和&lt;strong&gt;事务（Transaction）&lt;/strong&gt;实现消息精确一次（exactly once）的可靠性保障。&lt;/p&gt;
+&lt;h2 id=&quot;幂等性-Producer&quot;&gt;&lt;a
         
       
     
@@ -343,7 +343,7 @@
     <link href="https://wangyixin-tom.github.io/2021/03/23/kafka-lan-jie-qi/"/>
     <id>https://wangyixin-tom.github.io/2021/03/23/kafka-lan-jie-qi/</id>
     <published>2021-03-23T11:18:48.000Z</published>
-    <updated>2021-03-23T11:32:43.702Z</updated>
+    <updated>2021-04-01T12:55:41.206Z</updated>
     
     <summary type="html">
     
@@ -369,7 +369,7 @@
     <link href="https://wangyixin-tom.github.io/2021/03/23/kafka-xiao-xi-diu-shi/"/>
     <id>https://wangyixin-tom.github.io/2021/03/23/kafka-xiao-xi-diu-shi/</id>
     <published>2021-03-23T11:13:33.000Z</published>
-    <updated>2021-03-23T11:18:27.829Z</updated>
+    <updated>2021-04-01T12:50:51.806Z</updated>
     
     <summary type="html">
     
@@ -377,9 +377,8 @@
       
         
         
-          &lt;p&gt;kafka 只对“已提交”的消息（committed message）做有限度的持久化保证。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;不要使用 producer.send(msg)，而要使用 producer.send(msg, callback)。记住，一定要使用带有回调通知的
+          &lt;p&gt;kafka 只对“已提交”的消息（committed ）做有限度的持久化保证。&lt;/p&gt;
+&lt;h2 id=&quot;避免消息丢失&quot;&gt;&lt;a href=&quot;#避免消息丢失&quot; class=&quot;headerlink&quot;
         
       
     
@@ -397,7 +396,7 @@
     <link href="https://wangyixin-tom.github.io/2021/03/23/kafka-sheng-chan-zhe/"/>
     <id>https://wangyixin-tom.github.io/2021/03/23/kafka-sheng-chan-zhe/</id>
     <published>2021-03-23T10:45:20.000Z</published>
-    <updated>2021-03-23T12:59:41.318Z</updated>
+    <updated>2021-04-01T12:35:29.605Z</updated>
     
     <summary type="html">
     

@@ -14,7 +14,7 @@
 定义消息可见性，即用来标识分区下的哪些消息是可以被消费者消费的。
 帮助 Kafka 完成副本同步。
 
-LEO(Log E">
+LEO（Log E">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -272,7 +272,7 @@ LEO(Log E">
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/10.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -427,7 +427,7 @@ LEO(Log E">
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    432
+                    438
                 </div>
                 
 
@@ -451,29 +451,26 @@ LEO(Log E">
 <li>定义消息可见性，即用来标识分区下的哪些消息是可以被消费者消费的。</li>
 <li>帮助 Kafka 完成副本同步。</li>
 </ul>
-<p><strong>LEO(Log End Offset)</strong></p>
-<p>表示副本写入下一条消息的位移值。</p>
-<h2 id="高水位更新机制"><a href="#高水位更新机制" class="headerlink" title="高水位更新机制"></a>高水位更新机制</h2><p><a href="water.jpg"></a></p>
-<p><a href="watertime.jpg"></a></p>
-<p><strong>Leader 副本</strong></p>
-<p><strong>处理生产者请求</strong>的逻辑如下：</p>
+<p><strong>LEO（Log End Offset）</strong>表示副本写入下一条消息的位移值。</p>
+<h2 id="高水位更新机制"><a href="#高水位更新机制" class="headerlink" title="高水位更新机制"></a>高水位更新机制</h2><p><img src="water.jpg" alt></p>
+<p><img src="watertime.jpg" alt></p>
+<h3 id="Leader-副本高水位"><a href="#Leader-副本高水位" class="headerlink" title="Leader 副本高水位"></a><strong>Leader 副本高水位</strong></h3><p><strong>处理生产者请求</strong>的逻辑如下：</p>
 <p>1、写入消息到本地磁盘。</p>
 <p>2、更新分区高水位值。</p>
 <p>i. 获取 Leader 副本所在 Broker 端保存的所有远程副本 LEO 值（LEO-1，LEO-2，……，LEO-n）。</p>
 <p>ii. 获取 Leader 副本高水位值：currentHW。</p>
-<p>iii. 更新 <strong>currentHW = max{currentHW, min（LEO-1, LEO-2, ……，LEO-n）}</strong>。</p>
+<p>iii. 更新 <code>currentHW = max{currentHW, min（LEO-1, LEO-2, ……，LEO-n）}</code>。</p>
 <p><strong>处理 Follower 副本拉取消息</strong>的逻辑如下：</p>
 <p>1、读取磁盘（或页缓存）中的消息数据。</p>
 <p>2、使用 Follower 副本发送请求中的位移值更新远程副本 LEO 值。</p>
 <p>3、更新分区高水位值（具体步骤与处理生产者请求的步骤相同）。</p>
-<p><strong>Follower 副本</strong></p>
-<p><strong>从 Leader 拉取消息的处理逻辑</strong>如下：</p>
+<h3 id="Follower-副本高水位"><a href="#Follower-副本高水位" class="headerlink" title="Follower 副本高水位"></a><strong>Follower 副本高水位</strong></h3><p><strong>从 Leader 拉取消息的处理逻辑</strong>如下：</p>
 <p>1、写入消息到本地磁盘。</p>
 <p>2、更新 LEO 值。</p>
 <p>3、更新高水位值。</p>
 <p>i. 获取 Leader 发送的高水位值：currentHW。</p>
 <p>ii. 获取步骤 2 中更新过的 LEO 值：currentLEO。</p>
-<p>iii. 更新高水位为 min(currentHW, currentLEO)。</p>
+<p>iii. 更新高水位为 <code>min(currentHW, currentLEO)</code>。</p>
 <h2 id="Leader-Epoch"><a href="#Leader-Epoch" class="headerlink" title="Leader Epoch"></a>Leader Epoch</h2><p>它由两部分数据组成。</p>
 <ul>
 <li>Epoch。一个单调增加的版本号。每当副本领导权发生变更时，都会增加该版本号。小版本号的 Leader 被认为是过期 Leader，不能再行使 Leader 权力。</li>
@@ -971,7 +968,7 @@ LEO(Log E">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="kafka主题管理">
+                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="kafka主题管理">
                         
                         <span class="card-title">kafka主题管理</span>
                     </div>
@@ -1020,7 +1017,7 @@ LEO(Log E">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="Kafka控制器">
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="Kafka控制器">
                         
                         <span class="card-title">Kafka控制器</span>
                     </div>
@@ -1226,7 +1223,7 @@ LEO(Log E">
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">46.6k</span>
+            <span class="white-color">46.4k</span>
             
 
             <br>

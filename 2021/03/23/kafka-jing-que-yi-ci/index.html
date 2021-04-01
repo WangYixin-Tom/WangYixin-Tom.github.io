@@ -8,7 +8,7 @@
     <meta name="baidu-site-verification" content="code-KoKq36g1n2">
     <meta name="google-site-verification" content="yCy2azpds5XSuGZvis6OuA-XIGF5GuGpYRAaGfD6o48">
     <meta name="360-site-verification" content="b7c11a830ef90fd1464ad6206bb7b6e7">
-    <meta name="description" content="kafka通过幂等性（Idempotence）和事务（Transaction）实现消息精确一次（exactly once)的可靠性保障。
+    <meta name="description" content="kafka通过幂等性（Idempotence）和事务（Transaction）实现消息精确一次（exactly once）的可靠性保障。
 幂等性 Producer设置props.put(“enable.idempotence”, ture)">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -267,7 +267,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/9.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -422,7 +422,7 @@
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    328
+                    329
                 </div>
                 
 
@@ -440,21 +440,20 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>kafka通过幂等性（Idempotence）和事务（Transaction）实现消息精确一次（exactly once)的可靠性保障。</p>
-<h2 id="幂等性-Producer"><a href="#幂等性-Producer" class="headerlink" title="幂等性 Producer"></a>幂等性 Producer</h2><p>设置props.put(“enable.idempotence”, ture)，或 props.put(ProducerConfig.ENABLE_IDEMPOTENCE_CONFIG， true)</p>
+                <p>kafka通过<strong>幂等性（Idempotence）</strong>和<strong>事务（Transaction）</strong>实现消息精确一次（exactly once）的可靠性保障。</p>
+<h2 id="幂等性-Producer"><a href="#幂等性-Producer" class="headerlink" title="幂等性 Producer"></a>幂等性 Producer</h2><p>设置<code>props.put(“enable.idempotence”, ture)</code>，或<code>props.put(ProducerConfig.ENABLE_IDEMPOTENCE_CONFIG， true)</code></p>
 <p><strong>底层原理：</strong>用空间去换时间的优化思路，即在 Broker 端多保存一些字段。当 Producer 发送了具有相同字段值的消息后，Broker 能够自动知晓这些消息已经重复了，于是可以在后台默默地把它们“丢弃”掉。</p>
 <p><strong>作用范围：</strong>它只能保证单分区上的幂等性，即一个幂等性 Producer 能够保证某个主题的一个分区上不出现重复消息，它无法实现多个分区的幂等性。其次，它只能实现单会话上的幂等性，不能实现跨会话的幂等性。</p>
-<p>多分区以及多会话上的消息无重复，需要事务（transaction）或者依赖事务型 Producer</p>
-<h2 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h2><p>事务型 Producer 能够保证将消息原子性地写入到多个分区中。这批消息要么全部写入成功，要么全部失败。</p>
+<p>多分区以及多会话上的消息无重复，需要依赖<strong>事务型 Producer</strong>.</p>
+<h2 id="事务型-Producer"><a href="#事务型-Producer" class="headerlink" title="事务型 Producer"></a><strong>事务型 Producer</strong></h2><p>事务型 Producer 能够保证将消息原子性地写入到多个分区中。这批消息要么全部写入成功，要么全部失败。</p>
 <p>设置事务型 Producer 的方法：</p>
 <ul>
-<li><p>开启 enable.idempotence = true。设</p>
+<li><p>开启<code>enable.idempotence = true</code>。</p>
 </li>
-<li><p>设置 Producer 端参数 transactional. id。最好为其设置一个有意义的名字。</p>
+<li><p>设置 Producer 端参数<code>transactional.id</code>。最好为其设置一个有意义的名字。</p>
 </li>
 </ul>
-<pre class="line-numbers language-java"><code class="language-java">
-producer<span class="token punctuation">.</span><span class="token function">initTransactions</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<pre class="line-numbers language-java"><code class="language-java">producer<span class="token punctuation">.</span><span class="token function">initTransactions</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token keyword">try</span> <span class="token punctuation">{</span>
     producer<span class="token punctuation">.</span><span class="token function">beginTransaction</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     producer<span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span>record1<span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -462,7 +461,8 @@ producer<span class="token punctuation">.</span><span class="token function">ini
     producer<span class="token punctuation">.</span><span class="token function">commitTransaction</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">KafkaException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
     producer<span class="token punctuation">.</span><span class="token function">abortTransaction</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><code>isolation.level</code>支持<code>read_uncommitted</code>和<code>read_committed</code></p>
 
             </div>
             <hr />
@@ -955,7 +955,7 @@ producer<span class="token punctuation">.</span><span class="token function">ini
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="kafka消费者">
+                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="kafka消费者">
                         
                         <span class="card-title">kafka消费者</span>
                     </div>
@@ -1007,7 +1007,7 @@ Group ID 是一个字符串，在一个 Kafka 集群中，它标识唯
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="kafka拦截器">
+                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="kafka拦截器">
                         
                         <span class="card-title">kafka拦截器</span>
                     </div>
@@ -1216,7 +1216,7 @@ Group ID 是一个字符串，在一个 Kafka 集群中，它标识唯
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">46.6k</span>
+            <span class="white-color">46.4k</span>
             
 
             <br>

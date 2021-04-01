@@ -270,7 +270,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/9.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -447,23 +447,21 @@
 <p>生产者拦截器允许你在发送消息前以及消息提交成功后植入你的拦截器逻辑；</p>
 <p>而消费者拦截器支持在消费消息前以及提交位移后编写特定逻辑。</p>
 <p><strong>使用</strong></p>
-<p>当前 Kafka 拦截器的设置方法是通过参数配置完成的。生产者和消费者两端有一个相同的参数，名字叫 interceptor.classes，它指定的是一组类的列表，每个类就是特定逻辑的拦截器实现类。</p>
-<pre class="line-numbers language-java"><code class="language-java">
-Properties props <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Properties</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<p>当前 Kafka 拦截器的设置方法是通过参数配置完成的。生产者和消费者两端有一个相同的参数，名字叫<code>interceptor.classes</code>，它指定的是一组类的列表，每个类就是特定逻辑的拦截器实现类。</p>
+<pre class="line-numbers language-java"><code class="language-java">Properties props <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Properties</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 List<span class="token operator">&lt;</span>String<span class="token operator">></span> interceptors <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 interceptors<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token string">"com.yourcompany.kafkaproject.interceptors.AddTimestampInterceptor"</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 拦截器1</span>
 interceptors<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token string">"com.yourcompany.kafkaproject.interceptors.UpdateCounterInterceptor"</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 拦截器2</span>
-props<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>ProducerConfig<span class="token punctuation">.</span>INTERCEPTOR_CLASSES_CONFIG<span class="token punctuation">,</span> interceptors<span class="token punctuation">)</span><span class="token punctuation">;</span>
-……<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>AddTimeStampInterceptor 和 UpdateCounterInterceptor 这两个类以及你自己编写的所有 Producer 端拦截器实现类都要继承 org.apache.kafka.clients.producer.ProducerInterceptor 接口。该接口是 Kafka 提供的，里面有两个核心的方法。</p>
+props<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>ProducerConfig<span class="token punctuation">.</span>INTERCEPTOR_CLASSES_CONFIG<span class="token punctuation">,</span> interceptors<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><code>AddTimeStampInterceptor</code> 和 <code>UpdateCounterInterceptor</code>这两个类以及你自己编写的所有 Producer 端拦截器实现类都要继承 <code>org.apache.kafka.clients.producer.ProducerInterceptor</code>接口。该接口是 Kafka 提供的，里面有两个核心的方法。</p>
 <ul>
-<li>onSend：该方法会在消息发送之前被调用。如果你想在发送之前对消息“美美容”。</li>
-<li>onAcknowledgement：该方法会在消息成功提交或发送失败之后被调用。onAcknowledgement 的调用要早于 callback 的调用。</li>
+<li><code>onSend</code>：该方法会在消息发送之前被调用。如果你想在发送之前对消息“美美容”。</li>
+<li><code>onAcknowledgement</code>：该方法会在消息成功提交或发送失败之后被调用。onAcknowledgement 的调用要早于 callback 的调用。</li>
 </ul>
-<p>消费者拦截器具体的实现类要实现 org.apache.kafka.clients.consumer.ConsumerInterceptor 接口，这里面也有两个核心方法。</p>
+<p>消费者拦截器具体的实现类要实现 <code>org.apache.kafka.clients.consumer.ConsumerInterceptor</code> 接口，这里面也有两个核心方法。</p>
 <ul>
-<li>onConsume：该方法在消息返回给 Consumer 程序之前调用。也就是说在开始正式处理消息之前，拦截器会先拦一道，搞一些事情，之后再返回给你。</li>
-<li>onCommit：Consumer 在提交位移之后调用该方法。通常你可以在该方法中做一些记账类的动作，比如打日志等。</li>
+<li><code>onConsume</code>：该方法在消息返回给 Consumer 程序之前调用。也就是说在开始正式处理消息之前，拦截器会先拦一道，搞一些事情，之后再返回给你。</li>
+<li><code>onCommit</code>：Consumer 在提交位移之后调用该方法。通常你可以在该方法中做一些记账类的动作，比如打日志等。</li>
 </ul>
 <p><strong>场景</strong></p>
 <p>Kafka 拦截器可以应用于包括客户端监控、端到端系统性能检测、消息审计等多种功能在内的场景。</p>
@@ -529,7 +527,9 @@ props<span class="token punctuation">.</span><span class="token function">put</s
 
 
     <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">configure</span><span class="token punctuation">(</span>Map<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> <span class="token operator">?</span><span class="token operator">></span> configs<span class="token punctuation">)</span> <span class="token punctuation">{</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">configure</span><span class="token punctuation">(</span>Map<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> <span class="token operator">?</span><span class="token operator">></span> configs<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
             </div>
             <hr />
@@ -1022,7 +1022,7 @@ props<span class="token punctuation">.</span><span class="token function">put</s
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="kafka精确一次">
+                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="kafka精确一次">
                         
                         <span class="card-title">kafka精确一次</span>
                     </div>
@@ -1030,7 +1030,7 @@ props<span class="token punctuation">.</span><span class="token function">put</s
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            kafka通过幂等性（Idempotence）和事务（Transaction）实现消息精确一次（exactly once)的可靠性保障。
+                            kafka通过幂等性（Idempotence）和事务（Transaction）实现消息精确一次（exactly once）的可靠性保障。
 幂等性 Producer设置props.put(“enable.idempotence”, ture)
                         
                     </div>
@@ -1072,7 +1072,7 @@ props<span class="token punctuation">.</span><span class="token function">put</s
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="kafka消息丢失">
+                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="kafka消息丢失">
                         
                         <span class="card-title">kafka消息丢失</span>
                     </div>
@@ -1080,9 +1080,9 @@ props<span class="token punctuation">.</span><span class="token function">put</s
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            kafka 只对“已提交”的消息（committed message）做有限度的持久化保证。
-
-不要使用 producer.send(msg)，而要使用 producer.send(msg, callback)。记住，一定要使用带有回调通知
+                            kafka 只对“已提交”的消息（committed ）做有限度的持久化保证。
+避免消息丢失
+不要使用 producer.send(msg)，而要使用producer.send(msg, callback)。一定要使用带有回调通知的 sen
                         
                     </div>
                     <div class="publish-info">
@@ -1279,7 +1279,7 @@ props<span class="token punctuation">.</span><span class="token function">put</s
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">46.6k</span>
+            <span class="white-color">46.4k</span>
             
 
             <br>

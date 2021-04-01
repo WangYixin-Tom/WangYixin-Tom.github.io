@@ -268,7 +268,7 @@ Reactor 模式是事件驱动架构的一种实现方式，特别适合应用于
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/3.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/1.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -423,7 +423,7 @@ Reactor 模式是事件驱动架构的一种实现方式，特别适合应用于
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    530
+                    508
                 </div>
                 
 
@@ -444,13 +444,14 @@ Reactor 模式是事件驱动架构的一种实现方式，特别适合应用于
                 <p>所有的请求都是通过 TCP 网络以 Socket 的方式进行通讯的。</p>
 <p>Kafka 使用的是 Reactor 模式处理请求。</p>
 <p><strong>Reactor 模式</strong>是事件驱动架构的一种实现方式，特别适合应用于处理多个客户端并发向服务器端发送请求的场景。多个客户端会发送请求给到 Reactor。Reactor 有个请求分发线程 Dispatcher，它会将不同的请求下发到多个工作线程中处理。工作线程可以根据实际业务处理需要任意增减，从而动态调节系统负载能力。</p>
-<p><a href="reactor.jpg"></a></p>
-<p>Kafka 提供了 Broker 端参数 num.network.threads，用于调整该<strong>网络线程池</strong>的线程数。其默认值是 3，表示每台 Broker 启动时会创建 3 <strong>个网络线程</strong>，专门处理客户端发送的请求。</p>
-<p><a href="work.jpg"></a></p>
-<p>当网络线程拿到请求后，它不是自己处理，而是将请求放入到一个<strong>共享请求队列</strong>中。Broker 端还有个 <strong>IO 线程池</strong>，负责从该队列中取出请求，执行真正的处理。如果是 PRODUCE 生产请求，则将消息写入到底层的磁盘日志中；如果是 FETCH 请求，则从磁盘或页缓存中读取消息。</p>
-<p>Broker 端参数 num.io.threads 控制了这个线程池中的线程数。目前该参数默认值是 8，表示每台 Broker 启动后自动创建 8 个 IO 线程处理请求。</p>
+<p><img src="reactor.jpg" alt></p>
+<p>Kafka 提供了 Broker 端参数 <code>num.network.threads</code>，用于调整该<strong>网络线程池</strong>的线程数。其默认值是 3，表示每台 Broker 启动时会创建 3 <strong>个网络线程</strong>，专门处理客户端发送的请求。</p>
+<p><img src="work.jpg" alt></p>
+<p>当网络线程拿到请求后，它不是自己处理，而是将请求放入到一个<strong>共享请求队列</strong>中。Broker 端还有个 <strong>IO 线程池</strong>，负责从该队列中取出请求，执行真正的处理–如果是 PRODUCE 生产请求，则将消息写入到底层的磁盘日志中；如果是 FETCH 请求，则从磁盘或页缓存中读取消息。</p>
+<p>Broker 端参数 <code>num.io.threads</code> 控制了IO线程池中的线程数。默认值是 8，表示每台 Broker 启动后自动创建 8 个 IO 线程处理请求。</p>
 <p><strong>Purgatory</strong></p>
-<p>缓存延时请求（Delayed Request）的。所谓延时请求，就是那些一时未满足条件不能立刻处理的请求。比如设置了 acks=all 的 PRODUCE 请求，一旦设置了 acks=all，那么该请求就必须等待 ISR 中所有副本都接收了消息后才能返回，此时处理该请求的 IO 线程就必须等待其他 Broker 的写入结果。当请求不能立刻处理时，它就会暂存在 Purgatory 中。稍后一旦满足了完成条件，IO 线程会继续处理该请求，并将 Response 放入对应网络线程的响应队列中。</p>
+<p>缓存延时请求（Delayed Request）,针对一时未满足条件不能立刻处理的请求。</p>
+<p>比如设置了 acks=all 的 PRODUCE 请求，一旦设置了 <code>acks=all</code>，那么该请求就必须等待 ISR 中所有副本都接收了消息后才能返回，此时处理该请求的 IO 线程就必须等待其他 Broker 的写入结果。当请求不能立刻处理时，它就会暂存在 Purgatory 中。一旦完成，IO 线程会继续处理该请求，并将 Response 放入对应网络线程的响应队列中。</p>
 
             </div>
             <hr />
@@ -943,7 +944,7 @@ Reactor 模式是事件驱动架构的一种实现方式，特别适合应用于
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="Kafka控制器">
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="Kafka控制器">
                         
                         <span class="card-title">Kafka控制器</span>
                     </div>
@@ -993,7 +994,7 @@ Reactor 模式是事件驱动架构的一种实现方式，特别适合应用于
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="kafka副本">
+                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="kafka副本">
                         
                         <span class="card-title">kafka副本</span>
                     </div>
@@ -1199,7 +1200,7 @@ Reactor 模式是事件驱动架构的一种实现方式，特别适合应用于
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">46.6k</span>
+            <span class="white-color">46.4k</span>
             
 
             <br>
