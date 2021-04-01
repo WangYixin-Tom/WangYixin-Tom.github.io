@@ -272,7 +272,7 @@ LEO（Log E">
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/10.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/9.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -427,14 +427,14 @@ LEO（Log E">
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    438
+                    1.1k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    4 分
                 </div>
                 
                 
@@ -471,11 +471,26 @@ LEO（Log E">
 <p>i. 获取 Leader 发送的高水位值：currentHW。</p>
 <p>ii. 获取步骤 2 中更新过的 LEO 值：currentLEO。</p>
 <p>iii. 更新高水位为 <code>min(currentHW, currentLEO)</code>。</p>
+<h3 id="高水位更新说明"><a href="#高水位更新说明" class="headerlink" title="高水位更新说明"></a>高水位更新说明</h3><p>新消息写入时，先更新leader副本LEO，</p>
+<p>follower副本新消息写入后第一次拉消息，更新了follower副本的LEO，</p>
+<p>follower第二次拉消息，leader副本更新remote LEO、HW；follower副本更新高水位</p>
+<p><strong>问题</strong>：Follower 端高水位的更新与 Leader 端有时间错配。如果在这个短暂的滞后时间窗口内，接连发生 Broker 宕机，可能发生数据丢失。</p>
+<p><strong>背景</strong>：副本 A 和副本 B 都处于正常状态，A 是 Leader 副本。某个使用了默认 acks 设置的生产者程序向 A 发送了两条消息，A 全部写入成功，此时 Kafka 会通知生产者说两条消息全部发送成功。</p>
+<p><img src="bad.jpg" alt></p>
+<p>1、副本 B 所在的 Broker 宕机，当它重启回来后，副本 B 会执行日志截断操作，将 <strong>LEO 值由2调整为之前的高水位值</strong>，也就是 1。</p>
+<p>2、副本 B 开始从 A 拉取消息前，副本 A 所在的 Broker 宕机了，副本 B 成为新的 Leader，A 回来后，需要执行相同的日志截断操作，即将高水位调整为与 B 相同的值，也就是 1。</p>
+<p><strong>影响：</strong>位移值为 1 的消息丢失。</p>
 <h2 id="Leader-Epoch"><a href="#Leader-Epoch" class="headerlink" title="Leader Epoch"></a>Leader Epoch</h2><p>它由两部分数据组成。</p>
 <ul>
 <li>Epoch。一个单调增加的版本号。每当副本领导权发生变更时，都会增加该版本号。小版本号的 Leader 被认为是过期 Leader，不能再行使 Leader 权力。</li>
 <li>起始位移（Start Offset）。Leader 副本在该 Epoch 值上写入的首条消息的位移。</li>
 </ul>
+<p>Kafka Broker 会在内存中为每个分区都缓存 Leader Epoch 数据，同时它还会定期地将这些信息持久化到一个 checkpoint 文件中。当 Leader 副本写入消息到磁盘时，Broker 会尝试更新这部分缓存。如果该 Leader 是首次写入消息，那么 Broker 会向缓存中增加一个 Leader Epoch 条目。</p>
+<p><strong>解决：</strong></p>
+<p><img src="good.jpg" alt></p>
+<p>Follower 副本 B 重启回来后，需要向 A 发送一个特殊的请求去获取 <strong>Leader 的 LEO 值</strong>。在这个例子中，该值为 2。当获知到 Leader LEO=2 后，B 发现该 LEO 值不比它自己的 LEO 值小，而且缓存中也没有保存任何起始位移值 &gt; 2 的 Epoch 条目，因此 B 无需执行任何日志截断操作。</p>
+<p>副本 A 宕机了，B 成为 Leader。同样地，当 A 重启回来后，执行与 B 相同的逻辑判断，发现也不用执行日志截断，至此位移值为 1 的那条消息在两个副本中均得到保留。</p>
+<p>后面当生产者程序向 B 写入新消息时，副本 B 所在的 Broker 缓存中，会生成新的 Leader Epoch 条目：[Epoch=1, Offset=2]。之后，副本 B 会使用这个条目帮助判断后续是否执行日志截断操作。</p>
 
             </div>
             <hr />
@@ -968,7 +983,7 @@ LEO（Log E">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="kafka主题管理">
+                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="kafka主题管理">
                         
                         <span class="card-title">kafka主题管理</span>
                     </div>
@@ -1017,7 +1032,7 @@ LEO（Log E">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="Kafka控制器">
+                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="Kafka控制器">
                         
                         <span class="card-title">Kafka控制器</span>
                     </div>
@@ -1223,7 +1238,7 @@ LEO（Log E">
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">46.4k</span>
+            <span class="white-color">47k</span>
             
 
             <br>
