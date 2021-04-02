@@ -453,8 +453,8 @@
 <p>Preferred 领导者选举：推选指定主题分区的 Preferred Broker 为领导者。</p>
 <h2 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h2><p>AdminClient 是一个双线程的设计：前端主线程和后端 I/O 线程。</p>
 <p>前端线程负责将用户要执行的操作转换成对应的请求，然后再将请求发送到后端 I/O 线程的队列中；</p>
-<p>而后端 I/O 线程(kafka-admin-client-thread)从队列中读取相应的请求，然后发送到对应的 Broker 节点上，之后把执行结果保存起来，以便等待前端线程的获取。</p>
-<p><a href="yuanli.jpg"></a></p>
+<p>而后端 I/O 线程（kafka-admin-client-thread）从队列中读取相应的请求，然后发送到对应的 Broker 节点上，之后把执行结果保存起来，以便等待前端线程的获取。</p>
+<p><img src="yuanli.jpg" alt></p>
 <h2 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h2><h3 id="创建实例"><a href="#创建实例" class="headerlink" title="创建实例"></a>创建实例</h3><pre class="line-numbers language-java"><code class="language-java">Properties props <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Properties</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 props<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>AdminClientConfig<span class="token punctuation">.</span>BOOTSTRAP_SERVERS_CONFIG<span class="token punctuation">,</span> <span class="token string">"kafka-host:port"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 props<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token string">"request.timeout.ms"</span><span class="token punctuation">,</span> <span class="token number">600000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>

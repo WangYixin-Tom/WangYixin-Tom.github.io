@@ -454,13 +454,13 @@
 <h3 id="Broker-端调优"><a href="#Broker-端调优" class="headerlink" title="Broker 端调优"></a>Broker 端调优</h3><p>保持客户端版本和 Broker 端版本一致。</p>
 <h3 id="应用层调优"><a href="#应用层调优" class="headerlink" title="应用层调优"></a>应用层调优</h3><p>1、不要频繁地创建 Producer 和 Consumer 对象实例。构造这些对象的开销很大，尽量复用它们。</p>
 <p>2、用完及时关闭。这些对象底层会创建很多物理资源，如 Socket 连接、ByteBuffer 缓冲区等。不及时关闭的话，势必造成资源泄露。3、合理利用多线程来改善性能。生产者、消费者多线程。</p>
-<h2 id="性能指标调优"><a href="#性能指标调优" class="headerlink" title="性能指标调优"></a>性能指标调优</h2><h3 id="调优吞吐量"><a href="#调优吞吐量" class="headerlink" title="调优吞吐量"></a>调优吞吐量</h3><p>1、broker 端参数 num.replica.fetchers 表示的是 Follower 副本用多少个线程来拉取消息，默认使用 1 个线程。如果你的 Broker 端 CPU 资源很充足，不妨适当调大该参数值，加快 Follower 副本的同步速度。</p>
-<p>2、在 Producer 端，如果要改善吞吐量，通常的标配是增加消息批次的大小以及批次缓存时间，即 batch.size 和 linger.ms。</p>
+<h2 id="性能指标调优"><a href="#性能指标调优" class="headerlink" title="性能指标调优"></a>性能指标调优</h2><h3 id="调优吞吐量"><a href="#调优吞吐量" class="headerlink" title="调优吞吐量"></a>调优吞吐量</h3><p>1、broker 端参数 <code>num.replica.fetchers</code>表示的是 Follower 副本用多少个线程来拉取消息，默认使用 1 个线程。如果你的 Broker 端 CPU 资源很充足，不妨适当调大该参数值，加快 Follower 副本的同步速度。</p>
+<p>2、在 Producer 端，如果要改善吞吐量，通常的标配是增加消息批次的大小以及批次缓存时间，即 <code>batch.size</code> 和 <code>linger.ms</code>。</p>
 <p>3、压缩算法也配置上，以减少网络 I/O 传输量，从而间接提升吞吐量。当前，和 Kafka 适配最好的两个压缩算法是 LZ4 和 zstd</p>
 <p>4、Consumer端使用多线程方案</p>
-<h3 id="调优延时"><a href="#调优延时" class="headerlink" title="调优延时"></a>调优延时</h3><p>1、在 Broker 端，我们依然要增加 num.replica.fetchers 值以加快 Follower 副本的拉取速度，减少整个消息处理的延时</p>
-<p>2、设置 linger.ms=0，同时不要启用压缩。因为压缩操作本身要消耗 CPU 时间。</p>
-<p>3、Consumer 端，我们保持 fetch.min.bytes=1 即可，也就是说，只要 Broker 端有能返回的数据，立即令其返回给 Consumer，缩短 Consumer 消费延时。</p>
+<h3 id="调优延时"><a href="#调优延时" class="headerlink" title="调优延时"></a>调优延时</h3><p>1、在 Broker 端，我们依然要增加 <code>num.replica.fetchers</code> 值以加快 Follower 副本的拉取速度，减少整个消息处理的延时</p>
+<p>2、设置 <code>linger.ms=0</code>，同时不要启用压缩。因为压缩操作本身要消耗 CPU 时间。</p>
+<p>3、Consumer 端，我们保持<code>fetch.min.bytes=1</code> 即可，也就是说，只要 Broker 端有能返回的数据，立即令其返回给 Consumer，缩短 Consumer 消费延时。</p>
 
             </div>
             <hr />
@@ -945,32 +945,29 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
-            </div>
+                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/03/30/kafka-diao-you/">
+                <a href="/2021/04/02/kafka-si-wei-dao-tu/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="kafka调优">
+                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="kafka思维导图">
                         
-                        <span class="card-title">kafka调优</span>
+                        <span class="card-title">kafka思维导图</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            调优目标吞吐量，也就是 TPS，是指 Broker 端进程或 Client 端应用程序每秒能处理的字节数或消息数。
-延时，表示从 Producer 端发送消息到 Broker 端持久化完成之间的时间间隔。
-优化操作系统调优1、最好在挂载（M
+                            博客中kafka相关的思维导图。
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-03-30
-                            </span>
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2021-04-02
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
@@ -983,7 +980,6 @@
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     

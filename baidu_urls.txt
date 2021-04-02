@@ -1,3 +1,5 @@
+https://wangyixin-tom.github.io/2021/04/02/mysql-si-wei-dao-tu/
+https://wangyixin-tom.github.io/2021/04/02/kafka-si-wei-dao-tu/
 https://wangyixin-tom.github.io/2021/03/30/kafka-diao-you/
 https://wangyixin-tom.github.io/2021/03/29/kafka-shou-quan/
 https://wangyixin-tom.github.io/2021/03/29/kafka-ren-zheng/

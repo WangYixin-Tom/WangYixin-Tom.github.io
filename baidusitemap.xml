@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://wangyixin-tom.github.io/2021/04/02/mysql-si-wei-dao-tu/</loc>
+    <lastmod>2021-04-02</lastmod>
+  </url>  <url>
+    <loc>https://wangyixin-tom.github.io/2021/03/08/redis-si-wei-dao-tu/</loc>
+    <lastmod>2021-04-02</lastmod>
+  </url>  <url>
+    <loc>https://wangyixin-tom.github.io/2021/04/02/kafka-si-wei-dao-tu/</loc>
+    <lastmod>2021-04-02</lastmod>
+  </url>  <url>
+    <loc>https://wangyixin-tom.github.io/2021/03/30/kafka-diao-you/</loc>
+    <lastmod>2021-04-02</lastmod>
+  </url>  <url>
+    <loc>https://wangyixin-tom.github.io/2021/03/29/kafkaadminclient/</loc>
+    <lastmod>2021-04-02</lastmod>
+  </url>  <url>
+    <loc>https://wangyixin-tom.github.io/2021/03/28/kafka-zhu-ti-guan-li/</loc>
+    <lastmod>2021-04-02</lastmod>
+  </url>  <url>
     <loc>https://wangyixin-tom.github.io/2021/03/28/kafka-gao-shui-wei-he-leader-epoch/</loc>
     <lastmod>2021-04-01</lastmod>
   </url>  <url>
@@ -79,9 +97,6 @@
     <loc>https://wangyixin-tom.github.io/2021/03/10/redis-ying-yong/</loc>
     <lastmod>2021-04-01</lastmod>
   </url>  <url>
-    <loc>https://wangyixin-tom.github.io/2021/03/08/redis-si-wei-dao-tu/</loc>
-    <lastmod>2021-04-01</lastmod>
-  </url>  <url>
     <loc>https://wangyixin-tom.github.io/2020/10/25/redis-zhu-cong-tong-bu/</loc>
     <lastmod>2021-04-01</lastmod>
   </url>  <url>
@@ -118,9 +133,6 @@
     <loc>https://wangyixin-tom.github.io/2020/12/10/kafka-ji-qun-pei-zhi/</loc>
     <lastmod>2021-04-01</lastmod>
   </url>  <url>
-    <loc>https://wangyixin-tom.github.io/2021/03/30/kafka-diao-you/</loc>
-    <lastmod>2021-04-01</lastmod>
-  </url>  <url>
     <loc>https://wangyixin-tom.github.io/2021/03/29/kafka-jiao-ben/</loc>
     <lastmod>2021-04-01</lastmod>
   </url>  <url>
@@ -148,9 +160,6 @@
     <loc>https://wangyixin-tom.github.io/2021/03/23/kafka-lan-jie-qi/</loc>
     <lastmod>2021-04-01</lastmod>
   </url>  <url>
-    <loc>https://wangyixin-tom.github.io/2021/03/28/kafka-zhu-ti-guan-li/</loc>
-    <lastmod>2021-04-01</lastmod>
-  </url>  <url>
     <loc>https://wangyixin-tom.github.io/2021/03/13/join-you-hua/</loc>
     <lastmod>2021-04-01</lastmod>
   </url>  <url>
@@ -164,9 +173,6 @@
     <lastmod>2021-04-01</lastmod>
   </url>  <url>
     <loc>https://wangyixin-tom.github.io/2021/03/28/kafka-kong-zhi-qi/</loc>
-    <lastmod>2021-04-01</lastmod>
-  </url>  <url>
-    <loc>https://wangyixin-tom.github.io/2021/03/29/kafkaadminclient/</loc>
     <lastmod>2021-04-01</lastmod>
   </url>  <url>
     <loc>https://wangyixin-tom.github.io/2021/03/21/innodb-lru-you-hua/</loc>

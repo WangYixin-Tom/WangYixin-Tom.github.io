@@ -480,7 +480,7 @@ kafka-reassign-partitions<span aria-hidden="true" class="line-numbers-rows"><spa
 <p>第 1 步，手动删除 ZooKeeper 节点 /admin/delete_topics 下以待删除主题为名的 znode。</p>
 <p>第 2 步，手动删除该主题在磁盘上的分区目录。</p>
 <p>第 3 步，在 ZooKeeper 中执行 rmr  /controller，触发 Controller 重选举，刷新 Controller 缓存。–非必须，可能造成大面积的分区 Leader 重选举</p>
-<h3 id="consumer-offsets-占用太多的磁盘"><a href="#consumer-offsets-占用太多的磁盘" class="headerlink" title="_consumer_offsets 占用太多的磁盘"></a>_consumer_offsets 占用太多的磁盘</h3><p> jstack 命令查看一下 kafka-log-cleaner-thread 前缀的线程状态。通常情况下，这都是因为该线程挂掉了，无法及时清理此内部主题。</p>
+<h3 id="consumer-offsets-占用太多的磁盘"><a href="#consumer-offsets-占用太多的磁盘" class="headerlink" title="__consumer_offsets 占用太多的磁盘"></a>__consumer_offsets 占用太多的磁盘</h3><p> jstack 命令查看一下 kafka-log-cleaner-thread 前缀的线程状态。通常情况下，这都是因为该线程挂掉了，无法及时清理此内部主题。</p>
 
             </div>
             <hr />

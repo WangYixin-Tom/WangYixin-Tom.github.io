@@ -293,6 +293,115 @@ $('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
+                    <a href="/2020/12/09/redis6-0/" target="_blank">
+                        <div class="card-image">
+                            
+                            
+                            <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="redis6.0">
+                            
+                            <span class="card-title">redis6.0</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                            多线程问题
+单个主线程处理网络请求的速度跟不上底层网络硬件的速度。
+优化
+多个 IO 线程并行处理网络操作，可以提升实例的整体处理性能。使用单线程执行命令操作，就不用为了保证 Lua 脚本、事务的原子性，额外开发多线程互斥机制了。
+具体流程
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-12-09
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fa fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/redis/" class="post-category" target="_blank">
+                                    redis
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/redis/" target="_blank">
+                            <span class="chip bg-color">redis</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2020/11/02/redis-xiao-xi-dui-lie/" target="_blank">
+                        <div class="card-image">
+                            
+                            
+                            <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="redis消息队列">
+                            
+                            <span class="card-title">redis消息队列</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                            需求分析
+消息保序：消费者需要按照生产者发送消息的顺序来处理消息
+
+处理重复的消息：消费者避免多次处理重复的消息
+
+保证消息可靠性：消费者重启后，可以重新读取消息再次进行处理
+
+
+基于List
+LPUSH 
+
+把要发送的消息依次写入 Lis
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-11-02
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fa fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/redis/" class="post-category" target="_blank">
+                                    redis
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/redis/" target="_blank">
+                            <span class="chip bg-color">redis</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
                     <a href="/2020/11/02/redis-nei-cun-sui-pian/" target="_blank">
                         <div class="card-image">
                             
@@ -797,103 +906,6 @@ mandatory当交换器无法路由消息，RabbitMQ将回发Basic.Return消息到
                         
                         <a href="/tags/rabbitmq/" target="_blank">
                             <span class="chip bg-color">rabbitmq</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-            
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2020/10/26/redis-rdb-ji-zhi/" target="_blank">
-                        <div class="card-image">
-                            
-                            
-                            <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="redis RBD机制">
-                            
-                            <span class="card-title">redis RBD机制</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                            RDB 就是 Redis DataBase，内存中的全量数据在某一个时刻的状态记录。
-快照机制引入原因：AOF日志进行故障恢复的时候，需要逐一执行操作日志。如果操作日志非常多，Redis 恢复得很慢，影响到正常使用。
-bgsave命令：主进
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-10-26
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fa fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/redis/" class="post-category" target="_blank">
-                                    redis
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/redis/" target="_blank">
-                            <span class="chip bg-color">redis</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-            
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2020/10/26/redis-aof-ji-zhi/" target="_blank">
-                        <div class="card-image">
-                            
-                            
-                            <img src="/medias/featureimages/25.jpg" class="responsive-img" alt="redis AOF机制">
-                            
-                            <span class="card-title">redis AOF机制</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                            先写内存，在写日志。1、命令执行成功才会被记录日志。2、避免对当前命令的阻塞。
-风险1、突然宕机，Redis用作数据库的话，命令可能没有记入日志，所以就无法用日志进行恢复了。2、AOF写磁盘，当磁盘压力大，会导致写盘慢，阻塞后续操作。3、子
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-10-26
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fa fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/redis/" class="post-category" target="_blank">
-                                    redis
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/redis/" target="_blank">
-                            <span class="chip bg-color">redis</span>
                         </a>
                         
                     </div>

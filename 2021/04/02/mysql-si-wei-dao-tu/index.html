@@ -4,14 +4,12 @@
 
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="redis应用, Python rabbitmq redis flask">
+    <meta name="keywords" content="mysql思维导图, Python rabbitmq redis flask">
     <meta name="baidu-site-verification" content="code-KoKq36g1n2">
     <meta name="google-site-verification" content="yCy2azpds5XSuGZvis6OuA-XIGF5GuGpYRAaGfD6o48">
     <meta name="360-site-verification" content="b7c11a830ef90fd1464ad6206bb7b6e7">
-    <meta name="description" content="分布式锁实现：set lock:codehole true ex5 nx
-注意：不要用于较长任务，可能超时释放
-优化：设置value是一个随机值，保证不会被其他线程释放
-可重入锁：基于线程的Threadlocal变量存储当前持有锁的计数。如">
+    <meta name="description" content="
+">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -19,7 +17,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>redis应用 | wangyixin-tom的博客</title>
+    <title>mysql思维导图 | wangyixin-tom的博客</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -269,13 +267,13 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/28.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/19.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        redis应用
+                        mysql思维导图
                     </div>
                 </div>
             </div>
@@ -386,8 +384,8 @@
                     
                     <div class="article-tag">
                         
-                        <a href="/tags/redis/" target="_blank">
-                            <span class="chip bg-color">redis</span>
+                        <a href="/tags/mysql/" target="_blank">
+                            <span class="chip bg-color">mysql</span>
                         </a>
                         
                     </div>
@@ -398,8 +396,8 @@
                     <div class="post-cate">
                         <i class="fa fa-bookmark fa-fw icon-category"></i>
                         
-                        <a href="/categories/redis/" class="post-category" target="_blank">
-                            redis
+                        <a href="/categories/mysql/" class="post-category" target="_blank">
+                            mysql
                         </a>
                         
                     </div>
@@ -410,7 +408,7 @@
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-03-10
+                    2021-04-02
                 </div>
 
                 <div class="post-author info-break-policy">
@@ -424,14 +422,14 @@
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    669
+                    0
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    2 分
+                    1 分
                 </div>
                 
                 
@@ -442,27 +440,7 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="分布式锁"><a href="#分布式锁" class="headerlink" title="分布式锁"></a>分布式锁</h2><p>实现：set lock:codehole true ex5 nx</p>
-<p>注意：不要用于较长任务，可能超时释放</p>
-<p>优化：设置value是一个随机值，保证不会被其他线程释放</p>
-<p>可重入锁：基于线程的Threadlocal变量存储当前持有锁的计数。如果当前有该锁的记录，则计数加一，返回加锁成功。否则尝试加锁，若不存在锁则成功，其他线程/进程会加锁失败。</p>
-<h2 id="延时队列"><a href="#延时队列" class="headerlink" title="延时队列"></a>延时队列</h2><p>实现：使用zset ，消息序列化成value，到期时间作为score。为保障可用性，可以使用多个线程/进程轮询到期任务进行处理（zrangebyscore）。通过zrem结果，判断任务被哪个线程/进程获取，再进一步处理。</p>
-<p>优化：考虑将zrangebyscore 和zrem，封装lua scripting,避免获取任务的浪费操作。</p>
-<h2 id="用户一年的签到统计"><a href="#用户一年的签到统计" class="headerlink" title="用户一年的签到统计"></a>用户一年的签到统计</h2><p>使用位图，1天的签到记录只需要占据一个位，一年365位。</p>
-<h2 id="页面访问量"><a href="#页面访问量" class="headerlink" title="页面访问量"></a>页面访问量</h2><p>简单方案：使用set集合存储当天访问某一个用户ID， scard可以统计集合大小。</p>
-<p>优化：用户很多时，使用HyperLogLog，提供了不精确的去重方案，节省空间。pfadd/pfcount</p>
-<h2 id="数据去重"><a href="#数据去重" class="headerlink" title="数据去重"></a>数据去重</h2><p>场景：用户为看过的内容推荐去重；爬虫URL去重；</p>
-<p>实现：简单去重，使用set。大数据去重，使用布隆过滤器（redis&gt;4.0）bf.add/bf.exists。</p>
-<p>误差：布隆过滤器返回存在，实际可能不存在；返回不存在，实际一定不存在。</p>
-<p>原理：大型位数组和几个不一样的无偏hash函数。</p>
-<h2 id="简单限流"><a href="#简单限流" class="headerlink" title="简单限流"></a>简单限流</h2><p>场景：限制用户行为在一定时间内的次数</p>
-<p>实现：每个用户每种行为作为key，使用zset,value和score都使用时间戳。在pipeline中，增加用户行为，移除时间窗口之前数据，<strong>获取当前剩下行为总数</strong>，并给该key增加过期时间，避免长期占用内存。通过剩下行为总数，判断是否超额。</p>
-<p>缺点：不适合1min操作不超过100万次这种场景。</p>
-<h2 id="漏斗限流"><a href="#漏斗限流" class="headerlink" title="漏斗限流"></a>漏斗限流</h2><p>实现：使用redis-cell（redis 4.0），其使用漏斗算法，提供了限流指令。cl.throttle。</p>
-<p>非常棒，被拒绝还提供了重试时间。</p>
-<h2 id="附近的人"><a href="#附近的人" class="headerlink" title="附近的人"></a>附近的人</h2><p>实现：使用GeoHash.</p>
-<p>原理：将二维经纬度数据映射到一维整数，距离近的点映射距离也会比较近。类似逐步切分蛋糕。</p>
-<p>注意：Geo数据将被放到一个zset中。集群环境中集合迁移，可能会影响线上服务运行，建议GEO数据使用单独的redis示例部署。</p>
+                <p><img src="mysql.png" alt></p>
 
             </div>
             <hr />
@@ -621,9 +599,9 @@
             <br/>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
                   property="dct:title" rel="dct:type">
-                    《redis应用》
+                    《mysql思维导图》
                 </span> 由
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2021/03/10/redis-ying-yong/" property="cc:attributionName"
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2021/04/02/mysql-si-wei-dao-tu/" property="cc:attributionName"
                rel="cc:attributionURL">
                 wangyixin-tom
             </a> 采用
@@ -664,7 +642,7 @@
         repo: 'wangyixin-tom.github.io',
         owner: 'WangYixin-Tom',
         admin: "WangYixin-Tom",
-        id: '2021/03/10/redis-ying-yong/',
+        id: '2021/04/02/mysql-si-wei-dao-tu/',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -947,32 +925,30 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/03/11/man-cha-xun-ding-wei-yu-fen-xi/">
+                <a href="/2021/04/02/mysql-si-wei-dao-tu/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="慢查询定位与分析">
+                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="mysql思维导图">
                         
-                        <span class="card-title">慢查询定位与分析</span>
+                        <span class="card-title">mysql思维导图</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            定位慢sql1、查看慢查询日志确定已经执行完的慢查询
-mysql> set global slow_query_log = on;
-mysql> set global long_query_time = 1;
-mysql> show glo
+                            博客中mysql相关思维导图
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2021-03-11
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-04-02
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
@@ -985,6 +961,7 @@ mysql> show glo
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -1003,31 +980,31 @@ mysql> show glo
                 下一篇&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/03/08/redis-si-wei-dao-tu/">
+                <a href="/2021/04/02/kafka-si-wei-dao-tu/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="redis思维导图">
+                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="kafka思维导图">
                         
-                        <span class="card-title">redis思维导图</span>
+                        <span class="card-title">kafka思维导图</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            博客中redis相关思维导图。
+                            博客中kafka相关的思维导图。
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-03-08
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-04-02
                             </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/redis/" class="post-category" target="_blank">
-                                    redis
+                            <a href="/categories/kafka/" class="post-category" target="_blank">
+                                    kafka
                                 </a>
                             
                             
@@ -1037,8 +1014,8 @@ mysql> show glo
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/redis/" target="_blank">
-                        <span class="chip bg-color">redis</span>
+                    <a href="/tags/kafka/" target="_blank">
+                        <span class="chip bg-color">kafka</span>
                     </a>
                     
                 </div>
