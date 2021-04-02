@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://wangyixin-tom.github.io/2021/03/28/kafka-kong-zhi-qi/</loc>
+    <lastmod>2021-04-02</lastmod>
+  </url>  <url>
+    <loc>https://wangyixin-tom.github.io/2021/03/29/kafka-ren-zheng/</loc>
+    <lastmod>2021-04-02</lastmod>
+  </url>  <url>
     <loc>https://wangyixin-tom.github.io/2021/04/02/mysql-si-wei-dao-tu/</loc>
     <lastmod>2021-04-02</lastmod>
   </url>  <url>
@@ -136,9 +142,6 @@
     <loc>https://wangyixin-tom.github.io/2021/03/29/kafka-jiao-ben/</loc>
     <lastmod>2021-04-01</lastmod>
   </url>  <url>
-    <loc>https://wangyixin-tom.github.io/2021/03/29/kafka-ren-zheng/</loc>
-    <lastmod>2021-04-01</lastmod>
-  </url>  <url>
     <loc>https://wangyixin-tom.github.io/2021/03/23/kafka-sheng-chan-zhe/</loc>
     <lastmod>2021-04-01</lastmod>
   </url>  <url>
@@ -170,9 +173,6 @@
     <lastmod>2021-04-01</lastmod>
   </url>  <url>
     <loc>https://wangyixin-tom.github.io/2021/03/14/mvcc/</loc>
-    <lastmod>2021-04-01</lastmod>
-  </url>  <url>
-    <loc>https://wangyixin-tom.github.io/2021/03/28/kafka-kong-zhi-qi/</loc>
     <lastmod>2021-04-01</lastmod>
   </url>  <url>
     <loc>https://wangyixin-tom.github.io/2021/03/21/innodb-lru-you-hua/</loc>
