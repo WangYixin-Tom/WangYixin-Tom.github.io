@@ -293,11 +293,209 @@ $('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
+                    <a href="/2021/03/28/kafka-gao-shui-wei-he-leader-epoch/" target="_blank">
+                        <div class="card-image">
+                            
+                            
+                            <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="kafka高水位和Leader Epoch">
+                            
+                            <span class="card-title">kafka高水位和Leader Epoch</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                            高水位在分区高水位以下的消息被认为是已提交消息。kafka中，分区的高水位就是其 Leader 副本的高水位。
+作用
+
+定义消息可见性，即用来标识分区下的哪些消息是可以被消费者消费的。
+帮助 Kafka 完成副本同步。
+
+LEO（Log E
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-03-28
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fa fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/kafka/" class="post-category" target="_blank">
+                                    kafka
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/kafka/" target="_blank">
+                            <span class="chip bg-color">kafka</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2021/03/28/kafka-kong-zhi-qi/" target="_blank">
+                        <div class="card-image">
+                            
+                            
+                            <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="Kafka控制器">
+                            
+                            <span class="card-title">Kafka控制器</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                            控制器组件（Controller），是 Apache Kafka 的核心组件。它的主要作用是在 Apache ZooKeeper 的帮助下管理和协调整个 Kafka 集群。每个正常运转的 Kafka 集群，在任意时刻都有且只有一个控制器。
+
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-03-28
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fa fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/kafka/" class="post-category" target="_blank">
+                                    kafka
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/kafka/" target="_blank">
+                            <span class="chip bg-color">kafka</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2021/03/28/kafka-broker-qing-qiu-chu-li/" target="_blank">
+                        <div class="card-image">
+                            
+                            
+                            <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="kafka Broker请求处理">
+                            
+                            <span class="card-title">kafka Broker请求处理</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                            所有的请求都是通过 TCP 网络以 Socket 的方式进行通讯的。
+Kafka 使用的是 Reactor 模式处理请求。
+Reactor 模式是事件驱动架构的一种实现方式，特别适合应用于处理多个客户端并发向服务器端发送请求的场景。多个客户
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-03-28
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fa fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/kafka/" class="post-category" target="_blank">
+                                    kafka
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/kafka/" target="_blank">
+                            <span class="chip bg-color">kafka</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2021/03/28/kafka-fu-ben/" target="_blank">
+                        <div class="card-image">
+                            
+                            
+                            <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="kafka副本">
+                            
+                            <span class="card-title">kafka副本</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                            主题可划分成若干个分，每个分区配置有若干个副本。副本（Replica），本质是一个只能追加写消息的提交日志。
+副本分类副本分成两类：领导者副本（Leader Replica）和追随者副本（Follower Replica）。每个分区在创建时
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-03-28
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fa fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/kafka/" class="post-category" target="_blank">
+                                    kafka
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/kafka/" target="_blank">
+                            <span class="chip bg-color">kafka</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
                     <a href="/2021/03/23/kafka-xiao-fei-zhe/" target="_blank">
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="kafka消费者">
+                            <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="kafka消费者">
                             
                             <span class="card-title">kafka消费者</span>
                         </div>
@@ -347,7 +545,7 @@ Group ID 是一个字符串，在一个 Kafka 集群中，它标识唯
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="kafka精确一次">
+                            <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="kafka精确一次">
                             
                             <span class="card-title">kafka精确一次</span>
                         </div>
@@ -395,7 +593,7 @@ Group ID 是一个字符串，在一个 Kafka 集群中，它标识唯
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="kafka拦截器">
+                            <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="kafka拦截器">
                             
                             <span class="card-title">kafka拦截器</span>
                         </div>
@@ -446,7 +644,7 @@ Group ID 是一个字符串，在一个 Kafka 集群中，它标识唯
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/24.jpg" class="responsive-img" alt="kafka消息丢失">
+                            <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="kafka消息丢失">
                             
                             <span class="card-title">kafka消息丢失</span>
                         </div>
@@ -495,7 +693,7 @@ Group ID 是一个字符串，在一个 Kafka 集群中，它标识唯
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="kafka生产者">
+                            <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="kafka生产者">
                             
                             <span class="card-title">kafka生产者</span>
                         </div>
@@ -543,7 +741,7 @@ Group ID 是一个字符串，在一个 Kafka 集群中，它标识唯
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="InnoDB LRU 优化">
+                            <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="InnoDB LRU 优化">
                             
                             <span class="card-title">InnoDB LRU 优化</span>
                         </div>
@@ -591,7 +789,7 @@ Group ID 是一个字符串，在一个 Kafka 集群中，它标识唯
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="数据恢复">
+                            <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="数据恢复">
                             
                             <span class="card-title">数据恢复</span>
                         </div>
@@ -639,7 +837,7 @@ Flashback恢复数据的原理，是修改binlog的内容，拿回原库重放�
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="基础架构">
+                            <img src="/medias/featureimages/25.jpg" class="responsive-img" alt="基础架构">
                             
                             <span class="card-title">基础架构</span>
                         </div>
@@ -656,202 +854,6 @@ Server层包括连接器、查询缓存、分析器、优化器、执行器等�
                         <div class="publish-info">
                             <span class="publish-date">
                                 <i class="fa fa-clock-o fa-fw icon-date"></i>2021-03-21
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fa fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/mysql/" class="post-category" target="_blank">
-                                    mysql
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/mysql/" target="_blank">
-                            <span class="chip bg-color">mysql</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-            
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2021/03/15/fen-ku-fen-biao/" target="_blank">
-                        <div class="card-image">
-                            
-                            
-                            <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="分库分表">
-                            
-                            <span class="card-title">分库分表</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                            垂直拆分
-有多个业务，每个业务单独分到一个实例里面。
-在一个实例中有多个库，把这些库分别放到单独的实例中。
-在一个库中存在过多的表，把这些表拆分到多个库中。
-把字段过多的表拆分成多个表，每张表包含一部分字段。
-
-水平拆分把同一张表分为多张表
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-03-15
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fa fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/mysql/" class="post-category" target="_blank">
-                                    mysql
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/mysql/" target="_blank">
-                            <span class="chip bg-color">mysql</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-            
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2021/03/15/du-xie-fen-chi/" target="_blank">
-                        <div class="card-image">
-                            
-                            
-                            <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="读写分离">
-                            
-                            <span class="card-title">读写分离</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                            主从复制异步复制在主库开启 binlog 的情况下，如果主库有增删改的语句，会记录到 binlog 中，主库通过 IO 线程把 binlog 里面的内容传给从库的中继日志（relay log）中，主库给客户端返回 commit 成功（这里不
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-03-15
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fa fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/mysql/" class="post-category" target="_blank">
-                                    mysql
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/mysql/" target="_blank">
-                            <span class="chip bg-color">mysql</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-            
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2021/03/14/mvcc/" target="_blank">
-                        <div class="card-image">
-                            
-                            
-                            <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="MVCC">
-                            
-                            <span class="card-title">MVCC</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                            MVCC多版本并发控制。MVCC 的实现，是通过保存数据在某个时间点的快照来实现的。
-不管需要执行多长时间，每个事务看到的数据都是一致的。根据事务开始的时间不同，每个事务对同一张表，同一时刻看到的数据可能是不一样的。
-MCCC 只在 RC 
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-03-14
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fa fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/mysql/" class="post-category" target="_blank">
-                                    mysql
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/mysql/" target="_blank">
-                            <span class="chip bg-color">mysql</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-            
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2021/03/14/shi-wu/" target="_blank">
-                        <div class="card-image">
-                            
-                            
-                            <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="事务">
-                            
-                            <span class="card-title">事务</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                            事务事务就是一组原子性的SQL查询，或者说一个独立的工作单元。如果数据库引擎能够成功地对数据库应用该组查询的全部语句，那么就执行该组查询。如果其中有任何一条语句因为崩溃或其他原因无法执行，那么所有的语句都不会执行。也就是说，事务内的语句，要
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-03-14
                             </span>
                             <span class="publish-author">
                                 
@@ -895,7 +897,7 @@ MCCC 只在 RC
             
         </div>
         <div class="page-info col m4 l4 hide-on-small-only">
-            <div class="center-align b-text-gray">2 / 5</div>
+            <div class="center-align b-text-gray">2 / 6</div>
         </div>
         <div class="col s6 m4 l4">
             
@@ -916,7 +918,7 @@ MCCC 只在 RC
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">47k</span>
+            <span class="white-color">51.2k</span>
             
 
             <br>

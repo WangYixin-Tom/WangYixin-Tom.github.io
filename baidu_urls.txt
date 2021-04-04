@@ -1,3 +1,7 @@
+https://wangyixin-tom.github.io/2021/04/04/rabbitmq-si-wei-dao-tu/
+https://wangyixin-tom.github.io/2021/04/03/rabbitmq-jin-jie/
+https://wangyixin-tom.github.io/2021/04/03/rabbitmq-ke-hu-duan-kai-fa/
+https://wangyixin-tom.github.io/2021/04/03/rabbitmq-gai-nian/
 https://wangyixin-tom.github.io/2021/04/02/mysql-si-wei-dao-tu/
 https://wangyixin-tom.github.io/2021/04/02/kafka-si-wei-dao-tu/
 https://wangyixin-tom.github.io/2021/03/30/kafka-diao-you/

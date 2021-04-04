@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://wangyixin-tom.github.io/2021/04/04/rabbitmq-si-wei-dao-tu/</loc>
+    <lastmod>2021-04-04</lastmod>
+  </url>  <url>
+    <loc>https://wangyixin-tom.github.io/2021/04/03/rabbitmq-jin-jie/</loc>
+    <lastmod>2021-04-04</lastmod>
+  </url>  <url>
+    <loc>https://wangyixin-tom.github.io/2021/04/03/rabbitmq-gai-nian/</loc>
+    <lastmod>2021-04-04</lastmod>
+  </url>  <url>
+    <loc>https://wangyixin-tom.github.io/2021/04/03/rabbitmq-ke-hu-duan-kai-fa/</loc>
+    <lastmod>2021-04-03</lastmod>
+  </url>  <url>
     <loc>https://wangyixin-tom.github.io/2021/03/28/kafka-kong-zhi-qi/</loc>
     <lastmod>2021-04-02</lastmod>
   </url>  <url>
@@ -82,10 +94,10 @@
     <loc>https://wangyixin-tom.github.io/2020/11/02/redis-xiao-xi-dui-lie/</loc>
     <lastmod>2021-04-01</lastmod>
   </url>  <url>
-    <loc>https://wangyixin-tom.github.io/2020/11/01/redis-shi-wu/</loc>
+    <loc>https://wangyixin-tom.github.io/2020/11/02/redis-nei-cun-sui-pian/</loc>
     <lastmod>2021-04-01</lastmod>
   </url>  <url>
-    <loc>https://wangyixin-tom.github.io/2020/11/02/redis-nei-cun-sui-pian/</loc>
+    <loc>https://wangyixin-tom.github.io/2020/11/01/redis-shi-wu/</loc>
     <lastmod>2021-04-01</lastmod>
   </url>  <url>
     <loc>https://wangyixin-tom.github.io/2020/10/29/redis-fen-bu-shi-suo/</loc>
@@ -118,10 +130,10 @@
     <loc>https://wangyixin-tom.github.io/2020/10/26/rabbitmq-xiao-xi-xiao-fei/</loc>
     <lastmod>2021-04-01</lastmod>
   </url>  <url>
-    <loc>https://wangyixin-tom.github.io/2020/10/26/rabbitmq-xiao-xi-lu-you/</loc>
+    <loc>https://wangyixin-tom.github.io/2020/10/26/rabbitmq-xiao-xi-chong-fu/</loc>
     <lastmod>2021-04-01</lastmod>
   </url>  <url>
-    <loc>https://wangyixin-tom.github.io/2020/10/26/rabbitmq-xiao-xi-chong-fu/</loc>
+    <loc>https://wangyixin-tom.github.io/2020/10/26/rabbitmq-xiao-xi-lu-you/</loc>
     <lastmod>2021-04-01</lastmod>
   </url>  <url>
     <loc>https://wangyixin-tom.github.io/2020/10/26/rabbitmq-ji-qun/</loc>

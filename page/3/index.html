@@ -293,11 +293,207 @@ $('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
+                    <a href="/2021/03/15/fen-ku-fen-biao/" target="_blank">
+                        <div class="card-image">
+                            
+                            
+                            <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="分库分表">
+                            
+                            <span class="card-title">分库分表</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                            垂直拆分
+有多个业务，每个业务单独分到一个实例里面。
+在一个实例中有多个库，把这些库分别放到单独的实例中。
+在一个库中存在过多的表，把这些表拆分到多个库中。
+把字段过多的表拆分成多个表，每张表包含一部分字段。
+
+水平拆分把同一张表分为多张表
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-03-15
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fa fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/mysql/" class="post-category" target="_blank">
+                                    mysql
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/mysql/" target="_blank">
+                            <span class="chip bg-color">mysql</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2021/03/15/du-xie-fen-chi/" target="_blank">
+                        <div class="card-image">
+                            
+                            
+                            <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="读写分离">
+                            
+                            <span class="card-title">读写分离</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                            主从复制异步复制在主库开启 binlog 的情况下，如果主库有增删改的语句，会记录到 binlog 中，主库通过 IO 线程把 binlog 里面的内容传给从库的中继日志（relay log）中，主库给客户端返回 commit 成功（这里不
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-03-15
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fa fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/mysql/" class="post-category" target="_blank">
+                                    mysql
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/mysql/" target="_blank">
+                            <span class="chip bg-color">mysql</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2021/03/14/mvcc/" target="_blank">
+                        <div class="card-image">
+                            
+                            
+                            <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="MVCC">
+                            
+                            <span class="card-title">MVCC</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                            MVCC多版本并发控制。MVCC 的实现，是通过保存数据在某个时间点的快照来实现的。
+不管需要执行多长时间，每个事务看到的数据都是一致的。根据事务开始的时间不同，每个事务对同一张表，同一时刻看到的数据可能是不一样的。
+MCCC 只在 RC 
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-03-14
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fa fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/mysql/" class="post-category" target="_blank">
+                                    mysql
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/mysql/" target="_blank">
+                            <span class="chip bg-color">mysql</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2021/03/14/shi-wu/" target="_blank">
+                        <div class="card-image">
+                            
+                            
+                            <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="事务">
+                            
+                            <span class="card-title">事务</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                            事务事务就是一组原子性的SQL查询，或者说一个独立的工作单元。如果数据库引擎能够成功地对数据库应用该组查询的全部语句，那么就执行该组查询。如果其中有任何一条语句因为崩溃或其他原因无法执行，那么所有的语句都不会执行。也就是说，事务内的语句，要
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-03-14
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fa fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/mysql/" class="post-category" target="_blank">
+                                    mysql
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/mysql/" target="_blank">
+                            <span class="chip bg-color">mysql</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
                     <a href="/2021/03/14/suo/" target="_blank">
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="锁">
+                            <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="锁">
                             
                             <span class="card-title">锁</span>
                         </div>
@@ -347,7 +543,7 @@ UNLOCK TAB
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="索引">
+                            <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="索引">
                             
                             <span class="card-title">索引</span>
                         </div>
@@ -396,7 +592,7 @@ B+ 树
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="count优化">
+                            <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="count优化">
                             
                             <span class="card-title">count优化</span>
                         </div>
@@ -445,7 +641,7 @@ MyISAM 引擎和 InnoDB 引
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="join优化">
+                            <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="join优化">
                             
                             <span class="card-title">join优化</span>
                         </div>
@@ -492,7 +688,7 @@ MyISAM 引擎和 InnoDB 引
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="分页查询优化">
+                            <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="分页查询优化">
                             
                             <span class="card-title">分页查询优化</span>
                         </div>
@@ -540,7 +736,7 @@ select * fro
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/27.jpg" class="responsive-img" alt="order/group by优化">
+                            <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="order/group by优化">
                             
                             <span class="card-title">order/group by优化</span>
                         </div>
@@ -589,7 +785,7 @@ select * fro
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/26.jpg" class="responsive-img" alt="批量数据导入优化">
+                            <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="批量数据导入优化">
                             
                             <span class="card-title">批量数据导入优化</span>
                         </div>
@@ -640,7 +836,7 @@ select * fro
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="索引失效">
+                            <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="索引失效">
                             
                             <span class="card-title">索引失效</span>
                         </div>
@@ -684,205 +880,6 @@ select * from t1 where c>='20
                 </div>
             </div>
             
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2021/03/11/man-cha-xun-ding-wei-yu-fen-xi/" target="_blank">
-                        <div class="card-image">
-                            
-                            
-                            <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="慢查询定位与分析">
-                            
-                            <span class="card-title">慢查询定位与分析</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                            定位慢sql1、查看慢查询日志确定已经执行完的慢查询
-mysql> set global slow_query_log = on;
-mysql> set global long_query_time = 1;
-mysql> show glo
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-03-11
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fa fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/mysql/" class="post-category" target="_blank">
-                                    mysql
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/mysql/" target="_blank">
-                            <span class="chip bg-color">mysql</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-            
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2021/03/10/redis-ying-yong/" target="_blank">
-                        <div class="card-image">
-                            
-                            
-                            <img src="/medias/featureimages/28.jpg" class="responsive-img" alt="redis应用">
-                            
-                            <span class="card-title">redis应用</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                            分布式锁实现：set lock:codehole true ex5 nx
-注意：不要用于较长任务，可能超时释放
-优化：设置value是一个随机值，保证不会被其他线程释放
-可重入锁：基于线程的Threadlocal变量存储当前持有锁的计数。如
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-03-10
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fa fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/redis/" class="post-category" target="_blank">
-                                    redis
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/redis/" target="_blank">
-                            <span class="chip bg-color">redis</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-            
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2021/03/08/redis-si-wei-dao-tu/" target="_blank">
-                        <div class="card-image">
-                            
-                            
-                            <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="redis思维导图">
-                            
-                            <span class="card-title">redis思维导图</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                            博客中redis相关思维导图。
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-03-08
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fa fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/redis/" class="post-category" target="_blank">
-                                    redis
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/redis/" target="_blank">
-                            <span class="chip bg-color">redis</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-            
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2020/12/10/kafka-ji-qun-pei-zhi/" target="_blank">
-                        <div class="card-image">
-                            
-                            
-                            <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="kafka集群配置">
-                            
-                            <span class="card-title">kafka集群配置</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                            Broker 端参数
-log.dirs：Broker 需要使用的若干个文件目录路径，必须指定；最好不同路径挂载到不同的物理磁盘，提升读写性能且能能够实现故障转移
-
-log.dir：单个路径
-
-zookeeper.connect：zookee
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-12-10
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fa fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/kafka/" class="post-category" target="_blank">
-                                    kafka
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/kafka/" target="_blank">
-                            <span class="chip bg-color">kafka</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-            
         </div>
     </article>
 
@@ -900,7 +897,7 @@ zookeeper.connect：zookee
             
         </div>
         <div class="page-info col m4 l4 hide-on-small-only">
-            <div class="center-align b-text-gray">3 / 5</div>
+            <div class="center-align b-text-gray">3 / 6</div>
         </div>
         <div class="col s6 m4 l4">
             
@@ -921,7 +918,7 @@ zookeeper.connect：zookee
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">47k</span>
+            <span class="white-color">51.2k</span>
             
 
             <br>
