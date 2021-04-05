@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://wangyixin-tom.github.io/"/>
-  <updated>2021-04-04T06:59:45.233Z</updated>
+  <updated>2021-04-05T14:20:47.140Z</updated>
   <id>https://wangyixin-tom.github.io/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>rabbitmq面试</title>
+    <link href="https://wangyixin-tom.github.io/2021/04/05/rabbitmq-mian-shi/"/>
+    <id>https://wangyixin-tom.github.io/2021/04/05/rabbitmq-mian-shi/</id>
+    <published>2021-04-05T12:05:22.000Z</published>
+    <updated>2021-04-05T14:20:47.140Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;MQ的优缺点&quot;&gt;&lt;a href=&quot;#MQ的优缺点&quot; class=&quot;headerlink&quot; title=&quot;MQ的优缺点&quot;&gt;&lt;/a&gt;MQ的优缺点&lt;/h2&gt;&lt;h3 id=&quot;优点&quot;&gt;&lt;a href=&quot;#优点&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="rabbitmq, 面试" scheme="https://wangyixin-tom.github.io/categories/rabbitmq-%E9%9D%A2%E8%AF%95/"/>
+    
+    
+      <category term="rabbitmq, 面试" scheme="https://wangyixin-tom.github.io/tags/rabbitmq-%E9%9D%A2%E8%AF%95/"/>
+    
+  </entry>
   
   <entry>
     <title>rabbitmq思维导图</title>
@@ -99,7 +125,7 @@
     <link href="https://wangyixin-tom.github.io/2021/04/03/rabbitmq-gai-nian/"/>
     <id>https://wangyixin-tom.github.io/2021/04/03/rabbitmq-gai-nian/</id>
     <published>2021-04-03T10:50:50.000Z</published>
-    <updated>2021-04-04T04:54:23.941Z</updated>
+    <updated>2021-04-05T01:22:25.696Z</updated>
     
     <summary type="html">
     
@@ -509,33 +535,6 @@
         
         
           &lt;p&gt;Kafka
-        
-      
-    
-    </summary>
-    
-      <category term="kafka" scheme="https://wangyixin-tom.github.io/categories/kafka/"/>
-    
-    
-      <category term="kafka" scheme="https://wangyixin-tom.github.io/tags/kafka/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>kafka消息丢失</title>
-    <link href="https://wangyixin-tom.github.io/2021/03/23/kafka-xiao-xi-diu-shi/"/>
-    <id>https://wangyixin-tom.github.io/2021/03/23/kafka-xiao-xi-diu-shi/</id>
-    <published>2021-03-23T11:13:33.000Z</published>
-    <updated>2021-04-01T23:01:49.726Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;kafka 只对“已提交”的消息（committed ）做有限度的持久化保证。&lt;/p&gt;
-&lt;h2 id=&quot;避免消息丢失&quot;&gt;&lt;a href=&quot;#避免消息丢失&quot; class=&quot;headerlink&quot;
         
       
     

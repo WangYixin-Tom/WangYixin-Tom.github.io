@@ -1,3 +1,4 @@
+https://wangyixin-tom.github.io/2021/04/05/rabbitmq-mian-shi/
 https://wangyixin-tom.github.io/2021/04/04/rabbitmq-si-wei-dao-tu/
 https://wangyixin-tom.github.io/2021/04/03/rabbitmq-jin-jie/
 https://wangyixin-tom.github.io/2021/04/03/rabbitmq-ke-hu-duan-kai-fa/
