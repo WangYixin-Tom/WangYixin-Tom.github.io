@@ -4,13 +4,12 @@
 
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="redis RBD机制, Python rabbitmq redis flask">
+    <meta name="keywords" content="mysql存储引擎, Python rabbitmq redis flask">
     <meta name="baidu-site-verification" content="code-KoKq36g1n2">
     <meta name="google-site-verification" content="yCy2azpds5XSuGZvis6OuA-XIGF5GuGpYRAaGfD6o48">
     <meta name="360-site-verification" content="b7c11a830ef90fd1464ad6206bb7b6e7">
-    <meta name="description" content="RDB 就是 Redis DataBase，内存中的全量数据在某一个时刻的状态记录。
-快照机制引入原因：AOF日志进行故障恢复的时候，需要逐一执行操作日志。如果操作日志非常多，Redis 恢复得很慢，影响到正常使用。
-bgsave命令：主进">
+    <meta name="description" content="innodb和myisiam区别Innodb引擎：Innodb引擎提供了对数据库ACID事务的支持。并且还提供了行级锁和外键约束。它的设计的目标就是处理大数据容量的数据库系统。
+MyIASM引擎：不提供事务的支持，也不支持行级锁和外键。My">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -18,7 +17,7 @@ bgsave命令：主进">
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>redis RBD机制 | wangyixin-tom的博客</title>
+    <title>mysql存储引擎 | wangyixin-tom的博客</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -268,13 +267,13 @@ bgsave命令：主进">
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/6.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/23.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        redis RBD机制
+                        mysql存储引擎
                     </div>
                 </div>
             </div>
@@ -385,8 +384,8 @@ bgsave命令：主进">
                     
                     <div class="article-tag">
                         
-                        <a href="/tags/redis/" target="_blank">
-                            <span class="chip bg-color">redis</span>
+                        <a href="/tags/mysql/" target="_blank">
+                            <span class="chip bg-color">mysql</span>
                         </a>
                         
                     </div>
@@ -397,8 +396,8 @@ bgsave命令：主进">
                     <div class="post-cate">
                         <i class="fa fa-bookmark fa-fw icon-category"></i>
                         
-                        <a href="/categories/redis/" class="post-category" target="_blank">
-                            redis
+                        <a href="/categories/mysql/" class="post-category" target="_blank">
+                            mysql
                         </a>
                         
                     </div>
@@ -409,7 +408,7 @@ bgsave命令：主进">
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-10-26
+                    2021-04-11
                 </div>
 
                 <div class="post-author info-break-policy">
@@ -423,14 +422,14 @@ bgsave命令：主进">
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    485
+                    1.1k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    3 分
                 </div>
                 
                 
@@ -441,13 +440,108 @@ bgsave命令：主进">
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>RDB 就是 Redis DataBase，内存中的全量数据在某一个时刻的状态记录。</p>
-<h2 id="快照机制"><a href="#快照机制" class="headerlink" title="快照机制"></a>快照机制</h2><p>引入原因：AOF日志进行故障恢复的时候，需要逐一执行操作日志。如果操作日志非常多，Redis 恢复得很慢，影响到正常使用。</p>
-<p>bgsave命令：主进程fork出子进程，共享主线程的所有内存数据。子进程读取主线程的内存数据，并把它们写入 RDB 文件。<br>借助了操作系统提供的写时复制技术（Copy-On-Write, COW），在执行快照的同时，正常处理写操作，避免了主线程的阻塞。<br>如果主线程要修改一块数据，这块数据就会被复制一份，生成数据副本。bgsave 子进程会把这个副本数据写入 RDB 文件。</p>
-<p><img src="https://img2020.cnblogs.com/blog/1030146/202010/1030146-20201024165305565-62767733.jpg" alt></p>
-<h2 id="增量快照"><a href="#增量快照" class="headerlink" title="增量快照"></a>增量快照</h2><p>做了一次全量快照后，后续的快照只对修改的数据进行快照记录，避免每次全量快照的开销。<br>需要使用额外的元数据信息去记录哪些数据被修改了，这会带来额外的空间开销问题。</p>
-<h2 id="混用-AOF日志和RDB-Redis-4-0"><a href="#混用-AOF日志和RDB-Redis-4-0" class="headerlink" title="混用 AOF日志和RDB(Redis 4.0)"></a>混用 AOF日志和RDB(Redis 4.0)</h2><p>内存快照以一定的频率执行，在两次快照之间，使用 AOF 日志记录这期间的所有命令操作。<br>快照不用很频繁地执行，这就避免了频繁 fork 对主线程的影响。而且，AOF 日志也只用记录两次快照间的操作，不需要记录所有操作了，因此，就不会出现文件过大的情况了，也可以避免重写开销。</p>
-<h2 id="备份机制选择"><a href="#备份机制选择" class="headerlink" title="备份机制选择"></a>备份机制选择</h2><p>数据不能丢失时，内存快照和 AOF 的混合使用；<br>如果允许分钟级别的数据丢失，只使用 RDB；<br>如果只用 AOF，优先使用 everysec 的配置选项，因为它在可靠性和性能之间取了一个平衡。</p>
+                <h2 id="innodb和myisiam区别"><a href="#innodb和myisiam区别" class="headerlink" title="innodb和myisiam区别"></a>innodb和myisiam区别</h2><p><strong>Innodb引擎：</strong>Innodb引擎提供了对数据库ACID事务的支持。并且还提供了行级锁和外键约束。它的设计的目标就是处理大数据容量的数据库系统。</p>
+<p><strong>MyIASM引擎</strong>：不提供事务的支持，也不支持行级锁和外键。MyISAM 适合查询以及插入为主的应用，InnoDB 适合频繁修改以及涉及到安全性较高的应用；</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>MyISAM</strong></th>
+<th><strong>Innodb</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>存储结构</td>
+<td><strong>每张表被存放在三个文件：frm-表格定义、MYD(MYData)-数据文件、MYI(MYIndex)-索引文件</strong></td>
+<td><strong>所有的表都保存在同一个数据文件中</strong>（也可能是多个文件，或者是独立的表空间文件），InnoDB表的大小只受限于操作系统文件的大小，一般为2GB</td>
+</tr>
+<tr>
+<td>存储空间</td>
+<td>MyISAM索引是有压缩的，存储空间较小</td>
+<td>InnoDB的表需要更多的内存和存储，它会在主内存中建立其专用的缓冲池用于高速缓冲数据和索引</td>
+</tr>
+<tr>
+<td>可移植性、备份及恢复</td>
+<td>由于MyISAM的数据是以文件的形式存储，所以在跨平台的数据转移中会很方便。在备份和恢复时可单独针对某个表进行操作</td>
+<td>免费的方案可以是拷贝数据文件、备份 binlog，或者用 mysqldump，在数据量达到几十G的时候就相对痛苦了</td>
+</tr>
+<tr>
+<td>文件格式</td>
+<td><strong>数据和索引是分别存储的，数据.MYD，索引.MYI</strong></td>
+<td><strong>数据和索引是集中存储的，.ibd</strong></td>
+</tr>
+<tr>
+<td>记录存储顺序</td>
+<td>按记录插入顺序保存</td>
+<td>按主键大小有序插入</td>
+</tr>
+<tr>
+<td>外键</td>
+<td>不支持</td>
+<td>支持</td>
+</tr>
+<tr>
+<td>事务</td>
+<td>不支持</td>
+<td>支持</td>
+</tr>
+<tr>
+<td>锁支持</td>
+<td>表级锁定</td>
+<td>行级锁定、表级锁定，锁定力度小并发能力高</td>
+</tr>
+<tr>
+<td>SELECT</td>
+<td>MyISAM更优</td>
+<td></td>
+</tr>
+<tr>
+<td>INSERT、UPDATE、DELETE</td>
+<td></td>
+<td>InnoDB更优</td>
+</tr>
+<tr>
+<td>select count(*)</td>
+<td>myisam更快，因为myisam内部维护了一个计数器，可以直接调取。</td>
+<td></td>
+</tr>
+<tr>
+<td>索引的实现方式</td>
+<td>B+树索引，myisam 是堆表</td>
+<td>B+树索引，Innodb 是索引组织表</td>
+</tr>
+<tr>
+<td>哈希索引</td>
+<td>不支持</td>
+<td>支持</td>
+</tr>
+<tr>
+<td>全文索引</td>
+<td>支持</td>
+<td>不支持</td>
+</tr>
+</tbody></table>
+<h3 id="MyISAM索引与InnoDB索引的区别"><a href="#MyISAM索引与InnoDB索引的区别" class="headerlink" title="MyISAM索引与InnoDB索引的区别"></a>MyISAM索引与InnoDB索引的区别</h3><p>InnoDB索引是<strong>聚簇索引</strong>，MyISAM索引是<strong>非聚簇索引</strong>。</p>
+<p>InnoDB的主键索引的叶子节点存储着行数据，因此主键索引非常高效；MyISAM索引的叶子节点存储的是行数据地址，需要再寻址一次才能得到数据。</p>
+<p>InnoDB非主键索引的叶子节点存储的是主键和其他带索引的列数据，因此查询时做到覆盖索引会非常高效</p>
+<p><strong>其他</strong></p>
+<ul>
+<li>一、InnoDB支持事务，MyISAM不支持，这一点是非常之重要。事务是一种高级的处理方式，如在一些列增删改中只要哪个出错还可以回滚还原，而MyISAM就不可以了。</li>
+<li>二、MyISAM适合查询以及插入为主的应用，InnoDB适合频繁修改以及涉及到安全性较高的应用</li>
+<li>三、InnoDB支持外键，MyISAM不支持</li>
+<li>四、InnoDB不支持FULLTEXT类型的索引，MyISAM不支持哈希索引</li>
+<li>五、InnoDB中不保存表的行数，如<code>select count(*) from table</code>时，InnoDB需要扫描一遍整个表来计算有多少行，但是MyISAM只要简单的读出保存好的行数即可。注意的是，当<code>count(*)</code>语句包含where条件时MyISAM也需要扫描整个表</li>
+<li>七、对于自增长的字段，InnoDB中必须包含只有该字段的索引，但是在MyISAM表中可以和其他字段一起建立联合索引</li>
+<li>八、清空整个表时，InnoDB是一行一行的删除，效率非常慢。MyISAM则会重建表</li>
+<li>九、InnoDB支持行锁（某些情况下还是锁整表，如 <strong>update table set a=1 where user like ‘%lee%’</strong></li>
+</ul>
+<h3 id="InnoDB引擎的4大特性"><a href="#InnoDB引擎的4大特性" class="headerlink" title="InnoDB引擎的4大特性"></a>InnoDB引擎的4大特性</h3><p>插入缓冲（insert buffer)</p>
+<p>二次写(double write)</p>
+<p>自适应哈希索引(ahi)</p>
+<p>预读(read ahead)</p>
+<h3 id="存储引擎选择"><a href="#存储引擎选择" class="headerlink" title="存储引擎选择"></a>存储引擎选择</h3><p>如果没有特别的需求，使用默认的Innodb即可。</p>
+<p>MyISAM：以读写插入为主的应用程序，比如博客系统、新闻门户网站。</p>
+<p>Innodb：更新（删除）操作频率也高，或者要保证数据的完整性；并发量高，支持事务和外键。比如OA自动化办公系统。</p>
 
             </div>
             <hr />
@@ -606,9 +700,9 @@ bgsave命令：主进">
             <br/>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
                   property="dct:title" rel="dct:type">
-                    《redis RBD机制》
+                    《mysql存储引擎》
                 </span> 由
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2020/10/26/redis-rdb-ji-zhi/" property="cc:attributionName"
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2021/04/11/mysql-cun-chu-yin-qing/" property="cc:attributionName"
                rel="cc:attributionURL">
                 wangyixin-tom
             </a> 采用
@@ -649,7 +743,7 @@ bgsave命令：主进">
         repo: 'wangyixin-tom.github.io',
         owner: 'WangYixin-Tom',
         admin: "WangYixin-Tom",
-        id: '2020/10/26/redis-rdb-ji-zhi/',
+        id: '2021/04/11/mysql-cun-chu-yin-qing/',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -936,32 +1030,32 @@ bgsave命令：主进">
             <div class="article-badge left-badge text-color">
                 <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2020/10/26/rabbitmq-xiao-xi-fa-bu/">
+                <a href="/2021/04/11/mysql-shu-ju-lei-xing/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="rabbitmq消息发布">
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="mysql数据类型">
                         
-                        <span class="card-title">rabbitmq消息发布</span>
+                        <span class="card-title">mysql数据类型</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            可靠投递
-mandatory当交换器无法路由消息，RabbitMQ将回发Basic.Return消息到发布者，同时回发完整消息。Basic.Return是异步的，在消息发布后的任何时候都可能发生。在rabbitpy库中，客户端自动接收Bas
+                            数据类型1、整数类型，包括TINYINT、SMALLINT、MEDIUMINT、INT、BIGINT，分别表示1字节、2字节、3字节、4字节、8字节整数。任何整数类型都可以加上UNSIGNED属性，表示数据是无符号的，即非负整数。
+长度：整
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2020-10-26
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2021-04-11
                         </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/rabbitmq/" class="post-category" target="_blank">
-                                    rabbitmq
+                            <a href="/categories/mysql/" class="post-category" target="_blank">
+                                    mysql
                                 </a>
                             
                             
@@ -971,8 +1065,8 @@ mandatory当交换器无法路由消息，RabbitMQ将回发Basic.Return消息到
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/rabbitmq/" target="_blank">
-                        <span class="chip bg-color">rabbitmq</span>
+                    <a href="/tags/mysql/" target="_blank">
+                        <span class="chip bg-color">mysql</span>
                     </a>
                     
                 </div>
@@ -986,32 +1080,34 @@ mandatory当交换器无法路由消息，RabbitMQ将回发Basic.Return消息到
                 下一篇&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/10/26/redis-aof-ji-zhi/">
+                <a href="/2021/04/11/mysql-ri-zhi-xi-tong/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="redis AOF机制">
+                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="mysql日志系统">
                         
-                        <span class="card-title">redis AOF机制</span>
+                        <span class="card-title">mysql日志系统</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            先写内存，在写日志。1、命令执行成功才会被记录日志。2、避免对当前命令的阻塞。
-风险1、突然宕机，Redis用作数据库的话，命令可能没有记入日志，所以就无法用日志进行恢复了。2、AOF写磁盘，当磁盘压力大，会导致写盘慢，阻塞后续操作。3、子
+                            日志系统redo log（重做日志）
+InnoDB引擎的日志，redo log 保证数据库异常重启之前提交的记录不会丢失（crash-safe）
+
+在一条更新语句进行执行的时候，InnoDB引擎会把更新记录写到 redo log 日志中，然
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-10-26
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-04-11
                             </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/redis/" class="post-category" target="_blank">
-                                    redis
+                            <a href="/categories/mysql/" class="post-category" target="_blank">
+                                    mysql
                                 </a>
                             
                             
@@ -1021,8 +1117,8 @@ mandatory当交换器无法路由消息，RabbitMQ将回发Basic.Return消息到
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/redis/" target="_blank">
-                        <span class="chip bg-color">redis</span>
+                    <a href="/tags/mysql/" target="_blank">
+                        <span class="chip bg-color">mysql</span>
                     </a>
                     
                 </div>

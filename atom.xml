@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://wangyixin-tom.github.io/"/>
-  <updated>2021-04-10T14:52:43.680Z</updated>
+  <updated>2021-04-11T13:17:50.516Z</updated>
   <id>https://wangyixin-tom.github.io/</id>
   
   <author>
@@ -17,11 +17,89 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>mysql数据类型</title>
+    <link href="https://wangyixin-tom.github.io/2021/04/11/mysql-shu-ju-lei-xing/"/>
+    <id>https://wangyixin-tom.github.io/2021/04/11/mysql-shu-ju-lei-xing/</id>
+    <published>2021-04-11T02:17:16.000Z</published>
+    <updated>2021-04-11T13:17:50.516Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;数据类型&quot;&gt;&lt;a href=&quot;#数据类型&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="mysql" scheme="https://wangyixin-tom.github.io/categories/mysql/"/>
+    
+    
+      <category term="mysql" scheme="https://wangyixin-tom.github.io/tags/mysql/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>mysql存储引擎</title>
+    <link href="https://wangyixin-tom.github.io/2021/04/11/mysql-cun-chu-yin-qing/"/>
+    <id>https://wangyixin-tom.github.io/2021/04/11/mysql-cun-chu-yin-qing/</id>
+    <published>2021-04-11T01:30:57.000Z</published>
+    <updated>2021-04-11T02:23:56.123Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;innodb和myisiam区别&quot;&gt;&lt;a href=&quot;#innodb和myisiam区别&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="mysql" scheme="https://wangyixin-tom.github.io/categories/mysql/"/>
+    
+    
+      <category term="mysql" scheme="https://wangyixin-tom.github.io/tags/mysql/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>mysql日志系统</title>
+    <link href="https://wangyixin-tom.github.io/2021/04/11/mysql-ri-zhi-xi-tong/"/>
+    <id>https://wangyixin-tom.github.io/2021/04/11/mysql-ri-zhi-xi-tong/</id>
+    <published>2021-04-11T01:04:56.000Z</published>
+    <updated>2021-04-11T01:12:29.238Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;日志系统&quot;&gt;&lt;a href=&quot;#日志系统&quot; class=&quot;headerlink&quot; title=&quot;日志系统&quot;&gt;&lt;/a&gt;日志系统&lt;/h2&gt;&lt;h3 id=&quot;redo-log（重做日志）&quot;&gt;&lt;a href=&quot;#redo-log（重做日志）&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="mysql" scheme="https://wangyixin-tom.github.io/categories/mysql/"/>
+    
+    
+      <category term="mysql" scheme="https://wangyixin-tom.github.io/tags/mysql/"/>
+    
+  </entry>
+  
+  <entry>
     <title>mysql面试</title>
     <link href="https://wangyixin-tom.github.io/2021/04/10/mysql-mian-shi/"/>
     <id>https://wangyixin-tom.github.io/2021/04/10/mysql-mian-shi/</id>
     <published>2021-04-10T10:45:14.000Z</published>
-    <updated>2021-04-10T14:52:43.680Z</updated>
+    <updated>2021-04-11T13:49:26.717Z</updated>
     
     <summary type="html">
     
@@ -102,9 +180,9 @@
       <category term="面试" scheme="https://wangyixin-tom.github.io/categories/rabbitmq/%E9%9D%A2%E8%AF%95/"/>
     
     
-      <category term="rabbitmq" scheme="https://wangyixin-tom.github.io/tags/rabbitmq/"/>
-    
       <category term="面试" scheme="https://wangyixin-tom.github.io/tags/%E9%9D%A2%E8%AF%95/"/>
+    
+      <category term="rabbitmq" scheme="https://wangyixin-tom.github.io/tags/rabbitmq/"/>
     
   </entry>
   
@@ -467,87 +545,6 @@
         
           &lt;p&gt;控制器组件（Controller），是 Apache Kafka 的核心组件。它的主要作用是在 Apache ZooKeeper 的帮助下管理和协调整个 Kafka 集群。每个正常运转的 Kafka 集群，在任意时刻都有且只有一个控制器。&lt;/p&gt;
 &lt;p&gt;&lt;img
-        
-      
-    
-    </summary>
-    
-      <category term="kafka" scheme="https://wangyixin-tom.github.io/categories/kafka/"/>
-    
-    
-      <category term="kafka" scheme="https://wangyixin-tom.github.io/tags/kafka/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>kafka Broker请求处理</title>
-    <link href="https://wangyixin-tom.github.io/2021/03/28/kafka-broker-qing-qiu-chu-li/"/>
-    <id>https://wangyixin-tom.github.io/2021/03/28/kafka-broker-qing-qiu-chu-li/</id>
-    <published>2021-03-28T09:58:17.000Z</published>
-    <updated>2021-04-01T23:01:49.676Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;所有的请求都是通过 TCP 网络以 Socket 的方式进行通讯的。&lt;/p&gt;
-&lt;p&gt;Kafka 使用的是 Reactor 模式处理请求。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Reactor
-        
-      
-    
-    </summary>
-    
-      <category term="kafka" scheme="https://wangyixin-tom.github.io/categories/kafka/"/>
-    
-    
-      <category term="kafka" scheme="https://wangyixin-tom.github.io/tags/kafka/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>kafka副本</title>
-    <link href="https://wangyixin-tom.github.io/2021/03/28/kafka-fu-ben/"/>
-    <id>https://wangyixin-tom.github.io/2021/03/28/kafka-fu-ben/</id>
-    <published>2021-03-28T09:45:20.000Z</published>
-    <updated>2021-04-01T23:01:49.716Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;主题可划分成若干个分，每个分区配置有若干个副本。副本（Replica），本质是一个只能&lt;strong&gt;追加写消息的提交日志&lt;/strong&gt;。&lt;/p&gt;
-&lt;h2 id=&quot;副本分类&quot;&gt;&lt;a href=&quot;#副本分类&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-      <category term="kafka" scheme="https://wangyixin-tom.github.io/categories/kafka/"/>
-    
-    
-      <category term="kafka" scheme="https://wangyixin-tom.github.io/tags/kafka/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>kafka消费者</title>
-    <link href="https://wangyixin-tom.github.io/2021/03/23/kafka-xiao-fei-zhe/"/>
-    <id>https://wangyixin-tom.github.io/2021/03/23/kafka-xiao-fei-zhe/</id>
-    <published>2021-03-23T13:07:18.000Z</published>
-    <updated>2021-04-01T23:01:49.726Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h2 id=&quot;消费者组&quot;&gt;&lt;a href=&quot;#消费者组&quot; class=&quot;headerlink&quot; title=&quot;消费者组&quot;&gt;&lt;/a&gt;消费者组&lt;/h2&gt;&lt;p&gt;Consumer Group 是 Kafka
         
       
     
