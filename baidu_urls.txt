@@ -1,3 +1,4 @@
+https://wangyixin-tom.github.io/2021/04/12/redis-mian-shi/
 https://wangyixin-tom.github.io/2021/04/11/mysql-shu-ju-lei-xing/
 https://wangyixin-tom.github.io/2021/04/11/mysql-cun-chu-yin-qing/
 https://wangyixin-tom.github.io/2021/04/11/mysql-ri-zhi-xi-tong/

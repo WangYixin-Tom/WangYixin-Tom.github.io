@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://wangyixin-tom.github.io/"/>
-  <updated>2021-04-11T13:17:50.516Z</updated>
+  <updated>2021-04-12T14:05:09.606Z</updated>
   <id>https://wangyixin-tom.github.io/</id>
   
   <author>
@@ -15,6 +15,36 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>redis面试</title>
+    <link href="https://wangyixin-tom.github.io/2021/04/12/redis-mian-shi/"/>
+    <id>https://wangyixin-tom.github.io/2021/04/12/redis-mian-shi/</id>
+    <published>2021-04-12T11:16:53.000Z</published>
+    <updated>2021-04-12T14:05:09.606Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot; title=&quot;概述&quot;&gt;&lt;/a&gt;概述&lt;/h2&gt;&lt;h3 id=&quot;什么是Redis&quot;&gt;&lt;a href=&quot;#什么是Redis&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="redis" scheme="https://wangyixin-tom.github.io/categories/redis/"/>
+    
+      <category term="interview" scheme="https://wangyixin-tom.github.io/categories/redis/interview/"/>
+    
+    
+      <category term="redis" scheme="https://wangyixin-tom.github.io/tags/redis/"/>
+    
+      <category term="interview" scheme="https://wangyixin-tom.github.io/tags/interview/"/>
+    
+  </entry>
   
   <entry>
     <title>mysql数据类型</title>
@@ -518,33 +548,6 @@
         
         
           &lt;h2 id=&quot;高水位&quot;&gt;&lt;a href=&quot;#高水位&quot; class=&quot;headerlink&quot; title=&quot;高水位&quot;&gt;&lt;/a&gt;高水位&lt;/h2&gt;&lt;p&gt;在分区高水位以下的消息被认为是已提交消息。kafka中，分区的高水位就是其 Leader
-        
-      
-    
-    </summary>
-    
-      <category term="kafka" scheme="https://wangyixin-tom.github.io/categories/kafka/"/>
-    
-    
-      <category term="kafka" scheme="https://wangyixin-tom.github.io/tags/kafka/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Kafka控制器</title>
-    <link href="https://wangyixin-tom.github.io/2021/03/28/kafka-kong-zhi-qi/"/>
-    <id>https://wangyixin-tom.github.io/2021/03/28/kafka-kong-zhi-qi/</id>
-    <published>2021-03-28T11:48:00.000Z</published>
-    <updated>2021-04-02T14:01:48.263Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;控制器组件（Controller），是 Apache Kafka 的核心组件。它的主要作用是在 Apache ZooKeeper 的帮助下管理和协调整个 Kafka 集群。每个正常运转的 Kafka 集群，在任意时刻都有且只有一个控制器。&lt;/p&gt;
-&lt;p&gt;&lt;img
         
       
     
