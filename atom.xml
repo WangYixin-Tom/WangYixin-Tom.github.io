@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://wangyixin-tom.github.io/"/>
-  <updated>2021-04-12T23:47:58.318Z</updated>
+  <updated>2021-04-14T23:50:00.971Z</updated>
   <id>https://wangyixin-tom.github.io/</id>
   
   <author>
@@ -15,6 +15,36 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>python面试</title>
+    <link href="https://wangyixin-tom.github.io/2021/04/13/python-mian-shi/"/>
+    <id>https://wangyixin-tom.github.io/2021/04/13/python-mian-shi/</id>
+    <published>2021-04-13T11:58:48.000Z</published>
+    <updated>2021-04-14T23:50:00.971Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;语言特性&quot;&gt;&lt;a href=&quot;#语言特性&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="python" scheme="https://wangyixin-tom.github.io/categories/python/"/>
+    
+      <category term="interview" scheme="https://wangyixin-tom.github.io/categories/python/interview/"/>
+    
+    
+      <category term="interview" scheme="https://wangyixin-tom.github.io/tags/interview/"/>
+    
+      <category term="python" scheme="https://wangyixin-tom.github.io/tags/python/"/>
+    
+  </entry>
   
   <entry>
     <title>redis面试</title>
@@ -161,7 +191,7 @@
     <link href="https://wangyixin-tom.github.io/2021/04/08/kafka-mian-shi/"/>
     <id>https://wangyixin-tom.github.io/2021/04/08/kafka-mian-shi/</id>
     <published>2021-04-08T11:55:21.000Z</published>
-    <updated>2021-04-08T14:23:47.452Z</updated>
+    <updated>2021-04-13T11:59:49.347Z</updated>
     
     <summary type="html">
     
@@ -177,12 +207,12 @@
     
       <category term="kafka" scheme="https://wangyixin-tom.github.io/categories/kafka/"/>
     
-      <category term="面试" scheme="https://wangyixin-tom.github.io/categories/kafka/%E9%9D%A2%E8%AF%95/"/>
+      <category term="interview" scheme="https://wangyixin-tom.github.io/categories/kafka/interview/"/>
     
     
       <category term="kafka" scheme="https://wangyixin-tom.github.io/tags/kafka/"/>
     
-      <category term="面试" scheme="https://wangyixin-tom.github.io/tags/%E9%9D%A2%E8%AF%95/"/>
+      <category term="interview" scheme="https://wangyixin-tom.github.io/tags/interview/"/>
     
   </entry>
   
@@ -191,7 +221,7 @@
     <link href="https://wangyixin-tom.github.io/2021/04/05/rabbitmq-mian-shi/"/>
     <id>https://wangyixin-tom.github.io/2021/04/05/rabbitmq-mian-shi/</id>
     <published>2021-04-05T12:05:22.000Z</published>
-    <updated>2021-04-08T11:55:50.903Z</updated>
+    <updated>2021-04-13T12:00:23.267Z</updated>
     
     <summary type="html">
     
@@ -207,10 +237,10 @@
     
       <category term="rabbitmq" scheme="https://wangyixin-tom.github.io/categories/rabbitmq/"/>
     
-      <category term="面试" scheme="https://wangyixin-tom.github.io/categories/rabbitmq/%E9%9D%A2%E8%AF%95/"/>
+      <category term="interview" scheme="https://wangyixin-tom.github.io/categories/rabbitmq/interview/"/>
     
     
-      <category term="面试" scheme="https://wangyixin-tom.github.io/tags/%E9%9D%A2%E8%AF%95/"/>
+      <category term="interview" scheme="https://wangyixin-tom.github.io/tags/interview/"/>
     
       <category term="rabbitmq" scheme="https://wangyixin-tom.github.io/tags/rabbitmq/"/>
     
@@ -522,32 +552,6 @@
         
         
           &lt;h2 id=&quot;主题增删改查&quot;&gt;&lt;a href=&quot;#主题增删改查&quot; class=&quot;headerlink&quot; title=&quot;主题增删改查&quot;&gt;&lt;/a&gt;&lt;strong&gt;主题增删改查&lt;/strong&gt;&lt;/h2&gt;&lt;h3 id=&quot;创建&quot;&gt;&lt;a href=&quot;#创建&quot;
-        
-      
-    
-    </summary>
-    
-      <category term="kafka" scheme="https://wangyixin-tom.github.io/categories/kafka/"/>
-    
-    
-      <category term="kafka" scheme="https://wangyixin-tom.github.io/tags/kafka/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>kafka高水位和Leader Epoch</title>
-    <link href="https://wangyixin-tom.github.io/2021/03/28/kafka-gao-shui-wei-he-leader-epoch/"/>
-    <id>https://wangyixin-tom.github.io/2021/03/28/kafka-gao-shui-wei-he-leader-epoch/</id>
-    <published>2021-03-28T12:07:34.000Z</published>
-    <updated>2021-04-01T23:38:36.364Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h2 id=&quot;高水位&quot;&gt;&lt;a href=&quot;#高水位&quot; class=&quot;headerlink&quot; title=&quot;高水位&quot;&gt;&lt;/a&gt;高水位&lt;/h2&gt;&lt;p&gt;在分区高水位以下的消息被认为是已提交消息。kafka中，分区的高水位就是其 Leader
         
       
     
