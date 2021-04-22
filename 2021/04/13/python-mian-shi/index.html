@@ -270,7 +270,7 @@ Python2 的默认编码是 ascii，因为 Pyt">
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/21.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/24.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -433,14 +433,14 @@ Python2 的默认编码是 ascii，因为 Pyt">
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    15.7k
+                    16.9k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    58 分
+                    62 分
                 </div>
                 
                 
@@ -460,10 +460,10 @@ Python2 的默认编码是 ascii，因为 Pyt">
 <li>True 和 False 在 Python2 中是两个全局变量，在数值上分别对应 1 和 0，可以指向其它对象。 Python3  True 和 False 变为两个关键字，永远指向两个固定的对象，不允许再被重新赋值。</li>
 <li>Python 2中print是特殊语句，Python 3中print则变成了函数。在Python 3中调用print需要加上括号。</li>
 <li>在Python 2中，3/2的结果是整数，在Python 3中，结果则是浮点数</li>
-<li>python2 range(1,10)返回列表，python3 range中返回迭代器，节约内存</li>
-<li>在Python 2中，map函数返回list，而在Python 3中，map函数返回iterator。</li>
+<li>python2 range返回列表，python3 range中返回迭代器，节约内存</li>
+<li>在Python 2中，map函数返回list，而在Python 3中，map函数返回迭代器。</li>
 <li>Python2中可以在函数里面可以用关键字 global 声明某个变量为全局变量，但是在嵌套函数中，想要给一个变量声明为非局部变量是没法实现的，在Pyhon3，新增了关键字 nonlcoal，使得非局部变量成为可能。</li>
-<li>python2中是raw_input()函数，python3中改名为input()函数</li>
+<li>python2中是raw_input函数，python3中改名为input函数</li>
 </ul>
 <h2 id="Python基础"><a href="#Python基础" class="headerlink" title="Python基础"></a>Python基础</h2><h3 id="可变数据类型和不可变数据类型"><a href="#可变数据类型和不可变数据类型" class="headerlink" title="可变数据类型和不可变数据类型"></a>可变数据类型和不可变数据类型</h3><p>可变数据类型：当该数据类型对应的变量的值发生了变化时，如果它对应的内存地址不发生改变，那么这个数据类型就是 可变数据类型。也叫值类型</p>
 <p>不可变数据类型：当该数据类型对应的变量的值发生了变化时，如果它对应的内存地址发生了改变，那么这个数据类型就是 不可变数据类型。也叫引用类型。</p>
@@ -504,7 +504,7 @@ str<span class="token punctuation">(</span>dict1<span class="token punctuation">
    a = 1
 print(vars(Runoob))
 {&#39;a&#39;: 1, &#39;__module__&#39;: &#39;__main__&#39;, &#39;__doc__&#39;: None}</code></pre><p><strong>ord</strong></p>
-<p>ord() 函数是 chr() 函数（对于8位的ASCII字符串）或 unichr() 函数（对于Unicode对象）的配对函数，它以一个长度为1的字符串作为参数，返回对应的 ASCII 数值，或者 Unicode 数值，如果所给的 Unicode 字符超出了你的 Python 定义范围，则会引发一个 TypeError 的异常。</p>
+<p>ord(函数是 chr函数（对于8位的ASCII字符串）或 unichr函数（对于Unicode对象）的配对函数，它以一个长度为1的字符串作为参数，返回对应的 ASCII 数值，或者 Unicode 数值，如果所给的 Unicode 字符超出了你的 Python 定义范围，则会引发一个 TypeError 的异常。</p>
 <h4 id="dir"><a href="#dir" class="headerlink" title="dir"></a>dir</h4><p><strong>dir()</strong> 函数不带参数时，返回当前范围内的变量、方法和定义的类型列表；带参数时，返回参数的属性、方法列表。如果参数包含方法<code>__dir__()</code>，该方法将被调用。如果参数不包含<code>__dir__()</code>，该方法将最大限度地收集参数信息。</p>
 <h4 id="isinstance"><a href="#isinstance" class="headerlink" title="isinstance"></a><strong>isinstance</strong></h4><p><code>isinstance()</code>函数来判断一个对象是否是一个已知的类型，类似 <code>type()</code>。<code>type()</code>函数可以查看一个类型或变量的类型。</p>
 <p><code>isinstance()</code>与 <code>type()</code>区别：</p>
@@ -857,6 +857,29 @@ add<span class="token punctuation">(</span><span class="token number">1</span><s
 <li>默认情况下，JSON 只能表示 Python 内置类型的子集，不能表示自定义的类；但 pickle 可以表示大量的 Python 数据类型（可以合理使用 Python 的对象内省功能自动地表示大多数类型，复杂情况可以通过实现 <a href="https://docs.python.org/zh-cn/3/library/pickle.html#pickle-inst" target="_blank" rel="noopener">specific object APIs</a> 来解决）。</li>
 <li>不像pickle，对一个不信任的JSON进行反序列化的操作本身不会造成任意代码执行漏洞。</li>
 </ul>
+<h3 id="说一下namedtuple的用法和作用"><a href="#说一下namedtuple的用法和作用" class="headerlink" title="说一下namedtuple的用法和作用"></a>说一下<code>namedtuple</code>的用法和作用</h3><p>在使用面向对象编程语言的时候，定义类是最常见的一件事情，有的时候，我们会用到只有属性没有方法的类，这种类的对象通常只用于组织数据，并不能接收消息，所以我们把这种类称为数据类或者退化的类，就像C语言中的结构体那样。我们并不建议使用这种退化的类，在Python中可以用<code>namedtuple</code>（命名元组）来替代这种类。</p>
+<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">from</span> collections <span class="token keyword">import</span> namedtuple
+
+Card <span class="token operator">=</span> namedtuple<span class="token punctuation">(</span><span class="token string">'Card'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token string">'suite'</span><span class="token punctuation">,</span> <span class="token string">'face'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+card1 <span class="token operator">=</span> Card<span class="token punctuation">(</span><span class="token string">'红桃'</span><span class="token punctuation">,</span> <span class="token number">13</span><span class="token punctuation">)</span>
+card2 <span class="token operator">=</span> Card<span class="token punctuation">(</span><span class="token string">'草花'</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>f<span class="token string">'{card1.suite}{card1.face}'</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>f<span class="token string">'{card2.suite}{card2.face}'</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>命名元组与普通元组一样是不可变容器，一旦将数据存储在<code>namedtuple</code>的顶层属性中，数据就不能再修改了，也就意味着对象上的所有属性都遵循“一次写入，多次读取”的原则。和普通元组不同的是，命名元组中的数据有访问名称，可以通过名称而不是索引来获取保存的数据，不仅在操作上更加简单，代码的可读性也会更好。</p>
+<p>命名元组的本质就是一个类，所以它还可以作为父类创建子类。除此之外，命名元组内置了一系列的方法，例如，可以通过<code>_asdict</code>方法将命名元组处理成字典，也可以通过<code>_replace</code>方法创建命名元组对象的浅拷贝。</p>
+<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">MyCard</span><span class="token punctuation">(</span>Card<span class="token punctuation">)</span><span class="token punctuation">:</span>
+
+    <span class="token keyword">def</span> <span class="token function">show</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        faces <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">''</span><span class="token punctuation">,</span> <span class="token string">'A'</span><span class="token punctuation">,</span> <span class="token string">'2'</span><span class="token punctuation">,</span> <span class="token string">'3'</span><span class="token punctuation">,</span> <span class="token string">'4'</span><span class="token punctuation">,</span> <span class="token string">'5'</span><span class="token punctuation">,</span> <span class="token string">'6'</span><span class="token punctuation">,</span> <span class="token string">'7'</span><span class="token punctuation">,</span> <span class="token string">'8'</span><span class="token punctuation">,</span> <span class="token string">'9'</span><span class="token punctuation">,</span> <span class="token string">'10'</span><span class="token punctuation">,</span> <span class="token string">'J'</span><span class="token punctuation">,</span> <span class="token string">'Q'</span><span class="token punctuation">,</span> <span class="token string">'K'</span><span class="token punctuation">]</span>
+        <span class="token keyword">return</span> f<span class="token string">'{self.suite}{faces[self.face]}'</span>
+
+
+<span class="token keyword">print</span><span class="token punctuation">(</span>Card<span class="token punctuation">)</span>    <span class="token comment" spellcheck="true"># &lt;class '__main__.Card'></span>
+card3 <span class="token operator">=</span> MyCard<span class="token punctuation">(</span><span class="token string">'方块'</span><span class="token punctuation">,</span> <span class="token number">12</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>card3<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>    <span class="token comment" spellcheck="true"># 方块Q</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>dict<span class="token punctuation">(</span>card1<span class="token punctuation">.</span>_asdict<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>    <span class="token comment" spellcheck="true"># {'suite': '红桃', 'face': 13}</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>card2<span class="token punctuation">.</span>_replace<span class="token punctuation">(</span>suite<span class="token operator">=</span><span class="token string">'方块'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>    <span class="token comment" spellcheck="true"># Card(suite='方块', face=5)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>总而言之，命名元组能更好的组织数据结构，让代码更加清晰和可读，在很多场景下是元组、字典和数据类的替代品。在需要创建占用空间更少的不可变类时，命名元组就是很好的选择。</p>
 <h2 id="面向对象"><a href="#面向对象" class="headerlink" title="面向对象"></a>面向对象</h2><p>继承：将多个类的共同属性和方法封装到一个父类下面，然后在用这些类来继承这个类的属性和方法</p>
 <p>封装：将有共同的属性和方法封装到同一个类下面</p>
 <p>多态：Python天生是支持多态的。指的是基类的同一个方法在不同的派生类中有着不同的功能</p>
@@ -1087,6 +1110,7 @@ d<span class="token punctuation">.</span>foo1<span class="token punctuation">(</
 <h2 id="整数"><a href="#整数" class="headerlink" title="整数"></a>整数</h2><p>PyIntObject就是一个对C语言中long类型的数值的扩展。</p>
 <p>出于性能考虑，对于小整数，Python使用小整数对象池small_ints缓存了[-5，257）之间的整数，该范围内的整数在Python系统中是共享的，值相同就属于同一个对象。</p>
 <p>而超过该范围的整数，值相同但对象不一定是同一个。</p>
+<p>CPython底层为了进一步提升性能还做了另一个设定，对于同一个代码块中值不在<code>small_ints</code>缓存范围内的整数，如果同一个代码块中已经存在一个值与其相同的整数对象，那么就直接引用该对象，否则创建新的<code>int</code>对象。</p>
 <h2 id="字符串-1"><a href="#字符串-1" class="headerlink" title="字符串"></a>字符串</h2><p>Python解释器为了提高字符串使用的效率和使用性能，做了很多优化，例如：Python解释器中使用了 intern（字符串驻留）的技术来提高字符串效率，什么是intern机制？即值同样的字符串对象仅仅会保存一份，放在一个字符串储蓄池中，是共用的，当然，肯定不能改变，这也决定了字符串必须是不可变对象。</p>
 <p><strong>简单原理</strong></p>
 <p>实现 Intern 机制的方式非常简单，就是通过维护一个字符串储蓄池，这个池子是一个字典结构，如果字符串已经存在于池子中就不再去创建新的字符串，直接返回之前创建好的字符串对象，如果之前还没有加入到该池子中，则先构造一个字符串对象，并把这个对象加入到池子中去，方便下一次获取。</p>
@@ -1159,6 +1183,19 @@ d<span class="token punctuation">.</span>foo1<span class="token punctuation">(</
 <p>可重入锁：为了支持在同一线程中多次请求同一资源，python提供了threading.RLock。重入锁必须由获取它的同一个线程释放，同时要求解锁次数应与加锁次数相同，才能用于另一个线程。</p>
 <h4 id="同步"><a href="#同步" class="headerlink" title="同步"></a>同步</h4><p>阻塞线程直到子线程全部结束。</p>
 <h4 id="守护线程"><a href="#守护线程" class="headerlink" title="守护线程"></a>守护线程</h4><p>不重要线程。主线程会等所有‘重要’线程结束后才结束。</p>
+<h4 id="线程池的工作原理"><a href="#线程池的工作原理" class="headerlink" title="线程池的工作原理"></a>线程池的工作原理</h4><p>线程池是一种用于减少线程本身创建和销毁造成的开销的技术，属于典型的空间换时间操作。如果应用程序需要频繁的将任务派发到线程中执行，线程池就是必选项，因为创建和释放线程涉及到大量的系统底层操作，开销较大，如果能够在应用程序工作期间，将创建和释放线程的操作变成预创建和借还操作，将大大减少底层开销。</p>
+<p>线程池在应用程序启动后，立即创建一定数量的线程，放入空闲队列中。这些线程最开始都处于阻塞状态，不会消耗CPU资源，但会占用少量的内存空间。</p>
+<p>当任务到来后，从队列中取出一个空闲线程，把任务派发到这个线程中运行，并将该线程标记为已占用。</p>
+<p>当线程池中所有的线程都被占用后，可以选择自动创建一定数量的新线程，用于处理更多的任务，也可以选择让任务排队等待直到有空闲的线程可用。</p>
+<p>在任务执行完毕后，线程并不退出结束，而是继续保持在池中等待下一次的任务。</p>
+<p>当系统比较空闲时，大部分线程长时间处于闲置状态时，线程池可以自动销毁一部分线程，回收系统资源。基于这种预创建技术，线程池将线程创建和销毁本身所带来的开销分摊到了各个具体的任务上，执行次数越多，每个任务所分担到的线程本身开销则越小。</p>
+<p>一般线程池都必须具备下面几个组成部分：</p>
+<ol>
+<li>线程池管理器：用于创建并管理线程池。</li>
+<li>工作线程和线程队列：线程池中实际执行的线程以及保存这些线程的容器。</li>
+<li>任务接口：将线程执行的任务抽象出来，形成任务接口，确保线程池与具体的任务无关。</li>
+<li>任务队列：线程池中保存等待被执行的任务的容器。</li>
+</ol>
 <h3 id="协程"><a href="#协程" class="headerlink" title="协程"></a>协程</h3><p>协程是一种用户态的轻量级线程，协程的调度完全由用户控制。协程拥有自己的寄存器上下文和栈。协程调度时，将寄存器上下文和栈保存到其他地方，在切回来的时候，恢复先前保存的寄存器上下文和栈，直接操作栈则基本没有内核切换的开销，可以不加锁的访问全局变量，所以上下文的切换非常快。</p>
 <p><strong>如何利用多核CPU呢？最简单的方法是多进程+协程，既充分利用多核，又充分发挥协程的高效率，可获得极高的性能</strong>。</p>
 <p><strong>常用模块</strong></p>
@@ -1812,7 +1849,7 @@ foo2 <span class="token operator">=</span> Foo<span class="token punctuation">(<
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="python面试">
+                        <img src="/medias/featureimages/24.jpg" class="responsive-img" alt="python面试">
                         
                         <span class="card-title">python面试</span>
                     </div>
@@ -1874,7 +1911,7 @@ Python2 的默认编码是 ascii，因为 Pyt
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/26.jpg" class="responsive-img" alt="redis面试">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="redis面试">
                         
                         <span class="card-title">redis面试</span>
                     </div>
@@ -2087,7 +2124,7 @@ Python2 的默认编码是 ascii，因为 Pyt
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">106.9k</span>
+            <span class="white-color">108.1k</span>
             
 
             <br>
