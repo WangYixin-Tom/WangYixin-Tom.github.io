@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://wangyixin-tom.github.io/"/>
-  <updated>2021-04-21T13:12:55.903Z</updated>
+  <updated>2021-04-24T14:00:59.443Z</updated>
   <id>https://wangyixin-tom.github.io/</id>
   
   <author>
@@ -15,6 +15,36 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>flask</title>
+    <link href="https://wangyixin-tom.github.io/2021/04/22/flask-mian-shi/"/>
+    <id>https://wangyixin-tom.github.io/2021/04/22/flask-mian-shi/</id>
+    <published>2021-04-22T12:23:24.000Z</published>
+    <updated>2021-04-24T14:00:59.443Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;Flask框架&quot;&gt;&lt;a href=&quot;#Flask框架&quot; class=&quot;headerlink&quot; title=&quot;Flask框架&quot;&gt;&lt;/a&gt;Flask框架&lt;/h1&gt;&lt;h2 id=&quot;WEB框架&quot;&gt;&lt;a href=&quot;#WEB框架&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="python" scheme="https://wangyixin-tom.github.io/categories/python/"/>
+    
+      <category term="interview" scheme="https://wangyixin-tom.github.io/categories/python/interview/"/>
+    
+    
+      <category term="python" scheme="https://wangyixin-tom.github.io/tags/python/"/>
+    
+      <category term="interview" scheme="https://wangyixin-tom.github.io/tags/interview/"/>
+    
+  </entry>
   
   <entry>
     <title>python面试</title>
@@ -40,9 +70,9 @@
       <category term="interview" scheme="https://wangyixin-tom.github.io/categories/python/interview/"/>
     
     
-      <category term="interview" scheme="https://wangyixin-tom.github.io/tags/interview/"/>
-    
       <category term="python" scheme="https://wangyixin-tom.github.io/tags/python/"/>
+    
+      <category term="interview" scheme="https://wangyixin-tom.github.io/tags/interview/"/>
     
   </entry>
   
@@ -526,32 +556,6 @@
         
         
           &lt;h2 id=&quot;生产消息&quot;&gt;&lt;a href=&quot;#生产消息&quot; class=&quot;headerlink&quot; title=&quot;生产消息&quot;&gt;&lt;/a&gt;生产消息&lt;/h2&gt;&lt;pre class=&quot;line-numbers language-shell&quot;&gt;&lt;code
-        
-      
-    
-    </summary>
-    
-      <category term="kafka" scheme="https://wangyixin-tom.github.io/categories/kafka/"/>
-    
-    
-      <category term="kafka" scheme="https://wangyixin-tom.github.io/tags/kafka/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>kafka主题管理</title>
-    <link href="https://wangyixin-tom.github.io/2021/03/28/kafka-zhu-ti-guan-li/"/>
-    <id>https://wangyixin-tom.github.io/2021/03/28/kafka-zhu-ti-guan-li/</id>
-    <published>2021-03-28T13:49:14.000Z</published>
-    <updated>2021-04-02T13:10:57.097Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h2 id=&quot;主题增删改查&quot;&gt;&lt;a href=&quot;#主题增删改查&quot; class=&quot;headerlink&quot; title=&quot;主题增删改查&quot;&gt;&lt;/a&gt;&lt;strong&gt;主题增删改查&lt;/strong&gt;&lt;/h2&gt;&lt;h3 id=&quot;创建&quot;&gt;&lt;a href=&quot;#创建&quot;
         
       
     
