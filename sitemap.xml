@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://wangyixin-tom.github.io/2021/04/13/python-mian-shi/</loc>
+    
+    <lastmod>2021-04-27T14:52:33.602Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://wangyixin-tom.github.io/2020/10/26/redis-rdb-ji-zhi/</loc>
     
     <lastmod>2021-04-27T11:57:34.730Z</lastmod>
@@ -96,13 +103,6 @@
     <loc>https://wangyixin-tom.github.io/2021/04/22/flask-mian-shi/</loc>
     
     <lastmod>2021-04-24T14:00:59.443Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://wangyixin-tom.github.io/2021/04/13/python-mian-shi/</loc>
-    
-    <lastmod>2021-04-21T13:12:55.903Z</lastmod>
     
   </url>
   
@@ -268,14 +268,14 @@
   </url>
   
   <url>
-    <loc>https://wangyixin-tom.github.io/2021/03/21/shu-ju-hui-fu/</loc>
+    <loc>https://wangyixin-tom.github.io/2021/03/13/pi-liang-shu-ju-dao-ru-you-hua/</loc>
     
     <lastmod>2021-04-01T23:01:50.177Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://wangyixin-tom.github.io/2021/03/13/pi-liang-shu-ju-dao-ru-you-hua/</loc>
+    <loc>https://wangyixin-tom.github.io/2021/03/21/shu-ju-hui-fu/</loc>
     
     <lastmod>2021-04-01T23:01:50.177Z</lastmod>
     
@@ -338,14 +338,14 @@
   </url>
   
   <url>
-    <loc>https://wangyixin-tom.github.io/2020/10/26/redis-zu-sai-ji-jie-jue-ban-fa/</loc>
+    <loc>https://wangyixin-tom.github.io/2020/10/26/redis-wang-luo-io-mo-xing/</loc>
     
     <lastmod>2021-04-01T23:01:50.117Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://wangyixin-tom.github.io/2020/10/26/redis-wang-luo-io-mo-xing/</loc>
+    <loc>https://wangyixin-tom.github.io/2020/10/26/redis-zu-sai-ji-jie-jue-ban-fa/</loc>
     
     <lastmod>2021-04-01T23:01:50.117Z</lastmod>
     
@@ -394,7 +394,7 @@
   </url>
   
   <url>
-    <loc>https://wangyixin-tom.github.io/2020/10/26/rabbitmq-xiao-xi-chong-fu/</loc>
+    <loc>https://wangyixin-tom.github.io/2020/10/26/rabbitmq-xiao-xi-ke-kao-xing/</loc>
     
     <lastmod>2021-04-01T23:01:49.986Z</lastmod>
     
@@ -408,7 +408,7 @@
   </url>
   
   <url>
-    <loc>https://wangyixin-tom.github.io/2020/10/26/rabbitmq-xiao-xi-ke-kao-xing/</loc>
+    <loc>https://wangyixin-tom.github.io/2020/10/26/rabbitmq-xiao-xi-chong-fu/</loc>
     
     <lastmod>2021-04-01T23:01:49.986Z</lastmod>
     
@@ -416,6 +416,13 @@
   
   <url>
     <loc>https://wangyixin-tom.github.io/2020/10/26/rabbitmq-xiao-xi-xiao-fei/</loc>
+    
+    <lastmod>2021-04-01T23:01:49.986Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://wangyixin-tom.github.io/2020/10/26/redis-aof-ji-zhi/</loc>
     
     <lastmod>2021-04-01T23:01:49.986Z</lastmod>
     
@@ -430,13 +437,6 @@
   
   <url>
     <loc>https://wangyixin-tom.github.io/2020/12/09/redis6-0/</loc>
-    
-    <lastmod>2021-04-01T23:01:49.986Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://wangyixin-tom.github.io/2020/10/26/redis-aof-ji-zhi/</loc>
     
     <lastmod>2021-04-01T23:01:49.986Z</lastmod>
     
@@ -492,14 +492,14 @@
   </url>
   
   <url>
-    <loc>https://wangyixin-tom.github.io/2021/03/13/join-you-hua/</loc>
+    <loc>https://wangyixin-tom.github.io/2021/03/28/kafka-broker-qing-qiu-chu-li/</loc>
     
     <lastmod>2021-04-01T23:01:49.676Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://wangyixin-tom.github.io/2021/03/28/kafka-broker-qing-qiu-chu-li/</loc>
+    <loc>https://wangyixin-tom.github.io/2021/03/13/join-you-hua/</loc>
     
     <lastmod>2021-04-01T23:01:49.676Z</lastmod>
     
@@ -534,6 +534,13 @@
   </url>
   
   <url>
+    <loc>https://wangyixin-tom.github.io/archives/index.html</loc>
+    
+    <lastmod>2020-04-04T11:43:42.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://wangyixin-tom.github.io/categories/index.html</loc>
     
     <lastmod>2020-04-04T11:43:42.000Z</lastmod>
@@ -542,13 +549,6 @@
   
   <url>
     <loc>https://wangyixin-tom.github.io/tags/index.html</loc>
-    
-    <lastmod>2020-04-04T11:43:42.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://wangyixin-tom.github.io/archives/index.html</loc>
     
     <lastmod>2020-04-04T11:43:42.000Z</lastmod>
     
