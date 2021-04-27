@@ -439,7 +439,7 @@ Hash
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.6k
+                    1.5k
                 </div>
                 
 
@@ -488,13 +488,13 @@ Hash
 </tbody></table>
 <p>redis中的键值对采用哈希表，哈希表就是一个数组，数组的每个元素称为一个哈希桶，每个哈希桶中保存了键值对数据的指针。<br>哈希冲突采用链式哈希。同一个哈希桶中的多个元素用一个链表来保存，它们之间依次用指针连接。<br>冲突增多时，Redis 会对哈希表做渐进式 rehash操作。rehash 也就是增加现有的哈希桶数量，让逐渐增多的 entry 元素能在更多的桶之间分散保存，减少单个桶中的元素数量，从而减少单个桶中的冲突。渐进式 rehash时指拷贝数据时，Redis 仍然正常处理客户端请求，每处理一个请求时，从哈希表 1 中的第一个索引位置开始，顺带着将这个索引位置上的所有 entries 拷贝到哈希表 2 中；等处理下一个请求时，再顺带拷贝哈希表 1 中的下一个索引位置的 entries</p>
 <h2 id="RedisObject"><a href="#RedisObject" class="headerlink" title="RedisObject"></a>RedisObject</h2><pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">struct</span> RedisObject <span class="token punctuation">{</span>
-    int4 type<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 4bits</span>
-    int4 encoding<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 4bits</span>
-    int24 lru<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 24bits</span>
-    int32 refcount<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 4bytes</span>
-    <span class="token keyword">void</span> <span class="token operator">*</span>ptr<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 8bytes，64-bit system</span>
+    int4 type<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 4bits，类型</span>
+    int4 encoding<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 4bits，存储形式</span>
+    int24 lru<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 24bits，LRU 信息</span>
+    int32 refcount<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 4bytes，引用计数</span>
+    <span class="token keyword">void</span> <span class="token operator">*</span>ptr<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 8bytes，对象内容的具体存储位置</span>
 <span class="token punctuation">}</span> robj<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>不同的对象具有不同的类型 type(4bit)，同一个类型的 type 会有不同的存储形式 encoding(4bit)，为了记录对象的 LRU 信息，使用了 24 个 bit 来记录 LRU 信息。每个对象都有个引用计数，当引用计数为零时，对象就会被销毁，内存被回收。ptr 指针将指向对象内容 (body) 的具体存储位置。这样一个 RedisObject 对象头需要占据 16 字节的存储空间。</p>
+<p> RedisObject 对象头需要占据 16 字节的存储空间。</p>
 <h2 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h2><p>Redis 的字符串叫着「SDS」，也就是Simple Dynamic String。它的结构是一个带长度信息的字节数组。</p>
 <pre class="line-numbers language-c"><code class="language-c"><span class="token keyword">struct</span> SDS<span class="token operator">&lt;</span>T<span class="token operator">></span> <span class="token punctuation">{</span>
     T capacity<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 数组容量</span>
@@ -1297,7 +1297,7 @@ Hash
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">103.5k</span>
+            <span class="white-color">103.4k</span>
             
 
             <br>

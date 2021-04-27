@@ -449,7 +449,7 @@ CAPC - Consistent ，一致性A - Availability ，可用性P - Partition to">
 <h2 id="同步机制"><a href="#同步机制" class="headerlink" title="同步机制"></a>同步机制</h2><p>通过 <code>replicaof</code>（Redis 5.0 之前使用 <code>slaveof</code>）命令形成主库和从库的关系。</p>
 <p>1、主从库间建立连接、协商同步，为全量复制做准备。<br><strong>从库和主库建立起连接，发送 psync 命令</strong>，表示要进行数据同步，<strong>主库确认回复</strong>，FULLRESYNC响应表示第一次复制采用的全量复制。<br>psync 命令包含了主库的 runID 和复制进度 offset 两个参数。</p>
 <p>2、主库将所有数据同步给从库。从库收到数据后，在本地完成数据加载。<br>主库执行 bgsave 命令，生成 RDB 文件，接着将文件发给从库。<br>从库接收到 RDB 文件后，会先清空当前数据库（避免之前数据的影响），然后加载 RDB 文件。</p>
-<p>3、主库会把第二阶段执行过程中新收到的写命令(replication buffer中的修改操作)，再发送给从库。<br>主库会在内存中使用 replication buffer，记录 RDB 文件生成后收到的所有写操作。</p>
+<p>3、主库会把第二阶段执行过程中新收到的写命令（replication buffer中的修改操作），再发送给从库。<br>主库会在内存中使用 replication buffer，记录 RDB 文件生成后收到的所有写操作。</p>
 <p><img src="zhucongtongbu.jpg" alt="主从第一次同步"></p>
 <h3 id="无盘复制"><a href="#无盘复制" class="headerlink" title="无盘复制"></a>无盘复制</h3><p>主节点在进行快照同步时，会进行很重的文件 IO 操作，特别是对于非 SSD 磁盘存储时，快照会对系统的负载产生较大影响。特别是当系统正在进行 AOF 的 fsync 操作时如果发生快照，fsync 将会被推迟执行，这就会严重影响主节点的服务效率。<br>所以从 Redis 2.8.18 版开始支持无盘复制。所谓无盘复制是指主服务器直接通过套接字将快照内容发送到从节点，生成快照是一个遍历的过程，主节点会一边遍历内存，一遍将序列化的内容发送到从节点，从节点还是跟之前一样，先将接收到的内容存储到磁盘文件中，再进行一次性加载。</p>
 <h2 id="主从级联"><a href="#主从级联" class="headerlink" title="主从级联"></a>主从级联</h2><h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><ul>
@@ -1257,7 +1257,7 @@ CAPC - Consistent ，一致性A - Availability ，可用性P - Partition to">
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">103.5k</span>
+            <span class="white-color">103.4k</span>
             
 
             <br>

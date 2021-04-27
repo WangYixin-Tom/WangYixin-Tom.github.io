@@ -432,7 +432,7 @@ LPUSH
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    658
+                    654
                 </div>
                 
 
@@ -478,8 +478,8 @@ LPUSH
 <h2 id="基于-Streams（Redis-5-0）"><a href="#基于-Streams（Redis-5-0）" class="headerlink" title="基于 Streams（Redis 5.0）"></a>基于 Streams（Redis 5.0）</h2><p><img src="stream.jpg" alt></p>
 <p>Redis Stream有一个消息链表，将所有加入的消息都串起来，每个消息都有一个唯一的 ID 和对应的内容。</p>
 <p>每个 Stream 都可以挂多个消费组，每个消费组会有个游标last_delivered_id在 Stream 数组之上往前移动，表示当前消费组已经消费到哪条消息了。</p>
-<p>同一个消费组 (Consumer Group) 可以挂接多个消费者 (Consumer)，这些消费者之间是竞争关系，任意一个消费者读取了消息都会使游标last_delivered_id往前移动。每个消费者有一个组内唯一名称。</p>
-<p>消费者 (Consumer) 内部会有个状态变量pending_ids，它记录了当前已经被客户端读取的消息，但是还没有 ack。如果客户端没有 ack，这个变量里面的消息 ID 会越来越多，一旦某个消息被 ack，它就开始减少。这个 pending_ids 变量在 Redis 官方被称之为PEL。</p>
+<p>同一个消费组可以挂接多个消费者，这些消费者之间是竞争关系，任意一个消费者读取了消息都会使游标last_delivered_id往前移动。每个消费者有一个组内唯一名称。</p>
+<p>消费者内部会有个状态变量pending_ids，它记录了当前已经被客户端读取的消息，但是还没有 ack。如果客户端没有 ack，这个变量里面的消息 ID 会越来越多，一旦某个消息被 ack，它就开始减少。这个 pending_ids 变量在 Redis 官方被称之为PEL。</p>
 <ul>
 <li>XADD：插入消息，保证有序，可以自动生成全局唯一 ID；</li>
 <li>XREAD：用于读取消息，可以按 ID 读取数据；</li>
@@ -1222,7 +1222,7 @@ LPUSH
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">103.5k</span>
+            <span class="white-color">103.4k</span>
             
 
             <br>

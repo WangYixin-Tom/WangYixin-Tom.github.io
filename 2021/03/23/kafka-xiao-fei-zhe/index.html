@@ -541,7 +541,7 @@ consumer<span class="token punctuation">.</span><span class="token function">sub
         <span class="token function">handle</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 处理提交失败异常</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><code>commitAsync()</code>，立即返回，不会阻塞，因此不会影响 Consumer 应用的 TPS。Kafka 提供了回调函数callback`，供你实现提交之后的逻辑，比如记录日志或处理异常等。<br>缺陷：出现问题时它不会自动重试。因为它是异步操作，倘若提交失败后自动重试，那么它重试时提交的位移值可能早已经“过期”或不是最新值了。</p>
+<p><code>commitAsync()</code>，立即返回，不会阻塞，因此不会影响 Consumer 应用的 TPS。Kafka 提供了回调函数<code>callback</code>，供你实现提交之后的逻辑，比如记录日志或处理异常等。<br>缺陷：出现问题时它不会自动重试。因为它是异步操作，倘若提交失败后自动重试，那么它重试时提交的位移值可能早已经“过期”或不是最新值了。</p>
 <pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">try</span> <span class="token punctuation">{</span>
     <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
         ConsumerRecords<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> String<span class="token operator">></span> records <span class="token operator">=</span>
@@ -1528,7 +1528,7 @@ $ bin/kafka-consumer-groups.sh --bootstrap-server <Kafka broker连接信息> --d
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">103.5k</span>
+            <span class="white-color">103.4k</span>
             
 
             <br>

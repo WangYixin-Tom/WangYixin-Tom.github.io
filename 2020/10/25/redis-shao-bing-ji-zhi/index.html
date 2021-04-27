@@ -470,7 +470,7 @@
 </ul>
 <h3 id="通知"><a href="#通知" class="headerlink" title="通知"></a>通知</h3><ul>
 <li>通知从库执行replicaof，与新主库同步</li>
-<li>通知客户端，像新主库请求</li>
+<li>通知客户端，向新主库请求</li>
 </ul>
 <p><strong>通知客户端</strong>的实现方法</p>
 <p>1、哨兵会把新主库的地址写入自己实例的pubsub中。客户端需要订阅这个pubsub，当这个pubsub有数据时，客户端就能感知到主库发生变更，同时可以拿到最新的主库地址。</p>
@@ -1234,7 +1234,7 @@ CAPC - Consistent ，一致性A - Availability ，可用性P - Partition to
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">103.5k</span>
+            <span class="white-color">103.4k</span>
             
 
             <br>
