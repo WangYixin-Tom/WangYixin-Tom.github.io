@@ -270,7 +270,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/6.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/4.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -433,7 +433,7 @@
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    4.2k
+                    4.3k
                 </div>
                 
 
@@ -540,7 +540,8 @@
 <p>确保 replication.factor &gt; min.insync.replicas 。</p>
 <p><strong>设置 unclean.leader.election.enable = false</strong></p>
 <p>不会从  follower 副本中和 leader 同步程度达不到要求的副本中选择出  leader ，这样降低了消息丢失的可能性。</p>
-<h2 id="Kafka-如何保证消息不重复消费"><a href="#Kafka-如何保证消息不重复消费" class="headerlink" title="Kafka 如何保证消息不重复消费"></a>Kafka 如何保证消息不重复消费</h2><h3 id="？？？"><a href="#？？？" class="headerlink" title="？？？"></a>？？？</h3><h2 id="Kafka为什么性能好"><a href="#Kafka为什么性能好" class="headerlink" title="Kafka为什么性能好"></a><strong>Kafka为什么性能好</strong></h2><h3 id="顺序写"><a href="#顺序写" class="headerlink" title="顺序写"></a><strong>顺序写</strong></h3><p>操作系统每次从磁盘读写数据的时候，需要先寻址，然后再进行数据读写，如果是机械硬盘，寻址就需要较长的时间。</p>
+<h2 id="Kafka-如何保证消息不重复消费"><a href="#Kafka-如何保证消息不重复消费" class="headerlink" title="Kafka 如何保证消息不重复消费"></a>Kafka 如何保证消息不重复消费</h2><p>去重：将消息的唯一标识保存到外部介质中，每次消费处理时判断是否处理过。</p>
+<h2 id="Kafka为什么性能好"><a href="#Kafka为什么性能好" class="headerlink" title="Kafka为什么性能好"></a><strong>Kafka为什么性能好</strong></h2><h3 id="顺序写"><a href="#顺序写" class="headerlink" title="顺序写"></a><strong>顺序写</strong></h3><p>操作系统每次从磁盘读写数据的时候，需要先寻址，然后再进行数据读写，如果是机械硬盘，寻址就需要较长的时间。</p>
 <p> Kafka 用的是顺序写，追加数据是追加到末尾，磁盘顺序写的性能极高。</p>
 <h3 id="零拷贝"><a href="#零拷贝" class="headerlink" title="零拷贝"></a><strong>零拷贝</strong></h3><p>Kafka 利用了 Linux 的 sendFile 技术实现零拷贝，减少了内核和用户模式之间的上下文切换。</p>
 <p>零拷贝是指将数据直接从磁盘文件复制到网卡设备中。</p>
@@ -1088,7 +1089,7 @@
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="mysql面试">
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="mysql面试">
                         
                         <span class="card-title">mysql面试</span>
                     </div>
@@ -1160,7 +1161,7 @@
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="rabbitmq面试">
+                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="rabbitmq面试">
                         
                         <span class="card-title">rabbitmq面试</span>
                     </div>
@@ -1376,7 +1377,7 @@
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">101.2k</span>
+            <span class="white-color">99.9k</span>
             
 
             <br>

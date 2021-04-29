@@ -8,9 +8,9 @@
     <meta name="baidu-site-verification" content="code-KoKq36g1n2">
     <meta name="google-site-verification" content="yCy2azpds5XSuGZvis6OuA-XIGF5GuGpYRAaGfD6o48">
     <meta name="360-site-verification" content="b7c11a830ef90fd1464ad6206bb7b6e7">
-    <meta name="description" content="count说明count(a) 和 count(*)当 count() 统计某一列时，比如 count(a)，a 表示列名，是不统计 null 的。
-而 count(*) 无论是否包含空值，都会统计。
-MyISAM 引擎和 InnoDB 引">
+    <meta name="description" content="count说明count(a) 和 count(*)当 count 统计某一列时，比如count(a)，a 表示列名，是不统计 null 的。
+而 count(*)无论是否包含空值，都会统计。
+MyISAM 引擎和 InnoDB 引擎 co">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -268,7 +268,7 @@ MyISAM 引擎和 InnoDB 引">
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/6.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/8.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -423,7 +423,7 @@ MyISAM 引擎和 InnoDB 引">
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    334
+                    320
                 </div>
                 
 
@@ -441,15 +441,15 @@ MyISAM 引擎和 InnoDB 引">
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="count说明"><a href="#count说明" class="headerlink" title="count说明"></a>count说明</h2><h3 id="count-a-和-count"><a href="#count-a-和-count" class="headerlink" title="count(a) 和 count(*)"></a>count(a) 和 count(*)</h3><p>当 count() 统计某一列时，比如 count(a)，a 表示列名，是不统计 null 的。</p>
-<p>而 count(*) 无论是否包含空值，都会统计。</p>
-<h3 id="MyISAM-引擎和-InnoDB-引擎-count-的区别"><a href="#MyISAM-引擎和-InnoDB-引擎-count-的区别" class="headerlink" title="MyISAM 引擎和 InnoDB 引擎 count(*) 的区别"></a>MyISAM 引擎和 InnoDB 引擎 count(*) 的区别</h3><p>对于 MyISAM 引擎，如果没有 where 子句，也没检索其它列，那么 count(*) 将会非常快。因为 MyISAM 引擎会把<br>表的总行数存在磁盘上。</p>
-<p>InnoDB 并不会保留表中的行数，因为并发事务可能同时读取到不同的行数。所以执行 count(*) 时都是临时去<br>计算的，会比 MyISAM 引擎慢很多。</p>
-<h3 id="MySQL-5-7-18-前后-count-的区别"><a href="#MySQL-5-7-18-前后-count-的区别" class="headerlink" title="MySQL 5.7.18 前后 count(*) 的区别"></a>MySQL 5.7.18 前后 count(*) 的区别</h3><p>MySQL 5.7.18 之前，InnoDB 通过扫描聚簇索引来处理 count(*) 语句。</p>
-<p>MySQL 5.7.18 开始，通过遍历最小的可用二级索引来处理 count(*) 语句。</p>
-<p>优化器基于成本的考虑，优先选择的是二级索引。所以 count(主键) 其实没 count (*)快。</p>
-<h3 id="count-1-count"><a href="#count-1-count" class="headerlink" title="count(1)   count(*)"></a>count(1)   count(*)</h3><p>执行计划相同，速度没有明显差别</p>
-<h2 id="count-优化"><a href="#count-优化" class="headerlink" title="count 优化"></a>count 优化</h2><p>1、show table status,Rows 这列就表示这张表的行数。</p>
+                <h2 id="count说明"><a href="#count说明" class="headerlink" title="count说明"></a>count说明</h2><h3 id="count-a-和-count"><a href="#count-a-和-count" class="headerlink" title="count(a) 和 count(*)"></a>count(a) 和 count(*)</h3><p>当 count 统计某一列时，比如<code>count(a)</code>，a 表示列名，是不统计 null 的。</p>
+<p>而 <code>count(*)</code>无论是否包含空值，都会统计。</p>
+<h3 id="MyISAM-引擎和-InnoDB-引擎-count-的区别"><a href="#MyISAM-引擎和-InnoDB-引擎-count-的区别" class="headerlink" title="MyISAM 引擎和 InnoDB 引擎 count(*) 的区别"></a>MyISAM 引擎和 InnoDB 引擎 count(*) 的区别</h3><p> MyISAM：如果没有 where 子句，也没检索其它列，<code>count(*)</code>会非常快。 MyISAM 引擎会把表的总行数存在磁盘上。</p>
+<p>InnoDB ：不会保留表中的行数，因为并发事务可能同时读取到不同的行数。执行<code>count(*)</code>时都是临时去计算的，会比 MyISAM 慢很多。</p>
+<h3 id="MySQL-5-7-18-前后-count-的区别"><a href="#MySQL-5-7-18-前后-count-的区别" class="headerlink" title="MySQL 5.7.18 前后 count(*) 的区别"></a>MySQL 5.7.18 前后 count(*) 的区别</h3><p>MySQL 5.7.18 之前，InnoDB 通过扫描聚簇索引来处理<code>count(*)</code>语句。</p>
+<p>MySQL 5.7.18 开始，通过遍历最小的可用二级索引来处理 <code>count(*)</code>语句。</p>
+<p>优化器基于成本的考虑，优先选择的是二级索引。所以<code>count(主键)</code> 其实没<code>count (*)</code>快。</p>
+<h3 id="count-1-count"><a href="#count-1-count" class="headerlink" title="count(1)   count(*)"></a><code>count(1)   count(*)</code></h3><p>执行计划相同，速度没有明显差别</p>
+<h2 id="count-优化"><a href="#count-优化" class="headerlink" title="count 优化"></a>count 优化</h2><p>1、<code>show table status</code>,Rows 这列就表示这张表的行数。</p>
 <pre class="line-numbers language-mysql"><code class="language-mysql">show table status like 't1';<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>估算值，可能与实际值相差 40% 到 50%。</p>
 <p>2、用 Redis 做计数器</p>
@@ -948,7 +948,7 @@ MyISAM 引擎和 InnoDB 引">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="索引">
+                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="索引">
                         
                         <span class="card-title">索引</span>
                     </div>
@@ -999,7 +999,7 @@ B+ 树
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="join优化">
+                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="join优化">
                         
                         <span class="card-title">join优化</span>
                     </div>
@@ -1007,7 +1007,10 @@ B+ 树
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            关联查询Nested-Loop Join思想：一次一行循环：从驱动表中读取行并取到关联字段，根据关联字段在被驱动表取出满足条件的行（使用索引），然后取两张表的结果合集。[manual][https://dev.mysql.com/doc/r
+                            关联查询Nested-Loop Join思想
+一次一行循环：从驱动表中读取行并取到关联字段，根据关联字段在被驱动表取出满足条件的行（使用索引），然后取两张表的结果合集。manual
+
+在关联字段有索引时，才会使用 NLJ，如果没索引，就会使
                         
                     </div>
                     <div class="publish-info">
@@ -1204,7 +1207,7 @@ B+ 树
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">101.2k</span>
+            <span class="white-color">99.9k</span>
             
 
             <br>

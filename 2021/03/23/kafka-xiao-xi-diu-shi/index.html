@@ -8,9 +8,11 @@
     <meta name="baidu-site-verification" content="code-KoKq36g1n2">
     <meta name="google-site-verification" content="yCy2azpds5XSuGZvis6OuA-XIGF5GuGpYRAaGfD6o48">
     <meta name="360-site-verification" content="b7c11a830ef90fd1464ad6206bb7b6e7">
-    <meta name="description" content="kafka 只对“已提交”的消息（committed ）做有限度的持久化保证。
-避免消息丢失
-不要使用 producer.send(msg)，而要使用producer.send(msg, callback)。一定要使用带有回调通知的 sen">
+    <meta name="description" content="kafka 只对“已提交”的消息做有限度的持久化保证。
+避免消息丢失生产者
+
+不要使用 producer.send(msg)，而要使用producer.send(msg, callback)。一定要使用带有回调通知的 send 方法。
+设置">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -268,7 +270,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/21.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/23.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -423,7 +425,7 @@
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    423
+                    429
                 </div>
                 
 
@@ -441,15 +443,22 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>kafka 只对“已提交”的消息（committed ）做有限度的持久化保证。</p>
-<h2 id="避免消息丢失"><a href="#避免消息丢失" class="headerlink" title="避免消息丢失"></a>避免消息丢失</h2><ul>
+                <p>kafka 只对“已提交”的消息做有限度的持久化保证。</p>
+<h2 id="避免消息丢失"><a href="#避免消息丢失" class="headerlink" title="避免消息丢失"></a>避免消息丢失</h2><p><strong>生产者</strong></p>
+<ul>
 <li>不要使用 <code>producer.send(msg)</code>，而要使用<code>producer.send(msg, callback)</code>。一定要使用带有回调通知的 send 方法。</li>
 <li>设置 <code>acks = all</code>。<code>acks</code>是 Producer 的一个参数，代表了你对“已提交”消息的定义。如果设置成 all，则表明所有副本 Broker 都要接收到消息，该消息才算是“已提交”。这是最高等级的“已提交”定义。</li>
 <li>设置 <code>retries</code> 为一个较大的值。当出现网络的瞬时抖动时，消息发送可能会失败，此时配置了 <code>retries &gt; 0</code> 的 Producer 能够自动重试消息发送，避免消息丢失。</li>
+</ul>
+<p><strong>broker</strong></p>
+<ul>
 <li>设置 <code>unclean.leader.election.enable = false</code>。如果一个 Broker 落后原先的 Leader 太多，那么它一旦成为新的 Leader，必然会造成消息的丢失。故一般设置成 false。</li>
 <li>设置 <code>replication.factor &gt;= 3</code>。防止消息丢失的主要机制就是冗余，最好将消息多保存几份。</li>
 <li>设置 <code>min.insync.replicas &gt; 1</code>。消息至少要被写入到多少个副本才算是“已提交”。设置成大于 1 可以提升消息持久性。在实际环境中千万不要使用默认值 1。</li>
 <li>确保 <code>replication.factor &gt; min.insync.replicas</code>。如果两者相等，那么只要有一个副本挂机，整个分区就无法正常工作了。推荐设置成 <code>replication.factor = min.insync.replicas + 1</code>。</li>
+</ul>
+<p><strong>消费者</strong></p>
+<ul>
 <li>确保消息消费完成再提交。Consumer 端有个参数 <code>enable.auto.commit</code>，最好把它设置成 <code>false</code>，并采用手动提交位移的方式。对于单 Consumer 多线程处理的场景而言是至关重要的</li>
 </ul>
 
@@ -944,7 +953,7 @@
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="kafka拦截器">
+                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="kafka拦截器">
                         
                         <span class="card-title">kafka拦截器</span>
                     </div>
@@ -997,7 +1006,7 @@
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="kafka生产者">
+                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="kafka生产者">
                         
                         <span class="card-title">kafka生产者</span>
                     </div>
@@ -1203,7 +1212,7 @@
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">101.2k</span>
+            <span class="white-color">99.9k</span>
             
 
             <br>

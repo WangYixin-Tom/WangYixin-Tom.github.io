@@ -297,7 +297,7 @@ $('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="事务">
+                            <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="事务">
                             
                             <span class="card-title">事务</span>
                         </div>
@@ -344,7 +344,7 @@ $('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="锁">
+                            <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="锁">
                             
                             <span class="card-title">锁</span>
                         </div>
@@ -394,7 +394,7 @@ UNLOCK TAB
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="索引">
+                            <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="索引">
                             
                             <span class="card-title">索引</span>
                         </div>
@@ -443,7 +443,7 @@ B+ 树
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="count优化">
+                            <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="count优化">
                             
                             <span class="card-title">count优化</span>
                         </div>
@@ -452,9 +452,9 @@ B+ 树
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                            count说明count(a) 和 count(*)当 count() 统计某一列时，比如 count(a)，a 表示列名，是不统计 null 的。
-而 count(*) 无论是否包含空值，都会统计。
-MyISAM 引擎和 InnoDB 引
+                            count说明count(a) 和 count(*)当 count 统计某一列时，比如count(a)，a 表示列名，是不统计 null 的。
+而 count(*)无论是否包含空值，都会统计。
+MyISAM 引擎和 InnoDB 引擎 co
                             
                         </div>
                         <div class="publish-info">
@@ -492,7 +492,7 @@ MyISAM 引擎和 InnoDB 引
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="join优化">
+                            <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="join优化">
                             
                             <span class="card-title">join优化</span>
                         </div>
@@ -501,7 +501,10 @@ MyISAM 引擎和 InnoDB 引
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                            关联查询Nested-Loop Join思想：一次一行循环：从驱动表中读取行并取到关联字段，根据关联字段在被驱动表取出满足条件的行（使用索引），然后取两张表的结果合集。[manual][https://dev.mysql.com/doc/r
+                            关联查询Nested-Loop Join思想
+一次一行循环：从驱动表中读取行并取到关联字段，根据关联字段在被驱动表取出满足条件的行（使用索引），然后取两张表的结果合集。manual
+
+在关联字段有索引时，才会使用 NLJ，如果没索引，就会使
                             
                         </div>
                         <div class="publish-info">
@@ -539,7 +542,7 @@ MyISAM 引擎和 InnoDB 引
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="分页查询优化">
+                            <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="分页查询优化">
                             
                             <span class="card-title">分页查询优化</span>
                         </div>
@@ -587,7 +590,7 @@ select * fro
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/24.jpg" class="responsive-img" alt="order/group by优化">
+                            <img src="/medias/featureimages/26.jpg" class="responsive-img" alt="order/group by优化">
                             
                             <span class="card-title">order/group by优化</span>
                         </div>
@@ -636,7 +639,7 @@ select * fro
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="批量数据导入优化">
+                            <img src="/medias/featureimages/25.jpg" class="responsive-img" alt="批量数据导入优化">
                             
                             <span class="card-title">批量数据导入优化</span>
                         </div>
@@ -687,7 +690,7 @@ select * fro
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="索引失效">
+                            <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="索引失效">
                             
                             <span class="card-title">索引失效</span>
                         </div>
@@ -737,7 +740,7 @@ select * from t1 where c>='20
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="慢查询定位与分析">
+                            <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="慢查询定位与分析">
                             
                             <span class="card-title">慢查询定位与分析</span>
                         </div>
@@ -787,7 +790,7 @@ mysql> show glo
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/25.jpg" class="responsive-img" alt="redis应用">
+                            <img src="/medias/featureimages/27.jpg" class="responsive-img" alt="redis应用">
                             
                             <span class="card-title">redis应用</span>
                         </div>
@@ -837,7 +840,7 @@ mysql> show glo
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="redis思维导图">
+                            <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="redis思维导图">
                             
                             <span class="card-title">redis思维导图</span>
                         </div>
@@ -916,7 +919,7 @@ mysql> show glo
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">101.2k</span>
+            <span class="white-color">99.9k</span>
             
 
             <br>

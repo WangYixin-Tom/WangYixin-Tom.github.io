@@ -270,7 +270,7 @@ Python2 的默认编码是 ascii，Python 3 默认编码">
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/22.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/24.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -433,14 +433,14 @@ Python2 的默认编码是 ascii，Python 3 默认编码">
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    14.6k
+                    14k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    55 分
+                    52 分
                 </div>
                 
                 
@@ -1170,20 +1170,23 @@ d<span class="token punctuation">.</span>foo1<span class="token punctuation">(</
 <p>可重入锁：为了支持在同一线程中多次请求同一资源，python提供了threading.RLock。重入锁必须由获取它的同一个线程释放，同时要求解锁次数应与加锁次数相同，才能用于另一个线程。</p>
 <h4 id="同步"><a href="#同步" class="headerlink" title="同步"></a>同步</h4><p>阻塞线程直到子线程全部结束。</p>
 <h4 id="守护线程"><a href="#守护线程" class="headerlink" title="守护线程"></a>守护线程</h4><p>不重要线程。主线程会等所有‘重要’线程结束后才结束。</p>
-<h4 id="线程池的工作原理"><a href="#线程池的工作原理" class="headerlink" title="线程池的工作原理"></a>线程池的工作原理</h4><p>线程池是一种用于减少线程本身创建和销毁造成的开销的技术，属于典型的空间换时间操作。如果应用程序需要频繁的将任务派发到线程中执行，线程池就是必选项，因为创建和释放线程涉及到大量的系统底层操作，开销较大，如果能够在应用程序工作期间，将创建和释放线程的操作变成预创建和借还操作，将大大减少底层开销。</p>
-<p>线程池在应用程序启动后，立即创建一定数量的线程，放入空闲队列中。这些线程最开始都处于阻塞状态，不会消耗CPU资源，但会占用少量的内存空间。</p>
-<p>当任务到来后，从队列中取出一个空闲线程，把任务派发到这个线程中运行，并将该线程标记为已占用。</p>
-<p>当线程池中所有的线程都被占用后，可以选择自动创建一定数量的新线程，用于处理更多的任务，也可以选择让任务排队等待直到有空闲的线程可用。</p>
-<p>在任务执行完毕后，线程并不退出结束，而是继续保持在池中等待下一次的任务。</p>
-<p>当系统比较空闲时，大部分线程长时间处于闲置状态时，线程池可以自动销毁一部分线程，回收系统资源。基于这种预创建技术，线程池将线程创建和销毁本身所带来的开销分摊到了各个具体的任务上，执行次数越多，每个任务所分担到的线程本身开销则越小。</p>
-<p>一般线程池都必须具备下面几个组成部分：</p>
+<h4 id="线程池的工作原理"><a href="#线程池的工作原理" class="headerlink" title="线程池的工作原理"></a>线程池的工作原理</h4><p>线程池是一种用于减少线程本身创建和销毁造成的开销的技术，属于典型的空间换时间操作。</p>
+<p>创建和释放线程涉及到大量的系统底层操作，开销较大，如果变成预创建和借还操作，将大大减少底层开销。</p>
+<ul>
+<li>在应用程序启动后，线程池创建一定数量的线程，放入空闲队列中。这些线程最开始都处于阻塞状态，不会消耗CPU，占用少量的内存。</li>
+<li>当任务到来后，从队列中取出一个空闲线程，把任务派发到这个线程中运行，并将标记为已占用。</li>
+<li>当线程池中所有的线程都被占用后，可以选择自动创建一定数量的新线程，用于处理更多的任务，也可以选择让任务排队等待直到有空闲的线程可用。</li>
+<li>在任务执行完毕后，线程并不退出结束，而是继续保持在池中等待下一次的任务。</li>
+<li>当系统比较空闲时，大部分线程长时间处于闲置状态时，线程池可以自动销毁一部分线程，回收系统资源。</li>
+</ul>
+<p>线程池组成部分：</p>
 <ol>
 <li>线程池管理器：用于创建并管理线程池。</li>
 <li>工作线程和线程队列：线程池中实际执行的线程以及保存这些线程的容器。</li>
 <li>任务接口：将线程执行的任务抽象出来，形成任务接口，确保线程池与具体的任务无关。</li>
 <li>任务队列：线程池中保存等待被执行的任务的容器。</li>
 </ol>
-<h3 id="协程"><a href="#协程" class="headerlink" title="协程"></a>协程</h3><p>协程是一种用户态的轻量级线程，协程的调度完全由用户控制。协程拥有自己的寄存器上下文和栈。协程调度时，将寄存器上下文和栈保存到其他地方，在切回来的时候，恢复先前保存的寄存器上下文和栈，直接操作栈则基本没有内核切换的开销，可以不加锁的访问全局变量，所以上下文的切换非常快。</p>
+<h3 id="协程"><a href="#协程" class="headerlink" title="协程"></a>协程</h3><p>协程是一种用户态的轻量级线程，协程的调度完全由用户控制。协程拥有自己的寄存器上下文和栈。协程调度时，将寄存器上下文和栈保存到其他地方，在切回来的时候，恢复先前保存的寄存器上下文和栈，基本没有内核切换的开销，可以不加锁的访问全局变量，上下文的切换非常快。</p>
 <p><strong>如何利用多核CPU呢？最简单的方法是多进程+协程，既充分利用多核，又充分发挥协程的高效率，可获得极高的性能</strong>。</p>
 <p><strong>常用模块</strong></p>
 <p>greenlet：提供了切换任务的快捷方式，但是遇到io无法自动切换任务，需要手动切换</p>
@@ -1210,37 +1213,21 @@ d<span class="token punctuation">.</span>foo1<span class="token punctuation">(</
 <p>1.用<code>wait()</code>函数使父进程阻塞</p>
 <p>2.使用信号量，在signal handler 中调用waitpid,这样父进程不用阻塞</p>
 <p><strong>3.fork 两次用孙子进程去完成子进程的任务（？？？）</strong></p>
-<h2 id="Global-Interpreter-Lock-全局解释器锁"><a href="#Global-Interpreter-Lock-全局解释器锁" class="headerlink" title="Global Interpreter Lock(全局解释器锁)"></a>Global Interpreter Lock(全局解释器锁)</h2><p>执行 Python 字节码时，为了保护访问 Python 对象而阻止多个线程执行的一把互斥锁。这把锁的存在主要是因为 CPython 解释器的内存管理不是线程安全的。</p>
+<h2 id="Global-Interpreter-Lock-全局解释器锁"><a href="#Global-Interpreter-Lock-全局解释器锁" class="headerlink" title="Global Interpreter Lock(全局解释器锁)"></a>Global Interpreter Lock(全局解释器锁)</h2><p>执行 Python 字节码时，为了保护访问 Python 对象而阻止多个线程执行的一把互斥锁。主要是因为 CPython 解释器的内存管理不是线程安全的。</p>
 <p>因为 Python 默认的解释器是 CPython，<strong>GIL 是存在于 CPython 解释器中的</strong>。</p>
 <p>常见的 Python 解释器：IPython（基于Cython）、IPython、Jython（可以把 Python 代码编译成 Java 字节码，依赖 Java 平台，不存在 GIL）、IronPython（运行在微软的 .Net 平台下的 Python 解释器，可以把 Python 代码编译成 .Net 字节码，不存在 GIL）</p>
 <h3 id="GIL原理"><a href="#GIL原理" class="headerlink" title="GIL原理"></a>GIL原理</h3><p>python 的线程就是 C 语言的 pthread，它是通过操作系统调度算法调度执行的。</p>
 <p>Python 2.x 的代码执行是基于 opcode 数量的调度方式，简单来说就是每执行一定数量的字节码，或遇到系统 IO 时，会强制释放 GIL，然后触发一次操作系统的线程调度。</p>
-<p>虽然在 Python 3.x 进行了优化，基于固定时间的调度方式，就是每执行固定时间的字节码，或遇到系统 IO 时，强制释放 GIL，触发系统的线程调度。</p>
+<p> Python 3.x 基于固定时间的调度方式，就是每执行固定时间的字节码，或遇到系统 IO 时，强制释放 GIL，触发系统的线程调度。</p>
 <h3 id="为什么会有GIL"><a href="#为什么会有GIL" class="headerlink" title="为什么会有GIL"></a>为什么会有GIL</h3><p>Python 设计者在设计解释器时，可能没有想到 CPU 的性能提升会这么快转为多核心方向发展，所以在当时的场景下，设计一个全局锁是那个时代保护多线程资源一致性最简单经济的设计方案。</p>
-<p>多核心时代来临，当大家试图去拆分和去除 GIL 的时候，发现大量库的代码和开发者已经重度依赖 GIL（默认认为 Pythonn 内部对象是线程安全的，无需在开发时额外加锁），所以这个去除 GIL 的任务变得复杂且难以实现。</p>
-<h2 id="性能优化"><a href="#性能优化" class="headerlink" title="性能优化"></a>性能优化</h2><p><strong>字典 (dictionary) 与列表 (list)</strong></p>
-<p>Python 字典中使用了 hash table，因此查找操作的复杂度为<code>O(1)</code>，而 list 实际是个数组，在 list 中，查找需要遍历整个 list，其复杂度为 O(n)，因此对成员的查找访问等操作字典要比 list 更快。</p>
-<p><em><em>集合  与列表 </em></em></p>
-<p>set 的 union， intersection，difference 操作要比 list 的迭代要快。如果涉及到求 list 交集，并集或者差的问题可以转换为 set 来操作</p>
-<p><strong>循环的优化</strong></p>
-<p>对循环的优化所遵循的原则是尽量减少循环过程中的计算量，有多重循环的尽量将内层的计算提到上一层。</p>
-<p><strong>Lazy if-evaluation 的特性</strong></p>
-<p>如果存在条件表达式 if x and y，在 x 为 false 的情况下 y 表达式的值将不再计算。因此可以利用该特性在一定程度上提高程序效率。</p>
-<p><strong>字符串的优化</strong></p>
-<p>在字符串连接的使用尽量使用 join() 而不是 +</p>
-<p>当对字符串可以使用正则表达式或者内置函数来处理的时候，选择内置函数</p>
-<p>对字符进行格式化比直接串联读取要快</p>
-<p>由于字符串是不可变对象，当使用“+”连接字符串的时候，每执行一次“+”操作都会申请一块新的内存，然后复制上一个“+”操作的结果和本次操作的有操作符到这块内存空间中，所以用“+”连接字符串的时候会涉及内存申请和复制；join在连接字符串的时候，首先计算需要多大的内存存放结果，然后一次性申请所需内存并将字符串复制过去。</p>
-<p><strong>使用列表解析和生成器表达式</strong></p>
-<p>在循环中，先要LOAD_ATTR，将append方法加载进来，然后CALL_FUNCTION，也就是执行；</p>
-<p>而在列表解析中，则直接调用了LIST_APPEND命令来添加元素，就是这一个小小的区别，使得列表推导式的速度会更快</p>
-<p><strong>xrange（python2）</strong></p>
-<p>在循环的时候使用 xrange 而不是 range；使用 xrange 可以节省大量的系统内存，因为 xrange() 在序列中每次调用只产生一个整数元素。而 range() 將直接返回完整的元素列表，用于循环时会有不必要的开销。</p>
-<p><strong>级联比较</strong></p>
-<p>使用级联比较 “x &lt; y &lt; z” 而不是 “x &lt; y and y &lt; z”；</p>
-<p><strong>while 1 要比 while True 更快</strong></p>
-<p>由于Python2中，True/False不是关键字，因此我们可以对其进行任意的赋值，这就导致程序在每次循环时都需要对True/False的值进行检查；而对于1，则被程序进行了优化，而后不会再进行检查。</p>
+<p>多核心时代来临，当大家试图去拆分和去除 GIL 的时候，发现大量库的代码和开发者已经重度依赖 GIL（默认认为 Pythonn内部对象是线程安全的，无需在开发时额外加锁），所以这个去除 GIL 的任务变得复杂且难以实现。</p>
 <h2 id="性能分析"><a href="#性能分析" class="headerlink" title="性能分析"></a>性能分析</h2><p>python 内置了丰富的性能分析工具，<strong>如 profile,cProfile 与 hotshot 等</strong>。其中 Profiler 是 python 自带的一组程序，能够描述程序运行时候的性能，并提供各种统计帮助用户定位程序的性能瓶颈。</p>
+<p>Python 标准库提供了同一分析接口的两种不同实现：</p>
+<ol>
+<li>建议使用 <a href="https://docs.python.org/zh-cn/3/library/profile.html#module-cProfile" target="_blank" rel="noopener"><code>cProfile</code></a> ；这是一个 C 扩展插件，因为其合理的运行开销，所以适合于分析长时间运行的程序。</li>
+<li><a href="https://docs.python.org/zh-cn/3/library/profile.html#module-profile" target="_blank" rel="noopener"><code>profile</code></a> 是一个纯 Python 模块（<a href="https://docs.python.org/zh-cn/3/library/profile.html#module-cProfile" target="_blank" rel="noopener"><code>cProfile</code></a> 就是模拟其接口的 C 语言实现），但它会显著增加配置程序的开销。如果你正在尝试以某种方式扩展分析器，则使用此模块可能会更容易完成任务</li>
+</ol>
+<p>支持输出：调用次数、在指定函数中消耗的总时间（不包括调用子函数的时间）、指定的函数及其所有子函数（从调用到退出）消耗的累积时间、函数运行一次的平均时间</p>
 <h2 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h2><h3 id="使用装饰器"><a href="#使用装饰器" class="headerlink" title="使用装饰器"></a><strong>使用装饰器</strong></h3><pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">singleton</span><span class="token punctuation">(</span>cls<span class="token punctuation">)</span><span class="token punctuation">:</span>
   instances <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
   <span class="token keyword">def</span> <span class="token function">wrapper</span><span class="token punctuation">(</span><span class="token operator">*</span>args<span class="token punctuation">,</span> <span class="token operator">**</span>kwargs<span class="token punctuation">)</span><span class="token punctuation">:</span>
@@ -1835,7 +1822,7 @@ foo2 <span class="token operator">=</span> Foo<span class="token punctuation">(<
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="flask">
+                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="flask">
                         
                         <span class="card-title">flask</span>
                     </div>
@@ -1896,7 +1883,7 @@ run 方法调用werkzeug 的 run_simple
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/27.jpg" class="responsive-img" alt="redis面试">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="redis面试">
                         
                         <span class="card-title">redis面试</span>
                     </div>
@@ -2109,7 +2096,7 @@ run 方法调用werkzeug 的 run_simple
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">101.2k</span>
+            <span class="white-color">99.9k</span>
             
 
             <br>
