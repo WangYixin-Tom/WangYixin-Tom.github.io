@@ -297,7 +297,7 @@ $('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="事务">
+                            <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="事务">
                             
                             <span class="card-title">事务</span>
                         </div>
@@ -306,7 +306,7 @@ $('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                            事务事务就是一组原子性的SQL查询，或者说一个独立的工作单元。如果数据库引擎能够成功地对数据库应用该组查询的全部语句，那么就执行该组查询。如果其中有任何一条语句因为崩溃或其他原因无法执行，那么所有的语句都不会执行。也就是说，事务内的语句，要
+                            事务ACID、隔离级别及实现。分析了事务可见性，介绍了Binlog、redolog，并加以对比。数据库不丢数据的设置，给出了使用事务的建议。
                             
                         </div>
                         <div class="publish-info">
@@ -344,7 +344,7 @@ $('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="锁">
+                            <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="锁">
                             
                             <span class="card-title">锁</span>
                         </div>
@@ -394,7 +394,7 @@ UNLOCK TAB
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="索引">
+                            <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="索引">
                             
                             <span class="card-title">索引</span>
                         </div>
@@ -403,9 +403,12 @@ UNLOCK TAB
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                            数据结构B 树B 树每个节点都包含 key 值和 data 值，因此如果 data 比较大时，每一页存储的 key 会比较少；当数据比较多时，有“要经历多层节点才能查询在叶子节点的数据”的问题。
+                            数据结构B 树B 树每个节点都包含 key 值和 data 值。
+如果 data 比较大时，每一页存储的 key 会比较少；
+当数据比较多时，要经历多层节点才能查询在叶子节点的数据。
 B+ 树
-所有叶子节点中包含了全部关键字的信
+所有叶子节点中包含了全部关键字的信息
+各叶子节
                             
                         </div>
                         <div class="publish-info">
@@ -443,7 +446,7 @@ B+ 树
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="count优化">
+                            <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="count优化">
                             
                             <span class="card-title">count优化</span>
                         </div>
@@ -492,7 +495,7 @@ MyISAM 引擎和 InnoDB 引擎 co
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="join优化">
+                            <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="join优化">
                             
                             <span class="card-title">join优化</span>
                         </div>
@@ -542,7 +545,7 @@ MyISAM 引擎和 InnoDB 引擎 co
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="分页查询优化">
+                            <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="分页查询优化">
                             
                             <span class="card-title">分页查询优化</span>
                         </div>
@@ -551,8 +554,7 @@ MyISAM 引擎和 InnoDB 引擎 co
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                            自增且连续主键的分页查询避免前n条记录的读取[mysql manual][https://dev.mysql.com/doc/refman/5.7/en/limit-optimization.html]，可以采用：
-select * fro
+                            分页查询性能优化，转换为主键查询或者排序和分页操作先查出主键，然后根据主键查到对应的记录。
                             
                         </div>
                         <div class="publish-info">
@@ -590,7 +592,7 @@ select * fro
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/26.jpg" class="responsive-img" alt="order/group by优化">
+                            <img src="/medias/featureimages/27.jpg" class="responsive-img" alt="order/group by优化">
                             
                             <span class="card-title">order/group by优化</span>
                         </div>
@@ -639,7 +641,7 @@ select * fro
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/25.jpg" class="responsive-img" alt="批量数据导入优化">
+                            <img src="/medias/featureimages/26.jpg" class="responsive-img" alt="批量数据导入优化">
                             
                             <span class="card-title">批量数据导入优化</span>
                         </div>
@@ -648,11 +650,7 @@ select * fro
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                            插入行所需的时间由以下因素决定([mysql manual][https://dev.mysql.com/doc/refman/5.7/en/insert-optimization.html])
-
-连接：30%
-向服务器发送查询：20%
-解
+                            批量数据导入优化方法：一次插入多行的值，关闭自动提交，redo log和bin log刷盘次数。
                             
                         </div>
                         <div class="publish-info">
@@ -690,7 +688,7 @@ select * fro
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="索引失效">
+                            <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="索引失效">
                             
                             <span class="card-title">索引失效</span>
                         </div>
@@ -740,7 +738,7 @@ select * from t1 where c>='20
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="慢查询定位与分析">
+                            <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="慢查询定位与分析">
                             
                             <span class="card-title">慢查询定位与分析</span>
                         </div>
@@ -749,10 +747,7 @@ select * from t1 where c>='20
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                            定位慢sql1、查看慢查询日志确定已经执行完的慢查询
-mysql> set global slow_query_log = on;
-mysql> set global long_query_time = 1;
-mysql> show glo
+                            慢查询的定位和分析方法。
                             
                         </div>
                         <div class="publish-info">
@@ -790,7 +785,7 @@ mysql> show glo
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/27.jpg" class="responsive-img" alt="redis应用">
+                            <img src="/medias/featureimages/28.jpg" class="responsive-img" alt="redis应用">
                             
                             <span class="card-title">redis应用</span>
                         </div>
@@ -840,7 +835,7 @@ mysql> show glo
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="redis思维导图">
+                            <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="redis思维导图">
                             
                             <span class="card-title">redis思维导图</span>
                         </div>
@@ -919,7 +914,7 @@ mysql> show glo
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">99.9k</span>
+            <span class="white-color">99.5k</span>
             
 
             <br>

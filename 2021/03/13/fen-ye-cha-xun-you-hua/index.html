@@ -8,8 +8,10 @@
     <meta name="baidu-site-verification" content="code-KoKq36g1n2">
     <meta name="google-site-verification" content="yCy2azpds5XSuGZvis6OuA-XIGF5GuGpYRAaGfD6o48">
     <meta name="360-site-verification" content="b7c11a830ef90fd1464ad6206bb7b6e7">
-    <meta name="description" content="自增且连续主键的分页查询避免前n条记录的读取[mysql manual][https://dev.mysql.com/doc/refman/5.7/en/limit-optimization.html]，可以采用：
-select * fro">
+    <meta name="description" content="自增且连续主键的分页查询避免前n条记录的读取mysql manual，可以采用：
+select * from t1 where id &gt;99000 limit 2;
+要求主链连续且自增，否则很多时候不适用。
+非主键字段排序的分页查询可能不走">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -267,7 +269,7 @@ select * fro">
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/10.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/9.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -422,7 +424,7 @@ select * fro">
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    163
+                    150
                 </div>
                 
 
@@ -440,7 +442,7 @@ select * fro">
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="自增且连续主键的分页查询"><a href="#自增且连续主键的分页查询" class="headerlink" title="自增且连续主键的分页查询"></a>自增且连续主键的分页查询</h2><p>避免前n条记录的读取[mysql manual][<a href="https://dev.mysql.com/doc/refman/5.7/en/limit-optimization.html]，可以采用：" target="_blank" rel="noopener">https://dev.mysql.com/doc/refman/5.7/en/limit-optimization.html]，可以采用：</a></p>
+                <h2 id="自增且连续主键的分页查询"><a href="#自增且连续主键的分页查询" class="headerlink" title="自增且连续主键的分页查询"></a>自增且连续主键的分页查询</h2><p>避免前n条记录的读取<a href="https://dev.mysql.com/doc/refman/5.7/en/limit-optimization.html" target="_blank" rel="noopener">mysql manual</a>，可以采用：</p>
 <pre class="line-numbers language-mysql"><code class="language-mysql">select * from t1 where id >99000 limit 2;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>要求主链连续且自增，否则很多时候不适用。</p>
 <h2 id="非主键字段排序的分页查询"><a href="#非主键字段排序的分页查询" class="headerlink" title="非主键字段排序的分页查询"></a>非主键字段排序的分页查询</h2><p>可能不走索引</p>
@@ -939,7 +941,7 @@ select * fro">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="join优化">
+                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="join优化">
                         
                         <span class="card-title">join优化</span>
                     </div>
@@ -991,7 +993,7 @@ select * fro">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/26.jpg" class="responsive-img" alt="order/group by优化">
+                        <img src="/medias/featureimages/27.jpg" class="responsive-img" alt="order/group by优化">
                         
                         <span class="card-title">order/group by优化</span>
                     </div>
@@ -1198,7 +1200,7 @@ select * fro">
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">99.9k</span>
+            <span class="white-color">99.5k</span>
             
 
             <br>

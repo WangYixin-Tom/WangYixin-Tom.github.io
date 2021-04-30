@@ -271,7 +271,7 @@ Undo logundo">
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/5.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/6.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -946,7 +946,7 @@ Undo logundo">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="读写分离">
+                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="读写分离">
                         
                         <span class="card-title">读写分离</span>
                     </div>
@@ -954,7 +954,7 @@ Undo logundo">
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            主从复制异步复制在主库开启 binlog 的情况下，如果主库有增删改的语句，会记录到 binlog 中，主库通过 IO 线程把 binlog 里面的内容传给从库的中继日志（relay log）中，主库给客户端返回 commit 成功（这里不
+                            mysql主从复制中异步复制和半同步复制的原理；可靠性/可用性优先策略下的主从切换；备库并行复制策略;主从延迟的原因和判断方法；主备切换的多种方法；过期读的解决方案；
                         
                     </div>
                     <div class="publish-info">
@@ -995,7 +995,7 @@ Undo logundo">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="事务">
+                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="事务">
                         
                         <span class="card-title">事务</span>
                     </div>
@@ -1003,7 +1003,7 @@ Undo logundo">
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            事务事务就是一组原子性的SQL查询，或者说一个独立的工作单元。如果数据库引擎能够成功地对数据库应用该组查询的全部语句，那么就执行该组查询。如果其中有任何一条语句因为崩溃或其他原因无法执行，那么所有的语句都不会执行。也就是说，事务内的语句，要
+                            事务ACID、隔离级别及实现。分析了事务可见性，介绍了Binlog、redolog，并加以对比。数据库不丢数据的设置，给出了使用事务的建议。
                         
                     </div>
                     <div class="publish-info">
@@ -1200,7 +1200,7 @@ Undo logundo">
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">99.9k</span>
+            <span class="white-color">99.5k</span>
             
 
             <br>

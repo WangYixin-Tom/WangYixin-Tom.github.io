@@ -8,10 +8,9 @@
     <meta name="baidu-site-verification" content="code-KoKq36g1n2">
     <meta name="google-site-verification" content="yCy2azpds5XSuGZvis6OuA-XIGF5GuGpYRAaGfD6o48">
     <meta name="360-site-verification" content="b7c11a830ef90fd1464ad6206bb7b6e7">
-    <meta name="description" content="定位慢sql1、查看慢查询日志确定已经执行完的慢查询
-mysql&gt; set global slow_query_log = on;
+    <meta name="description" content="定位慢sql1、查看慢查询日志确定已经执行完的慢查询mysql&gt; set global slow_query_log = on;
 mysql&gt; set global long_query_time = 1;
-mysql&gt; show glo">
+mysql&gt; show glob">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -269,7 +268,7 @@ mysql&gt; show glo">
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/1.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -424,7 +423,7 @@ mysql&gt; show glo">
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.1k
+                    1k
                 </div>
                 
 
@@ -442,8 +441,7 @@ mysql&gt; show glo">
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="定位慢sql"><a href="#定位慢sql" class="headerlink" title="定位慢sql"></a>定位慢sql</h2><p>1、查看慢查询日志确定已经执行完的慢查询</p>
-<pre class="line-numbers language-mysql"><code class="language-mysql">mysql> set global slow_query_log = on;
+                <h2 id="定位慢sql"><a href="#定位慢sql" class="headerlink" title="定位慢sql"></a>定位慢sql</h2><h3 id="1、查看慢查询日志确定已经执行完的慢查询"><a href="#1、查看慢查询日志确定已经执行完的慢查询" class="headerlink" title="1、查看慢查询日志确定已经执行完的慢查询"></a>1、查看慢查询日志确定已经执行完的慢查询</h3><pre class="line-numbers language-mysql"><code class="language-mysql">mysql> set global slow_query_log = on;
 mysql> set global long_query_time = 1;
 mysql> show global variables like "datadir";
 mysql> show global variables like "slow_query_log_file";
@@ -456,8 +454,7 @@ SET timestamp=1558401306;
 select sleep(10);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>可以看到查询时间、表锁时间、扫描行数Rows_examined。</p>
 <p>在有些场景下，执行器调用一次，在引擎内部则扫描了多行，因此引擎扫描行数跟rows_examined并不是完全相同的。</p>
-<p>2、show processlist 查看正在执行的慢查询</p>
-<pre class="line-numbers language-mysql"><code class="language-mysql">mysql> show processlist\G`
+<h3 id="2、show-processlist-查看正在执行的慢查询"><a href="#2、show-processlist-查看正在执行的慢查询" class="headerlink" title="2、show processlist 查看正在执行的慢查询"></a>2、show processlist 查看正在执行的慢查询</h3><pre class="line-numbers language-mysql"><code class="language-mysql">mysql> show processlist\G`
 
 `*************************** 10. row ***************************`
 `Id: 7651833`
@@ -471,21 +468,19 @@ select sleep(10);<span aria-hidden="true" class="line-numbers-rows"><span></span
 `......`
 `10 rows in set (0.00 sec)`<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>可以看到执行时间和SQL语句</p>
-<h2 id="分析慢查询"><a href="#分析慢查询" class="headerlink" title="分析慢查询"></a>分析慢查询</h2><p>1、使用 explain 分析慢查询</p>
-<p>获取 MySQL 中 SQL 语句的执行计划.需要重点关注以下：</p>
+<h2 id="分析慢查询"><a href="#分析慢查询" class="headerlink" title="分析慢查询"></a>分析慢查询</h2><h3 id="1、使用-explain-分析慢查询"><a href="#1、使用-explain-分析慢查询" class="headerlink" title="1、使用 explain 分析慢查询"></a>1、使用 explain 分析慢查询</h3><p>获取 MySQL 中 SQL 语句的执行计划.需要重点关注以下：</p>
 <ul>
-<li><p>select_type 查询类型：显示本行是简单还是复杂查询</p>
+<li><p>select_type ：查询类型，是简单还是复杂查询</p>
 </li>
-<li><p>type 本次查询的表连接类型</p>
+<li><p>type ：查询的表连接类型</p>
 </li>
-<li><p>key 实际选择的索引</p>
+<li><p>key ：实际选择的索引</p>
 </li>
-<li><p>rows 预计需要扫描的行数，对 InnoDB 来说，这个值是估值，并不一定准确</p>
+<li><p>rows： 预计需要扫描的行数，对 InnoDB 来说，这个值是估值</p>
 </li>
-<li><p>Extra 附加信息</p>
+<li><p>Extra ：附加信息</p>
 </li>
 </ul>
-<p>其中</p>
 <table>
 <thead>
 <tr>
@@ -495,7 +490,7 @@ select sleep(10);<span aria-hidden="true" class="line-numbers-rows"><span></span
 </thead>
 <tbody><tr>
 <td align="left">SIMPLE</td>
-<td>简单查询(不使用关联查询或子查询)</td>
+<td>简单查询，不使用关联查询或子查询</td>
 </tr>
 <tr>
 <td align="left">PRIMARY</td>
@@ -547,7 +542,7 @@ select sleep(10);<span aria-hidden="true" class="line-numbers-rows"><span></span
 </thead>
 <tbody><tr>
 <td align="left">system</td>
-<td align="left">查询对象表只有一行数据,且只能用于</td>
+<td align="left">查询对象表只有一行数据</td>
 </tr>
 <tr>
 <td align="left">const</td>
@@ -555,7 +550,7 @@ select sleep(10);<span aria-hidden="true" class="line-numbers-rows"><span></span
 </tr>
 <tr>
 <td align="left">eq_ref</td>
-<td align="left">表连接时基于主键或非</td>
+<td align="left">最多只返回一条符合条件的记录。</td>
 </tr>
 <tr>
 <td align="left">ref</td>
@@ -622,7 +617,7 @@ select sleep(10);<span aria-hidden="true" class="line-numbers-rows"><span></span
 <td align="left">对 where 子句判断的结果总是 false 而不能选择任何数据</td>
 </tr>
 <tr>
-<td align="left">Using join buffer (BlockNested Loop)</td>
+<td align="left">Using join buffer（BlockNested Loop）</td>
 <td align="left">关联查询中，被驱动表的关联字段没索引</td>
 </tr>
 <tr>
@@ -634,8 +629,7 @@ select sleep(10);<span aria-hidden="true" class="line-numbers-rows"><span></span
 <td align="left">使用某些聚合函数（比如 max、min）来访问存在索引的某个字段</td>
 </tr>
 </tbody></table>
-<p>2、show profile</p>
-<p>了解 SQL 执行过程的资源使用情况，能让我们知道到底慢在哪个环节</p>
+<h3 id="2、show-profile"><a href="#2、show-profile" class="headerlink" title="2、show profile"></a>2、show profile</h3><p>了解 SQL 执行过程的资源使用情况，能让我们知道到底慢在哪个环节</p>
 <pre class="line-numbers language-mysql"><code class="language-mysql">mysql> select @@have_profiling;
 mysql> select @@profiling;
 mysql> set profiling=1;
@@ -663,8 +657,7 @@ mysql> show profile for query 1;
 | cleaning up | 0.000016 |
 +----------------------+----------+
 15 rows in set, 1 warning (0.00 sec)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>3、trace</p>
-<p>使用 trace 查看优化器如何选择执行计划</p>
+<h3 id="3、trace"><a href="#3、trace" class="headerlink" title="3、trace"></a>3、trace</h3><p>使用 trace 查看优化器如何选择执行计划</p>
 <pre class="line-numbers language-mysql"><code class="language-mysql">mysql> set session optimizer_trace="enabled=on",end_markers_in_json=on;
 /* optimizer_trace="enabled=on" 表示开启 trace；end_markers_in_json=on 表示 JSON 输出开启结束标记 */
 mysql> select * from t1 where a >900 and b > 910 order by a;
@@ -1164,7 +1157,7 @@ mysql> SELECT * FROM information_schema.OPTIMIZER_TRACE\G;
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="索引失效">
+                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="索引失效">
                         
                         <span class="card-title">索引失效</span>
                     </div>
@@ -1216,7 +1209,7 @@ select * from t1 where c>='20
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/27.jpg" class="responsive-img" alt="redis应用">
+                        <img src="/medias/featureimages/28.jpg" class="responsive-img" alt="redis应用">
                         
                         <span class="card-title">redis应用</span>
                     </div>
@@ -1424,7 +1417,7 @@ select * from t1 where c>='20
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">99.9k</span>
+            <span class="white-color">99.5k</span>
             
 
             <br>

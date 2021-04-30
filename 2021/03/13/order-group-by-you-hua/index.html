@@ -268,7 +268,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/26.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/27.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -968,7 +968,7 @@
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="分页查询优化">
+                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="分页查询优化">
                         
                         <span class="card-title">分页查询优化</span>
                     </div>
@@ -976,8 +976,7 @@
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            自增且连续主键的分页查询避免前n条记录的读取[mysql manual][https://dev.mysql.com/doc/refman/5.7/en/limit-optimization.html]，可以采用：
-select * fro
+                            分页查询性能优化，转换为主键查询或者排序和分页操作先查出主键，然后根据主键查到对应的记录。
                         
                     </div>
                     <div class="publish-info">
@@ -1018,7 +1017,7 @@ select * fro
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/25.jpg" class="responsive-img" alt="批量数据导入优化">
+                        <img src="/medias/featureimages/26.jpg" class="responsive-img" alt="批量数据导入优化">
                         
                         <span class="card-title">批量数据导入优化</span>
                     </div>
@@ -1026,11 +1025,7 @@ select * fro
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            插入行所需的时间由以下因素决定([mysql manual][https://dev.mysql.com/doc/refman/5.7/en/insert-optimization.html])
-
-连接：30%
-向服务器发送查询：20%
-解
+                            批量数据导入优化方法：一次插入多行的值，关闭自动提交，redo log和bin log刷盘次数。
                         
                     </div>
                     <div class="publish-info">
@@ -1227,7 +1222,7 @@ select * fro
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">99.9k</span>
+            <span class="white-color">99.5k</span>
             
 
             <br>
