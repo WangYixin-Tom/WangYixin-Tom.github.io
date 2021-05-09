@@ -2,6 +2,34 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://wangyixin-tom.github.io/2020/10/26/redis-zu-sai-ji-jie-jue-ban-fa/</loc>
+    
+    <lastmod>2021-05-09T13:52:20.251Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://wangyixin-tom.github.io/2020/10/25/redis-shao-bing-ji-zhi/</loc>
+    
+    <lastmod>2021-05-09T13:52:20.248Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://wangyixin-tom.github.io/2020/10/26/redis-qie-pian-ji-qun/</loc>
+    
+    <lastmod>2021-05-09T13:52:20.245Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://wangyixin-tom.github.io/2020/10/25/redis-zhu-cong-tong-bu/</loc>
+    
+    <lastmod>2021-05-09T13:52:20.230Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://wangyixin-tom.github.io/2021/04/13/python-mian-shi/</loc>
     
     <lastmod>2021-05-07T14:04:41.618Z</lastmod>
@@ -177,13 +205,6 @@
   </url>
   
   <url>
-    <loc>https://wangyixin-tom.github.io/2020/10/25/redis-shao-bing-ji-zhi/</loc>
-    
-    <lastmod>2021-04-27T11:55:25.252Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://wangyixin-tom.github.io/2020/10/26/redis-shu-ju-jie-gou/</loc>
     
     <lastmod>2021-04-27T11:54:59.704Z</lastmod>
@@ -201,13 +222,6 @@
     <loc>https://wangyixin-tom.github.io/2021/03/10/redis-ying-yong/</loc>
     
     <lastmod>2021-04-27T11:52:21.242Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://wangyixin-tom.github.io/2020/10/25/redis-zhu-cong-tong-bu/</loc>
-    
-    <lastmod>2021-04-27T11:51:38.473Z</lastmod>
     
   </url>
   
@@ -387,13 +401,6 @@
   </url>
   
   <url>
-    <loc>https://wangyixin-tom.github.io/2020/10/26/redis-zu-sai-ji-jie-jue-ban-fa/</loc>
-    
-    <lastmod>2021-04-01T23:01:50.117Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://wangyixin-tom.github.io/2020/10/26/redis-wang-luo-io-mo-xing/</loc>
     
     <lastmod>2021-04-01T23:01:50.117Z</lastmod>
@@ -416,13 +423,6 @@
   
   <url>
     <loc>https://wangyixin-tom.github.io/2020/11/01/redis-shi-wu/</loc>
-    
-    <lastmod>2021-04-01T23:01:50.047Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://wangyixin-tom.github.io/2020/10/26/redis-qie-pian-ji-qun/</loc>
     
     <lastmod>2021-04-01T23:01:50.047Z</lastmod>
     
@@ -471,14 +471,14 @@
   </url>
   
   <url>
-    <loc>https://wangyixin-tom.github.io/2020/10/26/redis-aof-ji-zhi/</loc>
+    <loc>https://wangyixin-tom.github.io/2020/10/26/rabbitmq-xiao-xi-chong-fu/</loc>
     
     <lastmod>2021-04-01T23:01:49.986Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://wangyixin-tom.github.io/2020/10/26/rabbitmq-xiao-xi-chong-fu/</loc>
+    <loc>https://wangyixin-tom.github.io/2020/10/26/redis-aof-ji-zhi/</loc>
     
     <lastmod>2021-04-01T23:01:49.986Z</lastmod>
     
@@ -534,7 +534,7 @@
   </url>
   
   <url>
-    <loc>https://wangyixin-tom.github.io/categories/index.html</loc>
+    <loc>https://wangyixin-tom.github.io/archives/index.html</loc>
     
     <lastmod>2020-04-04T11:43:42.000Z</lastmod>
     
@@ -548,7 +548,7 @@
   </url>
   
   <url>
-    <loc>https://wangyixin-tom.github.io/archives/index.html</loc>
+    <loc>https://wangyixin-tom.github.io/categories/index.html</loc>
     
     <lastmod>2020-04-04T11:43:42.000Z</lastmod>
     

@@ -273,7 +273,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/3.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/8.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -477,7 +477,7 @@
 <p>2、客户端需要支持主动去获取最新主从的地址进行访问。</p>
 <h2 id="哨兵集群pub-sub"><a href="#哨兵集群pub-sub" class="headerlink" title="哨兵集群pub/sub"></a>哨兵集群pub/sub</h2><p><strong>连接关系的实现</strong></p>
 <ul>
-<li>哨兵-哨兵：哨兵订阅主库上的“<strong>sentinel</strong>:hello”，实现哨兵连接信息的发布获取</li>
+<li>哨兵-哨兵：哨兵订阅主库上的<code>__sentinel__:hello</code>，实现哨兵连接信息的发布获取</li>
 <li>哨兵-从库：哨兵给主库发送 INFO 命令，主库接受到后，返回从库列表。从而哨兵可以连接从库</li>
 <li>哨兵-客户端：客户端订阅哨兵消息</li>
 </ul>
@@ -976,7 +976,7 @@
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="redis切片集群">
+                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="redis切片集群">
                         
                         <span class="card-title">redis切片集群</span>
                     </div>
@@ -986,7 +986,7 @@
                         
                             问题 RDB 持久化时，fork 子进程用时和 Redis 的数据量是正相关的。数据量越大，fork 操作造成的主线程阻塞的时间越长。
 切片集群机制
-一个切片集群共有 16384 个哈希槽，哈希槽类似于数据分区，每个键值对都会根据它的 ke
+一个切片集群共有 16384 个哈希槽，每个键值对都会根据它的 key，被映射到一个哈希槽
                         
                     </div>
                     <div class="publish-info">
@@ -1027,7 +1027,7 @@
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="redis主从同步">
+                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="redis主从同步">
                         
                         <span class="card-title">redis主从同步</span>
                     </div>
@@ -1035,9 +1035,8 @@
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            [toc]
-主从库之间采用读写分离。读操作：主库、从库都可以接收；写操作：首先到主库执行，然后，主库将写操作同步给从库。
-CAPC - Consistent ，一致性A - Availability ，可用性P - Partition to
+                            主从库之间采用读写分离。读操作：主库、从库都可以接收；写操作：首先到主库执行，然后，主库将写操作同步给从库。
+CAPC - Consistent ，一致性A - Availability ，可用性P - Partition toleranc
                         
                     </div>
                     <div class="publish-info">

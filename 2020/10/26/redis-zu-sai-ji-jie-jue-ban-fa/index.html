@@ -270,7 +270,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/18.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/23.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -425,7 +425,7 @@
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    567
+                    563
                 </div>
                 
 
@@ -449,8 +449,16 @@
 <h3 id="主从节点"><a href="#主从节点" class="headerlink" title="主从节点"></a>主从节点</h3><p>1、从库接收 RDB 文件后、<strong>清空数据库、加载 RDB 文件</strong>；</p>
 <h3 id="切片集群"><a href="#切片集群" class="headerlink" title="切片集群"></a>切片集群</h3><p>向其他实例传输哈希槽信息，数据迁移时遇到big key。</p>
 <h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>关键路径：集合全量查询和聚合操作和从库加载 RDB 文件<br>非关键路径： bigkey 删除，清空数据库，以及 AOF 日志同步写。</p>
-<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><h3 id="异步的子线程机制"><a href="#异步的子线程机制" class="headerlink" title="异步的子线程机制"></a>异步的子线程机制</h3><p>Redis 主线程启动后，会使用操作系统提供的 pthread_create 函数创建 3 个子线程，分别由它们负责 AOF 日志写操作、键值对删除以及文件关闭的异步执行。主线程通过一个链表形式的任务队列和子线程进行交互。当收到键值对删除和清空数据库的操作时，主线程会把这个操作封装成一个任务，放入到任务队列中，然后给客户端返回一个完成信息，表明删除已经完成（惰性删除）。当 AOF 日志配置成 everysec 选项后，主线程会把 AOF 写日志操作封装成一个任务，也放到任务队列中。后台子线程读取任务后，开始自行写入 AOF 日志，这样主线程就不用一直等待 AOF 日志写完了。</p>
-<p>注：异步的键值对删除和数据库清空操作是 Redis 4.0 后提供的功能。之前的版本Big key删除可以先使用集合类型提供的 SCAN 命令读取数据，然后再进行删除。因为用 SCAN 命令可以每次只读取一部分数据并进行删除，这样可以避免一次性删除大量 key 给主线程带来的阻塞。</p>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><h3 id="异步的子线程机制"><a href="#异步的子线程机制" class="headerlink" title="异步的子线程机制"></a>异步的子线程机制</h3><p>Redis 主线程启动后，会使用操作系统提供的 pthread_create 函数创建 3 个子线程，分别负责 <strong>AOF 日志写操作、键值对删除以及文件关闭</strong>的异步执行。</p>
+<p>主线程通过一个链表形式的任务队列和子线程进行交互。</p>
+<ul>
+<li>当收到键值对删除和清空数据库的操作时，主线程会把这个操作封装成一个任务，放入到任务队列中，然后给客户端返回一个完成信息，表明删除已经完成（惰性删除）。</li>
+<li>当 AOF 日志配置成 everysec 选项后，主线程会把 AOF 写日志操作封装成一个任务，也放到任务队列中。后台子线程读取任务后，开始自行写入 AOF 日志，这样主线程就不用一直等待 AOF 日志写完了。</li>
+</ul>
+<blockquote>
+<p>异步的键值对删除和数据库清空操作是 Redis 4.0 后提供的功能。</p>
+<p>之前的版本Big key删除可以先使用集合类型提供的 SCAN 命令读取数据，然后再进行删除。因为用 SCAN 命令可以每次只读取一部分数据并进行删除，这样可以避免一次性删除大量 key 给主线程带来的阻塞。</p>
+</blockquote>
 <h3 id="分批读取"><a href="#分批读取" class="headerlink" title="分批读取"></a>分批读取</h3><p>集合全量查询和聚合操作：可以使用 SCAN 命令，分批读取数据，再在客户端进行聚合计算</p>
 <h3 id="控制RBD大小"><a href="#控制RBD大小" class="headerlink" title="控制RBD大小"></a>控制RBD大小</h3><p>从库加载 RDB 文件：把主库的数据量大小控制在 2~4GB 左右，以保证 RDB 文件能以较快的速度加载。</p>
 
@@ -945,7 +953,7 @@
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="基于多CPU多核架构的redis性能优化">
+                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="基于多CPU多核架构的redis性能优化">
                         
                         <span class="card-title">基于多CPU多核架构的redis性能优化</span>
                     </div>
@@ -998,7 +1006,7 @@
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="redis切片集群">
+                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="redis切片集群">
                         
                         <span class="card-title">redis切片集群</span>
                     </div>
@@ -1008,7 +1016,7 @@
                         
                             问题 RDB 持久化时，fork 子进程用时和 Redis 的数据量是正相关的。数据量越大，fork 操作造成的主线程阻塞的时间越长。
 切片集群机制
-一个切片集群共有 16384 个哈希槽，哈希槽类似于数据分区，每个键值对都会根据它的 ke
+一个切片集群共有 16384 个哈希槽，每个键值对都会根据它的 key，被映射到一个哈希槽
                         
                     </div>
                     <div class="publish-info">
