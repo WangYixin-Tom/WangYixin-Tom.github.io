@@ -8,13 +8,12 @@
     <meta name="baidu-site-verification" content="code-KoKq36g1n2">
     <meta name="google-site-verification" content="yCy2azpds5XSuGZvis6OuA-XIGF5GuGpYRAaGfD6o48">
     <meta name="360-site-verification" content="b7c11a830ef90fd1464ad6206bb7b6e7">
-    <meta name="description" content="消费方法
-Basic.Get
+    <meta name="description" content="消费方法Basic.Get
 每次接收消息必须发送一次请求 
 有消息可用，RabbitMQ返回Basic.GetOk以及消息
 无消息可用，RabbitMQ返回Basic.GetEmpty 应用程序需要评估RPC响应以及是否接收到消息。
 
-示">
+示例">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -272,7 +271,7 @@ Basic.Get
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/18.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/16.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -445,8 +444,7 @@ Basic.Get
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="消费方法"><a href="#消费方法" class="headerlink" title="消费方法"></a>消费方法</h2><hr>
-<h3 id="Basic-Get"><a href="#Basic-Get" class="headerlink" title="Basic.Get"></a><strong>Basic.Get</strong></h3><ul>
+                <h2 id="消费方法"><a href="#消费方法" class="headerlink" title="消费方法"></a>消费方法</h2><h3 id="Basic-Get"><a href="#Basic-Get" class="headerlink" title="Basic.Get"></a><strong>Basic.Get</strong></h3><ul>
 <li>每次接收消息必须发送一次请求 </li>
 <li>有消息可用，RabbitMQ返回Basic.GetOk以及消息</li>
 <li>无消息可用，RabbitMQ返回Basic.GetEmpty 应用程序需要评估RPC响应以及是否接收到消息。</li>
@@ -465,8 +463,7 @@ with rabbitpy.Connection() as connection:
                 # 确认消息
                 message.ack()
                 if message.body == &#39;stop&#39;:
-                    break</code></pre><p>###<strong>Basic.Consume</strong></p>
-<ul>
+                    break</code></pre><h3 id="Basic-Consume"><a href="#Basic-Consume" class="headerlink" title="Basic.Consume"></a><strong>Basic.Consume</strong></h3><ul>
 <li>消费者可用时，异步方式发送消息</li>
 <li>应用程序自动接收消息，直到Basic.Cancel</li>
 <li>仍然需要确认消息</li>
@@ -491,9 +488,7 @@ with rabbitpy.Connection() as connection:
             <span class="token keyword">if</span> message<span class="token punctuation">.</span>body <span class="token operator">==</span> <span class="token string">'stop'</span><span class="token punctuation">:</span>
                 <span class="token keyword">break</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h3 id="对比"><a href="#对比" class="headerlink" title="对比"></a><strong>对比</strong></h3><p>Consume吞吐量更大。Get包含了每条消息的同步通信开销。</p>
-<hr>
-<h2 id="消费性能优化"><a href="#消费性能优化" class="headerlink" title="消费性能优化"></a>消费性能优化</h2><hr>
-<h3 id="1、no-ack"><a href="#1、no-ack" class="headerlink" title="1、no-ack"></a>1、no-ack</h3><p>应用程序发送Basic.Comsume请求时，设置no-ack。表明消费者不进行消费确认。</p>
+<h2 id="消费性能优化"><a href="#消费性能优化" class="headerlink" title="消费性能优化"></a>消费性能优化</h2><h3 id="1、no-ack"><a href="#1、no-ack" class="headerlink" title="1、no-ack"></a>1、no-ack</h3><p>应用程序发送Basic.Comsume请求时，设置no-ack。表明消费者不进行消费确认。</p>
 <p>示例代码：消费不确认</p>
 <pre><code>import rabbitpy
 
@@ -528,9 +523,7 @@ with rabbitpy.Connection() as connection:
                 unacknowledged <span class="token operator">=</span> <span class="token number">0</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h3 id="3、事务"><a href="#3、事务" class="headerlink" title="3、事务"></a>3、事务</h3><p>事务允许消费者应用程序提交和回滚批量操作。不适用QoS时，可以获得轻微的性能提升。</p>
-<hr>
-<h2 id="拒绝消息"><a href="#拒绝消息" class="headerlink" title="拒绝消息"></a>拒绝消息</h2><hr>
-<h3 id="Basic-Reject"><a href="#Basic-Reject" class="headerlink" title="Basic.Reject"></a>Basic.Reject</h3><p>通知rabbitmq无法处理投递的消息（拒绝一个消息），可指示rabbitMQ丢弃消息或使用requeue重发消息。</p>
+<h2 id="拒绝消息"><a href="#拒绝消息" class="headerlink" title="拒绝消息"></a>拒绝消息</h2><h3 id="Basic-Reject"><a href="#Basic-Reject" class="headerlink" title="Basic.Reject"></a>Basic.Reject</h3><p>通知rabbitmq无法处理投递的消息（拒绝一个消息），可指示rabbitMQ丢弃消息或使用requeue重发消息。</p>
 <p>示例程序：消息拒绝</p>
 <pre><code>import rabbitpy
 
@@ -551,9 +544,7 @@ for message in rabbitpy.consume(&#39;amqp://guest:guest@localhost:5672/%2f&#39;,
                                dead_letter_exchange<span class="token operator">=</span><span class="token string">'rejected-messages'</span><span class="token punctuation">)</span>
         queue<span class="token punctuation">.</span>declare<span class="token punctuation">(</span><span class="token punctuation">)</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<hr>
-<h2 id="控制队列"><a href="#控制队列" class="headerlink" title="控制队列"></a>控制队列</h2><hr>
-<h3 id="临时队列"><a href="#临时队列" class="headerlink" title="临时队列"></a>临时队列</h3><p><strong>自动删除队列</strong><br>消费者完成连接和检索消息，所有消费者断开连接时，队列将被删除。</p>
+<h2 id="控制队列"><a href="#控制队列" class="headerlink" title="控制队列"></a>控制队列</h2><h3 id="临时队列"><a href="#临时队列" class="headerlink" title="临时队列"></a>临时队列</h3><p><strong>自动删除队列</strong><br>消费者完成连接和检索消息，所有消费者断开连接时，队列将被删除。</p>
 <p>示例程序：自动删除队列auto_delete=True</p>
 <pre><code>import rabbitpy
 
@@ -600,7 +591,8 @@ with rabbitpy.Connection() as connection:
         queue = rabbitpy.Queue(channel, &#39;expiring-msg-queue&#39;,
                                arguments={&#39;x-message-ttl&#39;: 1000})
          queue.declare()
-</code></pre><p><strong>最大队列长度</strong><br>一旦达到最大值，添加新消息时，删除队列前端的消息。声明队列时，如果指定死信交换器，前端移除的消息将成为死信。</p>
+</code></pre><p><strong>最大队列长度</strong><br>一旦达到最大值，添加新消息时，删除队列前端的消息。</p>
+<p>声明队列时，如果指定死信交换器，前端移除的消息将成为死信。</p>
 <p>示例程序：最大长度队列</p>
 <pre><code>import rabbitpy
 
@@ -1141,7 +1133,7 @@ with rabbitpy.Connection() as connection:
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="rabbitmq集群">
+                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="rabbitmq集群">
                         
                         <span class="card-title">rabbitmq集群</span>
                     </div>
@@ -1193,7 +1185,7 @@ with rabbitpy.Connection() as connection:
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="rabbitmq消息路由">
+                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="rabbitmq消息路由">
                         
                         <span class="card-title">rabbitmq消息路由</span>
                     </div>
@@ -1202,8 +1194,6 @@ with rabbitpy.Connection() as connection:
                     <div class="summary block-with-text">
                         
                             
-[toc]
-
 direct交换器
 特点
 投递的消息有一个或者多个确定的目标。
@@ -1211,7 +1201,8 @@ direct交换器
 绑定相同路由键的队列都能收到该路由键对应的消息。
 适用于RPC消息通信模式下的路由应答消息
 
-示例代码：Direct交
+示例代码：Direct交换器
+impo
                         
                     </div>
                     <div class="publish-info">
@@ -1408,7 +1399,7 @@ direct交换器
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">98.2k</span>
+            <span class="white-color">97.8k</span>
             
 
             <br>
