@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://wangyixin-tom.github.io/2021/04/05/rabbitmq-mian-shi/</loc>
+    <lastmod>2021-05-11</lastmod>
+  </url>  <url>
+    <loc>https://wangyixin-tom.github.io/2021/04/10/mysql-mian-shi/</loc>
+    <lastmod>2021-05-11</lastmod>
+  </url>  <url>
+    <loc>https://wangyixin-tom.github.io/2021/04/08/kafka-mian-shi/</loc>
+    <lastmod>2021-05-11</lastmod>
+  </url>  <url>
+    <loc>https://wangyixin-tom.github.io/2021/04/13/python-mian-shi/</loc>
+    <lastmod>2021-05-11</lastmod>
+  </url>  <url>
+    <loc>https://wangyixin-tom.github.io/2021/04/12/redis-mian-shi/</loc>
+    <lastmod>2021-05-11</lastmod>
+  </url>  <url>
+    <loc>https://wangyixin-tom.github.io/2021/04/22/flask-mian-shi/</loc>
+    <lastmod>2021-05-11</lastmod>
+  </url>  <url>
     <loc>https://wangyixin-tom.github.io/2020/10/25/redis-shao-bing-ji-zhi/</loc>
     <lastmod>2021-05-11</lastmod>
   </url>  <url>
@@ -73,9 +91,6 @@
     <loc>https://wangyixin-tom.github.io/2020/10/25/redis-zhu-cong-tong-bu/</loc>
     <lastmod>2021-05-09</lastmod>
   </url>  <url>
-    <loc>https://wangyixin-tom.github.io/2021/04/13/python-mian-shi/</loc>
-    <lastmod>2021-05-07</lastmod>
-  </url>  <url>
     <loc>https://wangyixin-tom.github.io/2021/03/13/suo-yin-shi-xiao/</loc>
     <lastmod>2021-04-29</lastmod>
   </url>  <url>
@@ -106,9 +121,6 @@
     <loc>https://wangyixin-tom.github.io/2021/03/21/innodb-lru-you-hua/</loc>
     <lastmod>2021-04-28</lastmod>
   </url>  <url>
-    <loc>https://wangyixin-tom.github.io/2021/04/08/kafka-mian-shi/</loc>
-    <lastmod>2021-04-28</lastmod>
-  </url>  <url>
     <loc>https://wangyixin-tom.github.io/2021/03/29/kafka-jiao-ben/</loc>
     <lastmod>2021-04-28</lastmod>
   </url>  <url>
@@ -129,18 +141,6 @@
   </url>  <url>
     <loc>https://wangyixin-tom.github.io/2021/03/23/kafka-sheng-chan-zhe/</loc>
     <lastmod>2021-04-27</lastmod>
-  </url>  <url>
-    <loc>https://wangyixin-tom.github.io/2021/04/12/redis-mian-shi/</loc>
-    <lastmod>2021-04-26</lastmod>
-  </url>  <url>
-    <loc>https://wangyixin-tom.github.io/2021/04/10/mysql-mian-shi/</loc>
-    <lastmod>2021-04-26</lastmod>
-  </url>  <url>
-    <loc>https://wangyixin-tom.github.io/2021/04/22/flask-mian-shi/</loc>
-    <lastmod>2021-04-24</lastmod>
-  </url>  <url>
-    <loc>https://wangyixin-tom.github.io/2021/04/05/rabbitmq-mian-shi/</loc>
-    <lastmod>2021-04-13</lastmod>
   </url>  <url>
     <loc>https://wangyixin-tom.github.io/2021/04/04/rabbitmq-si-wei-dao-tu/</loc>
     <lastmod>2021-04-04</lastmod>

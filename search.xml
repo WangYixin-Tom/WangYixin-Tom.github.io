@@ -13,16 +13,12 @@
       
       <categories>
           
-          <category> python </category>
-          
           <category> interview </category>
           
       </categories>
       
       
         <tags>
-            
-            <tag> python </tag>
             
             <tag> interview </tag>
             
@@ -42,16 +38,12 @@
       
       <categories>
           
-          <category> python </category>
-          
           <category> interview </category>
           
       </categories>
       
       
         <tags>
-            
-            <tag> python </tag>
             
             <tag> interview </tag>
             
@@ -71,8 +63,6 @@
       
       <categories>
           
-          <category> redis </category>
-          
           <category> interview </category>
           
       </categories>
@@ -81,8 +71,6 @@
         <tags>
             
             <tag> interview </tag>
-            
-            <tag> redis </tag>
             
         </tags>
       
@@ -175,16 +163,12 @@
       
       <categories>
           
-          <category> mysql </category>
-          
           <category> interview </category>
           
       </categories>
       
       
         <tags>
-            
-            <tag> mysql </tag>
             
             <tag> interview </tag>
             
@@ -204,16 +188,12 @@
       
       <categories>
           
-          <category> kafka </category>
-          
           <category> interview </category>
           
       </categories>
       
       
         <tags>
-            
-            <tag> kafka </tag>
             
             <tag> interview </tag>
             
@@ -233,8 +213,6 @@
       
       <categories>
           
-          <category> rabbitmq </category>
-          
           <category> interview </category>
           
       </categories>
@@ -243,8 +221,6 @@
         <tags>
             
             <tag> interview </tag>
-            
-            <tag> rabbitmq </tag>
             
         </tags>
       
