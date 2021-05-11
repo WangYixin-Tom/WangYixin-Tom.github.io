@@ -424,14 +424,14 @@ UNLOCK TAB">
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.6k
+                    2.5k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    9 分
+                    8 分
                 </div>
                 
                 
@@ -491,7 +491,7 @@ ALTER TABLE tbl_name WAIT N add column ...<span aria-hidden="true" class="line-n
 <li>优化2：索引上的等值查询，向右遍历时且最后一个值不满足等值条件的时候，next-key lock退化为间隙锁。</li>
 <li>一个bug：唯一索引上的范围查询会访问到不满足条件的第一个值为止。</li>
 </ol>
-<h3 id="事务隔离级别"><a href="#事务隔离级别" class="headerlink" title="事务隔离级别"></a>事务隔离级别</h3><p>Read uncommitted（读未提交）: 在该隔离级别，所有事务都可以看到其它未提交事务的执行结果。可能会出现<br>脏读。<br><strong>Read Committed（读已提交，RC）</strong>：一个事务只能看见已经提交事务所做的改变。因为同一事务的其它<br>实例在该实例处理期间可能会有新的 commit，<strong>所以可能出现幻读</strong>。<br><strong>Repeatable Read（可重复读，RR）</strong>：这是 MySQL 的默认事务隔离级别，它确保同一事务的多个实例在<br>并发读取数据时，会看到同样的数据行。消除了脏读、不可重复读，<strong>默认也不会出现幻读</strong>。<br><strong>Serializable（串行）</strong>：这是最高的隔离级别，它通过强制事务排序，使之不可能相互冲突，从而解决幻读问题。</p>
+<h3 id="事务隔离级别"><a href="#事务隔离级别" class="headerlink" title="事务隔离级别"></a>事务隔离级别</h3><p>Read uncommitted（读未提交）: 在该隔离级别，所有事务都可以看到其它未提交事务的执行结果。可能会出现脏读。<br><strong>Read Committed（读已提交，RC）</strong>：一个事务只能看见已经提交事务所做的改变。因为同一事务的其它实例在该实例处理期间可能会有新的 commit，<strong>所以可能出现幻读</strong>。<br><strong>Repeatable Read（可重复读，RR）</strong>：默认事务隔离级别，它确保同一事务的多个实例在并发读取数据时，会看到同样的数据行。消除了脏读、不可重复读，<strong>默认也不会出现幻读</strong>。<br><strong>Serializable（串行）</strong>：这是最高的隔离级别，它通过强制事务排序，使之不可能相互冲突，从而解决幻读问题。</p>
 <p>脏读：读取未提交的事务。<br>幻读：幻读指的是一个事务在前后两次查询同一个范围的时候，后一次查询看到了前一次查询没有看到的行。</p>
 <h4 id="非索引字段查询（RC）"><a href="#非索引字段查询（RC）" class="headerlink" title="非索引字段查询（RC）"></a>非索引字段查询（RC）</h4><p>如果一个条件无法通过索引快速过滤，那么存储引擎层面就会将所有记录加锁后返回，然后由 server 层进行过滤。</p>
 <h4 id="唯一索引查询（RC）"><a href="#唯一索引查询（RC）" class="headerlink" title="唯一索引查询（RC）"></a>唯一索引查询（RC）</h4><p>如果查询的条件是唯一索引，那么 SQL 需要在满足条件的唯一索引上加锁，并且会在对应的聚簇索引上加锁。</p>
@@ -500,12 +500,12 @@ ALTER TABLE tbl_name WAIT N add column ...<span aria-hidden="true" class="line-n
 <h4 id="唯一索引查询（RR）"><a href="#唯一索引查询（RR）" class="headerlink" title="唯一索引查询（RR）"></a>唯一索引查询（RR）</h4><p>如果能确保索引字段唯一，那其实一个等值查询，最多就返回一条记录，而且相同索引记录的值，一定不会再新增，因此不会出现 GAP 锁。</p>
 <p>以唯一索引为条件的当前读，不会有 GAP 锁。</p>
 <h4 id="非唯一索引查询（RR）"><a href="#非唯一索引查询（RR）" class="headerlink" title="非唯一索引查询（RR）"></a>非唯一索引查询（RR）</h4><p>新增GAP锁+对应数据的X锁</p>
-<h2 id="悲观锁"><a href="#悲观锁" class="headerlink" title="悲观锁"></a>悲观锁</h2><p>当我们要对数据库中的一条数据进行修改的时候，为了避免同时被其他人修改，最好的办法就是直接对该数据进行加锁以防止并发。这种借助数据库锁机制在修改数据之前锁定，再修改的方式被称为悲观并发控制</p>
-<p>优点：利用锁机制保证了数据的顺序执行，不需要自己控制，加锁、释放完全由数据库代劳<br>缺点：一旦一个事务获取了锁，其他的事务必须等待，势必会影响系统的吞吐量</p>
-<p>悲观锁的适用场景：写入操作比较频繁的场景</p>
-<h2 id="乐观锁"><a href="#乐观锁" class="headerlink" title="乐观锁"></a>乐观锁</h2><p>乐观锁是相对悲观锁而言的，乐观锁假设数据一般情况下不会造成冲突，所以在数据进行提交更新的时候，才会正式对数据的冲突与否进行检测。</p>
-<p>优点：由于不需要加锁，其他的事务可以同时操作数据，相比于悲观锁，系统吞吐量会提高<br>缺点：锁机制，如果并发度较高，失败重试的情况会成为系统瓶颈</p>
-<p>乐观锁的适用场景：读取操作比较频繁的场景</p>
+<h2 id="悲观锁"><a href="#悲观锁" class="headerlink" title="悲观锁"></a>悲观锁</h2><p>借助数据库锁机制在修改数据之前锁定，再修改的方式被称为悲观并发控制。</p>
+<p><strong>优点：</strong>利用锁机制保证了数据的顺序执行，不需要自己控制，加锁、释放完全由数据库代劳<br><strong>缺点：</strong>一旦一个事务获取了锁，其他的事务必须等待，势必会影响系统的吞吐量</p>
+<p><strong>适用场景</strong>：写入操作比较频繁的场景</p>
+<h2 id="乐观锁"><a href="#乐观锁" class="headerlink" title="乐观锁"></a>乐观锁</h2><p>假设数据一般情况下不会造成冲突，所以在数据进行提交更新的时候，才会正式对数据冲突与否进行检测。</p>
+<p><strong>优点：</strong>由于不需要加锁，其他的事务可以同时操作数据，相比于悲观锁，系统吞吐量会提高<br><strong>缺点：</strong>锁机制，如果并发度较高，失败重试的情况会成为系统瓶颈</p>
+<p><strong>适用场景</strong>：读取操作比较频繁的场景</p>
 <h2 id="锁定位"><a href="#锁定位" class="headerlink" title="锁定位"></a>锁定位</h2><p>1、show processlist，查看state</p>
 <h2 id="死锁"><a href="#死锁" class="headerlink" title="死锁"></a>死锁</h2><p>死锁是指两个或者多个事务在同一资源上相互占用，并请求锁定对方占用的资源，从而导致恶性循环的现象。</p>
 <p><strong>“唯一键”引起的死锁</strong></p>
@@ -1283,7 +1283,7 @@ B+ 树
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">97.8k</span>
+            <span class="white-color">97.5k</span>
             
 
             <br>

@@ -424,7 +424,7 @@
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    613
+                    601
                 </div>
                 
 
@@ -461,7 +461,7 @@
 <h3 id="Batched-Key-Access"><a href="#Batched-Key-Access" class="headerlink" title="Batched Key Access"></a>Batched Key Access</h3><blockquote>
 <p><strong>MRR</strong></p>
 <p>尽量使用顺序读盘。如果按照主键的递增顺序查询的话，对磁盘的读比较接近顺序读，能够提升读性能。</p>
-<p>MRR能够提升性能的核心在于，查询语句在索引的是范围查询（也就是说，这是一个多值查询），可以得到足够多的主键id。排序后，再去主键索引查数据，才能体现出“顺序性”的优势。</p>
+<p>MRR能够提升性能的核心在于，查询语句在索引的是范围查询，可以得到足够多的主键id。排序后，再去主键索引查数据，才能体现出“顺序性”的优势。</p>
 </blockquote>
 <p><strong>思想</strong></p>
 <p>结合NLJ和BNL，将驱动表中相关列放入 join_buffer 中，批量将关联字段的值发送到 Multi-Range Read（MRR） 接口，MRR 通过接收到的值，根据其对应的主键 ID 进行排序，然后再进行数据的读取和操作，返回结果给客户端。</p>
@@ -975,9 +975,9 @@
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            count说明count(a) 和 count(*)当 count 统计某一列时，比如count(a)，a 表示列名，是不统计 null 的。
+                            count说明count（a） 和 count（*）当 count 统计某一列时，比如count(a)，a 表示列名，是不统计 null 的。
 而 count(*)无论是否包含空值，都会统计。
-MyISAM 引擎和 InnoDB 引擎 co
+MyISAM/InnoDB count（*） 
                         
                     </div>
                     <div class="publish-info">
@@ -1223,7 +1223,7 @@ MyISAM 引擎和 InnoDB 引擎 co
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">97.8k</span>
+            <span class="white-color">97.5k</span>
             
 
             <br>

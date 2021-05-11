@@ -355,8 +355,9 @@ mandatory当交换器无法路由消息，RabbitMQ将回发Basic.Return消息到
                         <div class="summary block-with-text">
                             
                             RDB 就是 Redis DataBase，内存中的全量数据在某一个时刻的状态记录。
-快照机制引入原因：AOF日志进行故障恢复的时候，需要逐一执行操作日志。如果操作日志非常多，Redis 恢复得很慢，影响到正常使用。
-bgsave命令：主进
+快照机制引入原因AOF日志进行故障恢复的时候，需要逐一执行操作日志。如果操作日志非常多，Redis 恢复得很慢，影响到正常使用。
+bgsave命令
+主进程
                             
                         </div>
                         <div class="publish-info">
@@ -771,7 +772,7 @@ Hash
 基本功能监控
 哨兵进程周期性地给所有的主从库发送 PING 命令，检测它们是否仍然在线运行。
 
-主库或从库对 PING 命令的响应超时了，哨兵会标记为“主观下
+主库或从库对 PING 命令的响应超时了，哨兵会标记为主观下线
                             
                         </div>
                         <div class="publish-info">
@@ -935,7 +936,7 @@ CAPC - Consistent ，一致性A - Availability ，可用性P - Partition toleran
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">97.8k</span>
+            <span class="white-color">97.5k</span>
             
 
             <br>

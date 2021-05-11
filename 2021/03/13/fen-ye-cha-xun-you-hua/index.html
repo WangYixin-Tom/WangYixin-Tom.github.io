@@ -1001,9 +1001,12 @@ select * from t1 where id &gt;99000 limit 2;
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            order by 原理按照排序原理分[manual][https://dev.mysql.com/doc/refman/5.7/en/order-by-optimization.html]，MySQL 排序方式分两种：
+                            order by 原理按照排序原理分manual，MySQL 排序方式分两种：
 
-通过有序索引直接返
+通过有序索引直接返回有序数据：Using index
+通过 Filesort 进行的排序：Using filesort
+
+Filesort是内存排序还是磁盘排
                         
                     </div>
                     <div class="publish-info">
@@ -1200,7 +1203,7 @@ select * from t1 where id &gt;99000 limit 2;
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">97.8k</span>
+            <span class="white-color">97.5k</span>
             
 
             <br>

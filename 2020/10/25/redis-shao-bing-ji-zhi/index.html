@@ -15,7 +15,7 @@
 基本功能监控
 哨兵进程周期性地给所有的主从库发送 PING 命令，检测它们是否仍然在线运行。
 
-主库或从库对 PING 命令的响应超时了，哨兵会标记为“主观下">
+主库或从库对 PING 命令的响应超时了，哨兵会标记为主观下线">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -428,7 +428,7 @@
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    432
+                    437
                 </div>
                 
 
@@ -453,9 +453,9 @@
 <h2 id="基本功能"><a href="#基本功能" class="headerlink" title="基本功能"></a>基本功能</h2><h3 id="监控"><a href="#监控" class="headerlink" title="监控"></a>监控</h3><ul>
 <li><p>哨兵进程周期性地给所有的主从库发送 PING 命令，检测它们是否仍然在线运行。</p>
 </li>
-<li><p>主库或从库对 PING 命令的响应超时了，哨兵会标记为“主观下线”。</p>
+<li><p>主库或从库对 PING 命令的响应超时了，哨兵会标记为主观下线。</p>
 </li>
-<li><p>需有quorum 个实例判断主库为“主观下线”，才能判定主库为“客观下线”</p>
+<li><p>需有quorum 个实例判断主库为主观下线，才能判定主库为客观下线</p>
 </li>
 </ul>
 <h3 id="选主"><a href="#选主" class="headerlink" title="选主"></a>选主</h3><ul>
@@ -475,7 +475,7 @@
 <p><strong>通知客户端</strong>的实现方法</p>
 <p>1、哨兵会把新主库的地址写入自己实例的pubsub中。客户端需要订阅这个pubsub，当这个pubsub有数据时，客户端就能感知到主库发生变更，同时可以拿到最新的主库地址。</p>
 <p>2、客户端需要支持主动去获取最新主从的地址进行访问。</p>
-<h2 id="哨兵集群pub-sub"><a href="#哨兵集群pub-sub" class="headerlink" title="哨兵集群pub/sub"></a>哨兵集群pub/sub</h2><p><strong>连接关系的实现</strong></p>
+<h2 id="基于-pub-sub-机制的哨兵集群"><a href="#基于-pub-sub-机制的哨兵集群" class="headerlink" title="基于 pub/sub 机制的哨兵集群"></a>基于 pub/sub 机制的哨兵集群</h2><p><strong>连接关系的实现</strong></p>
 <ul>
 <li>哨兵-哨兵：哨兵订阅主库上的<code>__sentinel__:hello</code>，实现哨兵连接信息的发布获取</li>
 <li>哨兵-从库：哨兵给主库发送 INFO 命令，主库接受到后，返回从库列表。从而哨兵可以连接从库</li>
@@ -1233,7 +1233,7 @@ CAPC - Consistent ，一致性A - Availability ，可用性P - Partition toleran
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">97.8k</span>
+            <span class="white-color">97.5k</span>
             
 
             <br>

@@ -9,8 +9,9 @@
     <meta name="google-site-verification" content="yCy2azpds5XSuGZvis6OuA-XIGF5GuGpYRAaGfD6o48">
     <meta name="360-site-verification" content="b7c11a830ef90fd1464ad6206bb7b6e7">
     <meta name="description" content="RDB 就是 Redis DataBase，内存中的全量数据在某一个时刻的状态记录。
-快照机制引入原因：AOF日志进行故障恢复的时候，需要逐一执行操作日志。如果操作日志非常多，Redis 恢复得很慢，影响到正常使用。
-bgsave命令：主进">
+快照机制引入原因AOF日志进行故障恢复的时候，需要逐一执行操作日志。如果操作日志非常多，Redis 恢复得很慢，影响到正常使用。
+bgsave命令
+主进程">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -423,7 +424,7 @@ bgsave命令：主进">
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    485
+                    483
                 </div>
                 
 
@@ -442,11 +443,17 @@ bgsave命令：主进">
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p>RDB 就是 Redis DataBase，内存中的全量数据在某一个时刻的状态记录。</p>
-<h2 id="快照机制"><a href="#快照机制" class="headerlink" title="快照机制"></a>快照机制</h2><p>引入原因：AOF日志进行故障恢复的时候，需要逐一执行操作日志。如果操作日志非常多，Redis 恢复得很慢，影响到正常使用。</p>
-<p>bgsave命令：主进程fork出子进程，共享主线程的所有内存数据。子进程读取主线程的内存数据，并把它们写入 RDB 文件。<br>借助了操作系统提供的写时复制技术（Copy-On-Write, COW），在执行快照的同时，正常处理写操作，避免了主线程的阻塞。<br>如果主线程要修改一块数据，这块数据就会被复制一份，生成数据副本。bgsave 子进程会把这个副本数据写入 RDB 文件。</p>
+<h2 id="快照机制"><a href="#快照机制" class="headerlink" title="快照机制"></a>快照机制</h2><h3 id="引入原因"><a href="#引入原因" class="headerlink" title="引入原因"></a>引入原因</h3><p>AOF日志进行故障恢复的时候，需要逐一执行操作日志。如果操作日志非常多，Redis 恢复得很慢，影响到正常使用。</p>
+<h3 id="bgsave命令"><a href="#bgsave命令" class="headerlink" title="bgsave命令"></a>bgsave命令</h3><ul>
+<li>主进程fork出子进程，共享主线程的所有内存数据。</li>
+<li>子进程读取主线程的内存数据，并把它们写入 RDB 文件。</li>
+<li>借助了操作系统提供的写时复制技术（Copy-On-Write, COW），在执行快照的同时，正常处理写操作，避免了主线程的阻塞。</li>
+<li>如果主线程要修改一块数据，这块数据就会被复制一份，生成数据副本。bgsave 子进程会把这个副本数据写入 RDB 文件。</li>
+</ul>
 <p><img src="https://img2020.cnblogs.com/blog/1030146/202010/1030146-20201024165305565-62767733.jpg" alt></p>
 <h2 id="增量快照"><a href="#增量快照" class="headerlink" title="增量快照"></a>增量快照</h2><p>做了一次全量快照后，后续的快照只对修改的数据进行快照记录，避免每次全量快照的开销。<br>需要使用额外的元数据信息去记录哪些数据被修改了，这会带来额外的空间开销问题。</p>
-<h2 id="混用-AOF日志和RDB（Redis-4-0）"><a href="#混用-AOF日志和RDB（Redis-4-0）" class="headerlink" title="混用 AOF日志和RDB（Redis 4.0）"></a>混用 AOF日志和RDB（Redis 4.0）</h2><p>内存快照以一定的频率执行，在两次快照之间，使用 AOF 日志记录这期间的所有命令操作。<br>快照不用很频繁地执行，这就避免了频繁 fork 对主线程的影响。而且，AOF 日志也只用记录两次快照间的操作，不需要记录所有操作了，因此，就不会出现文件过大的情况了，也可以避免重写开销。</p>
+<h2 id="混用-AOF日志和RDB（Redis-4-0）"><a href="#混用-AOF日志和RDB（Redis-4-0）" class="headerlink" title="混用 AOF日志和RDB（Redis 4.0）"></a>混用 AOF日志和RDB（Redis 4.0）</h2><p>内存快照以一定的频率执行，在两次快照之间，使用 AOF 日志记录这期间的所有命令操作。<br>快照不用很频繁地执行，这就避免了频繁 fork 对主线程的影响。</p>
+<p>AOF 日志也只用记录两次快照间的操作，不需要记录所有操作了，因此，就不会出现文件过大的情况了，也可以避免重写开销。</p>
 <h2 id="备份机制选择"><a href="#备份机制选择" class="headerlink" title="备份机制选择"></a>备份机制选择</h2><p>数据不能丢失时，内存快照和 AOF 的混合使用；<br>如果允许分钟级别的数据丢失，只使用 RDB；<br>如果只用 AOF，优先使用 everysec 的配置选项，因为它在可靠性和性能之间取了一个平衡。</p>
 
             </div>
@@ -1196,7 +1203,7 @@ mandatory当交换器无法路由消息，RabbitMQ将回发Basic.Return消息到
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">97.8k</span>
+            <span class="white-color">97.5k</span>
             
 
             <br>

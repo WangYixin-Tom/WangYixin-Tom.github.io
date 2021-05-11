@@ -594,9 +594,9 @@ B+ 树
                         <div class="card-content article-content">
                             <div class="summary block-with-text">
                                 
-                                count说明count(a) 和 count(*)当 count 统计某一列时，比如count(a)，a 表示列名，是不统计 null 的。
+                                count说明count（a） 和 count（*）当 count 统计某一列时，比如count(a)，a 表示列名，是不统计 null 的。
 而 count(*)无论是否包含空值，都会统计。
-MyISAM 引擎和 InnoDB 引擎 co
+MyISAM/InnoDB count（*） 
                                 
                             </div>
                             <div class="publish-info">
@@ -779,9 +779,12 @@ MyISAM 引擎和 InnoDB 引擎 co
                         <div class="card-content article-content">
                             <div class="summary block-with-text">
                                 
-                                order by 原理按照排序原理分[manual][https://dev.mysql.com/doc/refman/5.7/en/order-by-optimization.html]，MySQL 排序方式分两种：
+                                order by 原理按照排序原理分manual，MySQL 排序方式分两种：
 
-通过有序索引直接返
+通过有序索引直接返回有序数据：Using index
+通过 Filesort 进行的排序：Using filesort
+
+Filesort是内存排序还是磁盘排
                                 
                             </div>
                             <div class="publish-info">
@@ -1157,7 +1160,7 @@ select * from t1 where c>='20
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">97.8k</span>
+            <span class="white-color">97.5k</span>
             
 
             <br>
