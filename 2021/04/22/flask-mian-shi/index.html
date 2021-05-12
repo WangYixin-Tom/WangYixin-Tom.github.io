@@ -473,21 +473,18 @@ run 方法调用werkzeug 的 run_simple">
 </ul>
 </li>
 <li><p><code>wsgi_app</code>方法中 调用  <code>full_dispatch_request</code>方法<strong>请求分发</strong>，开始实际的请求处理过程，这个过程中会生成 <code>response</code>对象来返回给服务器。</p>
-</li>
-<li><p>调用 <code>try_trigger_before_first_request_functions</code> 方法尝试调用 <code>before_first_request</code> 列表中的函数，只会执行一次</p>
-<pre><code>- 调用 `preprocess_request` 方法，调用 `before_request_funcs` 列表中所有的方法。</code></pre><blockquote>
-<p>可以检测用户是否登录，未登录使用<code>abort</code>返回错误，则后续不会分发</p>
-</blockquote>
-</li>
-</ul>
 <ul>
-<li><ul>
-<li>调用 <code>dispatch_request</code> 方法进行业务请求分发。<ul>
+<li><p>调用 <code>try_trigger_before_first_request_functions</code> 方法尝试调用 <code>before_first_request</code> 列表中的函数，只会执行一次</p>
+</li>
+<li><p>调用 <code>preprocess_request</code> 方法，调用 <code>before_request_funcs</code> 列表中所有的方法。（可以检测用户是否登录，未登录使用<code>abort</code>返回错误，则后续不会分发）</p>
+</li>
+<li><p>调用 <code>dispatch_request</code> 方法进行业务请求分发。</p>
+<ul>
 <li><code>_request_ctx_stack.top.request</code>获取请求上下文</li>
 <li>获取请求上下文在的<code>rule</code></li>
 <li>调用 <code>view_functions</code> 中相应的<strong>视图函数</strong>（<code>rule.endpoint</code> 作为键值）并把参数值传入（<code>**req.view_args</code>），视图函数就是开发人员写的API接口了。视图函数的返回值或者错误处理视图函数的返回值会作为<code>rv</code>返回给<code>full_dispatch_request</code>。</li>
 </ul>
-</li>
+<ul>
 <li>调用<code>finalize_request</code>根据 <code>rv</code> 生成响应<ul>
 <li>调用<code>make_response</code> 方法会查看 rv 是否是要求的返回值类型，否则生成正确的返回类型。</li>
 <li>调用<code>process_response</code> 方法，实现<code>after_request</code>方法的调用</li>
@@ -497,10 +494,12 @@ run 方法调用werkzeug 的 run_simple">
 </ul>
 </li>
 </ul>
+</li>
+</ul>
 <ul>
 <li><p>如果当中出错，就生成相应的错误信息。</p>
 </li>
-<li><p>Flask 都会把<strong>请求上下文</strong>出栈。</p>
+<li><p>把<strong>请求上下文</strong>出栈。</p>
 </li>
 </ul>
 <h2 id="视图函数注册"><a href="#视图函数注册" class="headerlink" title="视图函数注册"></a>视图函数注册</h2><p>在程序加载业务代码时，用修饰器 <code>route</code>注册视图函数，并实现 URL 到视图函数的映射。在<code>route</code> 方法中，调用了<code>add_url_rule</code>方法。主要流程如下：</p>
@@ -534,7 +533,7 @@ run 方法调用werkzeug 的 run_simple">
 <ul>
 <li><p>封装 Response 和 Request 类型供 Flask 使用，在实际开发中，我们在请求和响应对象上的操作，调用的其实是 werkzeug 的方法。</p>
 </li>
-<li><p>实现 URL到视图函数的映射，并且能把 URL中的参数传给该视图函数。我们看到了 Flask 的 url_map 属性并且看到了它如何绑定视图函数和错误处理函数，但是具体的映射规则的实现，和在响应过程中的 UR- 解析，都是由 werkzeug 完成的。</p>
+<li><p>实现 URL到视图函数的映射，并且能把 URL中的参数传给该视图函数。我们看到了 Flask 的 url_map 属性并且看到了它如何绑定视图函数和错误处理函数，但是具体的映射规则的实现，和在响应过程中的 URL解析，都是由 werkzeug 完成的。</p>
 </li>
 <li><p>通过 _request_ctx_stack 对 Flask 实现线程保护。</p>
 </li>
@@ -591,7 +590,7 @@ run 方法调用werkzeug 的 run_simple">
 <p>（1）werkzeug使用了自定义的<code>__storage__</code>保存不同线程下的状态</p>
 <p>（2）werkzeug提供了释放本地线程的release_local方法</p>
 <p>（3）werkzeug通过get_ident函数来获得线程标识符</p>
-<h4 id="为什么造轮子"><a href="#为什么造轮子" class="headerlink" title="为什么造轮子"></a><strong>为什么造轮子</strong></h4><p>WSGI不保证每个请求必须由一个线程来处理，如果WSGI服务器不是每个线程派发一个请求，而是每个协程派发一个请求，所以如果使用thread local变量可能会造成请求间数据相互干扰，因为一个线程中存在多个请求。所以werkzeug给出了自己的解决方案：werkzeug.local模块。</p>
+<h4 id="为什么造轮子"><a href="#为什么造轮子" class="headerlink" title="为什么造轮子"></a><strong>为什么造轮子</strong></h4><p>WSGI不保证每个请求必须由一个线程来处理，如果WSGI服务器不是每个线程派发一个请求，而是每个协程派发一个请求，thread local变量可能会造成请求间数据相互干扰，因为一个线程中存在多个请求。</p>
 <h4 id="除-了Local"><a href="#除-了Local" class="headerlink" title="除 了Local"></a>除 了Local</h4><p>Werkzeug 还实现了两种数据结构：LocalStack 和 LocalProxy。</p>
 <p>LocalStack 是用 Local 实现的栈结构，可以将对象推入、弹出，也可以快速拿到栈顶对象。当然，所有的修改都只在本线程可见。</p>
 <p>LocalProxy用于代理Local对象和LocalStack对象，而所谓代理就是作为中间的代理人来处理所有针对被代理对象的操作。LocalStack无法再动态更新了，而使用Proxy实现了动态更新。重载了绝大多数操作符，以便在调用LocalProxy的相应操作时，通过<code>_get_current_object</code> method来获取真正代理的对象，然后再进行相应操作</p>
@@ -613,7 +612,7 @@ run 方法调用werkzeug 的 run_simple">
 <h2 id="wsgi"><a href="#wsgi" class="headerlink" title="wsgi"></a>wsgi</h2><p>Web服务器和Web应用程序或框架之间的一种简单而通用的接口。描述了web server如何与web application交互、web application如何处理请求。</p>
 <p><strong>应用程序端</strong></p>
 <p>WSGI 规定每个 python 程序（Application）必须是一个可调用的对象（实现了<code>__call__</code> 函数的方法或者类），接受两个参数 environ（WSGI 的环境信息） 和 start_response（开始响应请求的函数），并且返回 iterable。</p>
-<h2 id="Werkzeug"><a href="#Werkzeug" class="headerlink" title="Werkzeug"></a>Werkzeug</h2><p>werkzeug 的定位并不是一个 web 框架，而是 HTTP 和 WSGI 相关的工具集，可以用来编写 web 框架，也可以直接使用它提供的一些帮助函数。</p>
+<h2 id="Werkzeug"><a href="#Werkzeug" class="headerlink" title="Werkzeug"></a>Werkzeug</h2><p>HTTP 和 WSGI 相关的工具集，可以用来编写 web 框架，可以直接使用它提供的一些帮助函数。</p>
 <p>werkzeug 提供了 python web WSGI 开发相关的功能：</p>
 <ul>
 <li><p>路由处理：如何根据请求 URL 找到对应的视图函数</p>
@@ -1391,7 +1390,7 @@ Python2 的默认编码是 ascii，Python 3 默认编码
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">97.5k</span>
+            <span class="white-color">97.4k</span>
             
 
             <br>
