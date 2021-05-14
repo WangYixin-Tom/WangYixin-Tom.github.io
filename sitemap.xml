@@ -2,6 +2,41 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://wangyixin-tom.github.io/2021/04/08/kafka-mian-shi/</loc>
+    
+    <lastmod>2021-05-14T00:02:28.100Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://wangyixin-tom.github.io/2021/04/13/python-mian-shi/</loc>
+    
+    <lastmod>2021-05-12T13:17:14.405Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://wangyixin-tom.github.io/2021/04/10/mysql-mian-shi/</loc>
+    
+    <lastmod>2021-05-12T12:45:57.833Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://wangyixin-tom.github.io/2021/03/14/shi-wu/</loc>
+    
+    <lastmod>2021-05-12T12:23:33.154Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://wangyixin-tom.github.io/2021/03/14/suo/</loc>
+    
+    <lastmod>2021-05-12T11:53:48.536Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://wangyixin-tom.github.io/2020/11/02/redis-xiao-xi-dui-lie/</loc>
     
     <lastmod>2021-05-11T23:27:40.459Z</lastmod>
@@ -19,27 +54,6 @@
     <loc>https://wangyixin-tom.github.io/2021/04/05/rabbitmq-mian-shi/</loc>
     
     <lastmod>2021-05-11T22:38:40.668Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://wangyixin-tom.github.io/2021/04/10/mysql-mian-shi/</loc>
-    
-    <lastmod>2021-05-11T22:38:27.691Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://wangyixin-tom.github.io/2021/04/08/kafka-mian-shi/</loc>
-    
-    <lastmod>2021-05-11T22:38:17.547Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://wangyixin-tom.github.io/2021/04/13/python-mian-shi/</loc>
-    
-    <lastmod>2021-05-11T22:38:06.746Z</lastmod>
     
   </url>
   
@@ -103,20 +117,6 @@
     <loc>https://wangyixin-tom.github.io/2021/03/13/order-group-by-you-hua/</loc>
     
     <lastmod>2021-05-11T12:06:53.619Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://wangyixin-tom.github.io/2021/03/14/shi-wu/</loc>
-    
-    <lastmod>2021-05-11T11:56:13.589Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://wangyixin-tom.github.io/2021/03/14/suo/</loc>
-    
-    <lastmod>2021-05-11T11:41:56.313Z</lastmod>
     
   </url>
   
@@ -422,14 +422,14 @@
   </url>
   
   <url>
-    <loc>https://wangyixin-tom.github.io/contact/index.html</loc>
+    <loc>https://wangyixin-tom.github.io/friends/index.html</loc>
     
     <lastmod>2021-04-01T23:01:50.207Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://wangyixin-tom.github.io/friends/index.html</loc>
+    <loc>https://wangyixin-tom.github.io/contact/index.html</loc>
     
     <lastmod>2021-04-01T23:01:50.207Z</lastmod>
     
@@ -471,7 +471,7 @@
   </url>
   
   <url>
-    <loc>https://wangyixin-tom.github.io/2020/10/26/redis-aof-ji-zhi/</loc>
+    <loc>https://wangyixin-tom.github.io/2020/10/26/rabbitmq-xiao-xi-chong-fu/</loc>
     
     <lastmod>2021-04-01T23:01:49.986Z</lastmod>
     
@@ -485,7 +485,7 @@
   </url>
   
   <url>
-    <loc>https://wangyixin-tom.github.io/2020/10/26/rabbitmq-xiao-xi-chong-fu/</loc>
+    <loc>https://wangyixin-tom.github.io/2020/10/26/redis-aof-ji-zhi/</loc>
     
     <lastmod>2021-04-01T23:01:49.986Z</lastmod>
     
@@ -534,6 +534,13 @@
   </url>
   
   <url>
+    <loc>https://wangyixin-tom.github.io/archives/index.html</loc>
+    
+    <lastmod>2020-04-04T11:43:42.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://wangyixin-tom.github.io/categories/index.html</loc>
     
     <lastmod>2020-04-04T11:43:42.000Z</lastmod>
@@ -542,13 +549,6 @@
   
   <url>
     <loc>https://wangyixin-tom.github.io/tags/index.html</loc>
-    
-    <lastmod>2020-04-04T11:43:42.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://wangyixin-tom.github.io/archives/index.html</loc>
     
     <lastmod>2020-04-04T11:43:42.000Z</lastmod>
     

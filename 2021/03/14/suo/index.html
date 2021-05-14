@@ -269,7 +269,7 @@ UNLOCK TAB">
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/13.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/15.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -424,14 +424,14 @@ UNLOCK TAB">
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.5k
+                    2.2k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    8 分
+                    7 分
                 </div>
                 
                 
@@ -491,9 +491,7 @@ ALTER TABLE tbl_name WAIT N add column ...<span aria-hidden="true" class="line-n
 <li>优化2：索引上的等值查询，向右遍历时且最后一个值不满足等值条件的时候，next-key lock退化为间隙锁。</li>
 <li>一个bug：唯一索引上的范围查询会访问到不满足条件的第一个值为止。</li>
 </ol>
-<h3 id="事务隔离级别"><a href="#事务隔离级别" class="headerlink" title="事务隔离级别"></a>事务隔离级别</h3><p>Read uncommitted（读未提交）: 在该隔离级别，所有事务都可以看到其它未提交事务的执行结果。可能会出现脏读。<br><strong>Read Committed（读已提交，RC）</strong>：一个事务只能看见已经提交事务所做的改变。因为同一事务的其它实例在该实例处理期间可能会有新的 commit，<strong>所以可能出现幻读</strong>。<br><strong>Repeatable Read（可重复读，RR）</strong>：默认事务隔离级别，它确保同一事务的多个实例在并发读取数据时，会看到同样的数据行。消除了脏读、不可重复读，<strong>默认也不会出现幻读</strong>。<br><strong>Serializable（串行）</strong>：这是最高的隔离级别，它通过强制事务排序，使之不可能相互冲突，从而解决幻读问题。</p>
-<p>脏读：读取未提交的事务。<br>幻读：幻读指的是一个事务在前后两次查询同一个范围的时候，后一次查询看到了前一次查询没有看到的行。</p>
-<h4 id="非索引字段查询（RC）"><a href="#非索引字段查询（RC）" class="headerlink" title="非索引字段查询（RC）"></a>非索引字段查询（RC）</h4><p>如果一个条件无法通过索引快速过滤，那么存储引擎层面就会将所有记录加锁后返回，然后由 server 层进行过滤。</p>
+<h3 id="加锁分析"><a href="#加锁分析" class="headerlink" title="加锁分析"></a>加锁分析</h3><h4 id="非索引字段查询（RC）"><a href="#非索引字段查询（RC）" class="headerlink" title="非索引字段查询（RC）"></a>非索引字段查询（RC）</h4><p>如果一个条件无法通过索引快速过滤，那么存储引擎层面就会将所有记录加锁后返回，然后由 server 层进行过滤。</p>
 <h4 id="唯一索引查询（RC）"><a href="#唯一索引查询（RC）" class="headerlink" title="唯一索引查询（RC）"></a>唯一索引查询（RC）</h4><p>如果查询的条件是唯一索引，那么 SQL 需要在满足条件的唯一索引上加锁，并且会在对应的聚簇索引上加锁。</p>
 <h4 id="非唯一索引查询（RC）"><a href="#非唯一索引查询（RC）" class="headerlink" title="非唯一索引查询（RC）"></a>非唯一索引查询（RC）</h4><p>如果查询的条件是非唯一索引，那么 SQL 需要在满足条件的非唯一索引上都加上锁，并且会在它们对应的聚簇索引上加锁。</p>
 <h4 id="非索引字段查询（RR）"><a href="#非索引字段查询（RR）" class="headerlink" title="非索引字段查询（RR）"></a>非索引字段查询（RR）</h4><p>RR 隔离级别下，非索引字段做条件的当前读不但会把每条记录都加上 X 锁，还会把每个 GAP 加上GAP 锁。（条件字段加索引的重要性！）</p>
@@ -1024,7 +1022,7 @@ show engine innodb status\G; //查看最后一次死锁信息<span aria-hidden="
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="事务">
+                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="事务">
                         
                         <span class="card-title">事务</span>
                     </div>
@@ -1073,7 +1071,7 @@ show engine innodb status\G; //查看最后一次死锁信息<span aria-hidden="
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="索引">
+                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="索引">
                         
                         <span class="card-title">索引</span>
                     </div>
@@ -1283,7 +1281,7 @@ B+ 树
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">97.4k</span>
+            <span class="white-color">94.9k</span>
             
 
             <br>
