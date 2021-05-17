@@ -270,7 +270,7 @@ Kafka 主要有两大应用场景：
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/3.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -459,26 +459,27 @@ Kafka 主要有两大应用场景：
 <h3 id="发布-订阅模型（Kafka-消息模型）"><a href="#发布-订阅模型（Kafka-消息模型）" class="headerlink" title="发布-订阅模型（Kafka 消息模型）"></a>发布-订阅模型（Kafka 消息模型）</h3><p> 使用主题作为消息通信载体，类似于广播模式；生产者发布一条消息，该消息通过主题传递给所有的订阅者。</p>
 <p>如果只有一个订阅者，那就退化到队列模型。</p>
 <h2 id="Producer、Consumer、Broker、Topic、Partition、Record？"><a href="#Producer、Consumer、Broker、Topic、Partition、Record？" class="headerlink" title="Producer、Consumer、Broker、Topic、Partition、Record？"></a>Producer、Consumer、Broker、Topic、Partition、Record？</h2><ol>
-<li><strong>Producer（生产者）</strong> : 产生消息的一方。</li>
-<li><strong>Consumer（消费者）</strong> : 消费消息的一方。</li>
+<li><strong>Producer（生产者）</strong> ： 产生消息的一方。</li>
+<li><strong>Consumer（消费者）</strong>：消费消息的一方。</li>
 <li><strong>Broker（代理）</strong> : 可以看作是一个独立的 Kafka 实例。多个 Kafka Broker 组成一个 Kafka Cluster。</li>
 </ol>
 <ul>
-<li><strong>Topic（主题）</strong> : kafka 通过不同的主题区分不同的业务类型的消息记录。Producer 将消息发送到特定的主题，Consumer 通过订阅特定的 主题来消费消息。</li>
-<li><strong>Partition（分区）</strong> : Partition 属于 Topic 的一部分。一个 Topic 可以有多个 Partition ，并且同一 Topic 下的 Partition 可以分布在不同的 Broker 上。</li>
+<li><strong>Topic（主题）</strong> : kafka 通过不同的主题区分不同的业务类型的消息记录。Producer 将消息发送到特定的主题，Consumer 通过订阅特定的主题来消费消息。</li>
+<li><strong>Partition（分区）</strong>： Partition属于Topic 的一部分。一个 Topic 可以有多个 Partition ，并且同一 Topic 下的 Partition 可以分布在不同的 Broker 上。</li>
 <li><strong>记录（Record）：</strong>实际写入到kafka集群并且可以被消费者读取的数据。每条记录包含一个键、值和时间戳。</li>
 </ul>
 <h2 id="什么是消费者组？"><a href="#什么是消费者组？" class="headerlink" title="什么是消费者组？"></a>什么是消费者组？</h2><p>可扩展且具有容错性的消费者机制。</p>
 <ul>
 <li>Kafka允许你将同一份消息广播到多个消费者组里。</li>
-<li>一个消费者组中可以包含多个消费者，他们共同消费该topic的数据。有助于消费能力的动态调整。</li>
-<li>同一个消费者组下的消费者都配置有相同的组ID，被分配不同的订阅分区。当某个消费者挂掉的时候，其他实例会自动地承担起它负责消费的分区。 </li>
+<li>一个消费者组中可以包含多个消费者，他们共同消费该主题的数据。</li>
+<li>同一个消费者组下的消费者有相同的组ID，他们被分配不同的订阅分区。</li>
+<li>当某个消费者挂掉的时候，其他消费者会自动地承担起它负责消费的分区。 </li>
 </ul>
 <h2 id="LEO、LSO、AR、ISR、HW？"><a href="#LEO、LSO、AR、ISR、HW？" class="headerlink" title="LEO、LSO、AR、ISR、HW？"></a>LEO、LSO、AR、ISR、HW？</h2><ul>
 <li>LEO（Log End Offset）：日志末端位移值或末端偏移量，表示日志下一条待插入消息的位移值。</li>
 <li>LSO（Log Stable Offset）：该值控制了事务型消费者能够看到的消息范围。</li>
-<li>AR（Assigned Replicas）：主题被创建后，创建时分区被分配的副本集合，副本个数由副本因子决定。</li>
-<li>ISR（In-Sync Replicas）：AR中那些与Leader保持同步的副本集合。Leader副本天然就包含在ISR中。</li>
+<li>AR（Assigned Replicas）：主题被创建后，创建的副本集合，副本个数由副本因子决定。</li>
+<li>ISR（In-Sync Replicas）：AR中与Leader保持同步的副本集合。Leader副本天然在ISR中。</li>
 <li>HW（High watermark）：高水位值，这是控制消费者可读取消息范围。一个普通消费者只能看到Leader副本上介于Log Start Offset和HW（不含）之间的所有消息。</li>
 </ul>
 <h2 id="位移的作用"><a href="#位移的作用" class="headerlink" title="位移的作用"></a>位移的作用</h2><p>用于标识消息在分区中的位置。</p>
@@ -491,27 +492,27 @@ Kafka 主要有两大应用场景：
 <li>是否启用压缩</li>
 </ul>
 <h2 id="consumer-offsets-作用？"><a href="#consumer-offsets-作用？" class="headerlink" title="__consumer_offsets 作用？"></a>__consumer_offsets 作用？</h2><ul>
-<li>内部主题，主要用于存储将 Consumer 的位移数据</li>
-<li>保存 Consumer Group 相关信息的消息</li>
-<li>用于删除 Group 过期位移、删除 Group 的消息。tombstone 消息，即墓碑消息</li>
+<li>内部主题，存储消费者的位移数据</li>
+<li>保存消费者组相关的消息</li>
+<li>用于删除消费者组过期位移、删除消费者组的消息。tombstone 消息，即墓碑消息</li>
 </ul>
 <h2 id="多副本机制？好处？"><a href="#多副本机制？好处？" class="headerlink" title="多副本机制？好处？"></a>多副本机制？好处？</h2><ul>
 <li>Kafka副本当前分为领导者副本和追随者副本。每个分区在创建时都要选举一个副本，称为领导者副本，其余的副本自动称为追随者副本。</li>
 <li>只有Leader副本才能对外提供读写服务。</li>
 <li>Follower副本只是采用拉的方式，同步Leader副本中的数据</li>
-<li>在Leader副本所在的Broker宕机后，Kafka 依托于 ZooKeeper 提供的监控功能能够实时感知到，并立即开启新一轮的领导者选举，从追随者副本中选一个作为新的领导者。</li>
+<li>在Leader副本所在的Broker宕机后，Kafka 依托于 ZooKeeper 提供的监控，实时感知到，并立即开启新一轮的领导者选举，从追随者副本中选一个作为新的领导者。</li>
 </ul>
 <p><strong>多分区多副本好处？</strong></p>
 <ol>
 <li>Kafka 通过给特定 Topic 指定多个 Partition， 而各个 Partition 可以分布在不同的 Broker 上， 这样便能提供比较好的并发能力（负载均衡）。</li>
 <li>多副本提高了消息存储的安全性，提高了容灾能力，不过也相应的增加了所需要的存储空间。</li>
-<li>方便实现“Read-your-writes”：</li>
+<li>方便实现“Read-your-writes”</li>
 <li>方便实现单调读：在多次消费消息时，它不会看到某条消息一会儿存在一会儿不存在</li>
 </ol>
 <h2 id="Zookeeper-的作用？"><a href="#Zookeeper-的作用？" class="headerlink" title="Zookeeper 的作用？"></a>Zookeeper 的作用？</h2><ul>
-<li>存放元数据：主题分区的所有数据都保存在 ZooKeeper 中，且以它保存的数据为权威。</li>
+<li>存放元数据：主题分区的相关数据都保存在 ZooKeeper 中，且以它保存的数据为权威。</li>
 <li>成员管理：Broker 节点的注册、注销以及属性变更。</li>
-<li>Controller 选举：选举集群 Controller</li>
+<li>Controller 选举：选举集群 Controller节点</li>
 <li>其他管理类任务：包括但不限于主题删除、参数配置等。</li>
 </ul>
 <h2 id="如何保证消息的消费顺序？"><a href="#如何保证消息的消费顺序？" class="headerlink" title="如何保证消息的消费顺序？"></a>如何保证消息的消费顺序？</h2><p>分区是真正保存消息的地方。Topic 可以指定多个 Partition。</p>
@@ -1094,7 +1095,7 @@ Kafka 主要有两大应用场景：
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="mysql面试">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="mysql面试">
                         
                         <span class="card-title">mysql面试</span>
                     </div>
@@ -1115,9 +1116,9 @@ Kafka 主要有两大应用场景：
 执行器：操作引擎，返回结果
 
 
-存储层
+存储引擎层
 
-负责数据存储和提取，插件式，支持InnoDB、MyISAM多个存储
+负责数据存储和提取，插件式，支持InnoDB、MyISAM多个
                         
                     </div>
                     <div class="publish-info">
@@ -1158,7 +1159,7 @@ Kafka 主要有两大应用场景：
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="rabbitmq面试">
+                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="rabbitmq面试">
                         
                         <span class="card-title">rabbitmq面试</span>
                     </div>
@@ -1366,7 +1367,7 @@ Kafka 主要有两大应用场景：
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">94.9k</span>
+            <span class="white-color">94.8k</span>
             
 
             <br>

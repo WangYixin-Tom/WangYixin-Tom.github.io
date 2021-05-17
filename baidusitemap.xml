@@ -2,12 +2,24 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://wangyixin-tom.github.io/2021/04/08/kafka-mian-shi/</loc>
-    <lastmod>2021-05-14</lastmod>
+    <lastmod>2021-05-17</lastmod>
   </url>  <url>
-    <loc>https://wangyixin-tom.github.io/2021/04/13/python-mian-shi/</loc>
-    <lastmod>2021-05-12</lastmod>
+    <loc>https://wangyixin-tom.github.io/2020/12/09/redis6-0/</loc>
+    <lastmod>2021-05-17</lastmod>
+  </url>  <url>
+    <loc>https://wangyixin-tom.github.io/2020/10/26/redis-bian-man-yi-ji-you-hua-fang-fa/</loc>
+    <lastmod>2021-05-17</lastmod>
+  </url>  <url>
+    <loc>https://wangyixin-tom.github.io/2020/10/26/redis-rdb-ji-zhi/</loc>
+    <lastmod>2021-05-17</lastmod>
+  </url>  <url>
+    <loc>https://wangyixin-tom.github.io/2020/10/26/redis-aof-ji-zhi/</loc>
+    <lastmod>2021-05-17</lastmod>
   </url>  <url>
     <loc>https://wangyixin-tom.github.io/2021/04/10/mysql-mian-shi/</loc>
+    <lastmod>2021-05-16</lastmod>
+  </url>  <url>
+    <loc>https://wangyixin-tom.github.io/2021/04/13/python-mian-shi/</loc>
     <lastmod>2021-05-12</lastmod>
   </url>  <url>
     <loc>https://wangyixin-tom.github.io/2021/03/14/shi-wu/</loc>
@@ -29,9 +41,6 @@
     <lastmod>2021-05-11</lastmod>
   </url>  <url>
     <loc>https://wangyixin-tom.github.io/2020/10/25/redis-shao-bing-ji-zhi/</loc>
-    <lastmod>2021-05-11</lastmod>
-  </url>  <url>
-    <loc>https://wangyixin-tom.github.io/2020/10/26/redis-rdb-ji-zhi/</loc>
     <lastmod>2021-05-11</lastmod>
   </url>  <url>
     <loc>https://wangyixin-tom.github.io/2021/04/11/mysql-shu-ju-lei-xing/</loc>
@@ -59,9 +68,6 @@
     <lastmod>2021-05-11</lastmod>
   </url>  <url>
     <loc>https://wangyixin-tom.github.io/2020/10/29/redis-fen-bu-shi-suo/</loc>
-    <lastmod>2021-05-11</lastmod>
-  </url>  <url>
-    <loc>https://wangyixin-tom.github.io/2020/12/09/redis6-0/</loc>
     <lastmod>2021-05-11</lastmod>
   </url>  <url>
     <loc>https://wangyixin-tom.github.io/2020/10/26/rabbitmq-xiao-xi-lu-you/</loc>
@@ -130,9 +136,6 @@
     <loc>https://wangyixin-tom.github.io/2020/12/10/kafka-ji-qun-pei-zhi/</loc>
     <lastmod>2021-04-28</lastmod>
   </url>  <url>
-    <loc>https://wangyixin-tom.github.io/2020/10/26/redis-bian-man-yi-ji-you-hua-fang-fa/</loc>
-    <lastmod>2021-04-27</lastmod>
-  </url>  <url>
     <loc>https://wangyixin-tom.github.io/2021/03/10/redis-ying-yong/</loc>
     <lastmod>2021-04-27</lastmod>
   </url>  <url>
@@ -193,13 +196,10 @@
     <loc>https://wangyixin-tom.github.io/2020/11/01/redis-shi-wu/</loc>
     <lastmod>2021-04-01</lastmod>
   </url>  <url>
-    <loc>https://wangyixin-tom.github.io/2020/10/26/rabbitmq-xiao-xi-chong-fu/</loc>
-    <lastmod>2021-04-01</lastmod>
-  </url>  <url>
     <loc>https://wangyixin-tom.github.io/2020/10/26/rabbitmq-ji-qun/</loc>
     <lastmod>2021-04-01</lastmod>
   </url>  <url>
-    <loc>https://wangyixin-tom.github.io/2020/10/26/redis-aof-ji-zhi/</loc>
+    <loc>https://wangyixin-tom.github.io/2020/10/26/rabbitmq-xiao-xi-chong-fu/</loc>
     <lastmod>2021-04-01</lastmod>
   </url>  <url>
     <loc>https://wangyixin-tom.github.io/2021/03/23/kafka-jing-que-yi-ci/</loc>
