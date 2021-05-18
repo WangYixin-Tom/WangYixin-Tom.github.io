@@ -270,7 +270,7 @@ Kafka 主要有两大应用场景：
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/5.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -533,7 +533,6 @@ Kafka 主要有两大应用场景：
 <li>关闭自动提交 offset，每次在真正消费完消息之后之后再自己手动提交 offset 。</li>
 </ul>
 <h3 id="Kafka-弄丢消息"><a href="#Kafka-弄丢消息" class="headerlink" title="Kafka 弄丢消息"></a>Kafka 弄丢消息</h3><ul>
-<li>所有副本都要接收到该消息之后该消息才算真正成功被发送。<strong>设置 replication.factor &gt;= 3</strong></li>
 <li>设置 <code>replication.factor &gt;= 3</code>。防止消息丢失的主要机制就是冗余，最好将消息多保存几份。</li>
 <li>设置 <code>min.insync.replicas &gt; 1</code>。消息至少要被写入到多少个副本才算是“已提交”。设置成大于 1 可以提升消息持久性。</li>
 <li>设置 <code>unclean.leader.election.enable = false</code>。如果一个 Broker 落后原先的 Leader 太多，那么它一旦成为新的 Leader，必然会造成消息的丢失。故一般设置成 false。</li>
@@ -1095,7 +1094,7 @@ Kafka 主要有两大应用场景：
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="mysql面试">
+                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="mysql面试">
                         
                         <span class="card-title">mysql面试</span>
                     </div>
@@ -1159,7 +1158,7 @@ Kafka 主要有两大应用场景：
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="rabbitmq面试">
+                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="rabbitmq面试">
                         
                         <span class="card-title">rabbitmq面试</span>
                     </div>
