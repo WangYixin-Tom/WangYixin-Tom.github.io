@@ -2,16 +2,30 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://wangyixin-tom.github.io/2021/04/13/python-mian-shi/</loc>
+    <loc>https://wangyixin-tom.github.io/2021/04/12/redis-mian-shi/</loc>
     
-    <lastmod>2021-05-19T00:00:40.520Z</lastmod>
+    <lastmod>2021-05-19T11:09:42.133Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://wangyixin-tom.github.io/2021/04/10/mysql-mian-shi/</loc>
     
-    <lastmod>2021-05-18T22:35:56.563Z</lastmod>
+    <lastmod>2021-05-19T11:09:42.123Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://wangyixin-tom.github.io/2020/10/29/redis-fen-bu-shi-suo/</loc>
+    
+    <lastmod>2021-05-19T11:09:42.123Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://wangyixin-tom.github.io/2021/04/13/python-mian-shi/</loc>
+    
+    <lastmod>2021-05-19T00:00:40.520Z</lastmod>
     
   </url>
   
@@ -86,13 +100,6 @@
   </url>
   
   <url>
-    <loc>https://wangyixin-tom.github.io/2021/04/12/redis-mian-shi/</loc>
-    
-    <lastmod>2021-05-11T22:37:09.597Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://wangyixin-tom.github.io/2020/10/25/redis-shao-bing-ji-zhi/</loc>
     
     <lastmod>2021-05-11T13:59:00.145Z</lastmod>
@@ -152,13 +159,6 @@
     <loc>https://wangyixin-tom.github.io/2020/10/26/redis-shu-ju-jie-gou/</loc>
     
     <lastmod>2021-05-11T11:33:29.606Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://wangyixin-tom.github.io/2020/10/29/redis-fen-bu-shi-suo/</loc>
-    
-    <lastmod>2021-05-11T11:33:29.604Z</lastmod>
     
   </url>
   
@@ -464,14 +464,14 @@
   </url>
   
   <url>
-    <loc>https://wangyixin-tom.github.io/2020/11/01/redis-shi-wu/</loc>
+    <loc>https://wangyixin-tom.github.io/2020/11/02/redis-nei-cun-sui-pian/</loc>
     
     <lastmod>2021-04-01T23:01:50.047Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://wangyixin-tom.github.io/2020/11/02/redis-nei-cun-sui-pian/</loc>
+    <loc>https://wangyixin-tom.github.io/2020/11/01/redis-shi-wu/</loc>
     
     <lastmod>2021-04-01T23:01:50.047Z</lastmod>
     
@@ -534,14 +534,14 @@
   </url>
   
   <url>
-    <loc>https://wangyixin-tom.github.io/archives/index.html</loc>
+    <loc>https://wangyixin-tom.github.io/categories/index.html</loc>
     
     <lastmod>2020-04-04T11:43:42.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://wangyixin-tom.github.io/categories/index.html</loc>
+    <loc>https://wangyixin-tom.github.io/archives/index.html</loc>
     
     <lastmod>2020-04-04T11:43:42.000Z</lastmod>
     

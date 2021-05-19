@@ -572,7 +572,7 @@
 <li>InnoDB中不保存表的行数，如<code>select count(*) from table</code>时，InnoDB需要扫描一遍整个表来计算有多少行，但是MyISAM只要简单的读出保存好的行数即可。注意的是，当<code>count(*)</code>语句包含where条件时MyISAM也需要扫描整个表</li>
 <li>对于自增长的字段，InnoDB中必须包含只有该字段的索引，但是在MyISAM表中可以和其他字段一起建立联合索引</li>
 <li>清空整个表时，InnoDB是一行一行的删除，效率非常慢。MyISAM则会重建表</li>
-<li><strong>InnoDB支持行锁</strong>（某些情况下还是锁整表，如 <strong>update table set a=1 where user like ‘%lee%’</strong></li>
+<li><strong>InnoDB支持行锁</strong>（某些情况下还是锁整表，如 <code>update table set a=1 where user like &#39;%lee%&#39;</code></li>
 </ul>
 <h2 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h2><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>数据库索引，是数据库管理系统中一个排序的数据结构，以协助快速查询、更新数据库表中数据。索引的实现通常使用B树及其变种B+树。</p>
 <p>通俗的说，索引就相当于目录。为了方便查找书中的内容，通过对内容建立索引形成目录。</p>
@@ -762,7 +762,7 @@
 </tbody></table>
 <p>事务隔离机制的实现基于锁机制和并发调度。其中并发调度使用的是MVCC（多版本并发控制），通过保存修改的旧版本信息来支持并发一致性读和回滚等特性。</p>
 <h2 id="锁"><a href="#锁" class="headerlink" title="锁"></a>锁</h2><p>当数据库有并发事务的时候，可能会产生数据的不一致，这时候需要一些机制来保证访问的次序，锁机制就是这样的一个机制。</p>
-<h3 id="按照锁的粒度分数据库锁有哪些？"><a href="#按照锁的粒度分数据库锁有哪些？" class="headerlink" title="按照锁的粒度分数据库锁有哪些？"></a>按照锁的粒度分数据库锁有哪些？</h3><p>在关系型数据库中，可以按照锁的粒度把数据库锁分为行级锁(INNODB引擎)、表级锁(MYISAM引擎)和页级锁(BDB引擎 )。</p>
+<h3 id="锁分类"><a href="#锁分类" class="headerlink" title="锁分类"></a>锁分类</h3><p>按照锁的粒度把数据库锁分为行级锁(INNODB引擎)、表级锁(MYISAM引擎)和页级锁(BDB引擎 )。</p>
 <p><strong>行级锁</strong> 行级锁是Mysql中锁定粒度最细的一种锁，表示只针对当前操作的行进行加锁。行级锁能大大减少数据库操作的冲突。其加锁粒度最小，但加锁的开销也最大。行级锁分为共享锁 和 排他锁。</p>
 <p>特点：开销大，加锁慢；会出现死锁；锁定粒度最小，发生锁冲突的概率最低，并发度也最高。</p>
 <p><strong>表级锁</strong> 表级锁是MySQL中锁定粒度最大的一种锁，表示对当前操作的整张表加锁，它实现简单，资源消耗较少，被大部分MySQL引擎支持。最常使用的MYISAM与INNODB都支持表级锁定。表级锁定分为表共享读锁（共享锁）与表独占写锁（排他锁）。</p>
@@ -986,7 +986,7 @@
 <h3 id="慢查询日志"><a href="#慢查询日志" class="headerlink" title="慢查询日志"></a>慢查询日志</h3><p>用于记录执行时间超过某个临界值的SQL日志，用于快速定位慢查询，为我们的优化做参考。</p>
 <p><strong>开启慢查询日志</strong></p>
 <p>配置项：slow_query_log</p>
-<p>可以使用show variables like ‘slov_query_log’查看是否开启，如果状态值为OFF，可以使用set GLOBAL slow_query_log = on来开启，它会在datadir下产生一个xxx-slow.log的文件。</p>
+<p>可以使用<code>show variables like ‘slow_query_log’</code>查看是否开启，如果状态值为OFF，可以使用<code>set GLOBAL slow_query_log = on</code>来开启，它会在datadir下产生一个xxx-slow.log的文件。</p>
 <p><strong>设置临界时间</strong></p>
 <p>配置项：long_query_time</p>
 <p>查看：show VARIABLES like ‘long_query_time’，单位秒</p>
@@ -1790,7 +1790,7 @@ Kafka 主要有两大应用场景：
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">95.1k</span>
+            <span class="white-color">96.2k</span>
             
 
             <br>
