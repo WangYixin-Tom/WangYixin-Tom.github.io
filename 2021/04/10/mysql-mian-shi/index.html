@@ -436,7 +436,7 @@
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    12.9k
+                    13k
                 </div>
                 
 
@@ -1023,6 +1023,9 @@
 <li>选择合适的表引擎，参数上的优化; </li>
 <li>进行架构级别的缓存，静态化和分布式; </li>
 </ul>
+<h2 id="galera复制原理"><a href="#galera复制原理" class="headerlink" title="galera复制原理"></a>galera复制原理</h2><p>Galera采用的是多主同步复制。</p>
+<p>事务在本节点乐观执行，然后在提交时运行一个验证过程以保证全局数据一致性。</p>
+<p>所谓乐观执行是指，事务在一个节点提交时，被认为与其它节点上的事务没有冲突，首先在本地执行，然后再发送到所有节点做冲突检测，无冲突时在所有节点提交，否则在所有节点回滚。</p>
 <h2 id="分库分表后面临的问题"><a href="#分库分表后面临的问题" class="headerlink" title="分库分表后面临的问题"></a>分库分表后面临的问题</h2><p> <strong>事务支持</strong> 分库分表后，就成了分布式事务了。如果依赖数据库本身的分布式事务管理功能去执行事务，将付出高昂的性能代价； 如果由应用程序去协助控制，形成程序逻辑上的事务，又会造成编程方面的负担。</p>
 <p> <strong>跨库join</strong> </p>
 <p>只要是进行切分，跨节点Join的问题是不可避免的。但是良好的设计和切分却可以减少此类情况的发生。解决这一问题的普遍做法是分两次查询实现。在第一次查询的结果集中找出关联数据的id,根据这些id发起第二次请求得到关联数据。 </p>
@@ -1787,7 +1790,7 @@ Kafka 主要有两大应用场景：
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">94.8k</span>
+            <span class="white-color">95.1k</span>
             
 
             <br>
