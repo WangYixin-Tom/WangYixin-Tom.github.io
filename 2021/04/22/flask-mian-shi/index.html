@@ -270,7 +270,7 @@ run 方法调用werkzeug 的 run_simple">
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/6.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -425,14 +425,14 @@ run 方法调用werkzeug 的 run_simple">
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    4k
+                    4.8k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    14 分
+                    17 分
                 </div>
                 
                 
@@ -628,6 +628,56 @@ run 方法调用werkzeug 的 run_simple">
 <p>（3）客户端通过四个HTTP动词，对服务器端资源进行操作，实现”表现层状态转化”。</p>
 <p>“资源”是一种信息实体，它可以有多种外在表现形式。<strong>我们把”资源”具体呈现出来的形式，叫做它的”表现层”（Representation）。</strong></p>
 <p>所有的状态都保存在服务器端。因此，<strong>如果客户端想要操作服务器，必须通过某种手段，让服务器端发生”状态转化”（State Transfer）。而这种转化是建立在表现层之上的，所以就是”表现层状态转化”。</strong></p>
+<h2 id="安全漏洞"><a href="#安全漏洞" class="headerlink" title="安全漏洞"></a>安全漏洞</h2><h3 id="XSS-跨站脚本攻击"><a href="#XSS-跨站脚本攻击" class="headerlink" title="XSS 跨站脚本攻击"></a>XSS 跨站脚本攻击</h3><p><strong>原理</strong></p>
+<ul>
+<li>恶意攻击者将代码通过网站注入到其他用户浏览器中的攻击方式。</li>
+<li>攻击者会把恶意JavaScript 代码作为普通数据放入到网站数据库中；</li>
+<li>其他用户在获取和展示数据的过程中，运行JavaScript 代码；</li>
+<li>JavaScript 代码执行恶意代码（调用恶意请求，发送数据到攻击者等等）。</li>
+</ul>
+<p><strong>防御</strong></p>
+<p>根本的解决方法：<strong>从输入到输出都需要过滤、转义。</strong></p>
+<ol>
+<li><p>对输入内容的特定字符进行编码，例如表示 html标记的 &lt; &gt; 等符号。</p>
+</li>
+<li><p>对重要的 cookie设置 httpOnly, 防止客户端通过document.cookie读取 cookie，此 HTTP头由服务端设置。</p>
+</li>
+<li><p>将不可信的值输出 URL参数之前，进行 URLEncode操作，而对于从 URL参数中获取值一定要进行格式检测（比如你需要的时URL，就判读是否满足URL格式）。</p>
+</li>
+<li><p>不要使用 Eval来解析并运行不确定的数据或代码，对于 JSON解析请使用 JSON.parse() 方法。</p>
+</li>
+<li><p>后端接口也应该要做到关键字符过滤的问题。</p>
+</li>
+</ol>
+<h3 id="CSRF-跨站请求伪造"><a href="#CSRF-跨站请求伪造" class="headerlink" title="CSRF 跨站请求伪造"></a>CSRF 跨站请求伪造</h3><p>恶意攻击者在用户不知情的情况下，使用用户的身份来操作</p>
+<p><strong>原理</strong></p>
+<ul>
+<li>黑客创建一个请求网站A 类的URL 的Web 页面，放在恶意网站B 中，这个文件包含了一个创建用户的表单。这个表单加载完毕就会立即进行提交。</li>
+<li>黑客把这个恶意Web 页面的URL 发送至超级管理员，诱导超级管理员打开这个Web 页面。</li>
+</ul>
+<p><strong>防御：token 校验</strong></p>
+<p>最常用的一种是通过token去校验请求是否合法：</p>
+<h5 id="校验原理"><a href="#校验原理" class="headerlink" title="校验原理:"></a>校验原理:</h5><ol>
+<li>后端生成 token，并存在 session 中。</li>
+<li>用户请求成功后，后端将 token 发送到客户端，发送方式主要是为以下两种：</li>
+</ol>
+<p>（1）服务端将 token 渲染到 html 中。 也就是通过一个 dom 结点保存 token 信息，客户端就可以通过 dom 操作获取到该 token 内容。（同源策略会限制脚本 API 操作）</p>
+<p>（2）服务端将 token 设置到 cookie 中。 客户端从 cookie 中获取（同源策略限制 cookie 操作）</p>
+<ol start="3">
+<li>客户端在获取到 token 后，在下一次进行比较关键的请求操作时，将 token 发送到服务端。</li>
+</ol>
+<p>发送 token 到服务端的方式主要包括两种：</p>
+<ul>
+<li>在请求头中将获取到的 token 设置到 cookie 中。</li>
+<li>将 token 放到请求参数中。</li>
+</ul>
+<ol start="4">
+<li>服务端在接收到请求后，会从请求头中取出 token，并和 session 中的 token 进行比较，一致则表示身份验证通过，再返回相应的信息；否则，则校验不通过。</li>
+</ol>
+<h3 id="SQL注入攻击"><a href="#SQL注入攻击" class="headerlink" title="SQL注入攻击"></a>SQL注入攻击</h3><p>SQL 注入漏洞: 攻击者直接对网站数据库执行任意SQL语句，在无需用户权限的情况下即可实现对数据的访问、修改甚至是删除。</p>
+<p><strong>防御</strong></p>
+<p>注意避免拼接字符串</p>
+<p>部分ORM框架自带防御</p>
 <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://juejin.im/post/6844903533238566925#heading-10" target="_blank" rel="noopener">https://juejin.im/post/6844903533238566925#heading-10</a></p>
 <p><a href="http://www.pythondoc.com/flask/appcontext.html" target="_blank" rel="noopener">http://www.pythondoc.com/flask/appcontext.html</a></p>
 <p><a href="http://www.pythondoc.com/flask/reqcontext.html" target="_blank" rel="noopener">http://www.pythondoc.com/flask/reqcontext.html</a></p>
@@ -1126,7 +1176,7 @@ run 方法调用werkzeug 的 run_simple">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="网络">
+                        <img src="/medias/featureimages/24.jpg" class="responsive-img" alt="网络">
                         
                         <span class="card-title">网络</span>
                     </div>
@@ -1180,7 +1230,7 @@ run 方法调用werkzeug 的 run_simple">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/24.jpg" class="responsive-img" alt="python面试">
+                        <img src="/medias/featureimages/25.jpg" class="responsive-img" alt="python面试">
                         
                         <span class="card-title">python面试</span>
                     </div>
@@ -1389,7 +1439,7 @@ Python2 的默认编码是 ascii，Python 3 默认编码
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">97.9k</span>
+            <span class="white-color">100k</span>
             
 
             <br>
