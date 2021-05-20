@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://wangyixin-tom.github.io/2021/05/20/wang-luo/</loc>
+    
+    <lastmod>2021-05-20T00:08:59.155Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://wangyixin-tom.github.io/2021/04/12/redis-mian-shi/</loc>
     
     <lastmod>2021-05-19T11:09:42.133Z</lastmod>
@@ -422,14 +429,14 @@
   </url>
   
   <url>
-    <loc>https://wangyixin-tom.github.io/about/index.html</loc>
+    <loc>https://wangyixin-tom.github.io/contact/index.html</loc>
     
     <lastmod>2021-04-01T23:01:50.207Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://wangyixin-tom.github.io/contact/index.html</loc>
+    <loc>https://wangyixin-tom.github.io/about/index.html</loc>
     
     <lastmod>2021-04-01T23:01:50.207Z</lastmod>
     
@@ -478,14 +485,14 @@
   </url>
   
   <url>
-    <loc>https://wangyixin-tom.github.io/2020/10/26/rabbitmq-ji-qun/</loc>
+    <loc>https://wangyixin-tom.github.io/2020/10/26/rabbitmq-xiao-xi-chong-fu/</loc>
     
     <lastmod>2021-04-01T23:01:49.986Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://wangyixin-tom.github.io/2020/10/26/rabbitmq-xiao-xi-chong-fu/</loc>
+    <loc>https://wangyixin-tom.github.io/2020/10/26/rabbitmq-ji-qun/</loc>
     
     <lastmod>2021-04-01T23:01:49.986Z</lastmod>
     
@@ -541,14 +548,14 @@
   </url>
   
   <url>
-    <loc>https://wangyixin-tom.github.io/archives/index.html</loc>
+    <loc>https://wangyixin-tom.github.io/tags/index.html</loc>
     
     <lastmod>2020-04-04T11:43:42.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://wangyixin-tom.github.io/tags/index.html</loc>
+    <loc>https://wangyixin-tom.github.io/archives/index.html</loc>
     
     <lastmod>2020-04-04T11:43:42.000Z</lastmod>
     

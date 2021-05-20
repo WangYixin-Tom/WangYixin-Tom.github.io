@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://wangyixin-tom.github.io/"/>
-  <updated>2021-05-11T23:26:31.387Z</updated>
+  <updated>2021-05-20T00:08:59.155Z</updated>
   <id>https://wangyixin-tom.github.io/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>网络</title>
+    <link href="https://wangyixin-tom.github.io/2021/05/20/wang-luo/"/>
+    <id>https://wangyixin-tom.github.io/2021/05/20/wang-luo/</id>
+    <published>2021-05-19T22:20:37.000Z</published>
+    <updated>2021-05-20T00:08:59.155Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;TCP头格式&quot;&gt;&lt;a href=&quot;#TCP头格式&quot; class=&quot;headerlink&quot; title=&quot;TCP头格式&quot;&gt;&lt;/a&gt;TCP头格式&lt;/h2&gt;&lt;p&gt;&lt;img src=&quot;baowen.jpg&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="interview" scheme="https://wangyixin-tom.github.io/categories/interview/"/>
+    
+    
+      <category term="interview" scheme="https://wangyixin-tom.github.io/tags/interview/"/>
+    
+  </entry>
   
   <entry>
     <title>flask</title>
@@ -506,32 +532,6 @@
           &lt;h2 id=&quot;功能&quot;&gt;&lt;a href=&quot;#功能&quot; class=&quot;headerlink&quot; title=&quot;功能&quot;&gt;&lt;/a&gt;功能&lt;/h2&gt;&lt;p&gt;主题管理：包括主题的创建、删除和查询。&lt;/p&gt;
 &lt;p&gt;权限管理：包括具体权限的配置与删除。&lt;/p&gt;
 &lt;p&gt;配置参数管理：包括 Kafka
-        
-      
-    
-    </summary>
-    
-      <category term="kafka" scheme="https://wangyixin-tom.github.io/categories/kafka/"/>
-    
-    
-      <category term="kafka" scheme="https://wangyixin-tom.github.io/tags/kafka/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>kafka脚本</title>
-    <link href="https://wangyixin-tom.github.io/2021/03/29/kafka-jiao-ben/"/>
-    <id>https://wangyixin-tom.github.io/2021/03/29/kafka-jiao-ben/</id>
-    <published>2021-03-29T11:52:44.000Z</published>
-    <updated>2021-04-28T12:44:09.831Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h2 id=&quot;生产消息&quot;&gt;&lt;a href=&quot;#生产消息&quot; class=&quot;headerlink&quot; title=&quot;生产消息&quot;&gt;&lt;/a&gt;生产消息&lt;/h2&gt;&lt;pre class=&quot;line-numbers language-shell&quot;&gt;&lt;code
         
       
     
