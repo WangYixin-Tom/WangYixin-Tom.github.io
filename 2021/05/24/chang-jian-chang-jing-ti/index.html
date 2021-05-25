@@ -4,13 +4,12 @@
 
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="kafka Broker请求处理, Python rabbitmq redis flask">
+    <meta name="keywords" content="常见场景题, Python rabbitmq redis flask">
     <meta name="baidu-site-verification" content="code-KoKq36g1n2">
     <meta name="google-site-verification" content="yCy2azpds5XSuGZvis6OuA-XIGF5GuGpYRAaGfD6o48">
     <meta name="360-site-verification" content="b7c11a830ef90fd1464ad6206bb7b6e7">
-    <meta name="description" content="所有的请求都是通过 TCP 网络以 Socket 的方式进行通讯的。
-Kafka 使用的是 Reactor 模式处理请求。
-Reactor 模式是事件驱动架构的一种实现方式，特别适合应用于处理多个客户端并发向服务器端发送请求的场景。多个客户">
+    <meta name="description" content="大数据100G 的手机号文件，找到重复的手机号，将重复手机号放入另一个文件。PC 机内存1G
+按照手机前三位分成1000 个文件，然后hashmap 或者bitmap 进行重复校验）逻辑题很多根绳子，每一根都不一样且粗细不均匀，每根绳子从头">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -18,7 +17,7 @@ Reactor 模式是事件驱动架构的一种实现方式，特别适合应用于
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>kafka Broker请求处理 | wangyixin-tom的博客</title>
+    <title>常见场景题 | wangyixin-tom的博客</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -268,13 +267,13 @@ Reactor 模式是事件驱动架构的一种实现方式，特别适合应用于
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/3.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/20.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        kafka Broker请求处理
+                        常见场景题
                     </div>
                 </div>
             </div>
@@ -385,8 +384,8 @@ Reactor 模式是事件驱动架构的一种实现方式，特别适合应用于
                     
                     <div class="article-tag">
                         
-                        <a href="/tags/kafka/" target="_blank">
-                            <span class="chip bg-color">kafka</span>
+                        <a href="/tags/interview/" target="_blank">
+                            <span class="chip bg-color">interview</span>
                         </a>
                         
                     </div>
@@ -397,8 +396,8 @@ Reactor 模式是事件驱动架构的一种实现方式，特别适合应用于
                     <div class="post-cate">
                         <i class="fa fa-bookmark fa-fw icon-category"></i>
                         
-                        <a href="/categories/kafka/" class="post-category" target="_blank">
-                            kafka
+                        <a href="/categories/interview/" class="post-category" target="_blank">
+                            interview
                         </a>
                         
                     </div>
@@ -409,7 +408,7 @@ Reactor 模式是事件驱动架构的一种实现方式，特别适合应用于
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-03-28
+                    2021-05-24
                 </div>
 
                 <div class="post-author info-break-policy">
@@ -423,7 +422,7 @@ Reactor 模式是事件驱动架构的一种实现方式，特别适合应用于
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    508
+                    243
                 </div>
                 
 
@@ -441,18 +440,10 @@ Reactor 模式是事件驱动架构的一种实现方式，特别适合应用于
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>所有的请求都是通过 TCP 网络以 Socket 的方式进行通讯的。</p>
-<p>Kafka 使用的是 Reactor 模式处理请求。</p>
-<p><strong>Reactor 模式</strong>是事件驱动架构的一种实现方式，特别适合应用于处理多个客户端并发向服务器端发送请求的场景。多个客户端会发送请求给到 Reactor。Reactor 有个请求分发线程 Dispatcher，它会将不同的请求下发到多个工作线程中处理。工作线程可以根据实际业务处理需要任意增减，从而动态调节系统负载能力。</p>
-<p><img src="reactor.jpg" alt></p>
-<p>Kafka 提供了 Broker 端参数 <code>num.network.threads</code>，用于调整该<strong>网络线程池</strong>的线程数。其默认值是 3，表示每台 Broker 启动时会创建 3 <strong>个网络线程</strong>，专门处理客户端发送的请求。</p>
-<p><img src="work.jpg" alt></p>
-<p>当网络线程拿到请求后，它不是自己处理，而是将请求放入到一个<strong>共享请求队列</strong>中。Broker 端还有个 <strong>IO 线程池</strong>，负责从该队列中取出请求，执行真正的处理–如果是 PRODUCE 生产请求，则将消息写入到底层的磁盘日志中；如果是 FETCH 请求，则从磁盘或页缓存中读取消息。</p>
-<p>Broker 端参数 <code>num.io.threads</code> 控制了IO线程池中的线程数。默认值是 8，表示每台 Broker 启动后自动创建 8 个 IO 线程处理请求。</p>
-<p><strong>Purgatory</strong></p>
-<p>缓存延时请求（Delayed Request）,针对一时未满足条件不能立刻处理的请求。</p>
-<p>比如设置了 acks=all 的 PRODUCE 请求，一旦设置了 <code>acks=all</code>，那么该请求就必须等待 ISR 中所有副本都接收了消息后才能返回，此时处理该请求的 IO 线程就必须等待其他 Broker 的写入结果。当请求不能立刻处理时，它就会暂存在 Purgatory 中。一旦完成，IO 线程会继续处理该请求，并将 Response 放入对应网络线程的响应队列中。</p>
-
+                <h2 id="大数据"><a href="#大数据" class="headerlink" title="大数据"></a>大数据</h2><p>100G 的手机号文件，找到重复的手机号，将重复手机号放入另一个文件。PC 机内存1G</p>
+<pre><code>按照手机前三位分成1000 个文件，然后hashmap 或者bitmap 进行重复校验）</code></pre><h2 id="逻辑题"><a href="#逻辑题" class="headerlink" title="逻辑题"></a>逻辑题</h2><p>很多根绳子，每一根都不一样且粗细不均匀，每根绳子从头烧到尾都是60分钟烧完，怎么用绳子去测量15分钟的时间</p>
+<pre><code>取出三条绳子。1、同时点燃“第一根的两头”和“第二根的一头”，第一根烧完时间过了“30分钟”；2、第一根烧完后马上点燃第二根的另一头，到第二根烧完时间又过了“15分钟”；</code></pre><p>九个球，红黄蓝各三个，随机放在九个盒子里，排成一排。有两种操作，打开盒子查看颜色，交换两个盒子的位置。问最快的方法使得排成“红黄蓝红黄蓝”的顺序？</p>
+<pre><code></code></pre>
             </div>
             <hr />
 
@@ -610,9 +601,9 @@ Reactor 模式是事件驱动架构的一种实现方式，特别适合应用于
             <br/>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
                   property="dct:title" rel="dct:type">
-                    《kafka Broker请求处理》
+                    《常见场景题》
                 </span> 由
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2021/03/28/kafka-broker-qing-qiu-chu-li/" property="cc:attributionName"
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2021/05/24/chang-jian-chang-jing-ti/" property="cc:attributionName"
                rel="cc:attributionURL">
                 wangyixin-tom
             </a> 采用
@@ -653,7 +644,7 @@ Reactor 模式是事件驱动架构的一种实现方式，特别适合应用于
         repo: 'wangyixin-tom.github.io',
         owner: 'WangYixin-Tom',
         admin: "WangYixin-Tom",
-        id: '2021/03/28/kafka-broker-qing-qiu-chu-li/',
+        id: '2021/05/24/chang-jian-chang-jing-ti/',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -936,47 +927,49 @@ Reactor 模式是事件驱动架构的一种实现方式，特别适合应用于
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/03/28/kafka-kong-zhi-qi/">
+                <a href="/2021/05/24/chang-jian-chang-jing-ti/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="Kafka控制器">
+                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="常见场景题">
                         
-                        <span class="card-title">Kafka控制器</span>
+                        <span class="card-title">常见场景题</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            控制器组件（Controller），是 Apache Kafka 的核心组件。它的主要作用是在 Apache ZooKeeper 的帮助下管理和协调整个 Kafka 集群。每个正常运转的 Kafka 集群，在任意时刻都有且只有一个控制器。
-
+                            大数据100G 的手机号文件，找到重复的手机号，将重复手机号放入另一个文件。PC 机内存1G
+按照手机前三位分成1000 个文件，然后hashmap 或者bitmap 进行重复校验）逻辑题很多根绳子，每一根都不一样且粗细不均匀，每根绳子从头
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2021-03-28
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-05-24
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/kafka/" class="post-category" target="_blank">
-                                    kafka
+                            <a href="/categories/interview/" class="post-category" target="_blank">
+                                    interview
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/kafka/" target="_blank">
-                        <span class="chip bg-color">kafka</span>
+                    <a href="/tags/interview/" target="_blank">
+                        <span class="chip bg-color">interview</span>
                     </a>
                     
                 </div>
@@ -990,32 +983,37 @@ Reactor 模式是事件驱动架构的一种实现方式，特别适合应用于
                 下一篇&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/03/28/kafka-fu-ben/">
+                <a href="/2021/05/20/wang-luo/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="kafka副本">
+                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="网络">
                         
-                        <span class="card-title">kafka副本</span>
+                        <span class="card-title">网络</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            主题可划分成若干个分，每个分区配置有若干个副本。副本（Replica），本质是一个只能追加写消息的提交日志。
-副本分类副本分成两类：领导者副本（Leader Replica）和追随者副本（Follower Replica）。每个分区在创建时
+                            TCP/UDP头格式网络包的格式MAC头+IP头+TCP头+HTTP头+HTTP正文
+TCP
+
+源端口号和目标端口号
+包的序号（seq）
+确认序号（ack）
+状态位：例如 SYN 是发起一个连接，ACK 是回复，RST 是重新连接，FIN 
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-03-28
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-05-20
                             </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/kafka/" class="post-category" target="_blank">
-                                    kafka
+                            <a href="/categories/interview/" class="post-category" target="_blank">
+                                    interview
                                 </a>
                             
                             
@@ -1025,8 +1023,8 @@ Reactor 模式是事件驱动架构的一种实现方式，特别适合应用于
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/kafka/" target="_blank">
-                        <span class="chip bg-color">kafka</span>
+                    <a href="/tags/interview/" target="_blank">
+                        <span class="chip bg-color">interview</span>
                     </a>
                     
                 </div>

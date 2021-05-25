@@ -9,7 +9,7 @@
     <meta name="google-site-verification" content="yCy2azpds5XSuGZvis6OuA-XIGF5GuGpYRAaGfD6o48">
     <meta name="360-site-verification" content="b7c11a830ef90fd1464ad6206bb7b6e7">
     <meta name="description" content="先写内存，在写日志。1、命令执行成功才会被记录日志。2、避免对当前命令的阻塞。
-风险1、突然宕机，Redis用作数据库的话，命令可能没有记入日志，所以就无法用日志进行恢复了。2、AOF写磁盘，当磁盘压力大，会导致写盘慢，阻塞后续主线程的操作">
+风险1、突然宕机，Redis用作数据库的话，命令可能没有记入日志，所以就无法用日志进行恢复了。2、AOF 虽然避免了对当前命令的阻塞，但可能会给下一个操作带来阻">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -267,7 +267,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/25.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/22.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -422,7 +422,7 @@
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    600
+                    796
                 </div>
                 
 
@@ -441,7 +441,7 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p>先写内存，在写日志。<br>1、命令执行成功才会被记录日志。<br>2、避免对当前命令的阻塞。</p>
-<h2 id="风险"><a href="#风险" class="headerlink" title="风险"></a>风险</h2><p>1、突然宕机，Redis用作数据库的话，命令可能没有记入日志，所以就无法用日志进行恢复了。<br>2、AOF写磁盘，当磁盘压力大，会导致写盘慢，阻塞后续主线程的操作，比如下一次操作请求。<br>3、子进程要拷贝父进程的页表，这个过程的耗时和 Redis 实例的内存大小有关。如果 Redis 实例内存大，页表就会大，fork 执行时间就长，可能阻塞主线程。<br>4、子进程和父进程共享内存。当主线程收到新写或修改的操作时，主线程会申请新的内存空间，用来保存新写或修改的数据，如果操作的是 bigkey，也就是数据量大的集合类型数据，那么，主线程会因为申请大空间而面临阻塞风险。</p>
+<h2 id="风险"><a href="#风险" class="headerlink" title="风险"></a>风险</h2><p>1、突然宕机，Redis用作数据库的话，命令可能没有记入日志，所以就无法用日志进行恢复了。<br>2、AOF 虽然避免了对当前命令的阻塞，但可能会给下一个操作带来阻塞风险。这是因为，AOF 日志也是在主线程中执行的，如果在把日志文件写入磁盘时，磁盘写压力大，就会导致写盘很慢，进而导致后续的操作也无法执行了。<br>3、子进程要拷贝父进程的页表，这个过程的耗时和 Redis 实例的内存大小有关。如果 Redis 实例内存大，页表就会大，fork 执行时间就长，可能阻塞主线程。<br>4、子进程和父进程共享内存。当主线程收到新写或修改的操作时，主线程会申请新的内存空间，用来保存新写或修改的数据，如果操作的是 bigkey，也就是数据量大的集合类型数据，那么，主线程会因为申请大空间而面临阻塞风险。</p>
 <h2 id="日志写回策略与选择"><a href="#日志写回策略与选择" class="headerlink" title="日志写回策略与选择"></a>日志写回策略与选择</h2><ul>
 <li>Always，同步写回：每个写命令执行完，立马同步地将日志写回磁盘；</li>
 <li>Everysec，每秒写回：每个写命令执行完，只是先把日志写到 AOF 文件的内存缓冲区，每隔一秒把缓冲区中的内容写入磁盘；</li>
@@ -456,7 +456,9 @@
 </ul>
 <h2 id="重写机制"><a href="#重写机制" class="headerlink" title="重写机制"></a>重写机制</h2><p>后台线程bgwriteaof读取数据库中的所有键值对，然后对每一个键值对用一条命令记录它的写入。</p>
 <p><strong>作用</strong><br>1、避免日志文件过大。<br>2、后台线程避免阻塞主线程</p>
-<p><strong>流程</strong><br>一个拷贝，两处日志<br>1、主线程 fork 出 bgrewriteaof 子进程，把主线程的内存拷贝一份给 bgrewriteaof 子进程<br>2、正在使用的 AOF 日志，因为可能记录了最新操作，Redis 会把这个操作写到它的缓冲区<br>3、拷贝数据的所有操作记录重写完成后，重写日志记录的这些最新操作也会写入新的 AOF 文件</p>
+<p><strong>流程</strong><br>一个拷贝，两处日志：AOF 重写时，Redis 会先执行一个内存拷贝，用于重写；然后，使用两个日志保证在重写过程中，新写入的数据不会丢失。而且，因为 Redis 采用额外的线程进行数据重写，所以，这个过程并不会阻塞主线程</p>
+<p><img src="rewrite.jpg" alt></p>
+<p>1、主线程 fork 出 bgrewriteaof 子进程，把主线程的内存拷贝一份给 bgrewriteaof 子进程<br>2、正在使用的 AOF 日志，因为可能记录了最新操作，Redis 会把这个操作写到它的缓冲区<br>3、这个操作也会被写到重写日志的缓冲区，重写日志也不会丢失最新的操作。等到拷贝数据的所有操作记录重写完成后，重写日志记录的这些最新操作也会写入新的 AOF 文件，以保证数据库最新状态的记录。此时，我们就可以用新的 AOF 文件替代旧文件了。</p>
 
             </div>
             <hr />
@@ -949,7 +951,7 @@
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="redis RBD机制">
+                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="redis RBD机制">
                         
                         <span class="card-title">redis RBD机制</span>
                     </div>
@@ -1001,7 +1003,7 @@ bgsave命令
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="redis网络IO模型">
+                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="redis网络IO模型">
                         
                         <span class="card-title">redis网络IO模型</span>
                     </div>
@@ -1208,7 +1210,7 @@ bgsave命令
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">105.2k</span>
+            <span class="white-color">108.5k</span>
             
 
             <br>

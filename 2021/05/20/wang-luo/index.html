@@ -8,12 +8,13 @@
     <meta name="baidu-site-verification" content="code-KoKq36g1n2">
     <meta name="google-site-verification" content="yCy2azpds5XSuGZvis6OuA-XIGF5GuGpYRAaGfD6o48">
     <meta name="360-site-verification" content="b7c11a830ef90fd1464ad6206bb7b6e7">
-    <meta name="description" content="TCP头格式
+    <meta name="description" content="TCP/UDP头格式网络包的格式MAC头+IP头+TCP头+HTTP头+HTTP正文
+TCP
 
 源端口号和目标端口号
 包的序号（seq）
 确认序号（ack）
-状态位：例如 SYN 是发起一个连接，ACK 是回复，RST 是重新连接，FIN 是结束连接等。TCP 是面向连接的，因而双方要维护连接的状态，这些带状态位的包的">
+状态位：例如 SYN 是发起一个连接，ACK 是回复，RST 是重新连接，FIN ">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -271,7 +272,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/24.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/21.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -426,14 +427,14 @@
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    6.8k
+                    8.5k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    24 分
+                    29 分
                 </div>
                 
                 
@@ -444,7 +445,8 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="TCP头格式"><a href="#TCP头格式" class="headerlink" title="TCP头格式"></a>TCP头格式</h2><p><img src="baowen.jpg" alt></p>
+                <h2 id="TCP-UDP头格式"><a href="#TCP-UDP头格式" class="headerlink" title="TCP/UDP头格式"></a>TCP/UDP头格式</h2><h3 id="网络包的格式"><a href="#网络包的格式" class="headerlink" title="网络包的格式"></a>网络包的格式</h3><p>MAC头+IP头+TCP头+HTTP头+HTTP正文</p>
+<h3 id="TCP"><a href="#TCP" class="headerlink" title="TCP"></a>TCP</h3><p><img src="baowen.jpg" alt></p>
 <ul>
 <li>源端口号和目标端口号</li>
 <li>包的序号（seq）</li>
@@ -452,6 +454,7 @@
 <li>状态位：例如 SYN 是发起一个连接，ACK 是回复，RST 是重新连接，FIN 是结束连接等。TCP 是面向连接的，因而双方要维护连接的状态，这些带状态位的包的发送，会引起双方的状态变更。</li>
 <li>窗口大小</li>
 </ul>
+<h3 id="UDP"><a href="#UDP" class="headerlink" title="UDP"></a>UDP</h3><p><img src="udp_header.png" alt="UDP头"></p>
 <h2 id="三次握手"><a href="#三次握手" class="headerlink" title="三次握手"></a>三次握手</h2><p><img src="woshou.jpg" alt></p>
 <ul>
 <li>一开始，客户端和服务端都处于 CLOSED 状态。先是服务端主动监听某个端口，处于 LISTEN 状态。</li>
@@ -483,6 +486,9 @@
 </ol>
 <h3 id="初始序列号是什么？"><a href="#初始序列号是什么？" class="headerlink" title="初始序列号是什么？"></a>初始序列号是什么？</h3><p>TCP连接的一方A，随机选择一个32位的序列号（Sequence Number）作为发送数据的初始序列号（Initial Sequence Number，ISN），比如为1000，以该序列号为原点，对要传送的数据进行编号：1001、1002…三次握手时，把这个初始序列号传送给另一方B，以便在传输数据时，B可以确认什么样的数据编号是合法的；</p>
 <p>同时在进行数据传输时，A还可以确认B收到的每一个字节，如果A收到了B的确认编号（acknowledge number）是2001，就说明编号为1001-2000的数据已经被B成功接受。</p>
+<h3 id="accept-connect-listen对应三次握手什么阶段"><a href="#accept-connect-listen对应三次握手什么阶段" class="headerlink" title="accept connect listen对应三次握手什么阶段"></a>accept connect listen对应三次握手什么阶段</h3><p>当服务端有了 IP 和端口号，就可以调用 listen 函数进行监听。  当调用这个函数之后，服务端就进入了这个状态，这个时候客户端就可以发起连接了  </p>
+<p>客户端可以通过 connect 函数发起连接。先在参数中指明要连接的 IP 地址和端口号，然后开始发起三次握手。  内核会给客户端分配一个临时的端口。</p>
+<p>一旦握手成功，服务端的 accept就会返回另一个 Socket。  </p>
 <h2 id="四次挥手"><a href="#四次挥手" class="headerlink" title="四次挥手"></a>四次挥手</h2><p><img src="huishou.jpg" alt></p>
 <ul>
 <li><p>客户端进程发出连接释放报文，并且停止发送数据。释放数据报文首部FIN，其序列号为seq=u，客户端进入FIN-WAIT-1（终止等待1）状态。 </p>
@@ -502,7 +508,7 @@
 </ul>
 <h3 id="如果第二次挥手时服务器的ACK没有送达客户端，会怎样？"><a href="#如果第二次挥手时服务器的ACK没有送达客户端，会怎样？" class="headerlink" title="如果第二次挥手时服务器的ACK没有送达客户端，会怎样？"></a>如果第二次挥手时服务器的ACK没有送达客户端，会怎样？</h3><p>客户端没有收到ACK确认，会重新发送FIN请求。</p>
 <h3 id="客户端TIME-WAIT状态的意义是什么？"><a href="#客户端TIME-WAIT状态的意义是什么？" class="headerlink" title="客户端TIME_WAIT状态的意义是什么？"></a>客户端TIME_WAIT状态的意义是什么？</h3><p>第四次挥手时，客户端发送给服务器的ACK有可能丢失，TIME_WAIT状态就是用来重发可能丢失的ACK报文。如果Server没有收到ACK，就会重发FIN，如果Client在2*MSL的时间内收到了FIN，就会重新发送ACK并再次等待2MSL，防止Server没有收到ACK而不断重发FIN。</p>
-<p>MSL(Maximum Segment Lifetime)，指一个片段在网络中最大的存活时间，2MSL就是一个发送和一个回复所需的最大时间。如果直到2MSL，Client都没有再次收到FIN，那么Client推断ACK已经被成功接收，则结束TCP连接。</p>
+<p>MSL（Maximum Segment Lifetime），指一个片段在网络中最大的存活时间，2MSL就是一个发送和一个回复所需的最大时间。如果直到2MSL，Client都没有再次收到FIN，那么Client推断ACK已经被成功接收，则结束TCP连接。</p>
 <h3 id="2MSL作用"><a href="#2MSL作用" class="headerlink" title="2MSL作用"></a>2MSL作用</h3><p>服务端发送的FIN+ACK报文请求，客户端没有回应，于是服务器又会重新发送一次，而客户端就能在这个2MSL时间段内收到这个重传的报文，接着给出回应报文，并且会重启2MSL计时器。</p>
 <p>B 超过了 2MSL 的时间，依然没有收到它发的 FIN 的 ACK，按照TCP 的原理，B 当然还会重发 FIN，这个时候 A 再收到这个包之后，A 就就直接发送 RST，B 就知道 A 早就跑了。</p>
 <h3 id="为什么建立连接是三次握手，关闭连接确是四次挥手呢？"><a href="#为什么建立连接是三次握手，关闭连接确是四次挥手呢？" class="headerlink" title="为什么建立连接是三次握手，关闭连接确是四次挥手呢？"></a>为什么建立连接是三次握手，关闭连接确是四次挥手呢？</h3><p>建立连接的时候， 服务器在LISTEN状态下，收到建立连接请求的SYN报文后，把ACK和SYN放在一个报文里发送给客户端。<br>而关闭连接时，服务器收到对方的FIN报文时，仅仅表示对方不再发送数据了但是还能接收数据，而自己也未必全部数据都发送给对方了，所以需要等到数据发完之后再发FIN，断开服务器到客户端的数据传送。</p>
@@ -512,7 +518,7 @@
 <p>使用滑动窗口协议实现流量控制。防止发送方发送速率太快，接收方缓存区不够导致溢出。</p>
 <p>接收方会维护一个接收窗口 receiver window（窗口大小单位是字节），接受窗口的大小是根据自己的资源情况动态调整的，在返回ACK时将接受窗口大小放在TCP报文中的窗口字段告知发送方。发送窗口的大小不能超过接受窗口的大小，只有当发送方发送并收到确认之后，才能将发送窗口右移。</p>
 <p>发送窗口的上限为接受窗口和拥塞窗口中的较小值。接受窗口表明了接收方的接收能力，拥塞窗口表明了网络的传送能力。</p>
-<h3 id="什么是零窗口（接收窗口为0时会怎样）？"><a href="#什么是零窗口（接收窗口为0时会怎样）？" class="headerlink" title="什么是零窗口（接收窗口为0时会怎样）？"></a>什么是零窗口（接收窗口为0时会怎样）？</h3><p>如果接收方没有能力接收数据，就会将接收窗口设置为0，这时发送方必须暂停发送数据，但是会启动一个持续计时器(persistence timer)，到期后发送一个大小为1字节的探测数据包，以查看接收窗口状态。如果接收方能够接收数据，就会在返回的报文中更新接收窗口大小，恢复数据传送。</p>
+<h3 id="什么是零窗口（接收窗口为0时会怎样）？"><a href="#什么是零窗口（接收窗口为0时会怎样）？" class="headerlink" title="什么是零窗口（接收窗口为0时会怎样）？"></a>什么是零窗口（接收窗口为0时会怎样）？</h3><p>如果接收方没有能力接收数据，就会将接收窗口设置为0，这时发送方必须暂停发送数据，但是会启动一个持续计时器，到期后发送一个大小为1字节的探测数据包，以查看接收窗口状态。如果接收方能够接收数据，就会在返回的报文中更新接收窗口大小，恢复数据传送。</p>
 <h3 id="TCP的拥塞控制是怎么实现的？"><a href="#TCP的拥塞控制是怎么实现的？" class="headerlink" title="TCP的拥塞控制是怎么实现的？"></a>TCP的拥塞控制是怎么实现的？</h3><p>拥塞控制主要由四个算法组成：<strong>慢启动（Slow Start）、拥塞避免（Congestion voidance）、快重传 （Fast Retransmit）、快恢复（Fast Recovery）</strong></p>
 <ol>
 <li><p>慢启动：刚开始发送数据时，先把拥塞窗口（congestion window）设置为一个最大报文段MSS的数值，每收到一个新的确认报文之后，就把拥塞窗口加1个MSS。这样每经过一个传输轮次（或者说是每经过一个往返时间RTT），拥塞窗口的大小就会加倍</p>
@@ -534,20 +540,13 @@
 <li>RTT：即Round Trip Time，表示从发送端到接收端的一去一回需要的时间，TCP在数据传输过程中会对RTT进行采样（即对发送的数据包及其ACK的时间差进行测量，并根据测量值更新RTT值），TCP根据得到的RTT值更新RTO值，即Retransmission TimeOut，就是重传间隔，发送端对每个发出的数据包进行计时，如果在RTO时间内没有收到所发出的数据包的对应ACK，则任务数据包丢失，将重传数据。一般RTO值都比采样得到的RTT值要大。</li>
 </ul>
 <h2 id="TCP与UDP的区别"><a href="#TCP与UDP的区别" class="headerlink" title="TCP与UDP的区别"></a>TCP与UDP的区别</h2><ol>
-<li><p>TCP是面向连接的，UDP是无连接的；</p>
-</li>
-<li><p>TCP是可靠的，UDP不可靠；</p>
-</li>
-<li><p>TCP只支持点对点通信，UDP支持一对一、一对多、多对一、多对多；</p>
-</li>
-<li><p>TCP是面向字节流的，UDP是面向报文的；</p>
-</li>
-<li><p>TCP有拥塞控制机制，UDP没有。网络出现的拥塞不会使源主机的发送速率降低，这对某些实时应用是很重要的，比如媒体通信，游戏；</p>
-</li>
-<li><p>TCP首部开销（20字节）比UDP首部开销（8字节）要大</p>
-</li>
-<li><p>UDP 的主机不需要维持复杂的连接状态表</p>
-</li>
+<li>TCP是面向连接的，UDP是无连接的；</li>
+<li>TCP是可靠的，UDP不可靠；</li>
+<li>TCP只支持点对点通信，UDP支持一对一、一对多、多对一、多对多；</li>
+<li>TCP是面向字节流的，UDP是面向报文的；</li>
+<li>TCP有拥塞控制机制，UDP没有。它意识到包丢弃了或者网络的环境不好了，就会根据情况调整自己的行为，看看是不是发快了，要不要发慢点。UDP 就不会，应用让我发，我就发，管它洪水滔天。</li>
+<li>TCP首部开销（20字节）比UDP首部开销（8字节）要大</li>
+<li>UDP 的主机不需要维持复杂的连接状态表</li>
 </ol>
 <blockquote>
 <p>1：UDP发送数据之前不需要建立连接</p>
@@ -556,12 +555,16 @@
 <p>5：TCP有拥塞控制机制，UDP没有。网络出现的拥塞不会使源主机的发送速率降低，这对某些实时应用是很重要的，比如媒体通信，游戏；</p>
 </blockquote>
 <h3 id="什么时候选择TCP，什么时候选UDP？"><a href="#什么时候选择TCP，什么时候选UDP？" class="headerlink" title="什么时候选择TCP，什么时候选UDP？"></a>什么时候选择TCP，什么时候选UDP？</h3><p>对某些实时性要求比较高的情况，选择UDP，比如游戏，媒体通信，实时视频流（直播），即使出现传输错误也可以容忍；其它大部分情况下，HTTP都是用TCP，因为要求传输的内容可靠，不出现丢失</p>
-<h3 id="HTTP可以使用UDP吗？"><a href="#HTTP可以使用UDP吗？" class="headerlink" title="HTTP可以使用UDP吗？"></a>HTTP可以使用UDP吗？</h3><details>
-<summary>展开</summary>
-HTTP不可以使用UDP，HTTP需要基于可靠的传输协议，而UDP不可靠
-
-<h3 id="面向连接和无连接的区别？？"><a href="#面向连接和无连接的区别？？" class="headerlink" title="面向连接和无连接的区别？？"></a>面向连接和无连接的区别？？</h3><p>面向连接：首先建立连接，所有的数据包经过相同的路径，服务质量有较好的保证；</p>
-<p>无连接：每个数据包含目的地址，数据路由相互独立（路径可能变化）；网络尽最大努力交付数据，但不保证不丢失、不保证先后顺序、不保证在时限内交付；网络发生拥塞时，可能会将一些分组丢弃；</p>
+<h3 id="HTTP可以使用UDP吗？"><a href="#HTTP可以使用UDP吗？" class="headerlink" title="HTTP可以使用UDP吗？"></a>HTTP可以使用UDP吗？</h3><p>HTTP不可以使用UDP，HTTP需要基于可靠的传输协议，而UDP不可靠</p>
+<h3 id="UDP协议应用"><a href="#UDP协议应用" class="headerlink" title="UDP协议应用"></a>UDP协议应用</h3><ul>
+<li>DHCP 就是基于 UDP 协议的。一般的获取 IP 地址都是内网请求，而且一次获取不到IP 又没事，过一会儿还有机会。</li>
+<li>PXE 可以在启动的时候自动安装操作系统，操作系统镜像的下载使用的 TFTP，这个也是基于 UDP 协议的。  </li>
+</ul>
+<h3 id="面向连接和无连接的区别"><a href="#面向连接和无连接的区别" class="headerlink" title="面向连接和无连接的区别"></a>面向连接和无连接的区别</h3><p>在互通之前，面向连接的协议会先建立连接。例如，TCP 会三次握手，而 UDP 不会。所谓的建立连接，是为了在客户端和服务端维护连接，而建立一定的数据结构来维护双方交互的状态， 用这样的数据结构来保证所谓的面向连接的特性。</p>
+<ul>
+<li>例如，TCP 提供可靠交付。通过 TCP 连接传输的数据，无差错、不丢失、不重复、并且按序到达。</li>
+<li>UDP 继承了 IP 包的特性，不保证不丢失，不保证按顺序到达。</li>
+</ul>
 <h3 id="TCP如何保证传输的可靠性"><a href="#TCP如何保证传输的可靠性" class="headerlink" title="TCP如何保证传输的可靠性"></a>TCP如何保证传输的可靠性</h3><ol>
 <li>数据包校验</li>
 <li>对失序数据包重新排序（TCP报文具有序列号）</li>
@@ -575,12 +578,18 @@ HTTP不可以使用UDP，HTTP需要基于可靠的传输协议，而UDP不可靠
 <p>接收端之间发生的任何改动。如果接收方检测到校验和有差错，则TCP段会被直接丢弃。</p>
 <p>TCP的校验和是必需的，而UDP的校验和是可选的。</p>
 </blockquote>
+<h3 id="keepalive实现原理"><a href="#keepalive实现原理" class="headerlink" title="keepalive实现原理"></a>keepalive实现原理</h3><h3 id="单机最大tcp连接数"><a href="#单机最大tcp连接数" class="headerlink" title="单机最大tcp连接数"></a>单机最大tcp连接数</h3><p>系统用一个4四元组来唯一标识一个TCP连接：{local ip, local port,remote ip,remote port}。</p>
+<p>client最大tcp连接数：1-65535</p>
+<p>server最大tcp连接数：客户端ip数×客户端port数，最大tcp连接数约为2的32次方（ip数）×2的16次方（port数）。</p>
+<p>实际的tcp连接数：在实际环境中，受到机器资源、操作系统等的限制。内存和允许的文件描述符个数。</p>
 <h2 id="HTTP和HTTPS"><a href="#HTTP和HTTPS" class="headerlink" title="HTTP和HTTPS"></a>HTTP和HTTPS</h2><h3 id="区别？"><a href="#区别？" class="headerlink" title="区别？"></a>区别？</h3><ol>
 <li>端口不同：HTTP使用的是80端口，HTTPS使用443端口；</li>
 <li>HTTP（超文本传输协议）信息是明文传输，HTTPS运行在SSL（Secure Socket Layer）之上，添加了加密和认证机制，更加安全；</li>
 <li>HTTPS由于加密解密会带来更大的CPU和内存开销；</li>
 <li>HTTPS通信需要证书，一般需要向证书颁发机构（CA）购买</li>
 </ol>
+<h3 id="http1-0-和2-0-的区别"><a href="#http1-0-和2-0-的区别" class="headerlink" title="http1.0 和2.0 的区别"></a>http1.0 和2.0 的区别</h3><p><strong>HTTP2.0的多路复用</strong><br>浏览器对同一域名下的并发连接数量有限制，一般为6个，HTTP1中的Keep-Alive用于长连接而不必重新建立连接，然而keep-alive必须等本次请求彻底完成后才能发送下一个请求，而HTTP2的请求与响应以二进制帧的形式交错进行，只需建立一次连接，即一轮三次握手，实现多路复用<br><strong>HTTP2.0压缩消息头</strong><br>HTTP1的消息头很大冗余，而HTTP2.0利用HPACK对消息头进行压缩传输，假设将常用的请求GET/index.html用1表示，POST/index.html用2表示，即是将消息头中的不同的部分分别用不用的索引进行表示，且会用哈夫曼编码压缩字符串，最后封装成frame。索引表分为动态索引和静态索引，动态索引表在客户端和服务器端共同维护，静态索引采用硬编码形式。</p>
+<p><strong>HTTP2.0服务端推送</strong><br>HTTP2.0中服务器会主动将资源推送给客户端，例如把js和css文件主动推送给客户端而不用客户端解析HTML后请求再响应。</p>
 <h3 id="Https的连接过程？"><a href="#Https的连接过程？" class="headerlink" title="Https的连接过程？"></a>Https的连接过程？</h3><ol>
 <li>客户端向服务器发送请求，同时发送客户端支持的一套加密规则（包括对称加密、非对称加密、摘要算法）；</li>
 <li>服务器从中选出一组加密算法与HASH算法，并将自己的身份信息以证书的形式发回给浏览器。证书里面包含了网站地址，<strong>加密公钥</strong>（用于非对称加密），以及证书的颁发机构等信息（证书中的私钥只能用于服务器端进行解密）；</li>
@@ -590,23 +599,36 @@ HTTP不可以使用UDP，HTTP需要基于可靠的传输协议，而UDP不可靠
 <li>浏览器解密并验证摘要，若一致，则握手结束。之后的数据传送都使用对称加密的密钥进行加密</li>
 </ol>
 <p>总结：非对称加密算法用于在握手过程中加密生成的密码；对称加密算法用于对真正传输的数据进行加密；HASH算法用于验证数据的完整性。</p>
+<h3 id="https为什么要采用对称和非对称加密结合的方式"><a href="#https为什么要采用对称和非对称加密结合的方式" class="headerlink" title="https为什么要采用对称和非对称加密结合的方式"></a>https为什么要采用对称和非对称加密结合的方式</h3><p>非对称加密在性能上不如对称加密，  对称加密安全性比较低。</p>
+<p>所以公钥私钥主要用于传输对称加密的秘钥，而真正的双方大数据量的通信都是通过对称加密进行的。  </p>
 <h3 id="输入-www-baidu-com，怎么变成-https-www-baidu-com-的，怎么确定用HTTP还是HTTPS？"><a href="#输入-www-baidu-com，怎么变成-https-www-baidu-com-的，怎么确定用HTTP还是HTTPS？" class="headerlink" title="输入 www.baidu.com，怎么变成 https://www.baidu.com 的，怎么确定用HTTP还是HTTPS？"></a>输入 <a href="http://www.baidu.com，怎么变成" target="_blank" rel="noopener">www.baidu.com，怎么变成</a> <a href="https://www.baidu.com" target="_blank" rel="noopener">https://www.baidu.com</a> 的，怎么确定用HTTP还是HTTPS？</h3><p>一种是原始的302跳转，服务器把所有的HTTP流量跳转到HTTPS。但这样有一个漏洞，就是中间人可能在第一次访问站点的时候就劫持。<br>解决方法是引入HSTS机制，用户浏览器在访问站点的时候强制使用HTTPS。</p>
 <h3 id="什么是对称加密、非对称加密？区别是什么？"><a href="#什么是对称加密、非对称加密？区别是什么？" class="headerlink" title="什么是对称加密、非对称加密？区别是什么？"></a>什么是对称加密、非对称加密？区别是什么？</h3><ul>
 <li>对称加密：加密和解密采用相同的密钥。如：DES、RC2、RC4</li>
-<li>非对称加密：需要两个密钥：公钥和私钥。如果用公钥加密，需要用私钥才能解密。如：RSA</li>
+<li>非对称加密：需要两个密钥：公钥和私钥。如果用公钥加密，需要用私钥才能解密。私钥加密的信息，只有公钥才能解密  如：RSA</li>
 <li>区别：对称加密速度更快，通常用于大量数据的加密；非对称加密安全性更高（不需要传送私钥）</li>
 </ul>
+<p><strong>对称加密问题</strong></p>
+<p>黑客一旦截获秘钥，它可以佯作不知，静静地等着你们两个交互。这时候互通的任何消息，它都能截获并且查看  。</p>
+<p><strong>非对称加密</strong></p>
+<p>私钥放在外卖网站这里，不会在互联网上传输，这样就能保证这个秘钥的私密性。</p>
+<p>对应私钥的公钥，是可以在互联网上随意传播的，只要外卖网站把这个公钥给你，你们就可以愉快地互通了。  </p>
+<p>客户端也需要有自己的公钥和私钥，并且客户端要把自己的公钥，给外卖网站。  </p>
+<p><strong>数字证书</strong>  </p>
+<p>鉴别别人给你的公钥是对的。  包括公钥、证书的所有者 、CA签名、颁发者、签名算法。</p>
 <h3 id="数字签名、报文摘要的原理"><a href="#数字签名、报文摘要的原理" class="headerlink" title="数字签名、报文摘要的原理"></a>数字签名、报文摘要的原理</h3><ul>
 <li>发送者A用私钥进行签名，接收者B用公钥验证签名。因为除A外没有人有私钥，所以B相信签名是来自A。A不可抵赖，B也不能伪造报文。</li>
 <li>摘要算法:MD5、SHA</li>
 </ul>
+<p><strong>签名算法</strong></p>
+<p>一般是对信息做一个 Hash 计算，得到一个 Hash 值，这个过程是不可逆的，也就是说无法通过 Hash 值得出原来的信息内容。在把信息发送出去时，把这个 Hash 值加密后，作为一个签名和信息一起发出去。 </p>
+<p> CA 用自己的私钥给外卖网站的公钥签名，就相当于给外卖网站背书，形成了外卖网站的证书。  </p>
 <h3 id="GET与POST的区别？"><a href="#GET与POST的区别？" class="headerlink" title="GET与POST的区别？"></a>GET与POST的区别？</h3><ol>
 <li>GET是幂等的，即读取同一个资源，总是得到相同的数据，POST不是幂等的；</li>
 <li>GET一般用于从服务器获取资源，而POST有可能改变服务器上的资源；</li>
 <li>请求形式上：GET请求的数据附在URL之后，在HTTP请求头中；POST请求的数据在请求体中；</li>
 <li>安全性：GET请求可被缓存、收藏、保留到历史记录，且其请求数据明文出现在URL中。POST的参数不会被保存，安全性相对较高；</li>
 <li>GET只允许ASCII字符，POST对数据类型没有要求，也允许二进制数据；</li>
-<li>GET的长度有限制（操作系统或者浏览器），而POST数据大小无限制</li>
+<li>GET的长度有限制（操作系统或者浏览器的限制），而POST数据大小无限制</li>
 </ol>
 <h3 id="Session与Cookie的区别？"><a href="#Session与Cookie的区别？" class="headerlink" title="Session与Cookie的区别？"></a>Session与Cookie的区别？</h3><p>Session是服务器端保持状态的方案，Cookie是客户端保持状态的方案</p>
 <p>Cookie保存在客户端本地，客户端请求服务器时会将Cookie一起提交；Session保存在服务端，通过检索Sessionid查看状态。保存Sessionid的方式可以采用Cookie，如果禁用了Cookie，可以使用URL重写机制（把会话ID保存在URL中）。</p>
@@ -622,9 +644,9 @@ HTTP不可以使用UDP，HTTP需要基于可靠的传输协议，而UDP不可靠
 <li>2xx状态码：操作成功。200 OK</li>
 <li>3xx状态码：重定向。301 永久重定向；302暂时重定向</li>
 <li>4xx状态码：客户端错误。400 Bad Request；401 Unauthorized；403 Forbidden；404 Not Found；</li>
-<li>5xx状态码：服务端错误。500服务器内部错误；501服务不可用</li>
+<li>5xx状态码：服务端错误。500服务器内部错误；501服务不可用； 502 Bad Gateway：请求未完成，服务器从上游服务器收到一个无效的响应。 </li>
 </ol>
-<h2 id="什么是RIP-Routing-Information-Protocol-距离矢量路由协议-算法是什么？"><a href="#什么是RIP-Routing-Information-Protocol-距离矢量路由协议-算法是什么？" class="headerlink" title="什么是RIP (Routing Information Protocol, 距离矢量路由协议)? 算法是什么？"></a>什么是RIP (Routing Information Protocol, 距离矢量路由协议)? 算法是什么？</h2><p>每个路由器维护一张表，记录该路由器到其它网络的”跳数“，路由器到与其直接连接的网络的跳数是1，每多经过一个路由器跳数就加1；更新该表时和相邻路由器交换路由信息；路由器允许一个路径最多包含15个路由器，如果跳数为16，则不可达。交付数据报时优先选取距离最短的路径。</p>
+<h2 id="什么是RIP（Routing-Information-Protocol-距离矢量路由协议）-算法是什么？"><a href="#什么是RIP（Routing-Information-Protocol-距离矢量路由协议）-算法是什么？" class="headerlink" title="什么是RIP（Routing Information Protocol, 距离矢量路由协议）? 算法是什么？"></a>什么是RIP（Routing Information Protocol, 距离矢量路由协议）? 算法是什么？</h2><p>每个路由器维护一张表，记录该路由器到其它网络的”跳数“，路由器到与其直接连接的网络的跳数是1，每多经过一个路由器跳数就加1；更新该表时和相邻路由器交换路由信息；路由器允许一个路径最多包含15个路由器，如果跳数为16，则不可达。交付数据报时优先选取距离最短的路径。</p>
 <p>（PS：RIP是应用层协议：<a href="https://www.zhihu.com/question/19645407" target="_blank" rel="noopener">https://www.zhihu.com/question/19645407</a>）</p>
 <p><strong>优缺点</strong></p>
 <ul>
@@ -643,21 +665,35 @@ HTTP不可以使用UDP，HTTP需要基于可靠的传输协议，而UDP不可靠
 <li>POP3(110端口)：接收邮件</li>
 <li>HTTP(80端口)：超文本传输协议</li>
 <li>DNS(53端口)：运行在UDP上，域名解析服务</li>
+<li>DHCP</li>
 </ul>
 </li>
 <li>传输层：TCP/UDP</li>
 <li>网络层：IP、ARP、NAT、RIP</li>
+<li>链路层：ARP、VLAN、STP</li>
 </ul>
 <p><strong>路由器、交换机位于哪一层？</strong></p>
 <ul>
-<li>路由器网络层，根据IP地址进行寻址；？？</li>
-<li>交换机数据链路层，根据MAC地址进行寻址??</li>
+<li>路由器网络层，根据IP地址进行寻址；</li>
+<li>交换机数据链路层，根据MAC地址进行寻址</li>
 </ul>
 <h3 id="什么叫划分子网？"><a href="#什么叫划分子网？" class="headerlink" title="什么叫划分子网？"></a>什么叫划分子网？</h3><p>从主机号host-id借用若干个比特作为子网号subnet-id；子网掩码：网络号和子网号都为1，主机号为0；数据报仍然先按照网络号找到目的网络，发送到路由器，路由器再按照网络号和子网号找到目的子网：将子网掩码与目标地址逐比特与操作，若结果为某个子网的网络地址，则送到该子网。</p>
 <h3 id="什么是ARP协议-Address-Resolution-Protocol-？"><a href="#什么是ARP协议-Address-Resolution-Protocol-？" class="headerlink" title="什么是ARP协议 (Address Resolution Protocol)？"></a>什么是ARP协议 (Address Resolution Protocol)？</h3><p><strong>ARP协议完成了IP地址与物理地址的映射</strong>。每一个主机都设有一个 ARP 高速缓存，里面有<strong>所在的局域网</strong>上的各主机和路由器的 IP 地址到硬件地址的映射表。当源主机要发送数据包到目的主机时，会先检查自己的ARP高速缓存中有没有目的主机的MAC地址，如果有，就直接将数据包发到这个MAC地址，如果没有，就向<strong>所在的局域网</strong>发起一个ARP请求的广播包（在发送自己的 ARP 请求时，同时会带上自己的 IP 地址到硬件地址的映射），收到请求的主机检查自己的IP地址和目的主机的IP地址是否一致，如果一致，则先保存源主机的映射到自己的ARP缓存，然后给源主机发送一个ARP响应数据包。源主机收到响应数据包之后，先添加目的主机的IP地址与MAC地址的映射，再进行数据传送。如果源主机一直没有收到响应，表示ARP查询失败。</p>
 <p>如果所要找的主机和源主机不在同一个局域网上，那么就要通过 ARP 找到一个位于本局域网上的某个路由器的硬件地址，然后把分组发送给这个路由器，让这个路由器把分组转发给下一个网络。剩下的工作就由下一个网络来做。</p>
 <h3 id="什么是NAT-Network-Address-Translation-网络地址转换-？"><a href="#什么是NAT-Network-Address-Translation-网络地址转换-？" class="headerlink" title="什么是NAT (Network Address Translation, 网络地址转换)？"></a>什么是NAT (Network Address Translation, 网络地址转换)？</h3><p>用于解决内网中的主机要和因特网上的主机通信。由NAT路由器将主机的本地IP地址转换为全球IP地址，分为静态转换（转换得到的全球IP地址固定不变）和动态NAT转换。</p>
-</details>
+<h2 id="Socket"><a href="#Socket" class="headerlink" title="Socket"></a>Socket</h2><h3 id="知道多路复用吗？为啥select的socket数量是有限的"><a href="#知道多路复用吗？为啥select的socket数量是有限的" class="headerlink" title="知道多路复用吗？为啥select的socket数量是有限的"></a>知道多路复用吗？为啥select的socket数量是有限的</h3><p><strong>select</strong></p>
+<ul>
+<li>由于 Socket 是文件描述符，因而某个线程盯的所有的 Socket，都放在一个文件描述符集合 fd_set 中，这就是项目进度墙，然后调用 select 函数来监听文件描述符集合是否有变化。</li>
+<li>一旦有变化，就会依次查看每个文件描述符。那些发生变化的文件描述符在 fd_set 对应的位都设为 1，表示 Socket 可读或者可写，从而可以进行读写操作，然后再调用 select，接着盯着下一轮的变化。</li>
+<li>因为每次 Socket 所在的文件描述符集合中有 Socket 发生变化的时候，都需要通过轮询的方式，也就是需要将全部项目都过一遍的方式来查看进度，这大大影响了一个项目组能够支撑的最大的项目数量。因而使用 select，能够同时盯的项目数量由 FD_SETSIZE 限制  </li>
+</ul>
+<p><strong>epoll</strong> </p>
+<p>它在内核中的实现不是通过轮询的方式，而是通过注册 callback 函数的方式，当某个文件描述符发送变化的时候，就会主动通知。  </p>
+<ul>
+<li>epoll_create 创建一个 epoll 对象，也是一个文件，也对应一个文件描述符，同样也对应着打开文件列表中的一项。在这项里面有一个红黑树，在红黑树里，要保存这个 epoll要监听的所有 Socket  </li>
+<li>当 epoll_ctl 添加一个 Socket 的时候，其实是加入这个红黑树，同时红黑树里面的节点指向一个结构，将这个结构挂在被监听的 Socket 的事件列表中。当一个 Socket 来了一个事件的时候，可以从这个列表中得到 epoll 对象，并调用 call back 通知它。  </li>
+</ul>
+
             </div>
             <hr />
 
@@ -1141,35 +1177,30 @@ HTTP不可以使用UDP，HTTP需要基于可靠的传输协议，而UDP不可靠
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
-            </div>
+                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/05/20/wang-luo/">
+                <a href="/2021/05/24/chang-jian-chang-jing-ti/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/24.jpg" class="responsive-img" alt="网络">
+                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="常见场景题">
                         
-                        <span class="card-title">网络</span>
+                        <span class="card-title">常见场景题</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            TCP头格式
-
-源端口号和目标端口号
-包的序号（seq）
-确认序号（ack）
-状态位：例如 SYN 是发起一个连接，ACK 是回复，RST 是重新连接，FIN 是结束连接等。TCP 是面向连接的，因而双方要维护连接的状态，这些带状态位的包的
+                            大数据100G 的手机号文件，找到重复的手机号，将重复手机号放入另一个文件。PC 机内存1G
+按照手机前三位分成1000 个文件，然后hashmap 或者bitmap 进行重复校验）逻辑题很多根绳子，每一根都不一样且粗细不均匀，每根绳子从头
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-05-20
-                            </span>
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2021-05-24
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
@@ -1182,7 +1213,6 @@ HTTP不可以使用UDP，HTTP需要基于可靠的传输协议，而UDP不可靠
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
@@ -1205,7 +1235,7 @@ HTTP不可以使用UDP，HTTP需要基于可靠的传输协议，而UDP不可靠
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="flask">
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="flask">
                         
                         <span class="card-title">flask</span>
                     </div>
@@ -1414,7 +1444,7 @@ run 方法调用werkzeug 的 run_simple
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">105.2k</span>
+            <span class="white-color">108.5k</span>
             
 
             <br>

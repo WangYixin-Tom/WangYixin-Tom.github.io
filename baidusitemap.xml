@@ -2,19 +2,25 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://wangyixin-tom.github.io/2021/05/20/wang-luo/</loc>
-    <lastmod>2021-05-21</lastmod>
+    <lastmod>2021-05-25</lastmod>
+  </url>  <url>
+    <loc>https://wangyixin-tom.github.io/2021/04/12/redis-mian-shi/</loc>
+    <lastmod>2021-05-25</lastmod>
+  </url>  <url>
+    <loc>https://wangyixin-tom.github.io/2021/05/24/chang-jian-chang-jing-ti/</loc>
+    <lastmod>2021-05-25</lastmod>
+  </url>  <url>
+    <loc>https://wangyixin-tom.github.io/2020/10/26/redis-aof-ji-zhi/</loc>
+    <lastmod>2021-05-25</lastmod>
+  </url>  <url>
+    <loc>https://wangyixin-tom.github.io/2021/04/10/mysql-mian-shi/</loc>
+    <lastmod>2021-05-25</lastmod>
   </url>  <url>
     <loc>https://wangyixin-tom.github.io/2021/04/11/mysql-cun-chu-yin-qing/</loc>
     <lastmod>2021-05-20</lastmod>
   </url>  <url>
-    <loc>https://wangyixin-tom.github.io/2021/04/10/mysql-mian-shi/</loc>
-    <lastmod>2021-05-20</lastmod>
-  </url>  <url>
     <loc>https://wangyixin-tom.github.io/2021/04/22/flask-mian-shi/</loc>
     <lastmod>2021-05-20</lastmod>
-  </url>  <url>
-    <loc>https://wangyixin-tom.github.io/2021/04/12/redis-mian-shi/</loc>
-    <lastmod>2021-05-19</lastmod>
   </url>  <url>
     <loc>https://wangyixin-tom.github.io/2020/10/29/redis-fen-bu-shi-suo/</loc>
     <lastmod>2021-05-19</lastmod>
@@ -35,9 +41,6 @@
     <lastmod>2021-05-17</lastmod>
   </url>  <url>
     <loc>https://wangyixin-tom.github.io/2020/10/26/redis-rdb-ji-zhi/</loc>
-    <lastmod>2021-05-17</lastmod>
-  </url>  <url>
-    <loc>https://wangyixin-tom.github.io/2020/10/26/redis-aof-ji-zhi/</loc>
     <lastmod>2021-05-17</lastmod>
   </url>  <url>
     <loc>https://wangyixin-tom.github.io/2021/03/14/shi-wu/</loc>
@@ -199,10 +202,10 @@
     <loc>https://wangyixin-tom.github.io/2020/11/01/redis-shi-wu/</loc>
     <lastmod>2021-04-01</lastmod>
   </url>  <url>
-    <loc>https://wangyixin-tom.github.io/2020/10/26/rabbitmq-ji-qun/</loc>
+    <loc>https://wangyixin-tom.github.io/2020/10/26/rabbitmq-xiao-xi-chong-fu/</loc>
     <lastmod>2021-04-01</lastmod>
   </url>  <url>
-    <loc>https://wangyixin-tom.github.io/2020/10/26/rabbitmq-xiao-xi-chong-fu/</loc>
+    <loc>https://wangyixin-tom.github.io/2020/10/26/rabbitmq-ji-qun/</loc>
     <lastmod>2021-04-01</lastmod>
   </url>  <url>
     <loc>https://wangyixin-tom.github.io/2021/03/23/kafka-jing-que-yi-ci/</loc>
@@ -211,10 +214,10 @@
     <loc>https://wangyixin-tom.github.io/2021/03/29/kafka-shou-quan/</loc>
     <lastmod>2021-04-01</lastmod>
   </url>  <url>
-    <loc>https://wangyixin-tom.github.io/2021/03/28/kafka-fu-ben/</loc>
+    <loc>https://wangyixin-tom.github.io/2021/03/23/kafka-lan-jie-qi/</loc>
     <lastmod>2021-04-01</lastmod>
   </url>  <url>
-    <loc>https://wangyixin-tom.github.io/2021/03/23/kafka-lan-jie-qi/</loc>
+    <loc>https://wangyixin-tom.github.io/2021/03/28/kafka-fu-ben/</loc>
     <lastmod>2021-04-01</lastmod>
   </url>  <url>
     <loc>https://wangyixin-tom.github.io/2021/03/28/kafka-broker-qing-qiu-chu-li/</loc>
