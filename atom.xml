@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://wangyixin-tom.github.io/"/>
-  <updated>2021-05-25T12:44:50.552Z</updated>
+  <updated>2021-05-26T10:48:24.846Z</updated>
   <id>https://wangyixin-tom.github.io/</id>
   
   <author>
@@ -17,11 +17,33 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title></title>
+    <link href="https://wangyixin-tom.github.io/2021/05/26/question-2/"/>
+    <id>https://wangyixin-tom.github.io/2021/05/26/question-2/</id>
+    <published>2021-05-26T10:48:24.845Z</published>
+    <updated>2021-05-26T10:48:24.846Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;2.进程与线程的区别&lt;br&gt;3.常用的数据结构有哪些&lt;br&gt;4.平衡二叉树是什么？能否用数组来实现，你会怎么实现？&lt;br&gt;5.排序算法有哪些？冒泡排序与快速排序的时间复杂度是多少？是否O(n^2)一定要比O(nlong)差？&lt;br&gt;算法了解动态规划吗？什么情况用动态规划&lt;b
+        
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
     <title>常见场景题</title>
     <link href="https://wangyixin-tom.github.io/2021/05/24/chang-jian-chang-jing-ti/"/>
     <id>https://wangyixin-tom.github.io/2021/05/24/chang-jian-chang-jing-ti/</id>
     <published>2021-05-24T14:24:00.000Z</published>
-    <updated>2021-05-25T12:44:50.552Z</updated>
+    <updated>2021-05-26T10:48:24.847Z</updated>
     
     <summary type="html">
     
@@ -47,7 +69,7 @@
     <link href="https://wangyixin-tom.github.io/2021/05/20/wang-luo/"/>
     <id>https://wangyixin-tom.github.io/2021/05/20/wang-luo/</id>
     <published>2021-05-19T22:20:37.000Z</published>
-    <updated>2021-05-25T12:44:50.562Z</updated>
+    <updated>2021-05-26T10:48:24.848Z</updated>
     
     <summary type="html">
     
@@ -229,7 +251,7 @@
     <link href="https://wangyixin-tom.github.io/2021/04/10/mysql-mian-shi/"/>
     <id>https://wangyixin-tom.github.io/2021/04/10/mysql-mian-shi/</id>
     <published>2021-04-10T10:45:14.000Z</published>
-    <updated>2021-05-25T12:44:50.502Z</updated>
+    <updated>2021-05-26T10:48:24.844Z</updated>
     
     <summary type="html">
     
@@ -503,33 +525,6 @@
           &lt;p&gt;授权，一般是指对与信息安全或计算机安全相关的资源授予访问权限，特别是存取控制。&lt;/p&gt;
 &lt;p&gt;Kafka用的是 ACL 模型，规定了什么用户对什么资源有什么样的访问权限。&lt;/p&gt;
 &lt;h2 id=&quot;kafka-acls-脚本&quot;&gt;&lt;a
-        
-      
-    
-    </summary>
-    
-      <category term="kafka" scheme="https://wangyixin-tom.github.io/categories/kafka/"/>
-    
-    
-      <category term="kafka" scheme="https://wangyixin-tom.github.io/tags/kafka/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>kafka认证</title>
-    <link href="https://wangyixin-tom.github.io/2021/03/29/kafka-ren-zheng/"/>
-    <id>https://wangyixin-tom.github.io/2021/03/29/kafka-ren-zheng/</id>
-    <published>2021-03-29T13:37:09.000Z</published>
-    <updated>2021-04-02T13:46:25.827Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;认证要解决的是你要证明你是谁的问题，授权要解决的则是你能做什么的问题。&lt;/p&gt;
-&lt;h2 id=&quot;Kafka-认证机制&quot;&gt;&lt;a href=&quot;#Kafka-认证机制&quot; class=&quot;headerlink&quot; title=&quot;Kafka 认证机制&quot;&gt;&lt;/a&gt;Kafka
         
       
     
