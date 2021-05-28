@@ -4,13 +4,11 @@
 
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="读写分离, Python rabbitmq redis flask">
+    <meta name="keywords" content="Python rabbitmq redis flask">
     <meta name="baidu-site-verification" content="code-KoKq36g1n2">
     <meta name="google-site-verification" content="yCy2azpds5XSuGZvis6OuA-XIGF5GuGpYRAaGfD6o48">
     <meta name="360-site-verification" content="b7c11a830ef90fd1464ad6206bb7b6e7">
-    <meta name="description" content="主从复制异步复制
-在主库开启 binlog 的情况下，如果主库有增删改的语句，会记录到 binlog 中。
-主库通过 IO 线程把 binlog 里面的内容传给从库的中继日志（relay log）中，主库给客户端返回 commit 成功（不">
+    <meta name="description" content="2.进程与线程的区别3.常用的数据结构有哪些4.平衡二叉树是什么？能否用数组来实现，你会怎么实现？5.排序算法有哪些？冒泡排序与快速排序的时间复杂度是多少？是否O(n^2)一定要比O(nlong)差？算法了解动态规划吗？什么情况用动态规划最">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -18,7 +16,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>读写分离 | wangyixin-tom的博客</title>
+    <title>wangyixin-tom的博客</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -268,13 +266,13 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/19.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/5.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        读写分离
+                        
                     </div>
                 </div>
             </div>
@@ -384,24 +382,11 @@
                 <div class="col s7">
                     
                     <div class="article-tag">
-                        
-                        <a href="/tags/mysql/" target="_blank">
-                            <span class="chip bg-color">mysql</span>
-                        </a>
-                        
+                        <span class="chip bg-color">无标签</span>
                     </div>
                     
                 </div>
                 <div class="col s5 right-align">
-                    
-                    <div class="post-cate">
-                        <i class="fa fa-bookmark fa-fw icon-category"></i>
-                        
-                        <a href="/categories/mysql/" class="post-category" target="_blank">
-                            mysql
-                        </a>
-                        
-                    </div>
                     
                 </div>
             </div>
@@ -409,7 +394,7 @@
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-03-15
+                    2021-05-28
                 </div>
 
                 <div class="post-author info-break-policy">
@@ -423,14 +408,14 @@
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.3k
+                    1.7k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    8 分
+                    6 分
                 </div>
                 
                 
@@ -441,143 +426,40 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="主从复制"><a href="#主从复制" class="headerlink" title="主从复制"></a>主从复制</h2><h3 id="异步复制"><a href="#异步复制" class="headerlink" title="异步复制"></a>异步复制</h3><ul>
-<li>在主库开启 binlog 的情况下，如果主库有增删改的语句，会记录到 binlog 中。</li>
-<li>主库通过 IO 线程把 binlog 里面的内容传给从库的中继日志（relay log）中，主库给客户端返回 commit 成功（不管从库是否已经收到了事务的 binlog）</li>
-<li>从库的 SQL 线程负责读取 relay log 并应用到从库数据库中。</li>
-</ul>
-<h3 id="半同步复制"><a href="#半同步复制" class="headerlink" title="半同步复制"></a>半同步复制</h3><ul>
-<li>在主库开启 binlog 的情况下，如果主库有增删改的语句，会记录到 binlog 中。</li>
-<li>主库通过 IO 线程把 binlog 里面的内容传给从库的中继日志（relay log）中，<strong>从库收到 binlog 后，发送给主库一个 ACK，表示收到了，主库收到这个 ACK 以后，才能给客户端返回 commit 成功</strong></li>
-<li>从库的 SQL 线程负责读取 relay log 并应用到从库数据库中。</li>
-</ul>
-<h2 id="主从切换"><a href="#主从切换" class="headerlink" title="主从切换"></a>主从切换</h2><h3 id="可靠性优先策略"><a href="#可靠性优先策略" class="headerlink" title="可靠性优先策略"></a>可靠性优先策略</h3><ol>
-<li>判断备库的seconds_behind_master，如果小于某个值（比如5秒）继续下一步，否则持续重试这一步；</li>
-<li>把主库改成只读状态，把readonly设为true；</li>
-<li>判断备库的seconds_behind_master的值，直到这个值变成0为止；</li>
-<li>把备库改成可读写状态，把readonly 设为false；</li>
-<li>把业务请求切到备库B。</li>
+                <p>2.进程与线程的区别<br>3.常用的数据结构有哪些<br>4.平衡二叉树是什么？能否用数组来实现，你会怎么实现？<br>5.排序算法有哪些？冒泡排序与快速排序的时间复杂度是多少？是否O(n^2)一定要比O(nlong)差？<br>算法了解动态规划吗？什么情况用动态规划<br>最优子结构（当时突然忘了定义是啥，解释一大堆，说了LCS跟费波那西数列）<br>那跟分治法有什么区别？<br>4.堆排序和快排的区别和应用<br>6.进程间的通信，线程间的通信<br>9.在线测评：给一个时间戳，算出具体的年和月（时间戳是从格林威治时间1970年01月01日00时00分00秒起至现在）<br>12.堆和栈的区别<br>联合索引有什么特点。<br>AVL 描述一下，和红黑树的区别，优缺点，应用场景等<br>红黑树是什么样子的。<br>为什么myisam 的查询要比innoDB 快。<br>讲一讲归并排序和他的时间复杂度。<br>7、为什么归并排序的时间复杂度为nlogn<br>14.快排怎么实现<br>16.堆排序是稳定的吗<br>1.堆排序建堆及排序过程<br>2.堆调整的时间复杂度<br>3.设计LRU</p>
+<h2 id="网络"><a href="#网络" class="headerlink" title="网络"></a>网络</h2><p>TCP UDP报文格式以及区别，为啥要那些字段，分别能传输最大报文为多少。<br>OSI7层模型说说每层的常用协议。<br>http1.0 和2.0 的区别一个tcp 连接有几个http 请求，<br>http2.0 多路复用的话，一个tcp 连接是否可以有多个http 请求。<br>7.TCP和IP的区别<br>6.计算机网络有哪几层？每一层的协议有哪些？<br>7.说说什么是http协议（可以扩展一下https）<br>http协议处于网络模型哪一层<br>HTTP2有哪些新特性？HTTPS是什么？如果保证安全？（对称非对称加密）建立过程？<br>TCP发数据过程中必须按顺序接收吗<br>ICMP,IGMP协议是怎么回事，怎么实现的。<br>为啥要IP还要mac。<br>常见路由协议。<br>ARP协议是怎么回事，报文内容有啥。<br>3、http1.0 http1.1 http2.0区别 平时也不会用到这些，你怎么知道的？<br>7、服务器找到ip地址之后，如何找到要发送给谁？（就是想问ARP协议）<br>8、请求网络地址，地址中有大量带百分号的字符串，这个base64编码了解<br>9、发http请求同时也会请求他的字符集，了解的字符集有哪些</p>
+<p>11.文件里面每一行都是一个单词，文件有10万行，找出出现频率最高的10个单词（逐步优化）并找出以 a 开头的单词出现了多少次（面试官提示用字典树）<br>mysql 如何实现可重复 / 读已提交</p>
+<p>10个箱子，每个箱子100跟金条，每个1两，一个贪官，在其中一个箱子里面，每根都磨去了一钱，只能称一次，哪个箱子被磨去了一钱。（想了一会想不出来，面试官提示不用整个箱子放上去称，可以把金条从箱子里拿出来称，要构造出差异）<br>分库分表的方案和原理？<br>Kafka 分区能缩容吗？<br>kafka跟常见的MQ的对比你知道吗？<br>kafka怎么保证顺序消费的？<br>kafka是怎么防止消息重复提交的？broker上存储提交的日志，知道是否提交过<br>对热点数据有那些解决方案？<br>mysql创建的字段，double类型会有什么问题？mysql浮点数的字段类型<br>编程题：dp 查询最少路径<br>kafka的消息怎么保证有序的？<br>kafka的特性是什么？为什么如此之快？令拷贝是什么？确定吗？<br>queue的积压怎么处理？怎么增加消费的能力？<br>paritition会出现读两次吗？<br>kafka怎么保证同步一定是成功的？</p>
+<ol start="2">
+<li>BST与平衡二叉树区别；追问红黑树</li>
+<li>快排：时空复杂度、稳定性、影响快排效率的因素？</li>
+<li>SQL中什么时候（写什么样的SQL）会触发行锁，什么时候触发表锁？<br>MQ的数据一致性如何实现<br>密码为什么加盐</li>
 </ol>
-<blockquote>
-<p>如果一开始主备延迟就长达30分钟，而不先做判断直接切换的话，系统的不可用时间就会长达30分钟，这种情况一般业务都是不可接受的。</p>
-</blockquote>
-<h3 id="可用性优先策略"><a href="#可用性优先策略" class="headerlink" title="可用性优先策略"></a>可用性优先策略</h3><p>不等主备数据同步，直接把连接切到备库B，并且让备库B可以读写，那么系统几乎就没有不可用时间了。</p>
-<blockquote>
-<p>可能出现不一致的数据。</p>
-<p>设置binlog_format=row，会出现duplicate key error并停止；</p>
-<p>使用mixed或者statement格式的binlog时，数据很可能悄悄地就不一致了</p>
-</blockquote>
-<h2 id="备库并行复制策略"><a href="#备库并行复制策略" class="headerlink" title="备库并行复制策略"></a>备库并行复制策略</h2><h3 id="按库并行"><a href="#按库并行" class="headerlink" title="按库并行"></a>按库并行</h3><p>用于决定分发策略的hash表里，key就是数据库名。</p>
-<blockquote>
-<p>如果你的主库上的表都放在同一个DB里面，这个策略就没有效果了；</p>
-<p>或者如果不同DB的热点不同，比如一个是业务逻辑库，一个是系统配置库，那也起不到并行的效果。</p>
-</blockquote>
-<h3 id="MariaDB的并行复制策略"><a href="#MariaDB的并行复制策略" class="headerlink" title="MariaDB的并行复制策略"></a>MariaDB的并行复制策略</h3><blockquote>
-<p>利用redo log组提交特性：</p>
-<ul>
-<li><p>能够在同一组里提交的事务，一定不会修改同一行；</p>
-</li>
-<li><p>主库上可以并行执行的事务，备库上也一定是可以并行执行的。</p>
-</li>
-</ul>
-</blockquote>
-<p>实现方法</p>
-<ol>
-<li>在一组里面一起提交的事务，有一个相同的commit_id，下一组就是commit_id+1；</li>
-<li>commit_id直接写到binlog里面；</li>
-<li>传到备库应用的时候，相同commit_id的事务分发到多个worker执行；</li>
-<li>这一组全部执行完成后，coordinator再去取下一批。</li>
+<p>盐bai 被称作“Salt 值”，这个值是du由系统随机生成的，并且只有系统知道。即zhi便两个</p>
+<p>用户使dao用了同一个密码，由于系统为它们生成的salt值不同，散列值也是不同的。</p>
+<p>MD5算法：生成一个128位散列值。</p>
+<p>目的：防止反向查询密码，多次尝试破解。</p>
+<p>段页式</p>
+<p>虚拟内存</p>
+<p>缺页中断</p>
+<p>Major/Minor page fault区别</p>
+<p>TLB作用</p>
+<p>进程/线程和虚拟内存的关系</p>
+<p>运行在docker里面的文件系统，docker怎么实现文件系统机制？</p>
+<p>在docker里面根目录cd，能不能跳出沙箱回到宿主机？</p>
+<p>段页式结构的细节问题、零拷贝是啥（忘了）、</p>
+<p>AVL树深度差不能超过多少？红黑树时间复杂度？<br>讲一下什么样的情况能用动态规划？</p>
+<p>9.gossip 了解吗（redis）</p>
+<h2 id="mysql"><a href="#mysql" class="headerlink" title="mysql"></a>mysql</h2><p>3、主从复制    直接回答不会<br>4、mysql怎么去重</p>
+<ol start="3">
+<li>MVCC？版本号怎么变化的？更新的数据的时候怎么确定版本的？幻读怎么解决的？<br>MySQL 有哪几种日志？redo log 主要有什么用？提交之后 100%落盘吗？<br>为什么MySQL 要写到 redo log buff 内存？</li>
 </ol>
-<h3 id="MySQL-5-7-22的新增并行复制策略"><a href="#MySQL-5-7-22的新增并行复制策略" class="headerlink" title="MySQL 5.7.22的新增并行复制策略"></a>MySQL 5.7.22的新增并行复制策略</h3><p>基于WRITESET的并行复制。</p>
-<p>参数<code>binlog-transaction-dependency-tracking</code>，用来控制是否启用这个新策略。这个参数的可选值有以下三种。</p>
-<ol>
-<li>COMMIT_ORDER，根据同时进入prepare和commit来判断是否可以并行的策略。</li>
-<li>WRITESET，表示的是对于事务涉及更新的每一行，计算出它的hash值，组成集合writeset。如果两个事务没有操作相同的行，也就是说它们的writeset没有交集，就可以并行。</li>
-<li>WRITESET_SESSION，是在WRITESET的基础上多了一个约束，即在主库上同一个线程先后执行的两个事务，在备库执行的时候，要保证相同的先后顺序。</li>
-</ol>
-<h2 id="主从延迟"><a href="#主从延迟" class="headerlink" title="主从延迟"></a>主从延迟</h2><h3 id="可能原因"><a href="#可能原因" class="headerlink" title="可能原因"></a>可能原因</h3><ul>
-<li>大表 DDL</li>
-<li>大事务</li>
-<li>主库 DML 并发大</li>
-<li>从库配置差</li>
-</ul>
-<h3 id="判断主从延迟"><a href="#判断主从延迟" class="headerlink" title="判断主从延迟"></a>判断主从延迟</h3><p>1、判断 Seconds_Behind_Master 是否等于 0。</p>
-<p>2、对比位点，Master_Log_File 跟 Relay_Master_Log_File 相等，并且 Read_Master_Log_Pos 跟 Exec_Master_Log_Pos 相等。</p>
-<p>3、对比GTID，对比 Retrieved_Gtid_Set 和 Executed_Gtid_Set 是否相等。</p>
-<h2 id="主备切换"><a href="#主备切换" class="headerlink" title="主备切换"></a>主备切换</h2><h3 id="基于位点的主备切换"><a href="#基于位点的主备切换" class="headerlink" title="基于位点的主备切换"></a><strong>基于位点的主备切换</strong></h3><p>考虑到切换过程中不能丢数据，所以找位点时，找一个“稍微往前”的。再通过判断，跳过那些在从库上已经执行过的事务。</p>
-<p>通常情况下，我们在切换任务的时候，要先主动跳过这些错误，有两种常用的方法。</p>
-<ul>
-<li>主动跳过一个事务。</li>
-<li>通过设置slave_skip_errors参数，直接设置跳过指定的错误。</li>
-</ul>
-<pre class="line-numbers language-mysql"><code class="language-mysql">CHANGE MASTER TO
-MASTER_HOST=$host_name
-MASTER_PORT=$port
-MASTER_USER=$user_name
-MASTER_PASSWORD=$password
-MASTER_LOG_FILE=$master_log_name
-MASTER_LOG_POS=$master_log_pos<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="基于GTID的主备切换"><a href="#基于GTID的主备切换" class="headerlink" title="基于GTID的主备切换"></a><strong>基于GTID的主备切换</strong></h3><p>GTID的全称是Global Transaction Identifier，也就是全局事务ID，是一个事务在提交的时候生成的，是这个事务的唯一标识。在GTID模式下，每个事务都会跟一个GTID一一对应。</p>
-<pre class="line-numbers language-mysql"><code class="language-mysql">CHANGE MASTER TO
-MASTER_HOST=$host_name
-MASTER_PORT=$port
-MASTER_USER=$user_name
-MASTER_PASSWORD=$password
-master_auto_position=1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>主备切换逻辑，实例A’的GTID集合记为set_a，实例B的GTID集合记为set_b:</p>
-<ol>
-<li>实例B指定主库A’，基于主备协议建立连接。</li>
-<li>实例B把set_b发给主库A’。</li>
-<li>实例A’算出set_a与set_b的差集，也就是所有存在于set_a，但是不存在于set_b的GITD的集合，判断A’本地是否包含了这个差集需要的所有binlog事务。<br>a. 如果不包含，表示A’已经把实例B需要的binlog给删掉了，直接返回错误；<br>b. 如果确认全部包含，A’从自己的binlog文件里面，找出第一个不在set_b的事务，发给B；</li>
-<li>之后就从这个事务开始，往后读文件，按顺序取binlog发给B去执行。</li>
-</ol>
-<h2 id="过期读"><a href="#过期读" class="headerlink" title="过期读"></a>过期读</h2><p>问题：由于主从可能存在延迟，客户端执行完一个更新事务后马上发起查询，如果查询选择的是从库的话，就有可能读到刚刚的事务更新之前的状态。</p>
-<h3 id="强制走主库方案"><a href="#强制走主库方案" class="headerlink" title="强制走主库方案"></a><strong>强制走主库方案</strong></h3><ol>
-<li>对于必须要拿到最新结果的请求，强制将其发到主库上</li>
-<li>对于可以读到旧数据的请求，才将其发到从库上。</li>
-</ol>
-<h3 id="sleep方案"><a href="#sleep方案" class="headerlink" title="sleep方案"></a><strong>sleep方案</strong></h3><p>大多数情况下主备延迟在1秒之内，主库更新后，读从库之前先sleep一下。具体的方案就是，类似于执行一条<code>select sleep(1)</code>命令。</p>
-<p>以卖家发布商品为例，商品发布后，用Ajax（Asynchronous JavaScript + XML，异步JavaScript和XML）直接把客户端输入的内容作为“新的商品”显示在页面上，而不是真正地去数据库做查询。这样，卖家就可以通过这个显示，来确认产品已经发布成功了。等到卖家再刷新页面，去查看商品的时候，其实已经过了一段时间，也就达到了sleep的目的，进而也就解决了过期读的问题。</p>
-<p><strong>缺点</strong></p>
-<ol>
-<li>如果这个查询请求本来0.5秒就可以在从库上拿到正确结果，也会等1秒；</li>
-<li>如果延迟超过1秒，还是会出现过期读。</li>
-</ol>
-<h3 id="判断主备无延迟方案"><a href="#判断主备无延迟方案" class="headerlink" title="判断主备无延迟方案"></a><strong>判断主备无延迟方案</strong></h3><ul>
-<li><p>第一种确保主备无延迟的方法是，每次从库执行查询请求前，先判断seconds_behind_master是否已经等于0。</p>
-</li>
-<li><p>第二种方法，对比位点确保主备无延迟（show slave status）：<br>Master_Log_File和Read_Master_Log_Pos，表示的是读到的主库的最新位点；<br>Relay_Master_Log_File和Exec_Master_Log_Pos，表示的是备库执行的最新位点。<br>如果Master_Log_File和Relay_Master_Log_File、Read_Master_Log_Pos和Exec_Master_Log_Pos这两组值完全相同，就表示接收到的日志已经同步完成</p>
-</li>
-<li><p>第三种方法，对比GTID集合确保主备无延迟（show slave status）：</p>
-<p>Auto_Position=1 ，表示这对主备关系使用了GTID协议。<br>Retrieved_Gtid_Set，是备库收到的所有日志的GTID集合；<br>Executed_Gtid_Set，是备库所有已经执行完成的GTID集合。</p>
-<p>缺点：仍可能过期读。备库收到的日志都执行完成了。还有一部分日志，处于客户端已经收到提交确认，而备库还没收到日志的状态。</p>
-</li>
-</ul>
-<h3 id="配合semi-sync方案"><a href="#配合semi-sync方案" class="headerlink" title="配合semi-sync方案"></a><strong>配合semi-sync方案</strong></h3><p>引入半同步复制，配合前面关于位点的判断。</p>
-<blockquote>
-<p>在一主多从场景中，如果是查询落到其他从库上，它们可能还没有收到最新的日志，就会产生过期读的问题。</p>
-<p>在持续延迟的情况下，可能出现过度等待的问题。</p>
-</blockquote>
-<h3 id="等主库位点方案"><a href="#等主库位点方案" class="headerlink" title="等主库位点方案"></a><strong>等主库位点方案</strong></h3><ol>
-<li>trx1事务更新完成后，马上执行<code>show master status</code>得到当前主库执行到的File和Position；</li>
-<li>选定一个从库执行查询语句；</li>
-<li>在从库上执行<code>select master_pos_wait(File, Position, 1)</code>；</li>
-<li>如果返回值是&gt;=0的正整数，则在这个从库执行查询语句；</li>
-<li>否则，到主库执行查询语句。</li>
-</ol>
-<blockquote>
-<p>等待超时后是否直接到主库查询，需要业务开发同学来做限流考虑。</p>
-</blockquote>
-<h3 id="等GTID方案"><a href="#等GTID方案" class="headerlink" title="等GTID方案"></a><strong>等GTID方案</strong></h3><ol>
-<li>trx1事务更新完成后，从返回包直接获取这个事务的GTID，记为gtid1；</li>
-<li>选定一个从库执行查询语句；</li>
-<li>在从库上执行 <code>select wait_for_executed_gtid_set(gtid1, 1)</code>；</li>
-<li>如果返回值是0，则在这个从库执行查询语句；</li>
-<li>否则，到主库执行查询语句。</li>
-</ol>
-<blockquote>
-<p>等待超时后是否直接到主库查询，需要业务开发同学来做限流考虑。</p>
-</blockquote>
+<h2 id="redis"><a href="#redis" class="headerlink" title="redis"></a>redis</h2><p> redis 底层 hash 表扩容机制说一下？<br>Redis list底层数据结构<br>假设此时有一个热点数据过期了，但过期的瞬间，有上百万QPS打到Redis中，你能给出你的解决方案吗？（等效于解决缓存击穿问题）</p>
+<p>一道场景题：大日志中获取到指定时间段的数据</p>
+<h1 id="操作系统"><a href="#操作系统" class="headerlink" title="操作系统"></a>操作系统</h1><p>虚拟内存和物理内存谈一谈。<br>操作系统中的中断是什么<br>手推快排的时间复杂度<br>用户态内核态<br>虚拟内存？页表储存？文件映射？Cache结构？</p>
+<p>操作系统虚拟内存，虚拟地址。<br>32位操作系统里进程可以分配内存大小，为什么。<br>操作系统虚拟内存，虚拟地址深问<br>7.epoll底层，水平，边缘<br>8.操作系统怎么进行端口映射<br>9.操作系统内存管理<br>红黑树和平衡树的区别<br>SDS解释和优点</p>
+<p>详细介绍一下分段锁技术</p>
+<p>文件描述符有没有听过？软链接和硬链接？<br>怎么在文件夹中找到最大的文件？<br>介绍一下红黑树以及它的应用场景</p>
 
             </div>
             <hr />
@@ -736,9 +618,9 @@ master_auto_position=1<span aria-hidden="true" class="line-numbers-rows"><span><
             <br/>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
                   property="dct:title" rel="dct:type">
-                    《读写分离》
+                    《》
                 </span> 由
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2021/03/15/du-xie-fen-chi/" property="cc:attributionName"
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2021/05/28/question-2/" property="cc:attributionName"
                rel="cc:attributionURL">
                 wangyixin-tom
             </a> 采用
@@ -779,7 +661,7 @@ master_auto_position=1<span aria-hidden="true" class="line-numbers-rows"><span><
         repo: 'wangyixin-tom.github.io',
         owner: 'WangYixin-Tom',
         admin: "WangYixin-Tom",
-        id: '2021/03/15/du-xie-fen-chi/',
+        id: '2021/05/28/question-2/',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -1062,49 +944,36 @@ master_auto_position=1<span aria-hidden="true" class="line-numbers-rows"><span><
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/03/15/fen-ku-fen-biao/">
+                <a href="/2021/05/28/question-2/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="分库分表">
+                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="">
                         
-                        <span class="card-title">分库分表</span>
+                        <span class="card-title"></span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            垂直拆分和水平拆分的概述；分库分表的场景；
+                            2.进程与线程的区别3.常用的数据结构有哪些4.平衡二叉树是什么？能否用数组来实现，你会怎么实现？5.排序算法有哪些？冒泡排序与快速排序的时间复杂度是多少？是否O(n^2)一定要比O(nlong)差？算法了解动态规划吗？什么情况用动态规划最
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2021-03-15
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-05-28
+                            </span>
                         <span class="publish-author">
-                            
-                            <i class="fa fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/mysql/" class="post-category" target="_blank">
-                                    mysql
-                                </a>
-                            
                             
                         </span>
                     </div>
                 </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/mysql/" target="_blank">
-                        <span class="chip bg-color">mysql</span>
-                    </a>
-                    
-                </div>
+
                 
             </div>
         </div>
@@ -1115,36 +984,33 @@ master_auto_position=1<span aria-hidden="true" class="line-numbers-rows"><span><
                 下一篇&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/03/14/mvcc/">
+                <a href="/2021/05/24/chang-jian-chang-jing-ti/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="MVCC">
+                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="常见场景题">
                         
-                        <span class="card-title">MVCC</span>
+                        <span class="card-title">常见场景题</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            MVCC多版本并发控制。
-
-MVCC 只在 RC 和 RR 两个隔离级别下工作。
-不管需要执行多长时间，每个事务看到的数据都是一致的。根据事务开始的时间不同，每个事务对同一张表，同一时刻看到的数据可能是不一样的。
-
-Undo logundo
+                            大数据100G 的手机号文件，找到重复的手机号，将重复手机号放入另一个文件。PC 机内存1G
+按照手机前三位分成1000 个文件，然后hashmap 或者bitmap 进行重复校验）算法银行家算法
+我们可以把操作系统看作是银行家，操作系统管
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-03-14
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-05-24
                             </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/mysql/" class="post-category" target="_blank">
-                                    mysql
+                            <a href="/categories/interview/" class="post-category" target="_blank">
+                                    interview
                                 </a>
                             
                             
@@ -1154,8 +1020,8 @@ Undo logundo
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/mysql/" target="_blank">
-                        <span class="chip bg-color">mysql</span>
+                    <a href="/tags/interview/" target="_blank">
+                        <span class="chip bg-color">interview</span>
                     </a>
                     
                 </div>
@@ -1301,25 +1167,6 @@ Undo logundo
     
 
 </main>
-
-
-<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-<script>
-    MathJax.Hub.Config({
-        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
-    });
-</script>
-
-<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
-<!-- 代码语言 -->
-<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
-<!-- 代码块复制 -->
-<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
-<script type="text/javascript" src="/libs/codeBlock/clipboard.min.js"></script>
-<!-- 代码块收缩 -->
-<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script> 
-<!-- 代码块折行 -->
-<style type="text/css">code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }</style>
 
 
     <footer class="page-footer bg-color">

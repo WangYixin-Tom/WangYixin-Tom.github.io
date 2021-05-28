@@ -272,7 +272,7 @@ TCP
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/22.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/24.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -427,14 +427,14 @@ TCP
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    10k
+                    12.6k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    35 分
+                    44 分
                 </div>
                 
                 
@@ -512,9 +512,17 @@ TCP
 <h3 id="2MSL作用"><a href="#2MSL作用" class="headerlink" title="2MSL作用"></a>2MSL作用</h3><p>服务端发送的FIN+ACK报文请求，客户端没有回应，于是服务器又会重新发送一次，而客户端就能在这个2MSL时间段内收到这个重传的报文，接着给出回应报文，并且会重启2MSL计时器。</p>
 <p>B 超过了 2MSL 的时间，依然没有收到它发的 FIN 的 ACK，按照TCP 的原理，B 当然还会重发 FIN，这个时候 A 再收到这个包之后，A 就就直接发送 RST，B 就知道 A 早就跑了。</p>
 <h3 id="为什么建立连接是三次握手，关闭连接确是四次挥手呢？"><a href="#为什么建立连接是三次握手，关闭连接确是四次挥手呢？" class="headerlink" title="为什么建立连接是三次握手，关闭连接确是四次挥手呢？"></a>为什么建立连接是三次握手，关闭连接确是四次挥手呢？</h3><p>建立连接的时候， 服务器在LISTEN状态下，收到建立连接请求的SYN报文后，把ACK和SYN放在一个报文里发送给客户端。<br>而关闭连接时，服务器收到对方的FIN报文时，仅仅表示对方不再发送数据了但是还能接收数据，而自己也未必全部数据都发送给对方了，所以需要等到数据发完之后再发FIN，断开服务器到客户端的数据传送。</p>
-<h2 id="如果已经建立了连接，但是客户端突然出现故障了怎么办？"><a href="#如果已经建立了连接，但是客户端突然出现故障了怎么办？" class="headerlink" title="如果已经建立了连接，但是客户端突然出现故障了怎么办？"></a>如果已经建立了连接，但是客户端突然出现故障了怎么办？</h2><p>TCP还设有一个保活计时器，显然，客户端如果出现故障，服务器不能一直等下去，白白浪费资源。</p>
+<h3 id="如果已经建立了连接，但是客户端突然出现故障了怎么办？"><a href="#如果已经建立了连接，但是客户端突然出现故障了怎么办？" class="headerlink" title="如果已经建立了连接，但是客户端突然出现故障了怎么办？"></a>如果已经建立了连接，但是客户端突然出现故障了怎么办？</h3><p>TCP还设有一个保活计时器，显然，客户端如果出现故障，服务器不能一直等下去，白白浪费资源。</p>
 <p>服务器每收到一次客户端的请求后都会重新复位这个计时器，时间通常是设置为2小时，若两小时还没有收到客户端的任何数据，服务器就会发送一个探测报文段，以后每隔75秒发送一次。若一连发送10个探测报文仍然没反应，服务器就认为客户端出了故障，接着就关闭连接。</p>
-<h2 id="流量控制"><a href="#流量控制" class="headerlink" title="流量控制"></a>流量控制</h2><h3 id="TCP如何实现流量控制？"><a href="#TCP如何实现流量控制？" class="headerlink" title="TCP如何实现流量控制？"></a>TCP如何实现流量控制？</h3><p><img src="huadong.png" alt="滑动窗口"></p>
+<h3 id="服务端出现大量close-wait原因"><a href="#服务端出现大量close-wait原因" class="headerlink" title="服务端出现大量close_wait原因"></a>服务端出现大量close_wait原因</h3><p>如果一直保持在CLOSE_WAIT状态，那么只有一种情况，就是在对方关闭连接之后，服务器程序自己没有进一步发出ack信号。换句话说，就是在对方连接关闭之后，程序里没有检测到，或者程序压根就忘记了这个时候需要关闭连接，于是这个资源就一直被程序占着。</p>
+<p>会导致to many open files。</p>
+<h3 id="服务器保持了大量TIME-WAIT状态"><a href="#服务器保持了大量TIME-WAIT状态" class="headerlink" title="服务器保持了大量TIME_WAIT状态"></a>服务器保持了大量TIME_WAIT状态</h3><p>一些爬虫服务器或者WEB服务器上经常会遇到这个问题，在完成一个爬取任务之后，他就 会发起主动关闭连接，从而进入TIME_WAIT的状态，然后在保持这个状态2MSL时间之后，彻底关闭回收资源。</p>
+<p>解决方法：优化系统参数</p>
+<pre><code>#表示开启重用。允许将TIME-WAIT sockets重新用于新的TCP连接，默认为0，表示关闭 
+net.ipv4.tcp_tw_reuse = 1 
+
+#表示开启TCP连接中TIME-WAIT sockets的快速回收，默认为0，表示关闭 
+net.ipv4.tcp_tw_recycle = 1 </code></pre><h2 id="流量控制"><a href="#流量控制" class="headerlink" title="流量控制"></a>流量控制</h2><h3 id="TCP如何实现流量控制？"><a href="#TCP如何实现流量控制？" class="headerlink" title="TCP如何实现流量控制？"></a>TCP如何实现流量控制？</h3><p><img src="huadong.png" alt="滑动窗口"></p>
 <p>使用滑动窗口协议实现流量控制。防止发送方发送速率太快，接收方缓存区不够导致溢出。</p>
 <p>接收方会维护一个接收窗口 receiver window（窗口大小单位是字节），接受窗口的大小是根据自己的资源情况动态调整的，在返回ACK时将接受窗口大小放在TCP报文中的窗口字段告知发送方。发送窗口的大小不能超过接受窗口的大小，只有当发送方发送并收到确认之后，才能将发送窗口右移。</p>
 <p>发送窗口的上限为接受窗口和拥塞窗口中的较小值。接受窗口表明了接收方的接收能力，拥塞窗口表明了网络的传送能力。</p>
@@ -556,6 +564,7 @@ TCP
 </blockquote>
 <h3 id="什么时候选择TCP，什么时候选UDP？"><a href="#什么时候选择TCP，什么时候选UDP？" class="headerlink" title="什么时候选择TCP，什么时候选UDP？"></a>什么时候选择TCP，什么时候选UDP？</h3><p>对某些实时性要求比较高的情况，选择UDP，比如游戏，媒体通信，实时视频流（直播），即使出现传输错误也可以容忍；其它大部分情况下，HTTP都是用TCP，因为要求传输的内容可靠，不出现丢失</p>
 <h3 id="TCP报文确认机制"><a href="#TCP报文确认机制" class="headerlink" title="TCP报文确认机制"></a>TCP报文确认机制</h3><p>为了保证顺序性，每一个包都有一个 ID。在建立连接的时候，会商定起始的 ID 是什么，然后按照 ID 一个个发送。为了保证不丢包，对于发送的包都要进行应答，但是这个应答也不是一个一个来的，而是会应答某个之前的 ID，表示都收到了，这种模式称为累计确认或者累计应答</p>
+<h3 id="TCP发数据过程中必须按顺序接收吗"><a href="#TCP发数据过程中必须按顺序接收吗" class="headerlink" title="TCP发数据过程中必须按顺序接收吗"></a>TCP发数据过程中必须按顺序接收吗</h3><p>TCP报文段作为IP数据来传输，在IP数据报的到达可能会失序，因此TCP报文段的到达也存在失序的可能。特殊情况下，TCP将对收到的数据进行重新排列，确保顺序正确后再交给应用层。</p>
 <h3 id="TCP粘包"><a href="#TCP粘包" class="headerlink" title="TCP粘包"></a>TCP粘包</h3><h4 id="什么是TCP粘包问题？"><a href="#什么是TCP粘包问题？" class="headerlink" title="什么是TCP粘包问题？"></a>什么是TCP粘包问题？</h4><p>TCP粘包就是指发送方发送的若干包数据到达接收方时粘成了一包，从接收缓冲区来看，后一包数据的头紧接着前一包数据的尾。</p>
 <h4 id="造成TCP粘包的原因"><a href="#造成TCP粘包的原因" class="headerlink" title="造成TCP粘包的原因"></a>造成TCP粘包的原因</h4><p>（1）发送方原因</p>
 <p>TCP默认使用Nagle算法（主要作用：减少网络中报文段的数量），而Nagle算法主要做两件事：</p>
@@ -612,13 +621,21 @@ TCP
 <p>接收端之间发生的任何改动。如果接收方检测到校验和有差错，则TCP段会被直接丢弃。</p>
 <p>TCP的校验和是必需的，而UDP的校验和是可选的。</p>
 </blockquote>
-<h3 id="keepalive实现原理"><a href="#keepalive实现原理" class="headerlink" title="keepalive实现原理"></a>keepalive实现原理</h3><h3 id="单机最大tcp连接数"><a href="#单机最大tcp连接数" class="headerlink" title="单机最大tcp连接数"></a>单机最大tcp连接数</h3><p>系统用一个4四元组来唯一标识一个TCP连接：{local ip, local port,remote ip,remote port}。</p>
+<h3 id="TCP-keepalive实现原理"><a href="#TCP-keepalive实现原理" class="headerlink" title="TCP keepalive实现原理"></a>TCP keepalive实现原理</h3><p>在TCP中有一个Keep-alive的机制可以检测死连接，原理很简单，TCP会在空闲了一定时间后发送数据给对方。</p>
+<p>1.如果主机可达，对方就会响应ACK应答，就认为是存活的。<br>2.如果可达，但应用程序退出，对方就发RST应答，发送TCP撤消连接。<br>3.如果可达，但应用程序崩溃，对方就发FIN消息。</p>
+<p>4.如果对方主机不响应ack/rst，继续发送直到超时，就撤消连接。这个时间就是默认的二个小时。</p>
+<h3 id="单机最大tcp连接数"><a href="#单机最大tcp连接数" class="headerlink" title="单机最大tcp连接数"></a>单机最大tcp连接数</h3><p>系统用一个4四元组来唯一标识一个TCP连接：{local ip, local port,remote ip,remote port}。</p>
 <p>client最大tcp连接数：1-65535</p>
 <p>server最大tcp连接数：客户端ip数×客户端port数，最大tcp连接数约为2的32次方（ip数）×2的16次方（port数）。</p>
 <p>实际的tcp连接数：在实际环境中，受到机器资源、操作系统等的限制。内存和允许的文件描述符个数。</p>
 <h3 id="SYN泛洪攻击"><a href="#SYN泛洪攻击" class="headerlink" title="SYN泛洪攻击"></a>SYN泛洪攻击</h3><p>  SYN攻击利用的是TCP的<a href="http://baike.baidu.com/view/1003841.htm" target="_blank" rel="noopener">三次握手</a>机制，攻击端利用伪造的<a href="http://baike.baidu.com/view/8370.htm" target="_blank" rel="noopener">IP</a>地址向被攻击端发出请求，而被攻击端发出的响应<a href="http://baike.baidu.com/view/175122.htm" target="_blank" rel="noopener">报文</a>将永远发送不到目的地，那么被攻击端在等待关闭这个连接的过程中消耗了资源，如果有成千上万的这种连接，主机资源将被耗尽，从而达到攻击的目的。</p>
 <p>1、降低SYN timeout时间，使得主机尽快释放半连接的占用<br>2、采用SYN cookie设置，如果短时间内连续收到某个IP的重复SYN请求，则认为受到了该IP的攻击，丢弃来自该IP的后续请求报文<br>3、一个有防火墙或者代理的设备在网络中就能够缓冲SYN洪泛攻击</p>
-<h2 id="HTTP和HTTPS"><a href="#HTTP和HTTPS" class="headerlink" title="HTTP和HTTPS"></a>HTTP和HTTPS</h2><h3 id="区别？"><a href="#区别？" class="headerlink" title="区别？"></a>区别？</h3><ol>
+<h2 id="HTTP和HTTPS"><a href="#HTTP和HTTPS" class="headerlink" title="HTTP和HTTPS"></a>HTTP和HTTPS</h2><h3 id="什么是-https"><a href="#什么是-https" class="headerlink" title="什么是 https"></a>什么是 https</h3><p>简单来说， https 是 http + ssl，对 http 通信内容进行加密，是HTTP的安全版，是使用TLS/SSL加密的HTTP协议</p>
+<p>Https的作用：</p>
+<p>内容加密 建立一个信息安全通道，来保证数据传输的安全；<br>身份认证 确认网站的真实性<br>数据完整性 防止内容被第三方冒充或者篡改</p>
+<h3 id="什么是SSL"><a href="#什么是SSL" class="headerlink" title="什么是SSL"></a>什么是SSL</h3><p>通过Web创建安全的Internet通信。它是一种标准协议，用于加密浏览器和服务器之间的通信。它允许通过Internet安全轻松地传输账号密码、银行卡、手机号等私密信息。</p>
+<p>SSL证书就是遵守SSL协议，由受信任的CA机构颁发的数字证书。</p>
+<h3 id="区别？"><a href="#区别？" class="headerlink" title="区别？"></a>区别？</h3><ol>
 <li>端口不同：HTTP使用的是80端口，HTTPS使用443端口；</li>
 <li>HTTP（超文本传输协议）信息是明文传输，HTTPS运行在SSL（Secure Socket Layer）之上，添加了加密和认证机制，更加安全；</li>
 <li>HTTPS由于加密解密会带来更大的CPU和内存开销；</li>
@@ -626,17 +643,39 @@ TCP
 </ol>
 <h3 id="http1-0-和2-0-的区别"><a href="#http1-0-和2-0-的区别" class="headerlink" title="http1.0 和2.0 的区别"></a>http1.0 和2.0 的区别</h3><p><strong>HTTP2.0的多路复用</strong><br>浏览器对同一域名下的并发连接数量有限制，一般为6个，HTTP1中的Keep-Alive用于长连接而不必重新建立连接，然而keep-alive必须等本次请求彻底完成后才能发送下一个请求，而HTTP2的请求与响应以二进制帧的形式交错进行，只需建立一次连接，即一轮三次握手，实现多路复用<br><strong>HTTP2.0压缩消息头</strong><br>HTTP1的消息头很大冗余，而HTTP2.0利用HPACK对消息头进行压缩传输，假设将常用的请求GET/index.html用1表示，POST/index.html用2表示，即是将消息头中的不同的部分分别用不用的索引进行表示，且会用哈夫曼编码压缩字符串，最后封装成frame。索引表分为动态索引和静态索引，动态索引表在客户端和服务器端共同维护，静态索引采用硬编码形式。</p>
 <p><strong>HTTP2.0服务端推送</strong><br>HTTP2.0中服务器会主动将资源推送给客户端，例如把js和css文件主动推送给客户端而不用客户端解析HTML后请求再响应。</p>
-<h3 id="Https的连接过程？"><a href="#Https的连接过程？" class="headerlink" title="Https的连接过程？"></a>Https的连接过程？</h3><ol>
-<li>客户端向服务器发送请求，同时发送客户端支持的一套加密规则（包括对称加密、非对称加密、摘要算法）；</li>
-<li>服务器从中选出一组加密算法与HASH算法，并将自己的身份信息以证书的形式发回给浏览器。证书里面包含了网站地址，<strong>加密公钥</strong>（用于非对称加密），以及证书的颁发机构等信息（证书中的私钥只能用于服务器端进行解密）；</li>
-<li>客户端验证服务器的合法性，包括：证书是否过期，CA 是否可靠，发行者证书的公钥能否正确解开服务器证书的“发行者的数字签名”，服务器证书上的域名是否和服务器的实际域名相匹配；</li>
-<li>如果证书受信任，或者用户接收了不受信任的证书，浏览器会生成一个<strong>随机密钥</strong>（用于对称算法），并用服务器提供的公钥加密（采用非对称算法对密钥加密）；使用Hash算法对握手消息进行<strong>摘要</strong>计算，并对摘要使用之前产生的密钥加密（对称算法）；将加密后的随机密钥和摘要一起发送给服务器；</li>
-<li>服务器使用自己的私钥解密，得到对称加密的密钥，用这个密钥解密出Hash摘要值，并验证握手消息是否一致；如果一致，服务器使用对称加密的密钥加密握手消息发给浏览器；</li>
-<li>浏览器解密并验证摘要，若一致，则握手结束。之后的数据传送都使用对称加密的密钥进行加密</li>
-</ol>
-<p>总结：非对称加密算法用于在握手过程中加密生成的密码；对称加密算法用于对真正传输的数据进行加密；HASH算法用于验证数据的完整性。</p>
+<h3 id="Https的连接过程？"><a href="#Https的连接过程？" class="headerlink" title="Https的连接过程？"></a>Https的连接过程？</h3><p><img src="https.png" alt></p>
+<h4 id="证书验证阶段"><a href="#证书验证阶段" class="headerlink" title="证书验证阶段"></a>证书验证阶段</h4><ul>
+<li>浏览器发起请求</li>
+<li>服务器接收到请求之后，会返回证书，包括公钥</li>
+<li>浏览器接收到证书之后，会检验证书是否合法，不合法的话，会弹出告警提示</li>
+</ul>
+<h4 id="数据传输阶段"><a href="#数据传输阶段" class="headerlink" title="数据传输阶段"></a>数据传输阶段</h4><p>证书验证合法之后</p>
+<ul>
+<li>浏览器会生成一个随机数，</li>
+<li>使用公钥进行加密，发送给服务端</li>
+<li>服务器收到浏览器发来的值，使用私钥进行解密</li>
+<li>解析成功之后，使用对称加密算法进行加密，传输给客户端</li>
+</ul>
+<p>之后双方通信就使用第一步生成的随机数进行加密通信。</p>
 <h3 id="https为什么要采用对称和非对称加密结合的方式"><a href="#https为什么要采用对称和非对称加密结合的方式" class="headerlink" title="https为什么要采用对称和非对称加密结合的方式"></a>https为什么要采用对称和非对称加密结合的方式</h3><p>非对称加密在性能上不如对称加密，  对称加密安全性比较低。</p>
 <p>所以公钥私钥主要用于传输对称加密的秘钥，而真正的双方大数据量的通信都是通过对称加密进行的。  </p>
+<h3 id="什么是中间人攻击"><a href="#什么是中间人攻击" class="headerlink" title="什么是中间人攻击"></a>什么是中间人攻击</h3><p>中间人攻击是指攻击者与通讯的两端分别创建独立的联系，并交换其所收到的数据，使通讯的两端认为他们正在通过一个私密的连接与对方直接对话，但事实上整个会话都被攻击者完全控制。</p>
+<blockquote>
+<p>HTTPS 使用了 SSL 加密协议，是一种非常安全的机制，目前并没有方法直接对这个协议进行攻击，一般都是在建立 SSL 连接时，拦截客户端的请求，利用中间人获取到 CA证书、非对称加密的公钥、对称加密的密钥；有了这些条件，就可以对请求和响应进行拦截和篡改。</p>
+</blockquote>
+<h3 id="https-是如何防止中间人攻击的"><a href="#https-是如何防止中间人攻击的" class="headerlink" title="https 是如何防止中间人攻击的"></a>https 是如何防止中间人攻击的</h3><p>在https中需要证书，证书的作用是为了防止”中间人攻击”的。 如果有个中间人M拦截客户端请求,然后M向客户端提供自己的公钥，M再向服务端请求公钥,作为”中介者” 这样客户端和服务端都不知道,信息已经被拦截获取了。这时候就需要证明服务端的公钥是正确的.证明就需要权威第三方机构CA来公正了。</p>
+<h3 id="浏览器是如何确保CA证书的合法性？"><a href="#浏览器是如何确保CA证书的合法性？" class="headerlink" title="浏览器是如何确保CA证书的合法性？"></a>浏览器是如何确保CA证书的合法性？</h3><p><strong>证书包含什么信息？</strong></p>
+<p>颁发机构信息、公钥、公司信息、域名、有效期、指纹…</p>
+<p><strong>浏览器如何验证证书的合法性？</strong></p>
+<ul>
+<li>验证域名、有效期等信息是否正确。证书上都有包含这些信息，比较容易完成验证；</li>
+<li>判断证书来源是否合法。每份签发证书都可以根据验证链查找到对应的根证书，操作系统、浏览器会在本地存储权威机构的根证书，利用本地根证书可以对对应机构签发证书完成来源验证；</li>
+<li>判断证书是否被篡改。需要与CA服务器进行校验；</li>
+<li>判断证书是否已吊销。通过CRL（Certificate Revocation List 证书注销列表）和 OCSP（Online Certificate Status Protocol 在线证书状态协议）实现，其中 OCSP 可用于第3步中以减少与CA服务器的交互，提高验证效率。</li>
+</ul>
+<h3 id="https-可以抓包吗"><a href="#https-可以抓包吗" class="headerlink" title="https 可以抓包吗"></a>https 可以抓包吗</h3><p>常规下抓包工具代理请求后抓到的包内容是加密状态，无法直接查看。</p>
+<p>但是，我们可以通过抓包工具来抓包。它的原理其实是模拟一个中间人。</p>
+<p>通常 HTTPS 抓包工具的使用方法是会生成一个证书，用户需要手动把证书安装到客户端中，然后终端发起的所有请求通过该证书完成与抓包工具的交互，然后抓包工具再转发请求到服务器，最后把服务器返回的结果在控制台输出后再返回给终端，从而完成整个请求的闭环。</p>
 <h3 id="输入-www-baidu-com，怎么变成-https-www-baidu-com-的，怎么确定用HTTP还是HTTPS？"><a href="#输入-www-baidu-com，怎么变成-https-www-baidu-com-的，怎么确定用HTTP还是HTTPS？" class="headerlink" title="输入 www.baidu.com，怎么变成 https://www.baidu.com 的，怎么确定用HTTP还是HTTPS？"></a>输入 <a href="http://www.baidu.com，怎么变成" target="_blank" rel="noopener">www.baidu.com，怎么变成</a> <a href="https://www.baidu.com" target="_blank" rel="noopener">https://www.baidu.com</a> 的，怎么确定用HTTP还是HTTPS？</h3><p>一种是原始的302跳转，服务器把所有的HTTP流量跳转到HTTPS。但这样有一个漏洞，就是中间人可能在第一次访问站点的时候就劫持。<br>解决方法是引入HSTS机制，用户浏览器在访问站点的时候强制使用HTTPS。</p>
 <h3 id="什么是对称加密、非对称加密？区别是什么？"><a href="#什么是对称加密、非对称加密？区别是什么？" class="headerlink" title="什么是对称加密、非对称加密？区别是什么？"></a>什么是对称加密、非对称加密？区别是什么？</h3><ul>
 <li>对称加密：加密和解密采用相同的密钥。如：DES、RC2、RC4</li>
@@ -658,6 +697,11 @@ TCP
 <p><strong>签名算法</strong></p>
 <p>一般是对信息做一个 Hash 计算，得到一个 Hash 值，这个过程是不可逆的，也就是说无法通过 Hash 值得出原来的信息内容。在把信息发送出去时，把这个 Hash 值加密后，作为一个签名和信息一起发出去。 </p>
 <p> CA 用自己的私钥给外卖网站的公钥签名，就相当于给外卖网站背书，形成了外卖网站的证书。  </p>
+<h3 id="http层的keep-alive"><a href="#http层的keep-alive" class="headerlink" title="http层的keep-alive"></a>http层的keep-alive</h3><p>用于客户端告诉服务端，这个连接我还会继续使用，在使用完之后不要关闭。</p>
+<p>在性能上对客户端和服务器端性能上有一定的提升。很少了TCP的三次握手和四次挥手，第二次传递数据就可以通过前一个连接直接进行数据交互了。</p>
+<blockquote>
+<p>先发起连接断开的一方会在连接断开之后进入到TIME_WAIT的状态达到2MSL之久。如果没有开启HTTP的keep-alive，那么这个TIME_WAIT就会留在服务端，由于服务端资源是非常有限的，我们当然倾向于服务端不会同一时间hold住过多的连接，这种TIME_WAIT的状态应该尽量在客户端保持。</p>
+</blockquote>
 <h3 id="GET与POST的区别？"><a href="#GET与POST的区别？" class="headerlink" title="GET与POST的区别？"></a>GET与POST的区别？</h3><ol>
 <li>GET是幂等的，即读取同一个资源，总是得到相同的数据，POST不是幂等的；</li>
 <li>GET一般用于从服务器获取资源，而POST有可能改变服务器上的资源；</li>
@@ -678,12 +722,29 @@ TCP
 <li>浏览器解析并渲染视图，若遇到对js文件、css文件及图片等静态资源的引用，则重复上述步骤并向服务器请求这些资源；</li>
 <li>浏览器根据其请求到的资源、数据渲染页面，最终向用户呈现一个完整的页面。</li>
 </ol>
+<h3 id="一个-url-分为哪几部分，各个部分的含义是什么"><a href="#一个-url-分为哪几部分，各个部分的含义是什么" class="headerlink" title="一个 url 分为哪几部分，各个部分的含义是什么"></a>一个 url 分为哪几部分，各个部分的含义是什么</h3><p>统一资源定位符（URL）是用于完整地描述Internet上网页和其他资源的地址的一种标识方法。</p>
+<p>URL的一般格式为（带方括号[]的为可选项）：<code>protocol://hostname[:port]/path/[;parameters][?query]#fragment</code> </p>
+<p>URL由三部分组成： 协议类型 ，主机名 和 路径及文件名 。</p>
+<p>1、protocol（协议）：指定使用的传输协议， 最常用的是HTTP协议。 </p>
+<p>2、hostname（主机名）：是指存放资源的服务器的域名系统 (DNS) 主机名或 IP 地址。</p>
+<p>3、port（端口号）：省略时使用协议的默认端口，各种传输协议都有默认的端口号，如http的默认端口为80。</p>
+<p>4、path（路径）：由零或多个“/”符号隔开的字符串，一般用来表示主机上的一个目录或文件地址。</p>
+<p>5、;parameters（参数）：这是用于指定特殊参数的可选项。<br>6、?query（查询）：可选，可有多个参数，用“&amp;”符号隔开，每个参数的名和值用“=”符号隔开。<br>7、fragment，信息片断，字符串，用于指定网络资源中的片断。例如一个网页中有多个名词解释，可使用fragment直接定位到某一名词解释</p>
+<h3 id="HTTP-请求的请求行、请求头、请求包体各部分内容"><a href="#HTTP-请求的请求行、请求头、请求包体各部分内容" class="headerlink" title="HTTP 请求的请求行、请求头、请求包体各部分内容"></a>HTTP 请求的请求行、请求头、请求包体各部分内容</h3><p>请求行（Request Line）分为三个部分：请求方法、请求地址和协议及版本，以CRLF(rn)结束。</p>
+<p>HTTP请求报文头：拥有若干个报文关属性，它们是为协助客户端及服务端交易的一些附属信息。 常见的有Accept 、Cookie 、Referer 、Cache-Control</p>
+<p>请求体：支持格式：application/json、text/xml、文件分割</p>
+<h3 id="HTTP-响应报文的内容"><a href="#HTTP-响应报文的内容" class="headerlink" title="HTTP 响应报文的内容"></a>HTTP 响应报文的内容</h3><p>HTTP响应也由三个部分组成，分别是：状态行、响应头、响应正文。</p>
+<p>状态行：<code>HTTP-Version Status-Code Reason-Phrase CRLF</code>，HTTP-Version表示服务器HTTP协议的版本；Status-Code表示服务器发回的响应状态代码；Reason-Phrase表示状态代码的文本描述。</p>
+<p>响应头：响应头用于描述服务器的基本信息，以及数据的描述，服务器通过这些数据的描述信息，可以通知客户端如何处理等一会儿它回送的数据。常见的有：Expires、Last-Modified、Set-Cookie</p>
+<p>响应体：就是响应的消息体，如果是纯数据就是返回纯数据，如果请求的是HTML页面，那么返回的就是HTML代码，如果是JS就是JS代码</p>
 <h3 id="HTTP请求有哪些常见状态码？"><a href="#HTTP请求有哪些常见状态码？" class="headerlink" title="HTTP请求有哪些常见状态码？"></a>HTTP请求有哪些常见状态码？</h3><ol>
 <li>2xx状态码：操作成功。200 OK</li>
 <li>3xx状态码：重定向。301 永久重定向；302暂时重定向</li>
 <li>4xx状态码：客户端错误。400 Bad Request；401 Unauthorized；403 Forbidden；404 Not Found；</li>
 <li>5xx状态码：服务端错误。500服务器内部错误；501服务不可用； 502 Bad Gateway：请求未完成，服务器从上游服务器收到一个无效的响应。 </li>
 </ol>
+<p><code>502</code>并不是指网关（例如nginx）本身出了问题，而是从上游接收响应出了问题，比如由于上游服务自身超时导致不能产生响应数据，或者上游不按照协议约定来返回数据导致网关不能正常解析。</p>
+<p><code>504</code>，<code>Gateway Timeout</code>，网关超时。它表示网关没有从上游及时获取响应数据。原因在于超过了<code>nginx</code>自身的超时时间</p>
 <h2 id="什么是RIP（Routing-Information-Protocol-距离矢量路由协议）-算法是什么？"><a href="#什么是RIP（Routing-Information-Protocol-距离矢量路由协议）-算法是什么？" class="headerlink" title="什么是RIP（Routing Information Protocol, 距离矢量路由协议）? 算法是什么？"></a>什么是RIP（Routing Information Protocol, 距离矢量路由协议）? 算法是什么？</h2><p>每个路由器维护一张表，记录该路由器到其它网络的”跳数“，路由器到与其直接连接的网络的跳数是1，每多经过一个路由器跳数就加1；更新该表时和相邻路由器交换路由信息；路由器允许一个路径最多包含15个路由器，如果跳数为16，则不可达。交付数据报时优先选取距离最短的路径。</p>
 <p>（PS：RIP是应用层协议：<a href="https://www.zhihu.com/question/19645407" target="_blank" rel="noopener">https://www.zhihu.com/question/19645407</a>）</p>
 <p><strong>优缺点</strong></p>
@@ -722,6 +783,17 @@ TCP
 <h3 id="什么是ARP协议-Address-Resolution-Protocol-？"><a href="#什么是ARP协议-Address-Resolution-Protocol-？" class="headerlink" title="什么是ARP协议 (Address Resolution Protocol)？"></a>什么是ARP协议 (Address Resolution Protocol)？</h3><p><strong>ARP协议完成了IP地址与物理地址的映射</strong>。每一个主机都设有一个 ARP 高速缓存，里面有<strong>所在的局域网</strong>上的各主机和路由器的 IP 地址到硬件地址的映射表。当源主机要发送数据包到目的主机时，会先检查自己的ARP高速缓存中有没有目的主机的MAC地址，如果有，就直接将数据包发到这个MAC地址，如果没有，就向<strong>所在的局域网</strong>发起一个ARP请求的广播包（在发送自己的 ARP 请求时，同时会带上自己的 IP 地址到硬件地址的映射），收到请求的主机检查自己的IP地址和目的主机的IP地址是否一致，如果一致，则先保存源主机的映射到自己的ARP缓存，然后给源主机发送一个ARP响应数据包。源主机收到响应数据包之后，先添加目的主机的IP地址与MAC地址的映射，再进行数据传送。如果源主机一直没有收到响应，表示ARP查询失败。</p>
 <p>如果所要找的主机和源主机不在同一个局域网上，那么就要通过 ARP 找到一个位于本局域网上的某个路由器的硬件地址，然后把分组发送给这个路由器，让这个路由器把分组转发给下一个网络。剩下的工作就由下一个网络来做。</p>
 <h3 id="什么是NAT-Network-Address-Translation-网络地址转换-？"><a href="#什么是NAT-Network-Address-Translation-网络地址转换-？" class="headerlink" title="什么是NAT (Network Address Translation, 网络地址转换)？"></a>什么是NAT (Network Address Translation, 网络地址转换)？</h3><p>用于解决内网中的主机要和因特网上的主机通信。由NAT路由器将主机的本地IP地址转换为全球IP地址，分为静态转换（转换得到的全球IP地址固定不变）和动态NAT转换。</p>
+<h2 id="DNS解析流程"><a href="#DNS解析流程" class="headerlink" title="DNS解析流程"></a>DNS解析流程</h2><ul>
+<li>电脑客户端会发出一个 DNS 请求，问 <a href="http://www.163.com" target="_blank" rel="noopener">www.163.com</a> 的 IP 是啥啊，并发给本地域名服务器（DNS）。本地 DNS 由你的网络服务商，如电信、移动等自动分配，它通常就在你网络服务商的某个机房。</li>
+<li>本地 DNS 收到来自客户端的请求。你可以想象这台服务器上缓存了一张域名与之对应 IP 地址的大表格。如果能找到 <a href="http://www.163.com，它直接就返回" target="_blank" rel="noopener">www.163.com，它直接就返回</a> IP 地址。如果没有，本地 DNS 会去问它的根域名服务器：“老大，能告诉我 <a href="http://www.163.com" target="_blank" rel="noopener">www.163.com</a> 的 IP 地址吗？”根域名服务器是最高层次的，全球共有 13 套。它不直接用于域名解析，但能指明一条道路。</li>
+<li>根 DNS 收到来自本地 DNS 的请求，发现后缀是 .com，说：“哦，<a href="http://www.163.com" target="_blank" rel="noopener">www.163.com</a> 啊，这个域名是由.com 区域管理，我给你它的顶级域名服务器的地址，你去问问它吧。”</li>
+<li>本地 DNS 转向问顶级域名服务器：“老二，你能告诉我 <a href="http://www.163.com" target="_blank" rel="noopener">www.163.com</a> 的 IP 地址吗？”顶级域名服务器就是大名鼎鼎的比如 .com、.net、 .org 这些一级域名，它负责管理二级域名，比如163.com，所以它能提供一条更清晰的方向。</li>
+<li>顶级域名服务器说：“我给你负责 <a href="http://www.163.com" target="_blank" rel="noopener">www.163.com</a> 区域的权威 DNS 服务器的地址，你去问它应该能问到。”</li>
+<li>本地 DNS 转向问权威 DNS 服务器：“您好，<a href="http://www.163.com" target="_blank" rel="noopener">www.163.com</a> 对应的 IP 是啥呀？”163.com 的权威 DNS 服务器，它是域名解析结果的原出处。</li>
+<li>权限 DNS 服务器查询后将对应的 IP 地址 X.X.X.X 告诉本地 DNS。</li>
+<li>本地 DNS 再将 IP 地址返回客户端，客户端和目标建立连接</li>
+</ul>
+<h3 id="如果dns解析得到ip地址之后请求超时，那么会重新解析吗"><a href="#如果dns解析得到ip地址之后请求超时，那么会重新解析吗" class="headerlink" title="如果dns解析得到ip地址之后请求超时，那么会重新解析吗"></a>如果dns解析得到ip地址之后请求超时，那么会重新解析吗</h3><p>浏览器就得到了域名对应的 IP 地址，并将 IP 地址缓存起来。不需要</p>
 <h2 id="Socket"><a href="#Socket" class="headerlink" title="Socket"></a>Socket</h2><h3 id="知道多路复用吗？为啥select的socket数量是有限的"><a href="#知道多路复用吗？为啥select的socket数量是有限的" class="headerlink" title="知道多路复用吗？为啥select的socket数量是有限的"></a>知道多路复用吗？为啥select的socket数量是有限的</h3><p><strong>select</strong></p>
 <ul>
 <li>由于 Socket 是文件描述符，因而某个线程盯的所有的 Socket，都放在一个文件描述符集合 fd_set 中，这就是项目进度墙，然后调用 select 函数来监听文件描述符集合是否有变化。</li>
@@ -735,6 +807,7 @@ TCP
 <li>当 epoll_ctl 添加一个 Socket 的时候，其实是加入这个红黑树，同时红黑树里面的节点指向一个结构，将这个结构挂在被监听的 Socket 的事件列表中。当一个 Socket 来了一个事件的时候，可以从这个列表中得到 epoll 对象，并调用 call back 通知它。  </li>
 </ul>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://blog.csdn.net/weixin_41047704/article/details/85340311" target="_blank" rel="noopener">https://blog.csdn.net/weixin_41047704/article/details/85340311</a></p>
+<p><a href="https://blog.csdn.net/gdutxiaoxu/article/details/107393249" target="_blank" rel="noopener">https://blog.csdn.net/gdutxiaoxu/article/details/107393249</a></p>
 
             </div>
             <hr />
@@ -1227,7 +1300,7 @@ TCP
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="常见场景题">
+                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="常见场景题">
                         
                         <span class="card-title">常见场景题</span>
                     </div>
@@ -1278,7 +1351,7 @@ TCP
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="flask">
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="flask">
                         
                         <span class="card-title">flask</span>
                     </div>
@@ -1487,7 +1560,7 @@ run 方法调用werkzeug 的 run_simple
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">111.5k</span>
+            <span class="white-color">114.2k</span>
             
 
             <br>
