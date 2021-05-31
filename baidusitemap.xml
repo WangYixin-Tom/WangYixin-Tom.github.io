@@ -2,16 +2,28 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://wangyixin-tom.github.io/2021/05/28/question-2/</loc>
-    <lastmod>2021-05-27</lastmod>
-  </url>  <url>
-    <loc>https://wangyixin-tom.github.io/2021/05/20/wang-luo/</loc>
-    <lastmod>2021-05-27</lastmod>
-  </url>  <url>
-    <loc>https://wangyixin-tom.github.io/2021/05/24/chang-jian-chang-jing-ti/</loc>
-    <lastmod>2021-05-26</lastmod>
+    <lastmod>2021-05-31</lastmod>
   </url>  <url>
     <loc>https://wangyixin-tom.github.io/2021/04/10/mysql-mian-shi/</loc>
-    <lastmod>2021-05-26</lastmod>
+    <lastmod>2021-05-31</lastmod>
+  </url>  <url>
+    <loc>https://wangyixin-tom.github.io/2021/03/15/fen-ku-fen-biao/</loc>
+    <lastmod>2021-05-31</lastmod>
+  </url>  <url>
+    <loc>https://wangyixin-tom.github.io/2021/05/20/wang-luo/</loc>
+    <lastmod>2021-05-30</lastmod>
+  </url>  <url>
+    <loc>https://wangyixin-tom.github.io/2021/05/30/zui-chang-gong-gong-zi-chuan/</loc>
+    <lastmod>2021-05-30</lastmod>
+  </url>  <url>
+    <loc>https://wangyixin-tom.github.io/2021/03/14/suo/</loc>
+    <lastmod>2021-05-30</lastmod>
+  </url>  <url>
+    <loc>https://wangyixin-tom.github.io/2021/05/24/chang-jian-chang-jing-ti/</loc>
+    <lastmod>2021-05-30</lastmod>
+  </url>  <url>
+    <loc>https://wangyixin-tom.github.io/2021/03/14/shi-wu/</loc>
+    <lastmod>2021-05-28</lastmod>
   </url>  <url>
     <loc>https://wangyixin-tom.github.io/2021/04/12/redis-mian-shi/</loc>
     <lastmod>2021-05-25</lastmod>
@@ -45,12 +57,6 @@
   </url>  <url>
     <loc>https://wangyixin-tom.github.io/2020/10/26/redis-rdb-ji-zhi/</loc>
     <lastmod>2021-05-17</lastmod>
-  </url>  <url>
-    <loc>https://wangyixin-tom.github.io/2021/03/14/shi-wu/</loc>
-    <lastmod>2021-05-12</lastmod>
-  </url>  <url>
-    <loc>https://wangyixin-tom.github.io/2021/03/14/suo/</loc>
-    <lastmod>2021-05-12</lastmod>
   </url>  <url>
     <loc>https://wangyixin-tom.github.io/2020/11/02/redis-xiao-xi-dui-lie/</loc>
     <lastmod>2021-05-11</lastmod>
@@ -122,9 +128,6 @@
     <lastmod>2021-04-29</lastmod>
   </url>  <url>
     <loc>https://wangyixin-tom.github.io/2021/03/21/ji-chu-jia-gou/</loc>
-    <lastmod>2021-04-29</lastmod>
-  </url>  <url>
-    <loc>https://wangyixin-tom.github.io/2021/03/15/fen-ku-fen-biao/</loc>
     <lastmod>2021-04-29</lastmod>
   </url>  <url>
     <loc>https://wangyixin-tom.github.io/2021/03/15/du-xie-fen-chi/</loc>
@@ -217,10 +220,10 @@
     <loc>https://wangyixin-tom.github.io/2021/03/29/kafka-shou-quan/</loc>
     <lastmod>2021-04-01</lastmod>
   </url>  <url>
-    <loc>https://wangyixin-tom.github.io/2021/03/28/kafka-fu-ben/</loc>
+    <loc>https://wangyixin-tom.github.io/2021/03/23/kafka-lan-jie-qi/</loc>
     <lastmod>2021-04-01</lastmod>
   </url>  <url>
-    <loc>https://wangyixin-tom.github.io/2021/03/23/kafka-lan-jie-qi/</loc>
+    <loc>https://wangyixin-tom.github.io/2021/03/28/kafka-fu-ben/</loc>
     <lastmod>2021-04-01</lastmod>
   </url>  <url>
     <loc>https://wangyixin-tom.github.io/2021/03/28/kafka-broker-qing-qiu-chu-li/</loc>

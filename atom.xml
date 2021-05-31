@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://wangyixin-tom.github.io/"/>
-  <updated>2021-05-27T23:30:52.918Z</updated>
+  <updated>2021-05-30T14:18:52.766Z</updated>
   <id>https://wangyixin-tom.github.io/</id>
   
   <author>
@@ -17,11 +17,40 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>最长公共子串</title>
+    <link href="https://wangyixin-tom.github.io/2021/05/30/zui-chang-gong-gong-zi-chuan/"/>
+    <id>https://wangyixin-tom.github.io/2021/05/30/zui-chang-gong-gong-zi-chuan/</id>
+    <published>2021-05-30T14:16:05.000Z</published>
+    <updated>2021-05-30T14:18:52.766Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;思路：动态规划。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;dp[i][j]&lt;/code&gt;标识str1[i]和str[j]结尾的最长公共子串，递推关系如下：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;若&lt;code&gt;str1[i] == str2[j]&lt;/code&gt;，则&lt;code&gt;dp[i][j] =
+        
+      
+    
+    </summary>
+    
+      <category term="算法" scheme="https://wangyixin-tom.github.io/categories/%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="算法" scheme="https://wangyixin-tom.github.io/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
     <title></title>
     <link href="https://wangyixin-tom.github.io/2021/05/28/question-2/"/>
     <id>https://wangyixin-tom.github.io/2021/05/28/question-2/</id>
-    <published>2021-05-27T23:30:08.050Z</published>
-    <updated>2021-05-27T23:30:52.918Z</updated>
+    <published>2021-05-28T13:51:44.897Z</published>
+    <updated>2021-05-31T00:06:55.604Z</updated>
     
     <summary type="html">
     
@@ -43,7 +72,7 @@
     <link href="https://wangyixin-tom.github.io/2021/05/24/chang-jian-chang-jing-ti/"/>
     <id>https://wangyixin-tom.github.io/2021/05/24/chang-jian-chang-jing-ti/</id>
     <published>2021-05-24T14:24:00.000Z</published>
-    <updated>2021-05-26T10:48:24.847Z</updated>
+    <updated>2021-05-30T08:28:03.403Z</updated>
     
     <summary type="html">
     
@@ -69,7 +98,7 @@
     <link href="https://wangyixin-tom.github.io/2021/05/20/wang-luo/"/>
     <id>https://wangyixin-tom.github.io/2021/05/20/wang-luo/</id>
     <published>2021-05-19T22:20:37.000Z</published>
-    <updated>2021-05-27T23:30:08.052Z</updated>
+    <updated>2021-05-30T23:29:07.720Z</updated>
     
     <summary type="html">
     
@@ -251,7 +280,7 @@
     <link href="https://wangyixin-tom.github.io/2021/04/10/mysql-mian-shi/"/>
     <id>https://wangyixin-tom.github.io/2021/04/10/mysql-mian-shi/</id>
     <published>2021-04-10T10:45:14.000Z</published>
-    <updated>2021-05-26T10:48:24.844Z</updated>
+    <updated>2021-05-31T00:06:35.381Z</updated>
     
     <summary type="html">
     
@@ -497,34 +526,6 @@
         
         
           &lt;h2 id=&quot;调优目标&quot;&gt;&lt;a href=&quot;#调优目标&quot; class=&quot;headerlink&quot; title=&quot;调优目标&quot;&gt;&lt;/a&gt;调优目标&lt;/h2&gt;&lt;p&gt;吞吐量，也就是 TPS，是指 Broker 端进程或 Client
-        
-      
-    
-    </summary>
-    
-      <category term="kafka" scheme="https://wangyixin-tom.github.io/categories/kafka/"/>
-    
-    
-      <category term="kafka" scheme="https://wangyixin-tom.github.io/tags/kafka/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>kafka授权</title>
-    <link href="https://wangyixin-tom.github.io/2021/03/29/kafka-shou-quan/"/>
-    <id>https://wangyixin-tom.github.io/2021/03/29/kafka-shou-quan/</id>
-    <published>2021-03-29T13:47:25.000Z</published>
-    <updated>2021-04-01T23:01:49.726Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;授权，一般是指对与信息安全或计算机安全相关的资源授予访问权限，特别是存取控制。&lt;/p&gt;
-&lt;p&gt;Kafka用的是 ACL 模型，规定了什么用户对什么资源有什么样的访问权限。&lt;/p&gt;
-&lt;h2 id=&quot;kafka-acls-脚本&quot;&gt;&lt;a
         
       
     
