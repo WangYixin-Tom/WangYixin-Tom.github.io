@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://wangyixin-tom.github.io/"/>
-  <updated>2021-05-31T23:35:24.294Z</updated>
+  <updated>2021-06-01T10:47:48.268Z</updated>
   <id>https://wangyixin-tom.github.io/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title></title>
+    <link href="https://wangyixin-tom.github.io/2021/06/01/question-2/"/>
+    <id>https://wangyixin-tom.github.io/2021/06/01/question-2/</id>
+    <published>2021-06-01T10:47:48.268Z</published>
+    <updated>2021-06-01T10:47:48.268Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;进程与线程的区别&lt;/p&gt;
+&lt;p&gt;进程间的通信，线程间的通信&lt;br&gt;在线测评：给一个时间戳，算出具体的年和月（时间戳是从格林威治时间年月日时分秒起至现在）&lt;br&gt;.堆和栈的区别&lt;br&gt;设计LRU&lt;br&gt;MQ的数据一致性如何实现&lt;br&gt;密码为什么加盐&lt;br&gt;盐bai
+        
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>最长公共子序列</title>
@@ -39,29 +62,6 @@
     
     
       <category term="算法" scheme="https://wangyixin-tom.github.io/tags/%E7%AE%97%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title></title>
-    <link href="https://wangyixin-tom.github.io/2021/05/31/question-2/"/>
-    <id>https://wangyixin-tom.github.io/2021/05/31/question-2/</id>
-    <published>2021-05-31T13:19:15.361Z</published>
-    <updated>2021-06-01T00:04:40.958Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;进程与线程的区别&lt;/p&gt;
-&lt;p&gt;进程间的通信，线程间的通信&lt;br&gt;在线测评：给一个时间戳，算出具体的年和月（时间戳是从格林威治时间年月日时分秒起至现在）&lt;br&gt;.堆和栈的区别&lt;br&gt;设计LRU&lt;br&gt;MQ的数据一致性如何实现&lt;br&gt;密码为什么加盐&lt;br&gt;盐bai
-        
-      
-    
-    </summary>
-    
     
   </entry>
   
@@ -177,7 +177,7 @@
     <link href="https://wangyixin-tom.github.io/2021/04/13/python-mian-shi/"/>
     <id>https://wangyixin-tom.github.io/2021/04/13/python-mian-shi/</id>
     <published>2021-04-13T11:58:48.000Z</published>
-    <updated>2021-05-19T00:00:40.520Z</updated>
+    <updated>2021-06-01T10:47:48.267Z</updated>
     
     <summary type="html">
     
@@ -203,7 +203,7 @@
     <link href="https://wangyixin-tom.github.io/2021/04/12/redis-mian-shi/"/>
     <id>https://wangyixin-tom.github.io/2021/04/12/redis-mian-shi/</id>
     <published>2021-04-12T11:16:53.000Z</published>
-    <updated>2021-05-25T12:44:50.552Z</updated>
+    <updated>2021-06-01T10:47:48.269Z</updated>
     
     <summary type="html">
     
@@ -307,7 +307,7 @@
     <link href="https://wangyixin-tom.github.io/2021/04/10/mysql-mian-shi/"/>
     <id>https://wangyixin-tom.github.io/2021/04/10/mysql-mian-shi/</id>
     <published>2021-04-10T10:45:14.000Z</published>
-    <updated>2021-05-31T13:19:15.359Z</updated>
+    <updated>2021-06-01T10:47:48.253Z</updated>
     
     <summary type="html">
     

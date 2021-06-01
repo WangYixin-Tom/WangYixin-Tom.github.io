@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://wangyixin-tom.github.io/2021/05/31/question-2/</loc>
+    <loc>https://wangyixin-tom.github.io/2021/04/12/redis-mian-shi/</loc>
+    <lastmod>2021-06-01</lastmod>
+  </url>  <url>
+    <loc>https://wangyixin-tom.github.io/2021/06/01/question-2/</loc>
+    <lastmod>2021-06-01</lastmod>
+  </url>  <url>
+    <loc>https://wangyixin-tom.github.io/2021/04/13/python-mian-shi/</loc>
+    <lastmod>2021-06-01</lastmod>
+  </url>  <url>
+    <loc>https://wangyixin-tom.github.io/2021/04/10/mysql-mian-shi/</loc>
     <lastmod>2021-06-01</lastmod>
   </url>  <url>
     <loc>https://wangyixin-tom.github.io/2021/05/20/wang-luo/</loc>
@@ -22,9 +31,6 @@
     <loc>https://wangyixin-tom.github.io/2020/10/25/redis-shao-bing-ji-zhi/</loc>
     <lastmod>2021-05-31</lastmod>
   </url>  <url>
-    <loc>https://wangyixin-tom.github.io/2021/04/10/mysql-mian-shi/</loc>
-    <lastmod>2021-05-31</lastmod>
-  </url>  <url>
     <loc>https://wangyixin-tom.github.io/2021/04/08/kafka-mian-shi/</loc>
     <lastmod>2021-05-31</lastmod>
   </url>  <url>
@@ -40,9 +46,6 @@
     <loc>https://wangyixin-tom.github.io/2021/03/14/shi-wu/</loc>
     <lastmod>2021-05-28</lastmod>
   </url>  <url>
-    <loc>https://wangyixin-tom.github.io/2021/04/12/redis-mian-shi/</loc>
-    <lastmod>2021-05-25</lastmod>
-  </url>  <url>
     <loc>https://wangyixin-tom.github.io/2020/10/26/redis-aof-ji-zhi/</loc>
     <lastmod>2021-05-25</lastmod>
   </url>  <url>
@@ -53,9 +56,6 @@
     <lastmod>2021-05-20</lastmod>
   </url>  <url>
     <loc>https://wangyixin-tom.github.io/2020/10/29/redis-fen-bu-shi-suo/</loc>
-    <lastmod>2021-05-19</lastmod>
-  </url>  <url>
-    <loc>https://wangyixin-tom.github.io/2021/04/13/python-mian-shi/</loc>
     <lastmod>2021-05-19</lastmod>
   </url>  <url>
     <loc>https://wangyixin-tom.github.io/2021/04/05/rabbitmq-mian-shi/</loc>

@@ -436,7 +436,7 @@
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    14.4k
+                    14.3k
                 </div>
                 
 
@@ -472,15 +472,20 @@
 <li>负责数据存储和提取，插件式，支持InnoDB、MyISAM多个存储引擎</li>
 </ol>
 <h2 id="日志系统"><a href="#日志系统" class="headerlink" title="日志系统"></a>日志系统</h2><h3 id="redo-log（重做日志）"><a href="#redo-log（重做日志）" class="headerlink" title="redo log（重做日志）"></a>redo log（重做日志）</h3><ol>
-<li>InnoDB引擎的日志，redo log 保证数据库异常重启之前提交的记录不会丢失（crash-safe）</li>
-<li>在一条更新语句进行执行的时候，InnoDB引擎会把更新记录写到 redo log 日志中，然后更新内存，此时算是语句执行完了，然后在空闲的时候或者是按照设定的更新策略将 redo log 中的内容更新到磁盘中，这里涉及到WAL即Write Ahead logging技术（先写日志再写磁盘）</li>
+<li>InnoDB引擎的日志，redo log 保证数据库异常重启之前提交的记录不会丢失（crash-safe），确保事务的持久性。</li>
+<li>在一条更新语句进行执行的时候，InnoDB引擎会把更新记录写到 redo log 日志中，然后更新内存（buffer pool），此时算是语句执行完了，然后在空闲的时候或者是按照设定的更新策略将 redo log 中的内容更新到磁盘中，这里涉及到WAL即Write Ahead logging技术（先写日志再写磁盘）</li>
 <li>redo log 是物理日志，记录的是在某个数据页上做了什么修改</li>
 <li>redo log是循环写，空间固定会用完</li>
 </ol>
+<blockquote>
+<p>出现 MySQL 宕机或者断电时，如果有缓存页的数据还没来得及刷入磁盘，那么当 MySQL 重新启动时，可以根据 redo log 日志文件，进行数据重做，将数据恢复到宕机或者断电前的状态</p>
+<p>redo log 日志文件是持久化在磁盘上的，磁盘上可以有多个 redo log 文件，MySQL 默认有 2 个 redo log 文件，每个文件大小为 48M</p>
+<p> redo log 日志是存储在磁盘上的，那么此时是不是立马就将 redo log 日志写入磁盘呢？显然不是的，而是先写入一个叫做 redo log buffer 的缓存中，redo log buffer 是一块不同于 buffer pool 的内存缓存区</p>
+</blockquote>
 <p><strong>为什么MySQL 要写到 redo log buff 内存</strong></p>
 <ol>
-<li>找到记录后更新，这里涉及随时读，而随时读是很费时间的</li>
-<li>第二种是记在日志（内存）上，这是顺序写的，而顺序写是很快的</li>
+<li>如果找到记录后更新，需要随机读，很费时间</li>
+<li>记在日志（内存）上，这是顺序写的，而顺序写是很快的</li>
 </ol>
 <h3 id="binlog（归档日志）"><a href="#binlog（归档日志）" class="headerlink" title="binlog（归档日志）"></a>binlog（归档日志）</h3><ol>
 <li><p>server层日志，记录了MySQL对数据库执行更改的所有操作，没有crash-safe能力</p>
@@ -543,6 +548,7 @@
 <li>statement格式最后有commit  </li>
 <li>row格式最有有一个XID event（redo log 和 bin log关联：共同字段XID）</li>
 </ul>
+<p>MySQL 重启后，进行数据重做时，在 redo log 日志中由于该事务的 redo log 日志没有 commit 标识，那么就不会进行数据重做，磁盘上数据还是原来的数据，也就是事务没有提交。</p>
 <h3 id="undo-log"><a href="#undo-log" class="headerlink" title="undo log"></a>undo log</h3><ol>
 <li><p>undo log是逻辑日志，可以认为当delete一条记录时，undo log中会记录一条对应的insert记录，反之亦然，当update一条记录时，它记录一条对应相反的update记录</p>
 </li>
@@ -558,14 +564,14 @@
 <ol>
 <li>InnoDB 的 redo log 写满了，系统会停止所有更新操作，把 checkpoint 对应的所有脏页都 flush 到磁盘</li>
 <li>系统内存不足，当需要新的内存页，就要淘汰一些数据页，空出内存给别的数据页使用。如果淘汰的是”脏页”，就要先将脏页写到磁盘</li>
-<li>MySQL 认为系统”空闲”的时候，会flush脏页</li>
+<li>MySQL 认为系统空闲的时候，会flush脏页</li>
 <li>MySQL 正常关闭的情况，MySQL 会把内存的脏页都 flush 到磁盘上</li>
 </ol>
 <p>InnoDB 的刷盘速度参考两个因素：一个是脏页比例，一个是 redo log 写盘速度</p>
 <h2 id="存储引擎"><a href="#存储引擎" class="headerlink" title="存储引擎"></a>存储引擎</h2><h3 id="MyISAM与InnoDB索引区别"><a href="#MyISAM与InnoDB索引区别" class="headerlink" title="MyISAM与InnoDB索引区别"></a>MyISAM与InnoDB索引区别</h3><p>InnoDB索引是<strong>聚簇索引</strong>，MyISAM索引是<strong>非聚簇索引</strong>。</p>
 <p>InnoDB的主键索引的叶子节点存储着行数据，因此主键索引非常高效；MyISAM索引的叶子节点存储的是行数据地址，需要再寻址一次才能得到数据。</p>
 <p>InnoDB非主键索引的叶子节点存储的是主键和其他带索引的列数据，因此查询时做到覆盖索引会非常高效</p>
-<h3 id="为什么myisam-的查询要比innoDB-快"><a href="#为什么myisam-的查询要比innoDB-快" class="headerlink" title="为什么myisam 的查询要比innoDB 快"></a>为什么myisam 的查询要比innoDB 快</h3><p>1）数据块，InnoDB要缓存，MyISAM只缓存索引块， 这中间还有换进换出的减少；</p>
+<h3 id="为什么myisam-的查询要比innoDB-快"><a href="#为什么myisam-的查询要比innoDB-快" class="headerlink" title="为什么myisam 的查询要比innoDB 快"></a>为什么myisam 的查询要比innoDB 快</h3><p>1）InnoDB 要缓存数据和索引，MyISAM只缓存索引块， 这中间还有换进换出的减少；</p>
 <p>2）InnoDB寻址要映射到块，再到行，MyISAM记录的直接是文件的OFFSET，定位比InnoDB要快</p>
 <p>3）InnoDB还需要维护MVCC一致； 虽然你的场景没有，但他还是需要去检查和维护MVCC (Multi-Version Concurrency Control)多版本并发控制 。</p>
 <h3 id="Innodb引擎特性"><a href="#Innodb引擎特性" class="headerlink" title="Innodb引擎特性"></a>Innodb引擎特性</h3><h4 id="写缓冲（change-buffer）"><a href="#写缓冲（change-buffer）" class="headerlink" title="写缓冲（change buffer）"></a>写缓冲（change buffer）</h4><p>Insert Buffer 用于非聚集索引的插入和更新操作。先判断插入的非聚集索引是否在缓存池中，如果在则直接插入，否则插入到 Insert Buffer 对象里。再以一定的频率进行 Insert Buffer 和辅助索引叶子节点的 merge 操作，将多次插入合并到一个操作中，减少随机IO带来性能损耗，提高对非聚集索引的插入性能。</p>
@@ -573,7 +579,7 @@
 <p>如果数据库发生宕机时，可以通过重做日志对该页进行恢复，但是如果该页本身已经损坏了，进行重做恢复是没有意义的。因此引入了”二次写”方案，解决部分写失败，提高数据页的稳定性。</p>
 <h4 id="自适应哈希索引"><a href="#自适应哈希索引" class="headerlink" title="自适应哈希索引"></a>自适应哈希索引</h4><p>InnoDB 会监控对表上各个索引页的查询，如果观察到通过哈希索引可以带来性能提升，则自动建立哈希索引。自适应哈希索引通过缓存池的 B+ 树页构造而来，因此建立速度很快。</p>
 <h4 id="预读"><a href="#预读" class="headerlink" title="预读"></a>预读</h4><p>数据库访问通常都遵循集中读取原则，使用一些数据大概率会使用附近的数据，这就是所谓的局部性原理，它表明提前加载是有效的，能减少磁盘的i/o。</p>
-<p>预读机制就是发起一个i/o请求，异步的在缓冲池中预先回迁若干个页面,预计将会用到的页面回迁.</p>
+<p>预读机制就是发起一个i/o请求，异步的在缓冲池中预先回迁若干个页面，预计将会用到的页面回迁。</p>
 <h2 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h2><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>数据库索引，是数据库管理系统中一个排序的数据结构，以协助快速查询、更新数据库表中数据。索引的实现通常使用B树及其变种B+树。</p>
 <p>通俗的说，索引就相当于目录。为了方便查找书中的内容，通过对内容建立索引形成目录。</p>
 <p>索引是一种特殊的文件，需要占据物理空间的，它们包含着对数据表里所有记录的引用指针。</p>
@@ -608,14 +614,14 @@
 <h3 id="索引设计的原则"><a href="#索引设计的原则" class="headerlink" title="索引设计的原则"></a>索引设计的原则</h3><p><strong>适合索引的列</strong>是出现在where子句中的列，或者连接子句中指定的列</p>
 <p><strong>使用短索引</strong>，如果对长字符串列进行索引，应该指定一个前缀长度，这样能够节省大量索引空间</p>
 <p><strong>不要过度索引</strong>。索引需要额外的磁盘空间，并降低写操作的性能。在修改表内容的时候，索引会进行更新甚至重构。</p>
-<h3 id="创建索引的原则"><a href="#创建索引的原则" class="headerlink" title="创建索引的原则"></a>创建索引的原则</h3><p>1） 最左前缀匹配原则，组合索引非常重要的原则，mysql会一直向右匹配直到遇到范围查询（&gt;、&lt;、between、like）就停止匹配，比如a = 1 and b = 2 and c &gt; 3 and d = 4 如果建立<code>(a,b,c,d)</code>顺序的索引，d是用不到索引的，如果建立<code>(a,b,d,c)</code>的索引则都可以用到，a,b,d的顺序可以任意调整。</p>
+<h3 id="创建索引的原则"><a href="#创建索引的原则" class="headerlink" title="创建索引的原则"></a>创建索引的原则</h3><p>1） 组合索引的最左前缀匹配原则，mysql会一直向右匹配直到遇到范围查询（&gt;、&lt;、between、like）就停止匹配，比如a = 1 and b = 2 and c &gt; 3 and d = 4 如果建立<code>(a,b,c,d)</code>顺序的索引，d是用不到索引的，如果建立<code>(a,b,d,c)</code>的索引则都可以用到，a,b,d的顺序可以任意调整。</p>
 <p>2）较频繁作为查询条件的字段才去创建索引</p>
 <p>3）更新频繁字段不适合创建索引</p>
-<p>4）若是不能有效区分数据的列不适合做索引列（如性别，男女未知，最多也就三种，区分度实在太低），选择基数较大的列做索引</p>
-<p>5）尽量的扩展索引，不要新建索引。比如表中已经有a的索引，现在要加(a,b)的索引，那么只需要修改原来的索引即可。联合索引比单个索引的性价比更高。</p>
+<p>4）若是不能有效区分数据的列不适合做索引列（如性别），选择基数较大的列做索引</p>
+<p>5）尽量的扩展索引，不要新建索引。比如表中已经有a的索引，现在要加<code>(a,b)</code>的索引，那么只需要修改原来的索引即可。联合索引比单个索引的性价比更高。</p>
 <p>6）定义有外键的数据列一定要建立索引。</p>
 <h3 id="创建索引注意点"><a href="#创建索引注意点" class="headerlink" title="创建索引注意点"></a>创建索引注意点</h3><p><strong>非空字段：</strong>应该指定列为NOT NULL，除非你想存储NULL。在mysql中，含有空值的列很难进行查询优化，因为它们使得索引、索引的统计信息以及比较运算更加复杂。你应该用0、一个特殊的值或者一个空串代替空值；</p>
-<p><strong>取值离散大的字段：</strong>（变量各个取值之间的差异程度）的列放到联合索引的前面，可以通过count()函数查看字段的差异值</p>
+<p><strong>取值离散大的字段：</strong>（变量各个取值之间的差异程度）的列放到联合索引的前面，可以通过<code>count()</code>函数查看字段的差异值</p>
 <p><strong>索引字段越小越好</strong>：数据库的数据存储以页为单位，一页存储的数据越多一次IO操作获取的数据越大，效率越高。</p>
 <h3 id="使用索引查询一定能提高查询的性能吗"><a href="#使用索引查询一定能提高查询的性能吗" class="headerlink" title="使用索引查询一定能提高查询的性能吗"></a>使用索引查询一定能提高查询的性能吗</h3><p><strong>通常，通过索引查询数据比全表扫描要快。</strong>但是我们也必须注意到它的代价。</p>
 <p><strong>索引需要空间来存储，也需要定期维护，</strong> 每当有记录在表中增减或索引列被修改时，索引本身也会被修改。 这意味着每条记录的INSERT，DELETE，UPDATE将为此多付出4，5 次的磁盘I/O。 因为索引需要额外的存储空间和处理，那些不必要的索引反而会使查询反应时间变慢。使用索引查询不一定能提高查询性能，索引范围查询（INDEX RANGE SCAN）适用于两种情况:</p>
@@ -701,7 +707,7 @@
 <p>table_priv权限表：记录数据表级的操作权限。</p>
 <p>columns_priv权限表：记录数据列级的操作权限。</p>
 <p>host权限表：配合db权限表对给定主机上数据库级操作权限作更细致的控制。这个权限表不受GRANT和REVOKE语句的影响。</p>
-<h2 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h2><p>视图是虚拟的表，视图只包含使用时动态检索数据的查询;不包含任何列或数据。</p>
+<h2 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h2><p>视图是虚拟的表，视图只包含使用时动态检索数据的查询；不包含任何列或数据。</p>
 <p>使用视图可以简化复杂的sql操作，隐藏具体的细节，保护数据;</p>
 <p>视图创建后，可以使用与表相同的方式利用它们。</p>
 <blockquote>
@@ -792,13 +798,17 @@
 <p><strong>从锁的类别上来讲，有共享锁和排他锁。</strong></p>
 <p><strong>共享锁:</strong> 又叫做读锁。 当用户要进行数据的读取时，对数据加上共享锁。共享锁可以同时加上多个。</p>
 <p><strong>排他锁:</strong> 又叫做写锁。 当用户要进行数据的写入时，对数据加上排他锁。排他锁只可以加一个，他和其他的排他锁，共享锁都相斥。</p>
-<h3 id="什么时候加行锁？"><a href="#什么时候加行锁？" class="headerlink" title="什么时候加行锁？"></a>什么时候加行锁？</h3><p>对于UPDATE、DELETE和INSERT语句，InnoDB会自动给涉及数据集加排他锁；对于普通SELECT语句，InnoDB不会加任何锁；当然我们也可以显示的加锁：<br>共享锁：<code>select * from tableName where ...  lock in share more</code><br>排他锁：<code>select * from tableName where ...  for update</code></p>
-<h3 id="什么时候加表锁"><a href="#什么时候加表锁" class="headerlink" title="什么时候加表锁"></a>什么时候加表锁</h3><p>InnoDB默认采用行锁，在未使用索引字段查询时升级为表锁。</p>
+<h3 id="什么时候加行锁？"><a href="#什么时候加行锁？" class="headerlink" title="什么时候加行锁？"></a>什么时候加行锁？</h3><ul>
+<li>对于UPDATE、DELETE和INSERT语句，InnoDB会自动给涉及数据集加排他锁；</li>
+<li>对于普通SELECT语句，InnoDB不会加任何锁；</li>
+<li>当然我们也可以显示的加锁：<br>共享锁：<code>select * from tableName where ...  lock in share more</code><br>排他锁：<code>select * from tableName where ...  for update</code></li>
+</ul>
+<h3 id="什么时候加表锁"><a href="#什么时候加表锁" class="headerlink" title="什么时候加表锁"></a>什么时候加表锁</h3><p>InnoDB默认采用行锁，没有使用索引字段查询时，会使用表锁。</p>
 <p>第一种情况：<strong>全表更新</strong>。事务需要更新大部分或全部数据，且表又比较大。若使用行锁，会导致事务执行效率低，从而可能造成其他事务长时间锁等待和更多的锁冲突。</p>
 <p>第二种情况：<strong>多表级联</strong>。事务涉及多个表，比较复杂的关联查询，很可能引起死锁，造成大量事务回滚。这种情况若能一次性锁定事务涉及的表，从而可以避免死锁、减少数据库因事务回滚带来的开销。</p>
 <p>也可手动加锁：</p>
 <pre class="line-numbers language-mysql"><code class="language-mysql">lock table xxx read/write;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h3 id="什么时候加间隙锁？"><a href="#什么时候加间隙锁？" class="headerlink" title="什么时候加间隙锁？"></a>什么时候加间隙锁？</h3><p>当我们用范围条件检索数据，并请求共享或排他锁时，InnoDB会给符合条件的已有数据记录的索引项加锁；对于键值在条件范围内但并不存在的记录，叫做”间隙(GAP)”</p>
+<h3 id="什么时候加间隙锁？"><a href="#什么时候加间隙锁？" class="headerlink" title="什么时候加间隙锁？"></a>什么时候加间隙锁？</h3><p>当我们用范围条件检索数据，并请求共享或排他锁时，InnoDB会给符合条件的已有数据记录的索引项加锁；对于键值在条件范围内但并不存在的记录，叫做间隙(GAP)</p>
 <h3 id="InnoDB存储引擎的锁的算法"><a href="#InnoDB存储引擎的锁的算法" class="headerlink" title="InnoDB存储引擎的锁的算法"></a>InnoDB存储引擎的锁的算法</h3><p>Record lock：单个行记录上的锁</p>
 <p>Gap lock：间隙锁，锁定一个范围，不包括记录本身</p>
 <p>Next-key lock：record+gap 锁定一个范围，包含记录本身</p>
@@ -813,8 +823,7 @@
 <li>在程序以批量方式处理数据的时候，如果事先对数据排序，保证每个线程按固定的顺序来处理记录，也可以大大降低出现死锁的可能  </li>
 </ul>
 <h3 id="什么是死锁？怎么解决？"><a href="#什么是死锁？怎么解决？" class="headerlink" title="什么是死锁？怎么解决？"></a>什么是死锁？怎么解决？</h3><p>死锁是指两个或多个事务在同一资源上相互占用，并请求锁定对方的资源，从而导致恶性循环的现象。</p>
-<p><strong>常见的避免死锁的方法</strong></p>
-<p>1、如果不同程序会并发存取多个表，尽量约定以相同的顺序访问表，可以大大降低死锁机会。</p>
+<h4 id="常见的避免死锁的方法"><a href="#常见的避免死锁的方法" class="headerlink" title="常见的避免死锁的方法"></a><strong>常见的避免死锁的方法</strong></h4><p>1、如果不同程序会并发存取多个表，尽量约定以相同的顺序访问表，可以大大降低死锁机会。</p>
 <p>2、在同一个事务中，尽可能做到一次锁定所需要的所有资源，减少死锁产生概率；</p>
 <p>3、对于非常容易产生死锁的业务部分，可以尝试使用升级锁定粒度，通过表级锁定来减少死锁产生的概率；</p>
 <p>4、在RR隔离级别下，如果两个线程同时对相同条件记录用 <code>SELECT...FOR UPDATE</code> 加排他锁，在没有符合该条件记录情况下，两个线程都会加间隙锁成功，程序发现记录尚不存在，就试图插入一条新记录，如果两个线程都这么做，就会出现死锁，这种情况下，<strong>将隔离级别改成RC不会产生间隙锁</strong>，就可避免问题  </p>
@@ -822,9 +831,9 @@
 <p>如果业务处理不好可以用<strong>分布式事务锁或者使用乐观锁</strong></p>
 <h4 id="死锁的必要条件"><a href="#死锁的必要条件" class="headerlink" title="死锁的必要条件"></a>死锁的必要条件</h4><ol>
 <li>互斥条件：一个资源每次只能被一个进程使用。</li>
-<li>请求与保持条件：一个进程因请求资源而阻塞时，对已获得的资源保持不放。</li>
-<li>不剥夺条件:进程已获得的资源，在末使用完之前，不能强行剥夺。</li>
-<li>循环等待条件:若干进程之间形成一种头尾相接的循环等待资源关系。</li>
+<li>请求与保持条件：进程因请求资源而阻塞时，保持已获得的资源的占用。</li>
+<li>不剥夺条件：进程已占用的资源，在末使用完之前，不能强行剥夺。</li>
+<li>循环等待条件：若干进程之间存在一种头循环等待关系。</li>
 </ol>
 <h3 id="乐观锁和悲观锁是什么？怎么实现的？"><a href="#乐观锁和悲观锁是什么？怎么实现的？" class="headerlink" title="乐观锁和悲观锁是什么？怎么实现的？"></a>乐观锁和悲观锁是什么？怎么实现的？</h3><p><strong>悲观锁：</strong>假定会发生并发冲突，屏蔽一切可能违反数据完整性的操作。在查询完数据的时候就把事务锁起来，直到提交事务。实现方式：使用数据库中的锁机制</p>
 <p> <strong>乐观锁：</strong>假设不会发生并发冲突，只在提交操作时检查是否违反数据完整性。在修改数据的时候把事务锁起来，通过version的方式来进行锁定。实现方式：一般会使用版本号机制或CAS算法实现。</p>
@@ -891,7 +900,7 @@
 <li><p>子查询是多行多列的情况：结果集类似于一张虚拟表，不能用于where条件，用于select子句中做为子表</p>
 </li>
 </ul>
-<h3 id="in-和-exists-区别"><a href="#in-和-exists-区别" class="headerlink" title="in 和 exists 区别"></a>in 和 exists 区别</h3><p>mysql中的in语句是<strong>把外表和内表作hash 连接</strong>，而<strong>exists语句是对外表作loop循环，每次loop循环再对内表进行查询</strong>。一直大家都认为exists比in语句的效率要高，这种说法其实是不准确的。这个是要区分环境的。</p>
+<h3 id="in-和-exists-区别"><a href="#in-和-exists-区别" class="headerlink" title="in 和 exists 区别"></a>in 和 exists 区别</h3><p>mysql中的in语句是<strong>把外表和内表作hash 连接</strong>，而<strong>exists语句是对外表作loop循环，每次loop循环再对内表进行查询</strong>。</p>
 <ul>
 <li><p>IN适合于外表大而子查询表小的情况。</p>
 </li>
@@ -901,7 +910,7 @@
 <p>not in 和not exists：如果查询语句使用了not in，那么内外表都进行全表扫描，没有用到索引；</p>
 <p>而not extsts的子查询依然能用到表上的索引。所以无论那个表大，用not exists都比not in要快。</p>
 <h3 id="drop-delete与truncate"><a href="#drop-delete与truncate" class="headerlink" title="drop,delete与truncate"></a>drop,delete与truncate</h3><p>drop直接删掉表，truncate、delete删除表中数据。</p>
-<p>1.delete 语句执行删除的过程是每次从表中删除一行，并且同时将该行的删除操作作为事务记录在日志中保存以便进行回滚操作。truncate table则一次性地从表中删除所有的数据并不把单独的删除操作记录记入日志保存，删除行是不能恢复的。并且在删除的过程中不会激活与表有关的删除触发器，执行速度快。</p>
+<p>1.delete 语句执行删除的过程是每次从表中删除一行，并且同时将该行的删除操作作为事务记录在日志中保存以便进行回滚操作。truncate table则一次性地从表中删除所有的数据并不把单独的删除操作记录记入日志保存，删除行是不能恢复的。在删除的过程中，不会激活与表有关的删除触发器，执行速度快。</p>
 <p>2.表和索引所占空间。当表被truncate后，这个表和索引所占用的空间会恢复到初始大小，而delete操作不会减少表或索引所占用的空间。drop语句将表所占用的空间全释放掉。</p>
 <p>3.应用范围。truncate只能对table，delete可以是table和view</p>
 <p><strong>使用场景:</strong> </p>
@@ -943,7 +952,7 @@
 </tr>
 </tbody></table>
 <h2 id="SQL优化"><a href="#SQL优化" class="headerlink" title="SQL优化"></a>SQL优化</h2><h3 id="如何定位及优化SQL语句的性能问题？"><a href="#如何定位及优化SQL语句的性能问题？" class="headerlink" title="如何定位及优化SQL语句的性能问题？"></a>如何定位及优化SQL语句的性能问题？</h3><p>MySQL提供了<strong>explain命令来查看语句的执行计划</strong> 。执行计划，显示数据库引擎对于SQL语句的执行的详细情况，其中包含了<strong>是否使用索引，使用什么索引，使用的索引的相关信息</strong>等。</p>
-<p><strong>select_type</strong> 每个子查询的查询类型，一些常见的查询类型。</p>
+<p><strong>select_type</strong>查询类型。</p>
 <table>
 <thead>
 <tr>
@@ -976,7 +985,7 @@
 <td>从UNION中获取结果集，例如上文的第三个例子</td>
 </tr>
 </tbody></table>
-<p><strong>type</strong>(非常重要，可以看到有没有走索引) 访问类型</p>
+<p><strong>type</strong>访问类型</p>
 <p>ALL 扫描全表数据</p>
 <p>index 遍历索引</p>
 <p>range 索引范围查找</p>
@@ -986,9 +995,9 @@
 <p>fulltext 使用全文索引</p>
 <p>ref 使用非唯一索引查找数据</p>
 <p>eq_ref 在join查询中使用PRIMARY KEYorUNIQUE NOT NULL索引关联。</p>
-<p><strong>key</strong> 显示MySQL在查询中实际使用的索引，若没有使用索引，显示为NULL。</p>
+<p><strong>key</strong> ，实际使用的索引。</p>
 <p><strong>ref</strong> 表示上述表的连接匹配条件，即哪些列或常量被用于查找索引列上的值</p>
-<p><strong>rows</strong> 返回估算的结果集数目，并不是一个准确的值。</p>
+<p><strong>rows</strong> ：估算的结果集数目，并不是一个准确的值。</p>
 <p><strong>extra</strong> 的信息非常丰富，常见的有：</p>
 <ul>
 <li><p>Using index 使用覆盖索引</p>
@@ -1000,18 +1009,10 @@
 <li><p>Using temporary 使用了临时表</p>
 </li>
 </ul>
-<h3 id="大表数据查询，怎么优化"><a href="#大表数据查询，怎么优化" class="headerlink" title="大表数据查询，怎么优化"></a>大表数据查询，怎么优化</h3><ul>
-<li>优化shema、sql语句+索引；</li>
-<li>加缓存，memcached, redis；</li>
-<li>主从复制，读写分离；</li>
-<li>垂直拆分，根据你模块的耦合度，将一个大的系统分为多个小的系统，也就是分布式系统；</li>
-<li>水平切分，针对数据量大的表，这一步最麻烦，最能考验技术水平，要选择一个合理的sharding key, 为了有好的查询效率，表结构也要改动，做一定的冗余，应用也要改，sql中尽量带sharding key，将数据定位到限定的表上去查，而不是扫描全部的表；</li>
-</ul>
 <h3 id="超大分页怎么处理？"><a href="#超大分页怎么处理？" class="headerlink" title="超大分页怎么处理？"></a>超大分页怎么处理？</h3><ul>
-<li><p>数据库层面,类似于<strong>select * from table where age &gt; 20 limit 1000000,10</strong>这种查询其实也是有可以优化的余地的. 这条语句需要load1000000数据然后基本上全部丢弃,只取10条当然比较慢. 当时我们可以修改为<code>select * from table where id in (select id from table where age &gt; 20 limit 1000000,10)</code>.<strong>这样虽然也load了一百万的数据,但是由于</strong>索引覆盖<strong>,要查询的所有字段都在索引中,所以速度会很快. 同时如果ID连续的好,我们还可以</strong><code>select * from table where id &gt; 1000000 limit 10</code>效率也是不错的,优化的可能性有许多种,但是核心思想都一样,就是减少load的数据.</p>
-</li>
-<li><p>从需求的角度减少这种请求，主要是不做类似的需求（直接跳转到几百万页之后的具体某一页，只允许逐页查看或者按照给定的路线走，这样可预测、可缓存）以及防止ID泄漏且连续被人恶意攻击。</p>
-</li>
+<li>数据库层面,类似于<strong>select * from table where age &gt; 20 limit 1000000,10</strong>这种查询其实也是有可以优化的余地的. 这条语句需要load1000000数据然后基本上全部丢弃,只取10条当然比较慢. 当时我们可以修改为<code>select * from table where id in (select id from table where age &gt; 20 limit 1000000,10)</code>。<strong>这样虽然也load了一百万的数据,但是由于</strong>索引覆盖<em><em>,要查询的所有字段都在索引中,所以速度会很快. </em></em></li>
+<li>如果ID连续，我们还可以<code>select * from table where id &gt; 1000000 limit 10</code>效率也是不错的，优化的可能性有许多种，但是核心思想都一样，就是减少load的数据.</li>
+<li>从需求的角度减少这种请求，主要是不做类似的需求（直接跳转到几百万页之后的具体某一页，只允许逐页查看或者按照给定的路线走，这样可预测、可缓存）以及防止ID泄漏且连续被人恶意攻击。</li>
 </ul>
 <h3 id="mysql-分页"><a href="#mysql-分页" class="headerlink" title="mysql 分页"></a>mysql 分页</h3><p>LIMIT 子句可以被用于强制 SELECT 语句返回指定的记录数。LIMIT 接受一个或两个数字参数。参数必须是一个整数常量。如果给定两个参数，第一个参数指定第一个返回记录行的偏移量，第二个参数指定返回记录行的最大数目。初始记录行的偏移量是 0</p>
 <blockquote>
@@ -1027,9 +1028,10 @@
 <p>设置：set long_query_time=0.5</p>
 <p>实操时应该从长时间设置到短的时间，即将最慢的SQL优化掉</p>
 <p>查看日志，一旦SQL超过了我们设置的临界时间就会被记录到xxx-slow.log中</p>
-<h3 id="为什么要尽量设定一个主键？"><a href="#为什么要尽量设定一个主键？" class="headerlink" title="为什么要尽量设定一个主键？"></a>为什么要尽量设定一个主键？</h3><p>主键是数据库确保<strong>数据行在整张表唯一性</strong>的保障，即使业务上本张表没有主键，也建议添加一个自增长的ID列作为主键。设定了主键之后，在后续的删改查的时候可能更加快速以及确保操作数据范围安全。</p>
-<h3 id="主键使用自增ID还是UUID？"><a href="#主键使用自增ID还是UUID？" class="headerlink" title="主键使用自增ID还是UUID？"></a>主键使用自增ID还是UUID？</h3><p>自增ID，不要使用UUID。 </p>
-<p>因为在InnoDB存储引擎中，主键索引是作为聚簇索引存在的，也就是说，主键索引的B+树叶子节点上存储了主键索引以及全部的数据(按照顺序)，如果主键索引是自增ID，那么只需要不断向后排列即可，如果是UUID，由于到来的ID与原来的大小不确定，<strong>会造成非常多的数据插入，数据移动，然后导致产生很多的内存碎片，进而造成插入性能的下降。</strong></p>
+<h3 id="为什么要尽量设定一个主键？"><a href="#为什么要尽量设定一个主键？" class="headerlink" title="为什么要尽量设定一个主键？"></a>为什么要尽量设定一个主键？</h3><p>主键是数据库确保数据行在整张表唯一性的保障，即使业务上本张表没有主键，也建议添加一个自增长的ID列作为主键。</p>
+<p>设定了主键之后，在后续的删改查的时候可能更加快速以及确保操作数据范围安全。</p>
+<h3 id="主键使用自增ID还是UUID？"><a href="#主键使用自增ID还是UUID？" class="headerlink" title="主键使用自增ID还是UUID？"></a>主键使用自增ID还是UUID？</h3><p>使用自增ID。 </p>
+<p>因为在InnoDB存储引擎中，主键索引是作为聚簇索引存在的。主键索引的B+树叶子节点上存储了主键索引和数据，如果主键索引是自增ID，那么只需要不断向后排列即可，如果是UUID，由于到来的ID与原来的大小不确定，会造成非常多的数据插入，数据移动，然后导致产生很多的内存碎片，进而造成插入性能的下降。</p>
 <h3 id="字段为什么要求定义为not-null？"><a href="#字段为什么要求定义为not-null？" class="headerlink" title="字段为什么要求定义为not null？"></a>字段为什么要求定义为not null？</h3><p>null值会占用更多的字节，且会在程序中造成很多与预期不符的情况。</p>
 <h3 id="如果要存储用户的密码散列，应该使用什么字段进行存储？"><a href="#如果要存储用户的密码散列，应该使用什么字段进行存储？" class="headerlink" title="如果要存储用户的密码散列，应该使用什么字段进行存储？"></a>如果要存储用户的密码散列，应该使用什么字段进行存储？</h3><p>密码散列，用户身份证号等固定长度的字符串应该使用char而不是varchar来存储，这样可以节省空间且提高检索效率。</p>
 <h3 id="SQL语句优化的一些方法"><a href="#SQL语句优化的一些方法" class="headerlink" title="SQL语句优化的一些方法"></a>SQL语句优化的一些方法</h3><ul>
@@ -1047,15 +1049,14 @@
 </ul>
 <h2 id="数据库优化"><a href="#数据库优化" class="headerlink" title="数据库优化"></a>数据库优化</h2><ul>
 <li>优化索引、SQL 语句、分析慢查询; </li>
-<li>设计表的时候严格根据数据库的设计范式来设计数据库; </li>
-<li>使用缓存，把经常访问到的数据而且不需要经常变化的 数据放在缓存中，能节约磁盘 IO; </li>
-<li>优化硬件;采用 SSD，使用磁盘队列技术 (RAID0,RAID1,RDID5)等; </li>
+<li>使用缓存，把经常访问到的数据而且不需要经常变化的数据放在缓存中，能节约磁盘 IO; </li>
+<li>优化硬件，采用 SSD，使用磁盘队列技术 (RAID0,RAID1,RDID5)等; </li>
 <li>采用 MySQL 内部自带的表分区技术，把数据分成不同的文件，能够提高磁盘的读取效率; </li>
-<li>垂直分表;把一些不经常读的数据放在一张表里，节约 磁盘 I/O; </li>
-<li>主从分离读写;采用主从复制把数据库的读操作和写入操作分离开来;</li>
+<li>主从分离读写</li>
+<li>垂直分表，把一些不经常读的数据放在一张表里，节约 磁盘 I/O; </li>
 <li>分库分表分机器，主要的原理就是数据路由; </li>
 <li>选择合适的表引擎，参数上的优化; </li>
-<li>进行架构级别的缓存，静态化和分布式; </li>
+<li>进行架构级别的缓存，静态化和分布式</li>
 </ul>
 <h2 id="集群"><a href="#集群" class="headerlink" title="集群"></a>集群</h2><h3 id="主从复制"><a href="#主从复制" class="headerlink" title="主从复制"></a>主从复制</h3><h4 id="异步复制"><a href="#异步复制" class="headerlink" title="异步复制"></a>异步复制</h4><ul>
 <li>在主库开启 binlog 的情况下，如果主库有增删改的语句，会记录到 binlog 中。</li>
@@ -1847,7 +1848,7 @@ Kafka 主要有两大应用场景：
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">124.7k</span>
+            <span class="white-color">124.8k</span>
             
 
             <br>

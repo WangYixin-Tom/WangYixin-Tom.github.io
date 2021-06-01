@@ -425,7 +425,7 @@ Python2 的默认编码是 ascii，Python 3 默认编码">
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    12.9k
+                    13.1k
                 </div>
                 
 
@@ -456,6 +456,7 @@ Python2 的默认编码是 ascii，Python 3 默认编码">
 <li>Python 2 map函数返回list，Python 3 map函数返回迭代器。</li>
 <li>python2中的raw_input函数，python3中改名为input函数</li>
 <li>在Pyhon3，新增了关键字 nonlcoal，支持嵌套函数中，变量声明为非局部变量。</li>
+<li>python3提供注解，但是解释器<strong>并不会</strong>因为这些注解而提供额外的校验，没有任何的类型检查工作。也就是说，这些类型注解加不加，对你的代码来说<strong>没有任何影响</strong>，好处是易懂。</li>
 </ul>
 <h2 id="Python基础"><a href="#Python基础" class="headerlink" title="Python基础"></a>Python基础</h2><h3 id="可变数据类型和不可变数据类型"><a href="#可变数据类型和不可变数据类型" class="headerlink" title="可变数据类型和不可变数据类型"></a>可变数据类型和不可变数据类型</h3><p>可变数据类型（引用类型）：当该数据类型对应的变量值发生了变化时，对应的内存地址不发生改变。</p>
 <p>不可变数据类型（值类型）：当该数据类型对应的变量值发生了变化时，对应的内存地址发生了改变。</p>
@@ -464,10 +465,10 @@ Python2 的默认编码是 ascii，Python 3 默认编码">
 <h3 id="python2中xrange和range的区别"><a href="#python2中xrange和range的区别" class="headerlink" title="python2中xrange和range的区别"></a>python2中xrange和range的区别</h3><p><code>range()</code>返回的是一个list对象，而xrange返回的是一个可迭代对象。</p>
 <p><code>xrange()</code>则不会直接生成一个list，而是每次调用返回其中的一个值，内存空间使用极少。因而性能非常好。</p>
 <h3 id="变量的作用域-查找顺序"><a href="#变量的作用域-查找顺序" class="headerlink" title="变量的作用域/查找顺序"></a>变量的作用域/查找顺序</h3><p>函数作用域的LEGB顺序</p>
-<p>L： local ，局部作用域；</p>
-<p>E： enclosing，嵌套的父级函数的局部作用域；</p>
+<p>L：local ，局部作用域；</p>
+<p>E：enclosing，嵌套的父级函数的局部作用域；</p>
 <p>G：global ，全局变量；</p>
-<p>B： build-in， 系统固定模块里面的变量。</p>
+<p>B：build-in， 系统固定模块里面的变量。</p>
 <p>Python除了def/class/lambda 外，其他如: if/elif/else/ try/except for/while并不能改变其作用域。</p>
 <h3 id="内置函数"><a href="#内置函数" class="headerlink" title="内置函数"></a>内置函数</h3><p><code>reduce()</code> 函数会对参数序列中元素进行累积。</p>
 <p>先对数据集合中的第 1、2 个元素进行操作，得到的结果再与第三个数据做函数运算。</p>
@@ -827,7 +828,7 @@ add<span class="token punctuation">(</span><span class="token number">1</span><s
 <li>JSON在Python之外广泛使用，而pickle则是Python专用的；</li>
 <li>JSON 只能表示 Python 内置类型的子集，不能表示自定义的类；但 pickle 可以表示大量的 Python 数据类型。</li>
 </ul>
-<h3 id="说一下namedtuple的用法和作用"><a href="#说一下namedtuple的用法和作用" class="headerlink" title="说一下namedtuple的用法和作用"></a>说一下<code>namedtuple</code>的用法和作用</h3><p>只有属性没有方法的类，用于组织数据，称为数据类。</p>
+<h3 id="说一下namedtuple的用法和作用"><a href="#说一下namedtuple的用法和作用" class="headerlink" title="说一下namedtuple的用法和作用"></a>说一下<code>namedtuple</code>的用法和作用</h3><p>只有属性没有方法的类，用于组织数据，称为<strong>数据类</strong>。</p>
 <p>在Python中可以用<code>namedtuple</code>（命名元组）来替代这种类。</p>
 <pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">from</span> collections <span class="token keyword">import</span> namedtuple
 
@@ -836,10 +837,10 @@ card1 <span class="token operator">=</span> Card<span class="token punctuation">
 card2 <span class="token operator">=</span> Card<span class="token punctuation">(</span><span class="token string">'草花'</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">)</span>
 <span class="token keyword">print</span><span class="token punctuation">(</span>f<span class="token string">'{card1.suite}{card1.face}'</span><span class="token punctuation">)</span>
 <span class="token keyword">print</span><span class="token punctuation">(</span>f<span class="token string">'{card2.suite}{card2.face}'</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>命名元组与普通元组一样是不可变容器，一旦将数据存储在<code>namedtuple</code>的顶层属性中，数据就不能再修改了，</p>
+<p><strong>命名元组与普通元组一样是不可变容器，</strong>一旦将数据存储在<code>namedtuple</code>的顶层属性中，数据就不能再修改了，</p>
 <p>对象上的所有属性都遵循“一次写入，多次读取”的原则。</p>
-<p>和普通元组不同的是，命名元组中的数据有访问名称，可以通过名称而不是索引来获取保存的数据</p>
-<p>命名元组的本质就是一个类，所以它还可以作为父类创建子类。</p>
+<p>和普通元组不同的是，命名元组中的数据有访问名称，可以<strong>通过名称而不是索引来获取保存的数据**</strong></p>
+<p><strong>命名元组的本质就是一个类，所以它还可以作为父类创建子类。</strong></p>
 <p>除此之外，命名元组内置了一系列的方法，例如，可以通过<code>_asdict</code>方法将命名元组处理成字典，也可以通过<code>_replace</code>方法创建命名元组对象的浅拷贝。</p>
 <pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">MyCard</span><span class="token punctuation">(</span>Card<span class="token punctuation">)</span><span class="token punctuation">:</span>
 
@@ -1203,8 +1204,8 @@ d<span class="token punctuation">.</span>foo1<span class="token punctuation">(</
 <h3 id="GIL原理"><a href="#GIL原理" class="headerlink" title="GIL原理"></a>GIL原理</h3><p>python 的线程就是 C 语言的 pthread，它是通过操作系统调度算法调度执行的。</p>
 <p>Python 2.x 的代码执行是基于 opcode 数量的调度方式，简单来说就是每执行一定数量的字节码，或遇到系统 IO 时，会强制释放 GIL，然后触发一次操作系统的线程调度。</p>
 <p> Python 3.x 基于固定时间的调度方式，就是每执行固定时间的字节码，或遇到系统 IO 时，强制释放 GIL，触发系统的线程调度。</p>
-<h3 id="为什么会有GIL"><a href="#为什么会有GIL" class="headerlink" title="为什么会有GIL"></a>为什么会有GIL</h3><p>Python 设计者在设计解释器时，可能没有想到 CPU 的性能提升会这么快转为多核心方向发展，所以在当时的场景下，设计一个全局锁是那个时代保护多线程资源一致性最简单经济的设计方案。</p>
-<p>多核心时代来临，当大家试图去拆分和去除 GIL 的时候，发现大量库的代码和开发者已经重度依赖 GIL（默认认为 Pythonn内部对象是线程安全的，无需在开发时额外加锁），所以这个去除 GIL 的任务变得复杂且难以实现。</p>
+<h3 id="为什么会有GIL"><a href="#为什么会有GIL" class="headerlink" title="为什么会有GIL"></a>为什么会有GIL</h3><p>Python 设计者在设计解释器时，可能没有想到 CPU 的性能提升会这么快转为多核心方向发展，所以在当时的场景下，设计一个全局锁是<strong>那个时代保护多线程资源一致性最简单经济的设计方案</strong>。</p>
+<p>多核心时代来临，当大家试图去拆分和去除 GIL 的时候，发现大量库的代码和开发者已经重度依赖 GIL（默认认为 Python内部对象是线程安全的，无需在开发时额外加锁），所以这个去除 GIL 的任务变得复杂且难以实现。</p>
 <h2 id="性能分析"><a href="#性能分析" class="headerlink" title="性能分析"></a>性能分析</h2><p>python 内置了丰富的性能分析工具，<strong>如 profile,cProfile 与 hotshot 等</strong>。其中 Profiler 是 python 自带的一组程序，能够描述程序运行时候的性能，并提供各种统计帮助用户定位程序的性能瓶颈。</p>
 <p>Python 标准库提供了同一分析接口的两种不同实现：</p>
 <ol>
@@ -1252,6 +1253,36 @@ foo1 <span class="token operator">=</span> Foo<span class="token punctuation">(<
 foo2 <span class="token operator">=</span> Foo<span class="token punctuation">(</span><span class="token punctuation">)</span>
 
 <span class="token keyword">print</span><span class="token punctuation">(</span>foo1 <span class="token keyword">is</span> foo2<span class="token punctuation">)</span> <span class="token comment" spellcheck="true"># True</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="用装饰器实现同步锁"><a href="#用装饰器实现同步锁" class="headerlink" title="用装饰器实现同步锁"></a>用装饰器实现同步锁</h3><pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">make_synchronized</span><span class="token punctuation">(</span>func<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">import</span> threading
+    func<span class="token punctuation">.</span>__lock__ <span class="token operator">=</span> threading<span class="token punctuation">.</span>Lock<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">def</span> <span class="token function">synced_func</span><span class="token punctuation">(</span><span class="token operator">*</span>args<span class="token punctuation">,</span> <span class="token operator">**</span>kwargs<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">with</span> func<span class="token punctuation">.</span>__lock__<span class="token punctuation">:</span>
+            <span class="token keyword">return</span> func<span class="token punctuation">(</span><span class="token operator">*</span>args<span class="token punctuation">,</span> <span class="token operator">**</span>kwargs<span class="token punctuation">)</span>
+
+    <span class="token keyword">return</span> synced_func
+
+<span class="token keyword">class</span> <span class="token class-name">Singleton</span><span class="token punctuation">(</span>object<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    __instance <span class="token operator">=</span> None
+    @make_synchronized
+    <span class="token keyword">def</span> <span class="token function">__new__</span><span class="token punctuation">(</span>cls<span class="token punctuation">,</span> <span class="token operator">*</span>args<span class="token punctuation">,</span> <span class="token operator">**</span>kwargs<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">if</span> <span class="token operator">not</span> cls<span class="token punctuation">.</span>__instance<span class="token punctuation">:</span>
+            cls<span class="token punctuation">.</span>__instance <span class="token operator">=</span> object<span class="token punctuation">.</span>__new__<span class="token punctuation">(</span>cls<span class="token punctuation">)</span>
+        <span class="token keyword">return</span> cls<span class="token punctuation">.</span>__instance<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="双重检查线程安全单例模式"><a href="#双重检查线程安全单例模式" class="headerlink" title="双重检查线程安全单例模式"></a>双重检查线程安全单例模式</h3><pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">SingletonSample</span><span class="token punctuation">(</span>object<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    _instanceLock <span class="token operator">=</span> threading<span class="token punctuation">.</span>Lock<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+    @classmethod
+    <span class="token keyword">def</span> <span class="token function">get_instance</span><span class="token punctuation">(</span>cls<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token comment" spellcheck="true"># 初次检查，避免锁竞争</span>
+        <span class="token keyword">if</span> <span class="token operator">not</span> hasattr<span class="token punctuation">(</span>cls<span class="token punctuation">,</span> <span class="token string">"_instance"</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token keyword">with</span> cls<span class="token punctuation">.</span>_instanceLock<span class="token punctuation">:</span>
+                <span class="token comment" spellcheck="true"># 获取到锁后再次判断，避免重复创建</span>
+                <span class="token keyword">if</span> <span class="token operator">not</span> hasattr<span class="token punctuation">(</span>cls<span class="token punctuation">,</span> <span class="token string">"_instance"</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+                    cls<span class="token punctuation">.</span>_instance <span class="token operator">=</span> super<span class="token punctuation">(</span>SingletonSample<span class="token punctuation">,</span> cls<span class="token punctuation">)</span><span class="token punctuation">.</span>__new__<span class="token punctuation">(</span>cls<span class="token punctuation">)</span>
+                    <span class="token keyword">print</span> cls<span class="token punctuation">.</span>_instance
+        <span class="token keyword">return</span> cls<span class="token punctuation">.</span>_instance<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h3 id="classmethod"><a href="#classmethod" class="headerlink" title="classmethod"></a>classmethod</h3><pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">import</span> time
 <span class="token keyword">import</span> threading
 <span class="token keyword">class</span> <span class="token class-name">Singleton</span><span class="token punctuation">(</span>object<span class="token punctuation">)</span><span class="token punctuation">:</span>
@@ -1275,28 +1306,7 @@ foo2 <span class="token operator">=</span> Foo<span class="token punctuation">(<
 <span class="token comment" spellcheck="true"># Python2</span>
 <span class="token keyword">class</span> <span class="token class-name">Foo</span><span class="token punctuation">(</span>object<span class="token punctuation">)</span><span class="token punctuation">:</span>
     __metaclass__ <span class="token operator">=</span> Singleton<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="线程安全装饰器"><a href="#线程安全装饰器" class="headerlink" title="线程安全装饰器"></a><strong>线程安全装饰器</strong></h3><pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">make_synchronized</span><span class="token punctuation">(</span>func<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token keyword">import</span> threading
-    func<span class="token punctuation">.</span>__lock__ <span class="token operator">=</span> threading<span class="token punctuation">.</span>Lock<span class="token punctuation">(</span><span class="token punctuation">)</span>
-
-    <span class="token comment" spellcheck="true"># 用装饰器实现同步锁</span>
-    <span class="token keyword">def</span> <span class="token function">synced_func</span><span class="token punctuation">(</span><span class="token operator">*</span>args<span class="token punctuation">,</span> <span class="token operator">**</span>kwargs<span class="token punctuation">)</span><span class="token punctuation">:</span>
-        <span class="token keyword">with</span> func<span class="token punctuation">.</span>__lock__<span class="token punctuation">:</span>
-            <span class="token keyword">return</span> func<span class="token punctuation">(</span><span class="token operator">*</span>args<span class="token punctuation">,</span> <span class="token operator">**</span>kwargs<span class="token punctuation">)</span>
-
-    <span class="token keyword">return</span> synced_func
-
-<span class="token keyword">class</span> <span class="token class-name">Singleton</span><span class="token punctuation">(</span>object<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    __instance <span class="token operator">=</span> None
-
-    @make_synchronized
-    <span class="token keyword">def</span> <span class="token function">__new__</span><span class="token punctuation">(</span>cls<span class="token punctuation">,</span> <span class="token operator">*</span>args<span class="token punctuation">,</span> <span class="token operator">**</span>kwargs<span class="token punctuation">)</span><span class="token punctuation">:</span>
-        <span class="token keyword">if</span> <span class="token operator">not</span> cls<span class="token punctuation">.</span>__instance<span class="token punctuation">:</span>
-            cls<span class="token punctuation">.</span>__instance <span class="token operator">=</span> object<span class="token punctuation">.</span>__new__<span class="token punctuation">(</span>cls<span class="token punctuation">)</span>
-        <span class="token keyword">return</span> cls<span class="token punctuation">.</span>__instance
-
-    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
-        self<span class="token punctuation">.</span>blog <span class="token operator">=</span> <span class="token string">"blog"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="线程安全装饰器"><a href="#线程安全装饰器" class="headerlink" title="线程安全装饰器"></a><strong>线程安全装饰器</strong></h3><pre class="line-numbers language-python"><code class="language-python"><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <h3 id="线程安全–元类"><a href="#线程安全–元类" class="headerlink" title="线程安全–元类"></a><strong>线程安全–元类</strong></h3><pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">import</span> threading
 
 <span class="token keyword">class</span> <span class="token class-name">MetaSingleton</span><span class="token punctuation">(</span>type<span class="token punctuation">)</span><span class="token punctuation">:</span>
@@ -2064,7 +2074,7 @@ run 方法调用werkzeug 的 run_simple
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">124.7k</span>
+            <span class="white-color">124.8k</span>
             
 
             <br>

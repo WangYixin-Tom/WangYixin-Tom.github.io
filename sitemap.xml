@@ -2,9 +2,30 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://wangyixin-tom.github.io/2021/05/31/question-2/</loc>
+    <loc>https://wangyixin-tom.github.io/2021/04/12/redis-mian-shi/</loc>
     
-    <lastmod>2021-06-01T00:04:40.958Z</lastmod>
+    <lastmod>2021-06-01T10:47:48.269Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://wangyixin-tom.github.io/2021/06/01/question-2/</loc>
+    
+    <lastmod>2021-06-01T10:47:48.268Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://wangyixin-tom.github.io/2021/04/13/python-mian-shi/</loc>
+    
+    <lastmod>2021-06-01T10:47:48.267Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://wangyixin-tom.github.io/2021/04/10/mysql-mian-shi/</loc>
+    
+    <lastmod>2021-06-01T10:47:48.253Z</lastmod>
     
   </url>
   
@@ -51,13 +72,6 @@
   </url>
   
   <url>
-    <loc>https://wangyixin-tom.github.io/2021/04/10/mysql-mian-shi/</loc>
-    
-    <lastmod>2021-05-31T13:19:15.359Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://wangyixin-tom.github.io/2021/04/08/kafka-mian-shi/</loc>
     
     <lastmod>2021-05-31T13:19:15.355Z</lastmod>
@@ -93,13 +107,6 @@
   </url>
   
   <url>
-    <loc>https://wangyixin-tom.github.io/2021/04/12/redis-mian-shi/</loc>
-    
-    <lastmod>2021-05-25T12:44:50.552Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://wangyixin-tom.github.io/2020/10/26/redis-aof-ji-zhi/</loc>
     
     <lastmod>2021-05-25T12:44:50.522Z</lastmod>
@@ -124,13 +131,6 @@
     <loc>https://wangyixin-tom.github.io/2020/10/29/redis-fen-bu-shi-suo/</loc>
     
     <lastmod>2021-05-19T11:09:42.123Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://wangyixin-tom.github.io/2021/04/13/python-mian-shi/</loc>
-    
-    <lastmod>2021-05-19T00:00:40.520Z</lastmod>
     
   </url>
   
@@ -576,14 +576,14 @@
   </url>
   
   <url>
-    <loc>https://wangyixin-tom.github.io/tags/index.html</loc>
+    <loc>https://wangyixin-tom.github.io/categories/index.html</loc>
     
     <lastmod>2020-04-04T11:43:42.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://wangyixin-tom.github.io/categories/index.html</loc>
+    <loc>https://wangyixin-tom.github.io/tags/index.html</loc>
     
     <lastmod>2020-04-04T11:43:42.000Z</lastmod>
     
