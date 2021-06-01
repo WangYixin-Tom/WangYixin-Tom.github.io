@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://wangyixin-tom.github.io/"/>
-  <updated>2021-05-30T14:18:52.766Z</updated>
+  <updated>2021-05-31T23:35:24.294Z</updated>
   <id>https://wangyixin-tom.github.io/</id>
   
   <author>
@@ -15,6 +15,55 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>最长公共子序列</title>
+    <link href="https://wangyixin-tom.github.io/2021/05/31/zui-chang-gong-gong-zi-xu-lie/"/>
+    <id>https://wangyixin-tom.github.io/2021/05/31/zui-chang-gong-gong-zi-xu-lie/</id>
+    <published>2021-05-31T13:19:42.000Z</published>
+    <updated>2021-05-31T23:35:24.294Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;描述&quot;&gt;&lt;a href=&quot;#描述&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="算法" scheme="https://wangyixin-tom.github.io/categories/%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="算法" scheme="https://wangyixin-tom.github.io/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="https://wangyixin-tom.github.io/2021/05/31/question-2/"/>
+    <id>https://wangyixin-tom.github.io/2021/05/31/question-2/</id>
+    <published>2021-05-31T13:19:15.361Z</published>
+    <updated>2021-06-01T00:04:40.958Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;进程与线程的区别&lt;/p&gt;
+&lt;p&gt;进程间的通信，线程间的通信&lt;br&gt;在线测评：给一个时间戳，算出具体的年和月（时间戳是从格林威治时间年月日时分秒起至现在）&lt;br&gt;.堆和栈的区别&lt;br&gt;设计LRU&lt;br&gt;MQ的数据一致性如何实现&lt;br&gt;密码为什么加盐&lt;br&gt;盐bai
+        
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>最长公共子串</title>
@@ -46,33 +95,11 @@
   </entry>
   
   <entry>
-    <title></title>
-    <link href="https://wangyixin-tom.github.io/2021/05/28/question-2/"/>
-    <id>https://wangyixin-tom.github.io/2021/05/28/question-2/</id>
-    <published>2021-05-28T13:51:44.897Z</published>
-    <updated>2021-05-31T00:06:55.604Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;2.进程与线程的区别&lt;br&gt;3.常用的数据结构有哪些&lt;br&gt;4.平衡二叉树是什么？能否用数组来实现，你会怎么实现？&lt;br&gt;5.排序算法有哪些？冒泡排序与快速排序的时间复杂度是多少？是否O(n^2)一定要比O(nlong)差？&lt;br&gt;算法了解动态规划吗？什么情况用动态规划&lt;b
-        
-      
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
     <title>常见场景题</title>
     <link href="https://wangyixin-tom.github.io/2021/05/24/chang-jian-chang-jing-ti/"/>
     <id>https://wangyixin-tom.github.io/2021/05/24/chang-jian-chang-jing-ti/</id>
     <published>2021-05-24T14:24:00.000Z</published>
-    <updated>2021-05-30T08:28:03.403Z</updated>
+    <updated>2021-05-31T13:19:15.390Z</updated>
     
     <summary type="html">
     
@@ -80,7 +107,7 @@
       
         
         
-          &lt;h2 id=&quot;大数据&quot;&gt;&lt;a href=&quot;#大数据&quot; class=&quot;headerlink&quot; title=&quot;大数据&quot;&gt;&lt;/a&gt;大数据&lt;/h2&gt;&lt;p&gt;100G 的手机号文件，找到重复的手机号，将重复手机号放入另一个文件。PC
+          &lt;h2 id=&quot;大数据&quot;&gt;&lt;a href=&quot;#大数据&quot; class=&quot;headerlink&quot; title=&quot;大数据&quot;&gt;&lt;/a&gt;大数据&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;1、100G 的手机号文件，找到重复的手机号，将重复手机号放入另一个文件。PC
         
       
     
@@ -98,7 +125,7 @@
     <link href="https://wangyixin-tom.github.io/2021/05/20/wang-luo/"/>
     <id>https://wangyixin-tom.github.io/2021/05/20/wang-luo/</id>
     <published>2021-05-19T22:20:37.000Z</published>
-    <updated>2021-05-30T23:29:07.720Z</updated>
+    <updated>2021-05-31T23:43:22.590Z</updated>
     
     <summary type="html">
     
@@ -280,7 +307,7 @@
     <link href="https://wangyixin-tom.github.io/2021/04/10/mysql-mian-shi/"/>
     <id>https://wangyixin-tom.github.io/2021/04/10/mysql-mian-shi/</id>
     <published>2021-04-10T10:45:14.000Z</published>
-    <updated>2021-05-31T00:06:35.381Z</updated>
+    <updated>2021-05-31T13:19:15.359Z</updated>
     
     <summary type="html">
     
@@ -308,7 +335,7 @@
     <link href="https://wangyixin-tom.github.io/2021/04/08/kafka-mian-shi/"/>
     <id>https://wangyixin-tom.github.io/2021/04/08/kafka-mian-shi/</id>
     <published>2021-04-08T11:55:21.000Z</published>
-    <updated>2021-05-18T21:52:44.088Z</updated>
+    <updated>2021-05-31T13:19:15.355Z</updated>
     
     <summary type="html">
     
@@ -500,32 +527,6 @@
         
         
           &lt;p&gt;&lt;img src=&quot;kafka.png&quot;
-        
-      
-    
-    </summary>
-    
-      <category term="kafka" scheme="https://wangyixin-tom.github.io/categories/kafka/"/>
-    
-    
-      <category term="kafka" scheme="https://wangyixin-tom.github.io/tags/kafka/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>kafka调优</title>
-    <link href="https://wangyixin-tom.github.io/2021/03/30/kafka-diao-you/"/>
-    <id>https://wangyixin-tom.github.io/2021/03/30/kafka-diao-you/</id>
-    <published>2021-03-30T13:30:58.000Z</published>
-    <updated>2021-04-02T13:16:17.846Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h2 id=&quot;调优目标&quot;&gt;&lt;a href=&quot;#调优目标&quot; class=&quot;headerlink&quot; title=&quot;调优目标&quot;&gt;&lt;/a&gt;调优目标&lt;/h2&gt;&lt;p&gt;吞吐量，也就是 TPS，是指 Broker 端进程或 Client
         
       
     

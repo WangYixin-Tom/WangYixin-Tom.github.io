@@ -270,7 +270,7 @@ Kafka 主要有两大应用场景：
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/6.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -425,14 +425,14 @@ Kafka 主要有两大应用场景：
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    3.6k
+                    4.3k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    12 分
+                    15 分
                 </div>
                 
                 
@@ -484,6 +484,11 @@ Kafka 主要有两大应用场景：
 </ul>
 <h2 id="位移的作用"><a href="#位移的作用" class="headerlink" title="位移的作用"></a>位移的作用</h2><p>用于标识消息在分区中的位置。</p>
 <p>一旦消息被写入到分区日志，它的位移值将不能被修改。</p>
+<h2 id="Kafka数据索引如何实现"><a href="#Kafka数据索引如何实现" class="headerlink" title="Kafka数据索引如何实现"></a>Kafka数据索引如何实现</h2><ul>
+<li>kafka解决查询效率的手段之一是将数据文件分段存储。每一个段单独放在一个.log的文件中，数据文件命名是20个字符的长度，以每一个分段文件开始的最下offset来命名，其他位置用0填充。</li>
+<li>每一个log文件的大小默认是1GB，每一个log文件就会对应一个index文件，是和log文件的命名相同的。</li>
+<li>index文件中并没有为每一条message建立索引。而是采用了稀疏存储的方式，每隔一定字节的数据建立一条索引，避免了索引文件占用过多的空间和资源，从而可以将索引文件保留到内存中。缺点是没有建立索引的数据在查询的过程中需要小范围内的顺序扫描操作。</li>
+</ul>
 <h2 id="磁盘容量规划考虑因素？"><a href="#磁盘容量规划考虑因素？" class="headerlink" title="磁盘容量规划考虑因素？"></a>磁盘容量规划考虑因素？</h2><ul>
 <li>新增消息数</li>
 <li>消息留存时间</li>
@@ -538,6 +543,10 @@ Kafka 主要有两大应用场景：
 <li>设置 <code>unclean.leader.election.enable = false</code>。如果一个 Broker 落后原先的 Leader 太多，那么它一旦成为新的 Leader，必然会造成消息的丢失。故一般设置成 false。</li>
 </ul>
 <h2 id="如何保证消息不重复消费"><a href="#如何保证消息不重复消费" class="headerlink" title="如何保证消息不重复消费"></a>如何保证消息不重复消费</h2><p>去重：将消息的唯一标识保存到外部介质中，每次消费处理时判断是否处理过。</p>
+<h2 id="怎么增加消费的能力？"><a href="#怎么增加消费的能力？" class="headerlink" title="怎么增加消费的能力？"></a>怎么增加消费的能力？</h2><p>1、broker 端参数 <code>num.replica.fetchers</code>表示的是 Follower 副本用多少个线程来拉取消息，默认使用 1 个线程。如果你的 Broker 端 CPU 资源很充足，不妨适当调大该参数值，加快 Follower 副本的同步速度。</p>
+<p>2、在 Producer 端，如果要改善吞吐量，通常的标配是增加消息批次的大小以及批次缓存时间，即 <code>batch.size</code> 和 <code>linger.ms</code>。</p>
+<p>3、压缩算法也配置上，以减少网络 I/O 传输量，从而间接提升吞吐量。当前，和 Kafka 适配最好的两个压缩算法是 LZ4 和 zstd</p>
+<p>4、Consumer端使用多线程方案</p>
 <h2 id="为什么性能好"><a href="#为什么性能好" class="headerlink" title="为什么性能好"></a>为什么性能好</h2><h3 id="顺序写"><a href="#顺序写" class="headerlink" title="顺序写"></a>顺序写</h3><blockquote>
 <p>操作系统读写磁盘时，需要先寻址，再进行数据读写。如果是机械硬盘，寻址就需要较长的时间。</p>
 </blockquote>
@@ -562,6 +571,12 @@ Kafka 主要有两大应用场景：
 <li>Follower接收到FETCH响应之后，会把消息写入到底层日志，接着更新LEO和HW值。</li>
 </ul>
 <p>Leader和Follower的HW值更新时机是不同的，Follower的HW更新永远落后于Leader的HW。这种时间上的错配是造成各种不一致的原因。</p>
+<h3 id="怎么保证同步成功？？？"><a href="#怎么保证同步成功？？？" class="headerlink" title="怎么保证同步成功？？？"></a>怎么保证同步成功？？？</h3><p>leader Epoch 由两部分数据组成。</p>
+<ul>
+<li>Epoch。一个单调增加的版本号。每当副本领导权发生变更时，都会增加该版本号。小版本号的 Leader 被认为是过期 Leader，不能再行使 Leader 权力。</li>
+<li>起始位移（Start Offset）。Leader 副本在该 Epoch 值上写入的首条消息的位移。</li>
+</ul>
+<p>Kafka Broker 会在内存中为每个分区都缓存 Leader Epoch 数据，同时它还会定期地将这些信息持久化到一个 checkpoint 文件中。当 Leader 副本写入消息到磁盘时，Broker 会尝试更新这部分缓存。如果该 Leader 是首次写入消息，那么 Broker 会向缓存中增加一个 Leader Epoch 条目。</p>
 <h2 id="Leader总是-1，怎么破？"><a href="#Leader总是-1，怎么破？" class="headerlink" title="Leader总是-1，怎么破？"></a>Leader总是-1，怎么破？</h2><p>通常情况下就是Controller不工作了，导致无法分配leader。</p>
 <p>方法</p>
 <p>1、删除ZooKeeper中的/controller节点，触发Controller重选举。Controller重选举能够为所有主题分区重刷分区状态，可以有效解决因不一致导致的 Leader 不可用问题。</p>
@@ -569,6 +584,12 @@ Kafka 主要有两大应用场景：
 <h2 id="如何设置Kafka能接收的最大消息的大小？"><a href="#如何设置Kafka能接收的最大消息的大小？" class="headerlink" title="如何设置Kafka能接收的最大消息的大小？"></a>如何设置Kafka能接收的最大消息的大小？</h2><ul>
 <li>Broker端参数：<code>message.max.bytes</code>，<code>max.message.bytes</code>（topic级别），<code>replica.fetch.max.bytes</code></li>
 <li>Consumer端参数：<code>fetch.message.max.bytes</code></li>
+</ul>
+<h3 id="Kafka如何保证高可用"><a href="#Kafka如何保证高可用" class="headerlink" title="Kafka如何保证高可用"></a>Kafka如何保证高可用</h3><p>Kafka 的副本机制：</p>
+<ul>
+<li>Kafka 集群由多个 Broker组成。一个Broker可以容纳多个Topic，也就是一台服务器可以传输多个 Topic 数据。Kafka 为了实现可扩展性，将一个 Topic 分散到多个 Partition 中。</li>
+<li>Kafka 中同一个分区下的不同副本，分为 Leader和 Follower。Leader 负责处理所有 读写的请求，Follower 作为数据备份，拉取 Leader 副本的数据进行同步。</li>
+<li>如果某个 Broker 挂掉，Kafka 会从 ISR 列表中选择一个分区作为新的 Leader 副本。</li>
 </ul>
 <h2 id="Kafka能手动删除消息吗？"><a href="#Kafka能手动删除消息吗？" class="headerlink" title="Kafka能手动删除消息吗？"></a>Kafka能手动删除消息吗？</h2><p>一般不需要用户手动删除消息。它本身提供了留存策略，能够自动删除过期消息。同时支持手动删除消息的。</p>
 <ul>
@@ -1094,7 +1115,7 @@ Kafka 主要有两大应用场景：
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="mysql面试">
+                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="mysql面试">
                         
                         <span class="card-title">mysql面试</span>
                     </div>
@@ -1158,7 +1179,7 @@ Kafka 主要有两大应用场景：
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="rabbitmq面试">
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="rabbitmq面试">
                         
                         <span class="card-title">rabbitmq面试</span>
                     </div>
@@ -1366,7 +1387,7 @@ Kafka 主要有两大应用场景：
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">120.8k</span>
+            <span class="white-color">124.7k</span>
             
 
             <br>

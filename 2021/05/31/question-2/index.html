@@ -4,12 +4,12 @@
 
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="kafka脚本, Python rabbitmq redis flask">
+    <meta name="keywords" content="Python rabbitmq redis flask">
     <meta name="baidu-site-verification" content="code-KoKq36g1n2">
     <meta name="google-site-verification" content="yCy2azpds5XSuGZvis6OuA-XIGF5GuGpYRAaGfD6o48">
     <meta name="360-site-verification" content="b7c11a830ef90fd1464ad6206bb7b6e7">
-    <meta name="description" content="生产消息# 使用控制台来向 Kafka 的指定主题发送消息
-$ bin/kafka-console-producer.sh --broker-list kafka-host:port --topic test-topic --request">
+    <meta name="description" content="进程与线程的区别
+进程间的通信，线程间的通信在线测评：给一个时间戳，算出具体的年和月（时间戳是从格林威治时间年月日时分秒起至现在）.堆和栈的区别设计LRUMQ的数据一致性如何实现密码为什么加盐盐bai 被称作“Salt 值”，这个值是du由">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -17,7 +17,7 @@ $ bin/kafka-console-producer.sh --broker-list kafka-host:port --topic test-topic
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>kafka脚本 | wangyixin-tom的博客</title>
+    <title>wangyixin-tom的博客</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -267,13 +267,13 @@ $ bin/kafka-console-producer.sh --broker-list kafka-host:port --topic test-topic
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/6.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/2.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        kafka脚本
+                        
                     </div>
                 </div>
             </div>
@@ -383,24 +383,11 @@ $ bin/kafka-console-producer.sh --broker-list kafka-host:port --topic test-topic
                 <div class="col s7">
                     
                     <div class="article-tag">
-                        
-                        <a href="/tags/kafka/" target="_blank">
-                            <span class="chip bg-color">kafka</span>
-                        </a>
-                        
+                        <span class="chip bg-color">无标签</span>
                     </div>
                     
                 </div>
                 <div class="col s5 right-align">
-                    
-                    <div class="post-cate">
-                        <i class="fa fa-bookmark fa-fw icon-category"></i>
-                        
-                        <a href="/categories/kafka/" class="post-category" target="_blank">
-                            kafka
-                        </a>
-                        
-                    </div>
                     
                 </div>
             </div>
@@ -408,7 +395,7 @@ $ bin/kafka-console-producer.sh --broker-list kafka-host:port --topic test-topic
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-03-29
+                    2021-05-31
                 </div>
 
                 <div class="post-author info-break-policy">
@@ -422,7 +409,7 @@ $ bin/kafka-console-producer.sh --broker-list kafka-host:port --topic test-topic
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    618
+                    1k
                 </div>
                 
 
@@ -440,50 +427,34 @@ $ bin/kafka-console-producer.sh --broker-list kafka-host:port --topic test-topic
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="生产消息"><a href="#生产消息" class="headerlink" title="生产消息"></a>生产消息</h2><pre class="line-numbers language-shell"><code class="language-shell"># 使用控制台来向 Kafka 的指定主题发送消息
-$ bin/kafka-console-producer.sh --broker-list kafka-host:port --topic test-topic --request-required-acks -1 --producer-property compression.type=lz4
-><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<h2 id="消费消息"><a href="#消费消息" class="headerlink" title="消费消息"></a>消费消息</h2><pre class="line-numbers language-shell"><code class="language-shell"># 禁掉了自动提交位移,一些简单的测试
-$ bin/kafka-console-consumer.sh --bootstrap-server kafka-host:port --topic test-topic --group test-group --from-beginning --consumer-property enable.auto.commit=false <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<h2 id="测试生产者性能"><a href="#测试生产者性能" class="headerlink" title="测试生产者性能"></a>测试生产者性能</h2><pre class="line-numbers language-shell"><code class="language-shell"># 向指定主题发送了 1 千万条消息，每条消息大小是 1K
-$ bin/kafka-producer-perf-test.sh --topic test-topic --num-records 10000000 --throughput -1 --record-size 1024 --producer-props bootstrap.servers=kafka-host:port acks=-1 linger.ms=2000 compression.type=lz4
-
-2175479 records sent, 435095.8 records/sec (424.90 MB/sec), 131.1 ms avg latency, 681.0 ms max latency.
-4190124 records sent, 838024.8 records/sec (818.38 MB/sec), 4.4 ms avg latency, 73.0 ms max latency.
-10000000 records sent, 737463.126844 records/sec (720.18 MB/sec), 31.81 ms avg latency, 681.00 ms max latency, 4 ms 50th, 126 ms 95th, 604 ms 99th, 672 ms 99.9th.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="测试消费者性能"><a href="#测试消费者性能" class="headerlink" title="测试消费者性能"></a>测试消费者性能</h2><pre class="line-numbers language-shell"><code class="language-shell">$ bin/kafka-consumer-perf-test.sh --broker-list kafka-host:port --messages 10000000 --topic test-topic
-start.time, end.time, data.consumed.in.MB, MB.sec, data.consumed.in.nMsg, nMsg.sec, rebalance.time.ms, fetch.time.ms, fetch.MB.sec, fetch.nMsg.sec
-2019-06-26 15:24:18:138, 2019-06-26 15:24:23:805, 9765.6202, 1723.2434, 10000000, 1764602.0822, 16, 5651, 1728.1225, 1769598.3012<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<h2 id="查看主题消息总数"><a href="#查看主题消息总数" class="headerlink" title="查看主题消息总数"></a>查看主题消息总数</h2><pre class="line-numbers language-shell"><code class="language-shell">$ bin/kafka-run-class.sh kafka.tools.GetOffsetShell --broker-list kafka-host:port --time -2 --topic test-topic
-
-#最早位移
-test-topic:0:0
-test-topic:1:0
-
-$ bin/kafka-run-class.sh kafka.tools.GetOffsetShell --broker-list kafka-host:port --time -1 --topic test-topic
-# 最新位移
-test-topic:0:5500000 + 5500000 
-test-topic:1:5500000
-# 5500000 + 5500000 =1100w<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="查看消息文件数据"><a href="#查看消息文件数据" class="headerlink" title="查看消息文件数据"></a>查看消息文件数据</h2><pre class="line-numbers language-shell"><code class="language-shell">
-$ bin/kafka-dump-log.sh --files ../data_dir/kafka_1/test-topic-1/00000000000000000000.log 
-Dumping ../data_dir/kafka_1/test-topic-1/00000000000000000000.log
-Starting offset: 0
-baseOffset: 0 lastOffset: 14 count: 15 baseSequence: -1 lastSequence: -1 producerId: -1 producerEpoch: -1 partitionLeaderEpoch: 0 isTransactional: false isControl: false position: 0 CreateTime: 1561597044933 size: 1237 magic: 2 compresscodec: LZ4 crc: 646766737 isvalid: true
-baseOffset: 15 lastOffset: 29 count: 15 baseSequence: -1 lastSequence: -1 producerId: -1 producerEpoch: -1 partitionLeaderEpoch: 0 isTransactional: false isControl: false position: 1237 CreateTime: 1561597044934 size: 1237 magic: 2 compresscodec: LZ4 crc: 3751986433 isvalid: true
-......
-
-# 查看详细信息
-$ bin/kafka-dump-log.sh --files ../data_dir/kafka_1/test-topic-1/00000000000000000000.log --deep-iteration
-Dumping ../data_dir/kafka_1/test-topic-1/00000000000000000000.log
-Starting offset: 0
-baseOffset: 0 lastOffset: 14 count: 15 baseSequence: -1 lastSequence: -1 producerId: -1 producerEpoch: -1 partitionLeaderEpoch: 0 isTransactional: false isControl: false position: 0 CreateTime: 1561597044933 size: 1237 magic: 2 compresscodec: LZ4 crc: 646766737 isvalid: true
-| offset: 0 CreateTime: 1561597044911 keysize: -1 valuesize: 1024 sequence: -1 headerKeys: []
-......
-| offset: 14 CreateTime: 1561597044933 keysize: -1 valuesize: 1024 sequence: -1 headerKeys: []
-baseOffset: 15 lastOffset: 29 count: 15 baseSequence: -1 lastSequence: -1 producerId: -1 producerEpoch: -1 partitionLeaderEpoch: 0 isTransactional: false isControl: false position: 1237 CreateTime: 1561597044934 size: 1237 magic: 2 compresscodec: LZ4 crc: 3751986433 isvalid: true
-......<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="查看消费者组位移"><a href="#查看消费者组位移" class="headerlink" title="查看消费者组位移"></a>查看消费者组位移</h2><pre class="line-numbers language-shell"><code class="language-shell">bin/kafka-consumer-groups.sh --bootstrap-server kafka-host:port --describe --group test-group<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+                <p>进程与线程的区别</p>
+<p>进程间的通信，线程间的通信<br>在线测评：给一个时间戳，算出具体的年和月（时间戳是从格林威治时间年月日时分秒起至现在）<br>.堆和栈的区别<br>设计LRU<br>MQ的数据一致性如何实现<br>密码为什么加盐<br>盐bai 被称作“Salt 值”，这个值是du由系统随机生成的，并且只有系统知道。即zhi便两个<br>用户使dao用了同一个密码，由于系统为它们生成的salt值不同，散列值也是不同的。<br>MD法：生成一个散列值。<br>目的：防止反向查询密码，多次尝试破解。<br>段页式<br>虚拟内存<br>缺页中断<br>Major/Minor page fault区别<br>TLB作用<br>进程/线程和虚拟内存的关系<br>段页式结构的细节问题、零拷贝是啥（忘了）、<br>AVL树深度差不能超过多少？红黑树时间复杂度？<br>讲一下什么样的情况能用动态规划？<br>用户态和内核态<br>零拷贝相关，mmap</p>
+<ul>
+<li>当时mmap忘了，只说了mmap可以省去一次拷贝orz</li>
+<li>1000000数找中位数</li>
+</ul>
+<h1 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h1><p>树结构的好处是什么，平时有用到哪些</p>
+<p>平衡二叉树是什么？能否用数组来实现，你会怎么实现？bst 和 avl 树有什么区别</p>
+<p>6.然后开始问 红黑树 的优势，还有特点，说了旋转与着色，问我旋转与着色的实现过程</p>
+<p>红黑树和平衡树的区别</p>
+<p>介绍一下红黑树以及它的应用场景</p>
+<p>AVL 描述一下，和红黑树的区别，优缺点，应用场景等</p>
+<p>BST与平衡二叉树区别；追问红黑树</p>
+<h1 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h1><p>排序算法有哪些？冒泡排序与快速排序的时间复杂度是多少？是否O(n^一定要比O(nlong)差？<br>算法了解动态规划吗？什么情况用动态规划<br>最优子结构（当时突然忘了定义是啥，解释一大堆，说了LCS跟费波那西数列）<br>那跟分治法有什么区别？<br>堆排序和快排的区别和应用</p>
+<p>讲一讲归并排序和他的时间复杂度。<br>为什么归并排序的时间复杂度为nlogn<br>.快排怎么实现<br>.堆排序是稳定的吗<br>堆排序建堆及排序过程<br>堆调整的时间复杂度</p>
+<p>快排：时空复杂度、稳定性、影响快排效率的因素？</p>
+<h1 id="mysql"><a href="#mysql" class="headerlink" title="mysql"></a>mysql</h1><p>left join 为什么需要小表驱动大表，原理是什么<br>mysql对底层B+树的数据结构进行了什么独有的优化?<br>说一下数据库中左连接是怎么做的？</p>
+<p>修改数据库后，缓存怎么做？如果缓存更新失败，怎么处理？</p>
+<p>Redis的lua脚本，为什么能保证原子性？</p>
+<p>联合索引有什么特点。</p>
+<h1 id="场景题"><a href="#场景题" class="headerlink" title="场景题"></a>场景题</h1><p>大日志中获取到指定时间段的数据</p>
+<p>9.如果两堆1TB 的数据，要求合并成一堆有序的牌堆，怎么做？（归并+内部 排序 ，分而治之）</p>
+<p>10.回到扑克牌的这个主题，要求把一堆乱序的扑克牌进行 排序 ，如果要极致地压榨性能，</p>
+<p>应该怎么做？时间复杂度能达到多少？</p>
+<h1 id="python"><a href="#python" class="headerlink" title="python"></a>python</h1><p>双重检查锁</p>
+<p>python3类型注解</p>
+<h1 id="操作系统"><a href="#操作系统" class="headerlink" title="操作系统"></a>操作系统</h1><p>虚拟内存和物理内存谈一谈。<br>操作系统中的中断是什么<br>手推快排的时间复杂度<br>用户态内核态<br>虚拟内存？页表储存？文件映射？Cache结构？<br>memcache 的内存管理机制［slab分块管理，最终以chunk分配，维护了一个LRU的双向列表等等］<br>操作系统虚拟内存，虚拟地址。<br>位操作系统里进程可以分配内存大小，为什么。<br>操作系统虚拟内存，虚拟地址深问<br>epoll底层，水平，边缘<br>操作系统怎么进行端口映射<br>操作系统内存管理</p>
+<p>详细介绍一下分段锁技术<br>文件描述符有没有听过？软链接和硬链接？<br>怎么在文件夹中找到最大的文件？</p>
 
             </div>
             <hr />
@@ -642,9 +613,9 @@ baseOffset: 15 lastOffset: 29 count: 15 baseSequence: -1 lastSequence: -1 produc
             <br/>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
                   property="dct:title" rel="dct:type">
-                    《kafka脚本》
+                    《》
                 </span> 由
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2021/03/29/kafka-jiao-ben/" property="cc:attributionName"
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2021/05/31/question-2/" property="cc:attributionName"
                rel="cc:attributionURL">
                 wangyixin-tom
             </a> 采用
@@ -685,7 +656,7 @@ baseOffset: 15 lastOffset: 29 count: 15 baseSequence: -1 lastSequence: -1 produc
         repo: 'wangyixin-tom.github.io',
         owner: 'WangYixin-Tom',
         admin: "WangYixin-Tom",
-        id: '2021/03/29/kafka-jiao-ben/',
+        id: '2021/05/31/question-2/',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -972,34 +943,31 @@ baseOffset: 15 lastOffset: 29 count: 15 baseSequence: -1 lastSequence: -1 produc
             <div class="article-badge left-badge text-color">
                 <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/03/29/kafkaadminclient/">
+                <a href="/2021/05/31/zui-chang-gong-gong-zi-xu-lie/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="KafkaAdminClient">
+                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="最长公共子序列">
                         
-                        <span class="card-title">KafkaAdminClient</span>
+                        <span class="card-title">最长公共子序列</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            功能主题管理：包括主题的创建、删除和查询。
-权限管理：包括具体权限的配置与删除。
-配置参数管理：包括 Kafka 各种资源的参数设置、详情查询。所谓的 Kafka 资源，主要有 Broker、主题、用户、Client-id 等。
-副本日志管
+                            动态规划
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2021-03-29
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2021-05-31
                         </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/kafka/" class="post-category" target="_blank">
-                                    kafka
+                            <a href="/categories/算法/" class="post-category" target="_blank">
+                                    算法
                                 </a>
                             
                             
@@ -1009,8 +977,8 @@ baseOffset: 15 lastOffset: 29 count: 15 baseSequence: -1 lastSequence: -1 produc
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/kafka/" target="_blank">
-                        <span class="chip bg-color">kafka</span>
+                    <a href="/tags/算法/" target="_blank">
+                        <span class="chip bg-color">算法</span>
                     </a>
                     
                 </div>
@@ -1024,31 +992,37 @@ baseOffset: 15 lastOffset: 29 count: 15 baseSequence: -1 lastSequence: -1 produc
                 下一篇&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/03/28/kafka-zhu-ti-guan-li/">
+                <a href="/2021/05/30/zui-chang-gong-gong-zi-chuan/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="kafka主题管理">
+                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="最长公共子串">
                         
-                        <span class="card-title">kafka主题管理</span>
+                        <span class="card-title">最长公共子串</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            主题增删改查创建bin/kafka-topics.sh --bootstrap-server broker_host:port --create --topic my_topic_name  --partitions 1 --replica
+                            思路：动态规划。
+dp[i][j]标识str1[i]和str[j]结尾的最长公共子串，递推关系如下：
+
+若str1[i] == str2[j]，则dp[i][j] = dp[i-1][j-1] + 1
+否则，dp[i][j] = 0
+
+cl
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-03-28
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-05-30
                             </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/kafka/" class="post-category" target="_blank">
-                                    kafka
+                            <a href="/categories/算法/" class="post-category" target="_blank">
+                                    算法
                                 </a>
                             
                             
@@ -1058,8 +1032,8 @@ baseOffset: 15 lastOffset: 29 count: 15 baseSequence: -1 lastSequence: -1 produc
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/kafka/" target="_blank">
-                        <span class="chip bg-color">kafka</span>
+                    <a href="/tags/算法/" target="_blank">
+                        <span class="chip bg-color">算法</span>
                     </a>
                     
                 </div>
@@ -1205,25 +1179,6 @@ baseOffset: 15 lastOffset: 29 count: 15 baseSequence: -1 lastSequence: -1 produc
     
 
 </main>
-
-
-<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-<script>
-    MathJax.Hub.Config({
-        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
-    });
-</script>
-
-<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
-<!-- 代码语言 -->
-<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
-<!-- 代码块复制 -->
-<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
-<script type="text/javascript" src="/libs/codeBlock/clipboard.min.js"></script>
-<!-- 代码块收缩 -->
-<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script> 
-<!-- 代码块折行 -->
-<style type="text/css">code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }</style>
 
 
     <footer class="page-footer bg-color">
