@@ -270,7 +270,7 @@ Kafka 主要有两大应用场景：
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/6.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/5.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -511,8 +511,8 @@ Kafka 主要有两大应用场景：
 <ol>
 <li>Kafka 通过给特定 Topic 指定多个 Partition， 而各个 Partition 可以分布在不同的 Broker 上， 这样便能提供比较好的并发能力（负载均衡）。</li>
 <li>多副本提高了消息存储的安全性，提高了容灾能力，不过也相应的增加了所需要的存储空间。</li>
-<li>方便实现“Read-your-writes”</li>
-<li>方便实现单调读：在多次消费消息时，它不会看到某条消息一会儿存在一会儿不存在</li>
+<li>读写走leader：方便实现Read-your-writes</li>
+<li>读写走leader：方便实现单调读，在多次消费消息时，它不会看到某条消息一会儿存在一会儿不存在</li>
 </ol>
 <h2 id="Zookeeper-的作用？"><a href="#Zookeeper-的作用？" class="headerlink" title="Zookeeper 的作用？"></a>Zookeeper 的作用？</h2><ul>
 <li>存放元数据：主题分区的相关数据都保存在 ZooKeeper 中，且以它保存的数据为权威。</li>
@@ -555,8 +555,7 @@ Kafka 主要有两大应用场景：
 <h3 id="网络线程模型"><a href="#网络线程模型" class="headerlink" title="网络线程模型"></a>网络线程模型</h3><p>加强版的 Reactor 网络线程模型</p>
 <h3 id="消息批量量处理"><a href="#消息批量量处理" class="headerlink" title="消息批量量处理"></a>消息批量量处理</h3><p>合并小的请求，然后以流的方式进行交互，直顶网络上限。</p>
 <h2 id="为什么不支持读写分离？"><a href="#为什么不支持读写分离？" class="headerlink" title="为什么不支持读写分离？"></a>为什么不支持读写分离？</h2><p>CAP理论下，我们只能保证可用性和一致性取其一。</p>
-<p>如果支持读写分离，那其实对于一致性的要求可能就会有一定折扣。</p>
-<p>如果支持了读写分离，就意味着可能的数据不一致，或数据滞后。</p>
+<p>如果支持读写分离，一致性就会有一定折扣，意味着可能的数据不一致，或数据滞后。</p>
 <h2 id="Controller发生网络分区时，Kafka会怎么样？"><a href="#Controller发生网络分区时，Kafka会怎么样？" class="headerlink" title="Controller发生网络分区时，Kafka会怎么样？"></a>Controller发生网络分区时，Kafka会怎么样？</h2><p>判断：Broker端的ActiveControllerCount。</p>
 <p>由于Controller会给Broker发送3类请求，LeaderAndIsrRequest，StopReplicaRequest，UpdateMetadataRequest，因此，一旦出现网络分区，这些请求将不能顺利到达Broker端。</p>
 <p>将影响主题的创建、修改、删除操作的信息同步。</p>
@@ -571,7 +570,7 @@ Kafka 主要有两大应用场景：
 <li>Follower接收到FETCH响应之后，会把消息写入到底层日志，接着更新LEO和HW值。</li>
 </ul>
 <p>Leader和Follower的HW值更新时机是不同的，Follower的HW更新永远落后于Leader的HW。这种时间上的错配是造成各种不一致的原因。</p>
-<h3 id="怎么保证同步成功？？？"><a href="#怎么保证同步成功？？？" class="headerlink" title="怎么保证同步成功？？？"></a>怎么保证同步成功？？？</h3><p>leader Epoch 由两部分数据组成。</p>
+<h3 id="怎么保证同步成功？"><a href="#怎么保证同步成功？" class="headerlink" title="怎么保证同步成功？"></a>怎么保证同步成功？</h3><p>leader Epoch 由两部分数据组成。</p>
 <ul>
 <li>Epoch。一个单调增加的版本号。每当副本领导权发生变更时，都会增加该版本号。小版本号的 Leader 被认为是过期 Leader，不能再行使 Leader 权力。</li>
 <li>起始位移（Start Offset）。Leader 副本在该 Epoch 值上写入的首条消息的位移。</li>
@@ -1115,7 +1114,7 @@ Kafka 主要有两大应用场景：
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="mysql面试">
+                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="mysql面试">
                         
                         <span class="card-title">mysql面试</span>
                     </div>
@@ -1179,7 +1178,7 @@ Kafka 主要有两大应用场景：
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="rabbitmq面试">
+                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="rabbitmq面试">
                         
                         <span class="card-title">rabbitmq面试</span>
                     </div>
@@ -1387,7 +1386,7 @@ Kafka 主要有两大应用场景：
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">124.8k</span>
+            <span class="white-color">124.9k</span>
             
 
             <br>
