@@ -20,7 +20,7 @@ Kafka 主要有两大应用场景：
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>kafka面试 | wangyixin-tom的博客</title>
+    <title>kafka面试 | 好好学习</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -83,7 +83,7 @@ Kafka 主要有两大应用场景：
                     
                     <img src="/medias/logo.png" class="logo-img" alt="LOGO">
                     
-                    <span class="logo-span">wangyixin-tom的博客</span>
+                    <span class="logo-span">好好学习</span>
                 </a>
             </div>
             
@@ -167,10 +167,10 @@ Kafka 主要有两大应用场景：
         
         <img src="/medias/logo.png" class="logo-img circle responsive-img">
         
-        <div class="logo-name">wangyixin-tom的博客</div>
+        <div class="logo-name">好好学习</div>
         <div class="logo-desc">
             
-            python
+            天天向上
             
         </div>
     </div>
@@ -270,7 +270,7 @@ Kafka 主要有两大应用场景：
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/5.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/4.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -425,14 +425,14 @@ Kafka 主要有两大应用场景：
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    4.3k
+                    4.7k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    15 分
+                    16 分
                 </div>
                 
                 
@@ -468,13 +468,37 @@ Kafka 主要有两大应用场景：
 <li><strong>Partition（分区）</strong>： Partition属于Topic 的一部分。一个 Topic 可以有多个 Partition ，并且同一 Topic 下的 Partition 可以分布在不同的 Broker 上。</li>
 <li><strong>记录（Record）：</strong>实际写入到kafka集群并且可以被消费者读取的数据。每条记录包含一个键、值和时间戳。</li>
 </ul>
-<h2 id="什么是消费者组？"><a href="#什么是消费者组？" class="headerlink" title="什么是消费者组？"></a>什么是消费者组？</h2><p>可扩展且具有容错性的消费者机制。</p>
+<h2 id="生产者"><a href="#生产者" class="headerlink" title="生产者"></a>生产者</h2><h3 id="ack-机制"><a href="#ack-机制" class="headerlink" title="ack 机制"></a>ack 机制</h3><ul>
+<li>0：生产者不会等待 broker 的 ack，延迟最低，可能丢数据</li>
+<li>1：服务端会等待leader收到消息，成功写入PageCache后，会返回ack，此时producer认为消息发送成功。leader切换可能丢数据</li>
+<li>-1：leader broker收到消息后，挂起，等待所有ISR列表中的follower返回结果后，再返回ack，数据不会丢失。如果在follower收到数据以后，成功返回ack，leader断电，数据将存在于原来的follower中。在重新选举以后，新的leader会持有该部分数据。</li>
+</ul>
+<p>数据从leader同步到follower，需要2步：</p>
+<ul>
+<li>数据从pageCache被刷盘到disk。因为只有disk中的数据才能被同步到replica。</li>
+<li>数据同步到replica，并且replica成功将数据写入PageCache。在producer得到ack后，哪怕是所有机器都停电，数据也至少会存在于leader的磁盘内。</li>
+</ul>
+<h3 id="生产端怎么实现幂等的"><a href="#生产端怎么实现幂等的" class="headerlink" title="生产端怎么实现幂等的"></a>生产端怎么实现幂等的</h3><p><strong>幂等性 Producer</strong></p>
+<p>设置<code>props.put(“enable.idempotence”, ture)</code>，或<code>props.put(ProducerConfig.ENABLE_IDEMPOTENCE_CONFIG， true)</code></p>
+<p><strong>底层原理：</strong>用空间去换时间的优化思路，即在 Broker 端多保存一些字段。当 Producer 发送了具有相同字段值的消息后，Broker 能够自动知晓这些消息已经重复了，于是可以在后台默默地把它们“丢弃”掉。</p>
+<ul>
+<li>ProducerID：在每个新的Producer初始化时，会被分配一个唯一的ProducerID，这个ProducerID对客户端使用者是不可见的。</li>
+<li>SequenceNumber：对于每个ProducerID，Producer发送数据的每个Topic和Partition都对应一个从0开始单调递增的SequenceNumber值。</li>
+</ul>
+<p><strong>作用范围：</strong>它只能保证单分区上的幂等性，即一个幂等性 Producer 能够保证某个主题的一个分区上不出现重复消息，它无法实现多个分区的幂等性。其次，它只能实现单会话上的幂等性，不能实现跨会话的幂等性。</p>
+<h2 id="消费者"><a href="#消费者" class="headerlink" title="消费者"></a>消费者</h2><h3 id="什么是消费者组？"><a href="#什么是消费者组？" class="headerlink" title="什么是消费者组？"></a>什么是消费者组？</h3><p>可扩展且具有容错性的消费者机制。</p>
 <ul>
 <li>Kafka允许你将同一份消息广播到多个消费者组里。</li>
 <li>一个消费者组中可以包含多个消费者，他们共同消费该主题的数据。</li>
 <li>同一个消费者组下的消费者有相同的组ID，他们被分配不同的订阅分区。</li>
 <li>当某个消费者挂掉的时候，其他消费者会自动地承担起它负责消费的分区。 </li>
 </ul>
+<h3 id="如何保证消息的消费顺序？"><a href="#如何保证消息的消费顺序？" class="headerlink" title="如何保证消息的消费顺序？"></a>如何保证消息的消费顺序？</h3><p>分区是真正保存消息的地方。Topic 可以指定多个 Partition。</p>
+<p>Kafka 只能为我们保证分区中的消息有序，而不能保证 主题中的消息有序。</p>
+<ol>
+<li>1 个 Topic 只对应一个 Partition。</li>
+<li>（推荐）发送消息的时候指定 key/Partition。</li>
+</ol>
 <h2 id="LEO、LSO、AR、ISR、HW？"><a href="#LEO、LSO、AR、ISR、HW？" class="headerlink" title="LEO、LSO、AR、ISR、HW？"></a>LEO、LSO、AR、ISR、HW？</h2><ul>
 <li>LEO（Log End Offset）：日志末端位移值或末端偏移量，表示日志下一条待插入消息的位移值。</li>
 <li>LSO（Log Stable Offset）：该值控制了事务型消费者能够看到的消息范围。</li>
@@ -520,12 +544,6 @@ Kafka 主要有两大应用场景：
 <li>Controller 选举：选举集群 Controller节点</li>
 <li>其他管理类任务：包括但不限于主题删除、参数配置等。</li>
 </ul>
-<h2 id="如何保证消息的消费顺序？"><a href="#如何保证消息的消费顺序？" class="headerlink" title="如何保证消息的消费顺序？"></a>如何保证消息的消费顺序？</h2><p>分区是真正保存消息的地方。Topic 可以指定多个 Partition。</p>
-<p>Kafka 只能为我们保证分区中的消息有序，而不能保证 主题中的消息有序。</p>
-<ol>
-<li>1 个 Topic 只对应一个 Partition。</li>
-<li>（推荐）发送消息的时候指定 key/Partition。</li>
-</ol>
 <h2 id="如何保证消息不丢失"><a href="#如何保证消息不丢失" class="headerlink" title="如何保证消息不丢失"></a>如何保证消息不丢失</h2><h3 id="生产者丢失消息"><a href="#生产者丢失消息" class="headerlink" title="生产者丢失消息"></a>生产者丢失消息</h3><ul>
 <li><p>生产者调用<code>send</code>方法发送消息之后，消息可能因为网络问题并没有发送过去。 为了确定消息是发送成功，我们要判断消息发送的结果。可以采用回调函数的形式，如果消息发送失败的话，我们检查失败的原因之后重新发送即可。</p>
 </li>
@@ -550,8 +568,8 @@ Kafka 主要有两大应用场景：
 <h2 id="为什么性能好"><a href="#为什么性能好" class="headerlink" title="为什么性能好"></a>为什么性能好</h2><h3 id="顺序写"><a href="#顺序写" class="headerlink" title="顺序写"></a>顺序写</h3><blockquote>
 <p>操作系统读写磁盘时，需要先寻址，再进行数据读写。如果是机械硬盘，寻址就需要较长的时间。</p>
 </blockquote>
-<p> Kafka 用的是顺序写，追加数据是追加到末尾，磁盘顺序写的性能极高。</p>
-<h3 id="零拷贝"><a href="#零拷贝" class="headerlink" title="零拷贝"></a>零拷贝</h3><p>Kafka 利用了 Linux 的 sendFile 技术实现零拷贝，直接从磁盘文件复制到网卡设备中,减少了内核和用户模式之间的上下文切换。</p>
+<p> Kafka 用的是顺序写，追加数据是追加到末尾，磁盘顺序写（？？pagecache）的性能极高。</p>
+<h3 id="零拷贝"><a href="#零拷贝" class="headerlink" title="零拷贝"></a>零拷贝</h3><p>Kafka 利用了 Linux 的 sendFile 技术实现零拷贝，直接从磁盘文件（pagecache？？？）复制到网卡设备中,减少了内核和用户模式之间的上下文切换。</p>
 <h3 id="网络线程模型"><a href="#网络线程模型" class="headerlink" title="网络线程模型"></a>网络线程模型</h3><p>加强版的 Reactor 网络线程模型</p>
 <h3 id="消息批量量处理"><a href="#消息批量量处理" class="headerlink" title="消息批量量处理"></a>消息批量量处理</h3><p>合并小的请求，然后以流的方式进行交互，直顶网络上限。</p>
 <h2 id="为什么不支持读写分离？"><a href="#为什么不支持读写分离？" class="headerlink" title="为什么不支持读写分离？"></a>为什么不支持读写分离？</h2><p>CAP理论下，我们只能保证可用性和一致性取其一。</p>
@@ -613,11 +631,6 @@ Kafka 主要有两大应用场景：
 <li>版本号: 1 byte</li>
 <li>CRC 校验码: 4 bytes</li>
 <li>具体的消息: n bytes</li>
-</ul>
-<h2 id="ack-机制"><a href="#ack-机制" class="headerlink" title="ack 机制"></a>ack 机制</h2><ul>
-<li>0：生产者不会等待 broker 的 ack，延迟最低，可能丢数据</li>
-<li>1：服务端会等待 ack 值 leader 副本确认接收到消息后发送 ack，leader切换可能丢数据</li>
-<li>-1：等所有的 follower 的副本收到数据后，leader 发出的 ack，数据不会丢失</li>
 </ul>
 <h2 id="消费者如何消费数据"><a href="#消费者如何消费数据" class="headerlink" title="消费者如何消费数据"></a>消费者如何消费数据</h2><p>KafkaConsumer 类不是线程安全的 （thread-safe），不能在多个线程中共享同一个 KafkaConsumer 实例，否则程序会抛出 <code>ConcurrentModificationException</code>异常</p>
 <p>1.消费者程序启动多个线程，每个线程维护专属的 KafkaConsumer 实例，负责完整的消息获取、消息处理流程</p>
@@ -1114,7 +1127,7 @@ Kafka 主要有两大应用场景：
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="mysql面试">
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="mysql面试">
                         
                         <span class="card-title">mysql面试</span>
                     </div>
@@ -1178,7 +1191,7 @@ Kafka 主要有两大应用场景：
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="rabbitmq面试">
+                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="rabbitmq面试">
                         
                         <span class="card-title">rabbitmq面试</span>
                     </div>
@@ -1252,7 +1265,7 @@ Kafka 主要有两大应用场景：
 
         var url = document.location.href;
         newdiv.innerHTML += '<br />'
-            + '来源: wangyixin-tom的博客<br />'
+            + '来源: 好好学习<br />'
             + '作者: wangyixin-tom<br />'
             + '链接: <a href="' + url + '">' + url + '</a><br />'
             + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
@@ -1386,7 +1399,7 @@ Kafka 主要有两大应用场景：
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">124.9k</span>
+            <span class="white-color">127.1k</span>
             
 
             <br>

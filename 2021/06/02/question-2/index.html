@@ -4,17 +4,11 @@
 
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="最长公共子串, Python rabbitmq redis flask">
+    <meta name="keywords" content="Python rabbitmq redis flask">
     <meta name="baidu-site-verification" content="code-KoKq36g1n2">
     <meta name="google-site-verification" content="yCy2azpds5XSuGZvis6OuA-XIGF5GuGpYRAaGfD6o48">
     <meta name="360-site-verification" content="b7c11a830ef90fd1464ad6206bb7b6e7">
-    <meta name="description" content="思路：动态规划。
-dp[i][j]标识str1[i]和str[j]结尾的最长公共子串，递推关系如下：
-
-若str1[i] == str2[j]，则dp[i][j] = dp[i-1][j-1] + 1
-否则，dp[i][j] = 0
-
-cl">
+    <meta name="description" content="在线测评：给一个时间戳，算出具体的年和月（时间戳是从格林威治时间年月日时分秒起至现在）.堆和栈的区别设计LRUMQ的数据一致性如何实现密码为什么加盐盐bai 被称作“Salt 值”，这个值是du由系统随机生成的，并且只有系统知道。即zhi便">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -22,7 +16,7 @@ cl">
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>最长公共子串 | 好好学习</title>
+    <title>好好学习</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -272,13 +266,13 @@ cl">
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/17.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/4.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        最长公共子串
+                        
                     </div>
                 </div>
             </div>
@@ -388,24 +382,11 @@ cl">
                 <div class="col s7">
                     
                     <div class="article-tag">
-                        
-                        <a href="/tags/算法/" target="_blank">
-                            <span class="chip bg-color">算法</span>
-                        </a>
-                        
+                        <span class="chip bg-color">无标签</span>
                     </div>
                     
                 </div>
                 <div class="col s5 right-align">
-                    
-                    <div class="post-cate">
-                        <i class="fa fa-bookmark fa-fw icon-category"></i>
-                        
-                        <a href="/categories/算法/" class="post-category" target="_blank">
-                            算法
-                        </a>
-                        
-                    </div>
                     
                 </div>
             </div>
@@ -413,7 +394,7 @@ cl">
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-05-30
+                    2021-06-02
                 </div>
 
                 <div class="post-author info-break-policy">
@@ -427,14 +408,14 @@ cl">
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    165
+                    1.2k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    4 分
                 </div>
                 
                 
@@ -445,33 +426,20 @@ cl">
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>思路：动态规划。</p>
-<p><code>dp[i][j]</code>标识str1[i]和str[j]结尾的最长公共子串，递推关系如下：</p>
+                <p>在线测评：给一个时间戳，算出具体的年和月（时间戳是从格林威治时间年月日时分秒起至现在）<br>.堆和栈的区别<br>设计LRU<br>MQ的数据一致性如何实现<br>密码为什么加盐<br>盐bai 被称作“Salt 值”，这个值是du由系统随机生成的，并且只有系统知道。即zhi便两个<br>用户使dao用了同一个密码，由于系统为它们生成的salt值不同，散列值也是不同的。<br>MD法：生成一个散列值。<br>目的：防止反向查询密码，多次尝试破解。<br>段页式<br>虚拟内存<br>缺页中断<br>Major/Minor page fault区别<br>TLB作用<br>进程/线程和虚拟内存的关系<br>段页式结构的细节问题、零拷贝是啥（忘了）、<br>AVL树深度差不能超过多少？红黑树时间复杂度？<br>讲一下什么样的情况能用动态规划？<br>零拷贝相关，mmap<br>怎么实现一个线程池</p>
 <ul>
-<li>若<code>str1[i] == str2[j]</code>，则<code>dp[i][j] = dp[i-1][j-1] + 1</code></li>
-<li>否则，<code>dp[i][j] = 0</code></li>
+<li>当时mmap忘了，只说了mmap可以省去一次拷贝orz</li>
+<li>1000000数找中位数</li>
 </ul>
-<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">Solution</span><span class="token punctuation">:</span>
-    <span class="token keyword">def</span> <span class="token function">LCS</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span>str1 <span class="token punctuation">,</span> str2 <span class="token punctuation">)</span><span class="token punctuation">:</span>
-        <span class="token comment" spellcheck="true"># write code here</span>
-        len1<span class="token punctuation">,</span> len2<span class="token operator">=</span> len<span class="token punctuation">(</span>str1<span class="token punctuation">)</span><span class="token punctuation">,</span> len<span class="token punctuation">(</span>str2<span class="token punctuation">)</span>
-        dp <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">0</span> <span class="token keyword">for</span> j <span class="token keyword">in</span> range<span class="token punctuation">(</span>len2<span class="token punctuation">)</span><span class="token punctuation">]</span> <span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span>len1<span class="token punctuation">)</span><span class="token punctuation">]</span>
-        <span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span>len1<span class="token punctuation">)</span><span class="token punctuation">:</span>
-            dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">1</span> <span class="token keyword">if</span> str1<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">==</span> str2<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token keyword">else</span> <span class="token number">0</span>
-        <span class="token keyword">for</span> j <span class="token keyword">in</span> range<span class="token punctuation">(</span>len2<span class="token punctuation">)</span><span class="token punctuation">:</span>
-            dp<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">1</span> <span class="token keyword">if</span> str1<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">==</span> str2<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token keyword">else</span> <span class="token number">0</span>
-        maxlen <span class="token operator">=</span> <span class="token number">0</span>
-        pos <span class="token operator">=</span> <span class="token number">0</span>
-        <span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span>len1<span class="token punctuation">)</span><span class="token punctuation">:</span>
-            <span class="token keyword">for</span> j <span class="token keyword">in</span> range<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> len2<span class="token punctuation">)</span><span class="token punctuation">:</span>
-                <span class="token keyword">if</span> str1<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">==</span> str2<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">:</span>
-                    dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> dp<span class="token punctuation">[</span>i<span class="token number">-1</span><span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token number">-1</span><span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token number">1</span>
-                    <span class="token keyword">if</span> dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">></span> maxlen<span class="token punctuation">:</span>
-                        maxlen <span class="token operator">=</span> dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span>
-                        pos <span class="token operator">=</span> i
-                <span class="token keyword">else</span><span class="token punctuation">:</span>
-                    dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span>
-        <span class="token keyword">return</span> str1<span class="token punctuation">[</span>pos<span class="token operator">-</span>maxlen<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">:</span>pos<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h1 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h1><p>树结构的好处是什么，平时有用到哪些<br>平衡二叉树是什么？能否用数组来实现，你会怎么实现？bst 和 avl 树有什么区别<br>6.然后开始问 红黑树 的优势，还有特点，说了旋转与着色，问我旋转与着色的实现过程<br>红黑树和平衡树的区别<br>介绍一下红黑树以及它的应用场景<br>AVL 描述一下，和红黑树的区别，优缺点，应用场景等<br>BST与平衡二叉树区别；追问红黑树<br>平衡树怎么插入节点？<br>innodb插入节点？</p>
+<h1 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h1><p>算法了解动态规划吗？什么情况用动态规划<br>最优子结构（当时突然忘了定义是啥，解释一大堆，说了LCS跟费波那西数列）<br>那跟分治法有什么区别？<br>堆排序和快排的区别和应用</p>
+<p>排序算法有哪些？冒泡排序与快速排序的时间复杂度是多少？是否O(n^一定要比O(nlong)差？<br>讲一讲归并排序和他的时间复杂度。<br>为什么归并排序的时间复杂度为nlogn<br>.快排怎么实现<br>.堆排序是稳定的吗<br>堆排序建堆及排序过程<br>堆调整的时间复杂度<br>手推快排的时间复杂度<br>算法 令牌桶</p>
+<p>快排：时空复杂度、稳定性、影响快排效率的因素？</p>
+<h2 id="mysql"><a href="#mysql" class="headerlink" title="mysql"></a>mysql</h2><p>数据库中哪些地方用到了锁</p>
+<h1 id="场景题"><a href="#场景题" class="headerlink" title="场景题"></a>场景题</h1><p>大日志中获取到指定时间段的数据<br>9.如果两堆1TB 的数据，要求合并成一堆有序的牌堆，怎么做？（归并+内部 排序 ，分而治之）<br>10.回到扑克牌的这个主题，要求把一堆乱序的扑克牌进行 排序 ，如果要极致地压榨性能，<br>应该怎么做？时间复杂度能达到多少？<br>如果同时插入相同的东西（比如注册的时候不小心点了两次，就会插入相同的信息）如何避免重复插入<br>比如同时有几百个用户同时想数据库插入相同的东西，如何防止不重复插入相同东西浪费时间？</p>
+<h1 id="操作系统"><a href="#操作系统" class="headerlink" title="操作系统"></a>操作系统</h1><p>虚拟内存和物理内存谈一谈。<br>操作系统中的中断是什么<br>用户态内核态<br>虚拟内存？页表储存？文件映射？Cache结构？<br>memcache 的内存管理机制［slab分块管理，最终以chunk分配，维护了一个LRU的双向列表等等］<br>操作系统虚拟内存，虚拟地址。<br>位操作系统里进程可以分配内存大小，为什么。<br>操作系统虚拟内存，虚拟地址深问<br>epoll底层，水平，边缘<br>操作系统怎么进行端口映射<br>操作系统内存管理<br>进程与线程的区别<br>进程间的通信，线程间的通信<br>线程有哪些独立资源和共享资源<br>管道需要陷入内核态吗<br>内核态和用户态的区别<br>操作系统为什么知道什么时候进入内核态<br>不同进程间是如何实现共享内存的<br>为什么进程切换开销大<br>说一下虚拟内存<br>用户态和内核态<br>详细介绍一下分段锁技术<br>文件描述符有没有听过？软链接和硬链接？<br>怎么在文件夹中找到最大的文件？</p>
+<h2 id="网络"><a href="#网络" class="headerlink" title="网络"></a>网络</h2><p>如何避免 time_wait</p>
+<h1 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h1><p>python对象周期<br>包管理和docker区别<br>协程的实现原理<br>回收之后内存怎么处理，怎么减少内存碎片？<br>docker容器的问题<br>websocket怎么实现？</p>
 
             </div>
             <hr />
@@ -630,9 +598,9 @@ cl">
             <br/>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
                   property="dct:title" rel="dct:type">
-                    《最长公共子串》
+                    《》
                 </span> 由
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2021/05/30/zui-chang-gong-gong-zi-chuan/" property="cc:attributionName"
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2021/06/02/question-2/" property="cc:attributionName"
                rel="cc:attributionURL">
                 wangyixin-tom
             </a> 采用
@@ -673,7 +641,7 @@ cl">
         repo: 'wangyixin-tom.github.io',
         owner: 'WangYixin-Tom',
         admin: "WangYixin-Tom",
-        id: '2021/05/30/zui-chang-gong-gong-zi-chuan/',
+        id: '2021/06/02/question-2/',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -956,9 +924,45 @@ cl">
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/2021/06/02/question-2/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="">
+                        
+                        <span class="card-title"></span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            在线测评：给一个时间戳，算出具体的年和月（时间戳是从格林威治时间年月日时分秒起至现在）.堆和栈的区别设计LRUMQ的数据一致性如何实现密码为什么加盐盐bai 被称作“Salt 值”，这个值是du由系统随机生成的，并且只有系统知道。即zhi便
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-06-02
+                            </span>
+                        <span class="publish-author">
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fa fa-chevron-right"></i>
+            </div>
             <div class="card">
                 <a href="/2021/05/31/zui-chang-gong-gong-zi-xu-lie/">
                     <div class="card-image">
@@ -976,9 +980,9 @@ cl">
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2021-05-31
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-05-31
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
@@ -996,57 +1000,6 @@ cl">
                     
                     <a href="/tags/算法/" target="_blank">
                         <span class="chip bg-color">算法</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fa fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2021/05/24/chang-jian-chang-jing-ti/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="常见场景题">
-                        
-                        <span class="card-title">常见场景题</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            大数据1、100G 的手机号文件，找到重复的手机号，将重复手机号放入另一个文件。PC 机内存1G
-按照手机前三位分成1000 个文件，然后hashmap 或者bitmap 进行重复校验）2、1G大小的一个文件中找出出现频率最高的100个数
-
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-05-24
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fa fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/interview/" class="post-category" target="_blank">
-                                    interview
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/interview/" target="_blank">
-                        <span class="chip bg-color">interview</span>
                     </a>
                     
                 </div>
@@ -1192,25 +1145,6 @@ cl">
     
 
 </main>
-
-
-<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-<script>
-    MathJax.Hub.Config({
-        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
-    });
-</script>
-
-<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
-<!-- 代码语言 -->
-<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
-<!-- 代码块复制 -->
-<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
-<script type="text/javascript" src="/libs/codeBlock/clipboard.min.js"></script>
-<!-- 代码块收缩 -->
-<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script> 
-<!-- 代码块折行 -->
-<style type="text/css">code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }</style>
 
 
     <footer class="page-footer bg-color">

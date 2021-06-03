@@ -24,7 +24,7 @@ Redis为旁路缓存，因为读取缓存、读取数据库和更新缓存的操
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>redis缓存 | wangyixin-tom的博客</title>
+    <title>redis缓存 | 好好学习</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -87,7 +87,7 @@ Redis为旁路缓存，因为读取缓存、读取数据库和更新缓存的操
                     
                     <img src="/medias/logo.png" class="logo-img" alt="LOGO">
                     
-                    <span class="logo-span">wangyixin-tom的博客</span>
+                    <span class="logo-span">好好学习</span>
                 </a>
             </div>
             
@@ -171,10 +171,10 @@ Redis为旁路缓存，因为读取缓存、读取数据库和更新缓存的操
         
         <img src="/medias/logo.png" class="logo-img circle responsive-img">
         
-        <div class="logo-name">wangyixin-tom的博客</div>
+        <div class="logo-name">好好学习</div>
         <div class="logo-desc">
             
-            python
+            天天向上
             
         </div>
     </div>
@@ -274,7 +274,7 @@ Redis为旁路缓存，因为读取缓存、读取数据库和更新缓存的操
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/22.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/23.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -429,7 +429,7 @@ Redis为旁路缓存，因为读取缓存、读取数据库和更新缓存的操
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.4k
+                    2.6k
                 </div>
                 
 
@@ -535,6 +535,18 @@ Redis为旁路缓存，因为读取缓存、读取数据库和更新缓存的操
 <li>把要删除的缓存值或者是要更新的数据库值暂存到消息队列中（例如使用 Kafka 消息队列）。当应用没有能够成功地删除缓存值或者是更新数据库值时，可以从消息队列中重新读取这些值，然后再次进行删除或更新。</li>
 <li>如果重试超过的一定次数，还是没有成功，我们就需要向业务层发送报错信息了。</li>
 </ul>
+<p><strong>解决办法：binlog监听的消息队列</strong></p>
+<ul>
+<li>一般大公司本身都会有监听binlog消息的消息队列存在，主要是为了做一些核对的工作。</li>
+<li>可以借助监听binlog的消息队列来做删除缓存的操作。这样做的好处是，不用你自己引入，侵入到你的业务代码中，中间件帮你做了解耦，同时，中间件的这个东西本身就保证了高可用。</li>
+</ul>
+<p><strong>解决办法：设置缓存过期时间</strong></p>
+<ul>
+<li>每次放入缓存的时候，设置一个过期时间，比如5分钟，以后的操作只修改数据库，不操作缓存，等待缓存超时后从数据库重新读取。</li>
+</ul>
+<blockquote>
+<p>如果对于一致性要求不是很高的情况，可以采用这种方案。</p>
+</blockquote>
 <h3 id="原因2：大量并发请求"><a href="#原因2：大量并发请求" class="headerlink" title="原因2：大量并发请求"></a>原因2：大量并发请求</h3><p><strong>先删缓存，后更数据库</strong></p>
 <p><img src="buyizhi.jpg" alt="并发缓存不一致"></p>
 <p><strong>解决办法：延迟双删</strong></p>
@@ -1070,7 +1082,7 @@ Redis为旁路缓存，因为读取缓存、读取数据库和更新缓存的操
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="redis分布式锁">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="redis分布式锁">
                         
                         <span class="card-title">redis分布式锁</span>
                     </div>
@@ -1125,7 +1137,7 @@ Redis为旁路缓存，因为读取缓存、读取数据库和更新缓存的操
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="rabbitmq消息可靠性">
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="rabbitmq消息可靠性">
                         
                         <span class="card-title">rabbitmq消息可靠性</span>
                     </div>
@@ -1199,7 +1211,7 @@ Redis为旁路缓存，因为读取缓存、读取数据库和更新缓存的操
 
         var url = document.location.href;
         newdiv.innerHTML += '<br />'
-            + '来源: wangyixin-tom的博客<br />'
+            + '来源: 好好学习<br />'
             + '作者: wangyixin-tom<br />'
             + '链接: <a href="' + url + '">' + url + '</a><br />'
             + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
@@ -1333,7 +1345,7 @@ Redis为旁路缓存，因为读取缓存、读取数据库和更新缓存的操
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">124.9k</span>
+            <span class="white-color">127.1k</span>
             
 
             <br>
