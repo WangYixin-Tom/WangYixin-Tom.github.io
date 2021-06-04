@@ -4,7 +4,7 @@
 
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="常见场景题, Python rabbitmq redis flask">
+    <meta name="keywords" content="常见场景题, python rabbitmq redis flask kafka">
     <meta name="baidu-site-verification" content="code-KoKq36g1n2">
     <meta name="google-site-verification" content="yCy2azpds5XSuGZvis6OuA-XIGF5GuGpYRAaGfD6o48">
     <meta name="360-site-verification" content="b7c11a830ef90fd1464ad6206bb7b6e7">
@@ -168,7 +168,7 @@
         <div class="logo-name">好好学习</div>
         <div class="logo-desc">
             
-            天天向上
+            业精于勤荒于嬉，行成于思毁于随
             
         </div>
     </div>
@@ -268,7 +268,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/22.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/23.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -423,7 +423,7 @@
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    3.9k
+                    4.1k
                 </div>
                 
 
@@ -445,25 +445,29 @@
 <pre><code>按照手机前三位分成1000 个文件，然后hashmap 或者bitmap 进行重复校验）</code></pre><p><strong>2、1G大小的一个文件中找出出现频率最高的100个数</strong></p>
 <pre><code>（1）此处1G文件远远大于1M内存，分治法，先hash映射把大文件分成很多个小文件，具体操作如下：读文件中，对于每个词x，取hash(x)%5000，然后按照该值存到5000个小文件(记为f0,f1,...,f4999)中，这样每个文件大概是200k左右（每个相同的词一定被映射到了同一文件中）
 （2）对于每个文件fi，都用hash_map做词和出现频率的统计，取出频率大的前100个词（怎么取？topK问题，建立一个100个节点的最小堆），把这100个词和出现频率再单独存入一个文件
-（3）根据上述处理，我们又得到了5000个文件，归并文件取出top100（Top K 问题，比较最大的前100个频数）</code></pre><p><strong>海量日志数据，提取出某日访问百度次数最多的那个IP。</strong></p>
+（3）根据上述处理，我们又得到了5000个文件，归并文件取出top100（Top K 问题，比较最大的前100个频数）</code></pre><p><strong>3、海量日志数据，提取出某日访问百度次数最多的那个IP。</strong></p>
 <pre><code>分而治之+Hash
 1.IP地址最多有2^32=4G种取值情况，所以不能完全加载到内存中处理；
 2.可以考虑采用“分而治之”的思想，按照IP地址的Hash(IP)%1024值，把海量IP日志分别存储到1024个小文件中。这样，每个小文件最多包含4MB个IP地址；
 3.对于每一个小文件，可以构建一个IP为key，出现次数为value的Hash map，同时记录当前出现次数最多的那个IP地址；
-4.可以得到1024个小文件中的出现次数最多的IP，再依据常规的排序算法得到总体上出现次数最多的IP；</code></pre><p><strong>统计最热门的10个查询串，要求使用的内存不能超过1G，搜索引擎会通过日志文件把用户每次检索使用的所有检索串都记录下来，每个查询串的长度为1-255字节。</strong></p>
+4.可以得到1024个小文件中的出现次数最多的IP，再依据常规的排序算法得到总体上出现次数最多的IP；</code></pre><p><strong>4、统计最热门的10个查询串，要求使用的内存不能超过1G，搜索引擎会通过日志文件把用户每次检索使用的所有检索串都记录下来，每个查询串的长度为1-255字节。</strong></p>
 <pre><code>第一步、先对这批海量数据预处理，在O（N）的时间内用Hash表完成统计;
 第二步、借助堆这个数据结构，找出Top K，时间复杂度为N&#39;logK。
-即，借助堆结构，我们可以在log量级的时间内查找和调整/移动。因此，维护一个K(该题目中是10)大小的小根堆，然后遍历300万的Query，分别 和根元素进行对比所以，我们最终的时间复杂度是：O（N） + N&#39;*O（logK），（N为1000万，N&#39;为300万）。</code></pre><p><strong>给定a、b两个文件，各存放50亿个url，每个url各占64字节，内存限制是4G，让你找出a、b文件共同的url？</strong></p>
+即，借助堆结构，我们可以在log量级的时间内查找和调整/移动。因此，维护一个K(该题目中是10)大小的小根堆，然后遍历300万的Query，分别 和根元素进行对比所以，我们最终的时间复杂度是：O（N） + N&#39;*O（logK），（N为1000万，N&#39;为300万）。</code></pre><p><strong>5、给定a、b两个文件，各存放50亿个url，每个url各占64字节，内存限制是4G，让你找出a、b文件共同的url？</strong></p>
 <pre><code>可以估计每个文件安的大小为5G×64=320G，远远大于内存限制的4G。所以不可能将其完全加载到内存中处理。考虑采取分而治之的方法。
 
 遍历文件a，对每个url求取hash(url)%1000，然后根据所取得的值将url分别存储到1000个小文件（记为a0,a1,…,a999）中。这样每个小文件的大约为300M。
 
 遍历文件b，采取和a相同的方式将url分别存储到1000小文件（记为b0,b1,…,b999）。这样处理后，所有可能相同的url都在对应的小文件（a0vsb0,a1vsb1,…,a999vsb999）中，不对应的小文件不可能有相同的url。然后我们只要求出1000对小文件中相同的 url即可。
 
-求每对小文件中相同的url时，可以把其中一个小文件的url存储到hash_set中。然后遍历另一个小文件的每个url，看其是否在刚才构建的hash_set中，如果是，那么就是共同的url，存到文件里面就可以了。</code></pre><p><strong>2.5亿个整数中找出不重复的整数，注，内存不足以容纳这2.5亿个整数。</strong></p>
-<pre><code>采用2-Bitmap（每个数分配2bit，00表示不存在，01表示出现一次，10表示多次，11无意义）进行，共需内存2^32 * 2 bit=1 GB内存，还可以接受。然后扫描这2.5亿个整数，查看Bitmap中相对应位，如果是00变01，01变10，10保持不变。所描完事后，查看 bitmap，把对应位是01的整数输出即可。</code></pre><p><strong>给40亿个不重复的unsigned int的整数，没排过序的，然后再给一个数，如何快速判断这个数是否在那40亿个数当中？</strong></p>
+求每对小文件中相同的url时，可以把其中一个小文件的url存储到hash_set中。然后遍历另一个小文件的每个url，看其是否在刚才构建的hash_set中，如果是，那么就是共同的url，存到文件里面就可以了。</code></pre><p><strong>6、2.5亿个整数中找出不重复的整数，注，内存不足以容纳这2.5亿个整数。</strong></p>
+<pre><code>采用2-Bitmap（每个数分配2bit，00表示不存在，01表示出现一次，10表示多次，11无意义）进行，共需内存2^32 * 2 bit=1 GB内存，还可以接受。然后扫描这2.5亿个整数，查看Bitmap中相对应位，如果是00变01，01变10，10保持不变。所描完事后，查看 bitmap，把对应位是01的整数输出即可。</code></pre><p><strong>7、给40亿个不重复的unsigned int的整数，没排过序的，然后再给一个数，如何快速判断这个数是否在那40亿个数当中？</strong></p>
 <p>申请512M的内存，一个bit位代表一个unsigned int值。读入40亿个数，设置相应的bit位，读入要查询的数，查看相应bit位是否为1，为1表示存在，为0表示不存在。</p>
-<p><strong>海量数据如何排序</strong></p>
+<p><strong>8、大日志中获取到指定时间段的数据</strong></p>
+<blockquote>
+<p>与传统的二分搜索不一样，日志文件中的每一条日志长度都是不一样的，我们使用<code>mid = start + (end - start) / 2</code>得到mid时，并不直接指向一行的行首。所以我们需要找到<code>mid</code>所在行的行首。</p>
+</blockquote>
+<p><strong>9、海量数据如何排序</strong></p>
 <p><strong>外部排序</strong></p>
 <p>海量数据不能一次性读入内存，在对海量数据进行排序时，首先需要将海量数据拆分到多台机器或者多个文件，这些机器或文件称为拆分节点；然后在每个拆分节点上将数据全部读入内存并使用快速排序等方法进行排序；最后在合并节点使用<strong>多路归并方法</strong>将所有拆分节点的部分排序结果整合成最终的排序结果。外部排序也可以被称为外部归并排序。<br>如果不进行额外处理，<strong>合并节点仍然无法将所有数据读入内存中。可以使用小顶堆</strong>来解决这个问题：</p>
 <ul>
@@ -475,7 +479,7 @@
 <p><strong>BitMap</strong></p>
 <p>如果待排序的数据是整数，或者其它范围比较小的数据时，可以使用 BitMap 对其进行排序。BitMap 相当于一个比特数组，如果某个数据存在时就将对应的比特数组位置设置为 1，最后从头遍历比特数组就能得到一个排序的整数序列。</p>
 <p>这种方法<strong>只能处理数据不重复的情况</strong>，如果数据重复，就要将<strong>比特数组转换成整数数组用于计数</strong>，这种排序方法叫做计数排序。可以把整数数组看成 32 个比特数组，32 比特可以存放的计数最大值为 232 ，在某些场景下数据的重复量不会这么大，只需要几个比特数组就能完成计数操作。</p>
-<p>100亿数据找中位数</p>
+<p><strong>10、100亿数据找中位数</strong></p>
 <blockquote>
 <p>（1）我们要划分映射区域，一个有符号的32位整数的取值范围是[-2^31, 2^31-1]，总共有4294967296个取值，因此我们将它划分成100000组，即43000个数映射到一个组，将a1的区间[-2^31，-2^31+43000)，a2的区间[-2^31+43000，-2^31+86000)……一直到a100000的区间；（这是组数与项数的一个平衡问题）；</p>
 <p>（2.1）我们首先装载第一个1亿个数，遍历这些数，比较大小，看他落入a1至a100000的哪个区间，落入的对应区间统计计数增1；这次是对这里面的数区间的组映射；</p>
@@ -491,7 +495,13 @@
 <p>（5）总共遍历两遍100亿数据</p>
 </blockquote>
 <h2 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h2><p><strong>银行家算法</strong></p>
-<p>我们可以把操作系统看作是银行家，操作系统管理的资源相当于银行家管理的资金，进程向操作系统请求分配资源相当于用户向银行家贷款。<br>为保证资金的安全,银行家规定:<br>(1) 当一个顾客对资金的最大需求量不超过银行家现有的资金时就可接纳该顾客;<br>(2) 顾客可以分期贷款,但贷款的总数不能超过最大需求量;<br>(3) 当银行家现有的资金不能满足顾客尚需的贷款数额时,对顾客的贷款可推迟支付,但总能使顾客在有限的时间里得到贷款;<br>(4) 当顾客得到所需的全部资金后,一定能在有限的时间里归还所有的资金.</p>
+<p>我们可以把操作系统看作是银行家，操作系统管理的资源相当于银行家管理的资金，进程向操作系统请求分配资源相当于用户向银行家贷款。<br>为保证资金的安全,银行家规定:</p>
+<ul>
+<li>当一个顾客对资金的最大需求量不超过银行家现有的资金时就可接纳该顾客;</li>
+<li>顾客可以分期贷款,但贷款的总数不能超过最大需求量;</li>
+<li>当银行家现有的资金不能满足顾客尚需的贷款数额时,对顾客的贷款可推迟支付,但总能使顾客在有限的时间里得到贷款;</li>
+<li>当顾客得到所需的全部资金后,一定能在有限的时间里归还所有的资金.</li>
+</ul>
 <h2 id="系统设计"><a href="#系统设计" class="headerlink" title="系统设计"></a>系统设计</h2><h3 id="单点登录"><a href="#单点登录" class="headerlink" title="单点登录"></a>单点登录</h3><p>单点登录就是<strong>在多个系统中，用户只需一次登录，各个系统即可感知该用户已经登录。</strong></p>
 <p><strong>Session不共享问题</strong></p>
 <blockquote>
@@ -525,8 +535,12 @@
 <p>8个球分成3份，分别是2个球，3个球，3个球</p>
 <p>3个球和3个球称，如果一样重的话，那证明重的球在那一份2个球的，两边各放一个，重的球就可以找到了。</p>
 </blockquote>
+<p>5、回到扑克牌的这个主题，要求把一堆乱序的扑克牌进行 排序 ，如果要极致地压榨性能，应该怎么做？时间复杂度能达到多少？</p>
+<blockquote>
+<p>扑克牌本身规律8个1,8个2…</p>
+</blockquote>
 <p>九个球，红黄蓝各三个，随机放在九个盒子里，排成一排。有两种操作，打开盒子查看颜色，交换两个盒子的位置。问最快的方法使得排成“红黄蓝红黄蓝”的顺序？</p>
-<pre><code></code></pre>
+
             </div>
             <hr />
 
@@ -1018,7 +1032,7 @@
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="最长公共子串">
+                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="最长公共子串">
                         
                         <span class="card-title">最长公共子串</span>
                     </div>
@@ -1073,7 +1087,7 @@ cl
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="网络">
+                        <img src="/medias/featureimages/24.jpg" class="responsive-img" alt="网络">
                         
                         <span class="card-title">网络</span>
                     </div>
@@ -1284,7 +1298,7 @@ TCP
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">127.1k</span>
+            <span class="white-color">134.5k</span>
             
 
             <br>
