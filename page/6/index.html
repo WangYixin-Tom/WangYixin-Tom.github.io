@@ -293,11 +293,163 @@ $('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
+                    <a href="/2020/11/02/redis-xiao-xi-dui-lie/" target="_blank">
+                        <div class="card-image">
+                            
+                            
+                            <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="redis消息队列">
+                            
+                            <span class="card-title">redis消息队列</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                            需求分析
+消息保序：消费者需要按照生产者发送消息的顺序来处理消息
+
+处理重复的消息：消费者避免多次处理重复的消息
+
+保证消息可靠性：消费者重启后，可以重新读取消息再次进行处理
+
+
+基于List
+LPUSH 
+
+把要发送的消息依次写入 Lis
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-11-02
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fa fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/redis/" class="post-category" target="_blank">
+                                    redis
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/redis/" target="_blank">
+                            <span class="chip bg-color">redis</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2020/11/02/redis-nei-cun-sui-pian/" target="_blank">
+                        <div class="card-image">
+                            
+                            
+                            <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="redis内存碎片">
+                            
+                            <span class="card-title">redis内存碎片</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                            
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-11-02
+                            </span>
+                            <span class="publish-author">
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2020/11/01/redis-shi-wu/" target="_blank">
+                        <div class="card-image">
+                            
+                            
+                            <img src="/medias/featureimages/27.jpg" class="responsive-img" alt="redis事务">
+                            
+                            <span class="card-title">redis事务</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                            事务实现基本命令
+MULTI
+
+显式地表示一个事务的开启，把这些命令暂存到一个命令队列中
+
+EXEC 
+
+实际执行命令队列中的所有命令
+
+DISCARD
+
+主动放弃事务执行，把暂存的命令队列清空（起不到回滚的效果）
+
+WATCH
+
+在事务执
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-11-01
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fa fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/redis/" class="post-category" target="_blank">
+                                    redis
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/redis/" target="_blank">
+                            <span class="chip bg-color">redis</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
                     <a href="/2020/10/29/redis-fen-bu-shi-suo/" target="_blank">
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/28.jpg" class="responsive-img" alt="redis分布式锁">
+                            <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="redis分布式锁">
                             
                             <span class="card-title">redis分布式锁</span>
                         </div>
@@ -350,7 +502,7 @@ $('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/24.jpg" class="responsive-img" alt="redis缓存">
+                            <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="redis缓存">
                             
                             <span class="card-title">redis缓存</span>
                         </div>
@@ -405,7 +557,7 @@ Redis为旁路缓存，因为读取缓存、读取数据库和更新缓存的操
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="rabbitmq消息可靠性">
+                            <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="rabbitmq消息可靠性">
                             
                             <span class="card-title">rabbitmq消息可靠性</span>
                         </div>
@@ -455,7 +607,7 @@ Redis为旁路缓存，因为读取缓存、读取数据库和更新缓存的操
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="rabbitmq消息重复">
+                            <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="rabbitmq消息重复">
                             
                             <span class="card-title">rabbitmq消息重复</span>
                         </div>
@@ -507,7 +659,7 @@ MQ Broker服务与消费端传输消息的过程中出现网络抖动。
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="rabbitmq集群">
+                            <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="rabbitmq集群">
                             
                             <span class="card-title">rabbitmq集群</span>
                         </div>
@@ -557,7 +709,7 @@ MQ Broker服务与消费端传输消息的过程中出现网络抖动。
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="rabbitmq消息消费">
+                            <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="rabbitmq消息消费">
                             
                             <span class="card-title">rabbitmq消息消费</span>
                         </div>
@@ -609,7 +761,7 @@ MQ Broker服务与消费端传输消息的过程中出现网络抖动。
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="rabbitmq消息路由">
+                            <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="rabbitmq消息路由">
                             
                             <span class="card-title">rabbitmq消息路由</span>
                         </div>
@@ -665,7 +817,7 @@ impo
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="rabbitmq消息发布">
+                            <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="rabbitmq消息发布">
                             
                             <span class="card-title">rabbitmq消息发布</span>
                         </div>
@@ -713,7 +865,7 @@ mandatory当交换器无法路由消息，RabbitMQ将回发Basic.Return消息到
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="redis RBD机制">
+                            <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="redis RBD机制">
                             
                             <span class="card-title">redis RBD机制</span>
                         </div>
@@ -726,168 +878,6 @@ mandatory当交换器无法路由消息，RabbitMQ将回发Basic.Return消息到
 快照机制引入原因AOF日志进行故障恢复的时候，需要逐一执行操作日志。如果操作日志非常多，Redis 恢复得很慢，影响到正常使用。
 bgsave命令
 主进程
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-10-26
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fa fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/redis/" class="post-category" target="_blank">
-                                    redis
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/redis/" target="_blank">
-                            <span class="chip bg-color">redis</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-            
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2020/10/26/redis-aof-ji-zhi/" target="_blank">
-                        <div class="card-image">
-                            
-                            
-                            <img src="/medias/featureimages/25.jpg" class="responsive-img" alt="redis AOF机制">
-                            
-                            <span class="card-title">redis AOF机制</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                            先写内存，在写日志。1、命令执行成功才会被记录日志。2、避免对当前命令的阻塞。
-风险1、突然宕机，Redis用作数据库的话，命令可能没有记入日志，所以就无法用日志进行恢复了。2、AOF 虽然避免了对当前命令的阻塞，但可能会给下一个操作带来阻
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-10-26
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fa fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/redis/" class="post-category" target="_blank">
-                                    redis
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/redis/" target="_blank">
-                            <span class="chip bg-color">redis</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-            
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2020/10/26/redis-wang-luo-io-mo-xing/" target="_blank">
-                        <div class="card-image">
-                            
-                            
-                            <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="redis网络IO模型">
-                            
-                            <span class="card-title">redis网络IO模型</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                            单线程Redis 是单线程，主要是指 Redis 的网络 IO 和键值对读写是由一个线程来完成的。持久化、异步删除、集群数据同步等，其实是由额外的线程执行的。
-避免了多线程编程模式面临的共享资源的并发访问控制问题。
-多路复用机制一个线程处理
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-10-26
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fa fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/redis/" class="post-category" target="_blank">
-                                    redis
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/redis/" target="_blank">
-                            <span class="chip bg-color">redis</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-            
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2020/10/26/redis-shu-ju-jie-gou/" target="_blank">
-                        <div class="card-image">
-                            
-                            
-                            <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="redis数据结构">
-                            
-                            <span class="card-title">redis数据结构</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                            基本数据结构包括：String（字符串）、List（列表）、Hash（哈希）、Set（集合）和 Sorted Set（有序集合）
-
-
-
-基本数据结构
-底层实现
-
-
-
-string
-动态字符串
-
-
-List
-双向链表、压缩列表
-
-
-Hash
-
                             
                         </div>
                         <div class="publish-info">
@@ -957,7 +947,7 @@ Hash
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">134.5k</span>
+            <span class="white-color">141.9k</span>
             
 
             <br>
