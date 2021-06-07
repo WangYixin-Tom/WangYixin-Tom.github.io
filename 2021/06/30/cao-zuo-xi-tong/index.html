@@ -474,7 +474,7 @@
 <h3 id="传统IO"><a href="#传统IO" class="headerlink" title="传统IO"></a>传统IO</h3><p>传统的IO<code>read+write</code>方式会产生2次DMA拷贝+2次CPU拷贝，同时有4次上下文切换。</p>
 <p><img src="%E4%BC%A0%E7%BB%9F%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93.png" alt></p>
 <h3 id="mmap-write"><a href="#mmap-write" class="headerlink" title="mmap + write"></a>mmap + write</h3><p>通过<code>mmap+write</code>方式则产生2次DMA拷贝+1次CPU拷贝，4次上下文切换，通过内存映射减少了一次CPU拷贝，可以减少内存使用，适合大文件的传输。</p>
-<p>![](mmap + write 零拷贝.png)</p>
+<p>![](mmap_write 零拷贝.png)</p>
 <h3 id="sendfile"><a href="#sendfile" class="headerlink" title="sendfile"></a>sendfile</h3><p><code>sendfile</code>方式是新增的一个系统调用函数，产生2次DMA拷贝+1次CPU拷贝，但是只有2次上下文切换。因为只有一次调用，减少了上下文的切换，但是用户空间对IO数据不可见，适用于静态文件服务器。</p>
 <p><img src="senfile-3%E6%AC%A1%E6%8B%B7%E8%B4%9D.png" alt></p>
 <h3 id="sendfile-DMA-gather"><a href="#sendfile-DMA-gather" class="headerlink" title="sendfile+DMA gather"></a>sendfile+DMA gather</h3><p><code>sendfile+DMA gather</code>方式产生2次DMA拷贝，没有CPU拷贝，而且也只有2次上下文切换。虽然极大地提升了性能，但是需要依赖新的硬件设备支持。</p>
@@ -1489,7 +1489,7 @@
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">141.9k</span>
+            <span class="white-color">141.7k</span>
             
 
             <br>

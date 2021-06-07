@@ -436,14 +436,14 @@
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    15.1k
+                    14.8k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    53 分
+                    52 分
                 </div>
                 
                 
@@ -623,12 +623,13 @@
 <h3 id="创建索引注意点"><a href="#创建索引注意点" class="headerlink" title="创建索引注意点"></a>创建索引注意点</h3><p><strong>非空字段：</strong>应该指定列为NOT NULL，除非你想存储NULL。在mysql中，含有空值的列很难进行查询优化，因为它们使得索引、索引的统计信息以及比较运算更加复杂。你应该用0、一个特殊的值或者一个空串代替空值；</p>
 <p><strong>取值离散大的字段：</strong>（变量各个取值之间的差异程度）的列放到联合索引的前面，可以通过<code>count()</code>函数查看字段的差异值</p>
 <p><strong>索引字段越小越好</strong>：数据库的数据存储以页为单位，一页存储的数据越多一次IO操作获取的数据越大，效率越高。</p>
-<h3 id="使用索引查询一定能提高查询的性能吗"><a href="#使用索引查询一定能提高查询的性能吗" class="headerlink" title="使用索引查询一定能提高查询的性能吗"></a>使用索引查询一定能提高查询的性能吗</h3><p><strong>通常，通过索引查询数据比全表扫描要快。</strong>但是我们也必须注意到它的代价。</p>
-<p><strong>索引需要空间来存储，也需要定期维护，</strong> 每当有记录在表中增减或索引列被修改时，索引本身也会被修改。 这意味着每条记录的INSERT，DELETE，UPDATE将为此多付出4，5 次的磁盘I/O。 因为索引需要额外的存储空间和处理，那些不必要的索引反而会使查询反应时间变慢。使用索引查询不一定能提高查询性能，索引范围查询（INDEX RANGE SCAN）适用于两种情况:</p>
+<h3 id="使用索引查询一定能提高查询的性能吗"><a href="#使用索引查询一定能提高查询的性能吗" class="headerlink" title="使用索引查询一定能提高查询的性能吗"></a>使用索引查询一定能提高查询的性能吗</h3><p>使用索引查询不一定能提高查询性能，索引范围查询（INDEX RANGE SCAN）适用于两种情况:</p>
 <ul>
 <li>基于一个范围的检索，一般查询返回结果集小于表中记录数的30%</li>
 <li><strong>基于非唯一性索引的检索（？？？）</strong></li>
 </ul>
+<p><strong>通常，通过索引查询数据比全表扫描要快。</strong>但是我们也必须注意到它的代价。</p>
+<p><strong>索引需要空间来存储，也需要定期维护，</strong> 每当有记录在表中增减或索引列被修改时，索引本身也会被修改。 这意味着每条记录的INSERT，DELETE，UPDATE将为此多付出4，5 次的磁盘I/O。 因为索引需要额外的存储空间和处理，那些不必要的索引反而会使查询反应时间变慢。</p>
 <h3 id="百万级别或以上的数据如何删除"><a href="#百万级别或以上的数据如何删除" class="headerlink" title="百万级别或以上的数据如何删除"></a>百万级别或以上的数据如何删除</h3><blockquote>
 <p>索引需要额外的维护成本，因为索引文件是单独存在的文件,所以当我们对数据的增加,修改,删除,都会产生额外的对索引文件的操作,这些操作需要消耗额外的IO,会降低增/改/删的执行效率。所以，在我们删除数据库百万级别数据的时候，删除数据的速度和创建的索引数量是成正比的。</p>
 </blockquote>
@@ -644,22 +645,25 @@
 <h3 id="B-Tree和B-Tree的区别"><a href="#B-Tree和B-Tree的区别" class="headerlink" title="B-Tree和B+Tree的区别"></a>B-Tree和B+Tree的区别</h3><p>在B树中，你可以将键和值存放在内部节点和叶子节点；但在B+树中，内部节点都是键，没有值，叶子节点同时存放键和值。</p>
 <p>B+树的叶子节点有一条链相连，而B树的叶子节点各自独立。</p>
 <h3 id="使用B树的好处"><a href="#使用B树的好处" class="headerlink" title="使用B树的好处"></a>使用B树的好处</h3><p>B树可以在<strong>内部节点同时存储键和值</strong>，因此，<strong>把频繁访问的数据放在靠近根节点的地方将会大大提高热点数据的查询效率。</strong>这种特性使得B树在特定数据重复多次查询的场景中更加高效。</p>
-<h3 id="使用B-树的好处"><a href="#使用B-树的好处" class="headerlink" title="使用B+树的好处"></a>使用B+树的好处</h3><p>由于<strong>B+树的内部节点只存放键</strong>，不存放值，因此，<strong>一次读取，可以在内存页中获取更多的键，有利于更快地缩小查找范围</strong>。 B+树的叶节点由一条链相连，因此，当需要进行一次全数据遍历的时候，<strong>B+树只需要使用<code>O(logN)</code>时间找到最小的一个节点，然后通过链进行<code>O(N)</code>的顺序遍历即可。</strong>而B树则需要对树的每一层进行遍历，这会需要更多的内存置换次数，因此也就需要花费更多的时间</p>
-<h3 id="Hash索引和B-树优劣"><a href="#Hash索引和B-树优劣" class="headerlink" title="Hash索引和B+树优劣"></a>Hash索引和B+树优劣</h3><p>首先要知道Hash索引和B+树索引的底层实现原理：</p>
-<p><strong>hash索引底层就是hash表</strong>，进行查找时，调用一次hash函数就可以获取到相应的键值，之后进行回表查询获得实际数据。B+树底层实现是<strong>多路平衡查找树</strong>。对于每一次的查询都是从根节点出发，查找到叶子节点方可以获得所查键值，然后根据查询判断是否需要回表查询数据。</p>
+<h3 id="使用B-树的好处"><a href="#使用B-树的好处" class="headerlink" title="使用B+树的好处"></a>使用B+树的好处</h3><ul>
+<li><p>由于<strong>B+树的内部节点只存放键</strong>，不存放值，因此，<strong>一次读取，可以在内存页中获取更多的键，有利于更快地缩小查找范围</strong>。</p>
+</li>
+<li><p>B+树的叶节点由一条链相连，因此，当需要进行一次全数据遍历的时候，<strong>B+树只需要使用<code>O(logN)</code>时间找到最小的一个节点，然后通过链进行<code>O(N)</code>的顺序遍历即可。</strong>而B树则需要对树的每一层进行遍历，这会需要更多的内存置换次数，因此也就需要花费更多的时间</p>
+</li>
+</ul>
+<h3 id="Hash索引和B-树优劣"><a href="#Hash索引和B-树优劣" class="headerlink" title="Hash索引和B+树优劣"></a>Hash索引和B+树优劣</h3><p><strong>hash索引底层就是hash表</strong>，进行查找时，调用一次hash函数就可以获取到相应的键值，之后进行回表查询获得实际数据。</p>
+<p>B+树底层实现是<strong>多路平衡查找树</strong>。对于每一次的查询都是从根节点出发，查找到叶子节点方可以获得所查键值，然后根据查询判断是否需要回表查询数据。</p>
 <p>那么可以看出他们有以下的不同：</p>
 <ul>
-<li>hash索引进行<strong>等值查询更快（一般情况下），但是却无法进行范围查询</strong>。</li>
-</ul>
-<p>因为在hash索引中经过hash函数建立索引之后，索引的顺序与原顺序无法保持一致，不能支持范围查询。而B+树的的所有节点皆遵循(左节点小于父节点，右节点大于父节点，多叉树也类似)，天然支持范围。</p>
-<ul>
+<li><p>hash索引进行<strong>等值查询更快（一般情况下），但是却无法进行范围查询</strong>。</p>
+</li>
 <li><p>hash索引<strong>不支持使用索引进行排序</strong>，原理同上。</p>
 </li>
 <li><p>hash索引不<strong>支持模糊查询以及多列索引的最左前缀匹配。</strong>原理也是因为hash函数的不可预测。AAAA和AAAAB的索引没有相关性。</p>
 </li>
 <li><p>hash索引任何时候都<strong>避免不了回表查询数据</strong>，而B+树在符合某些条件（聚簇索引，覆盖索引等）的时候可以只通过索引完成查询。</p>
 </li>
-<li><p>hash索引虽然在等值查询上较快，但是不稳定。性能不可预测，当某个键值存在大量重复的时候，发生hash碰撞，此时效率可能极差。而B+树的查询效率比较稳定，对于所有的查询都是从根节点到叶子节点，且树的高度较低。</p>
+<li><p>hash<strong>索引不稳定</strong>。性能不可预测，当某个键值存在大量重复的时候，发生hash碰撞，此时效率可能极差。而B+树的查询效率比较稳定，对于所有的查询都是从根节点到叶子节点，且树的高度较低。</p>
 </li>
 </ul>
 <p>因此，在大多数情况下，直接选择B+树索引可以获得稳定且较好的查询速度。而不需要使用hash索引。</p>
@@ -678,16 +682,17 @@
 <h3 id="聚簇索引"><a href="#聚簇索引" class="headerlink" title="聚簇索引"></a>聚簇索引</h3><p><strong>聚簇索引</strong>：将数据存储与索引放到了一块，找到索引也就找到了数据</p>
 <p><strong>非聚簇索引</strong>：将数据存储于索引分开结构，索引结构的叶子节点指向了数据的对应行，myisam通过key_buffer把索引先缓存到内存中，当需要访问数据时（通过索引访问数据），在内存中直接搜索索引，然后通过索引找到磁盘相应数据，因此索引不在key buffer命中时，速度慢。</p>
 <p><strong>澄清一个概念：</strong>innodb中，在聚簇索引之上创建的索引称之为辅助索引，辅助索引访问数据总是需要二次查找。</p>
-<h3 id="非聚簇索引一定会回表查询吗？"><a href="#非聚簇索引一定会回表查询吗？" class="headerlink" title="非聚簇索引一定会回表查询吗？"></a>非聚簇索引一定会回表查询吗？</h3><p>不一定，这涉及到查询语句所要求的字段是否全部命中了索引，如果全部命中了索引，那么就不必再进行回表查询。</p>
-<h3 id="联合索引"><a href="#联合索引" class="headerlink" title="联合索引"></a><strong>联合索引</strong></h3><p>MySQL可以使用多个字段同时建立一个索引，叫做联合索引。在联合索引中，如果想要命中索引，需要按照建立索引时的字段顺序挨个使用，否则无法命中索引。</p>
-<h3 id="为什么需要注意联合索引中的顺序？"><a href="#为什么需要注意联合索引中的顺序？" class="headerlink" title="为什么需要注意联合索引中的顺序？"></a><strong>为什么需要注意联合索引中的顺序？</strong></h3><p>MySQL使用索引时需要索引有序.</p>
+<h3 id="非聚簇索引一定会回表查询吗？"><a href="#非聚簇索引一定会回表查询吗？" class="headerlink" title="非聚簇索引一定会回表查询吗？"></a>非聚簇索引一定会回表查询吗？</h3><p>不一定，这查询语句所要求的字段全部命中了索引，那么就不必再进行回表查询。</p>
+<h3 id="联合索引"><a href="#联合索引" class="headerlink" title="联合索引"></a><strong>联合索引</strong></h3><p>MySQL可以使用多个字段同时建立一个索引，叫做联合索引。</p>
+<p>在联合索引中，如果想要命中索引，需要按照建立索引时的字段顺序挨个使用，否则无法命中索引。</p>
+<h3 id="为什么需要注意联合索引中的顺序？"><a href="#为什么需要注意联合索引中的顺序？" class="headerlink" title="为什么需要注意联合索引中的顺序？"></a><strong>为什么需要注意联合索引中的顺序？</strong></h3><p>MySQL使用索引时需要索引有序。</p>
 <p>一般情况下，将查询需求频繁或者字段选择性高的列放在前面。此外可以根据特例的查询或者表结构进行单独的调整。</p>
 <h3 id="如果一张表没有主键怎么办？"><a href="#如果一张表没有主键怎么办？" class="headerlink" title="如果一张表没有主键怎么办？"></a>如果一张表没有主键怎么办？</h3><ul>
 <li>如果我们定义了主键，那么 InnoDB 会选择主键作为聚集索引。</li>
 <li>如果没有显式定义主键，则 InnoDB 会选择第一个不包含有 NULL 值的唯一索引作为主键索引。</li>
 <li>如果也没有这样的唯一索引，则 InnoDB 会选择内置 6 字节长的 ROWID 作为隐藏的聚集索引，它会随着行记录的写入而主键递增。 <code>select _rowid name from t2;</code></li>
 </ul>
-<h3 id="几千万记录，数据库表结构如何平滑变更？"><a href="#几千万记录，数据库表结构如何平滑变更？" class="headerlink" title="几千万记录，数据库表结构如何平滑变更？"></a>几千万记录，数据库表结构如何平滑变更？</h3><p>pt-online-schema-change</p>
+<h3 id="几千万记录，数据库表结构如何平滑变更？"><a href="#几千万记录，数据库表结构如何平滑变更？" class="headerlink" title="几千万记录，数据库表结构如何平滑变更？"></a>几千万记录，数据库表结构如何平滑变更？</h3><p><strong>pt-online-schema-change</strong></p>
 <p>假设：</p>
 <p><em>user(uid, name, passwd)</em>要扩展到： <em>user(uid, name, passwd, age, sex)</em></p>
 <p><strong>第一步</strong>，先创建一个扩充字段后的新表：<em>user_new(uid, name, passwd, age, sex)</em></p>
@@ -710,7 +715,7 @@
 <h2 id="数据库范式"><a href="#数据库范式" class="headerlink" title="数据库范式"></a>数据库范式</h2><p><strong>第一范式：</strong>强调的是列的原子性，即列不能够再分成其他几列。</p>
 <p> <strong>第二范式</strong>：首先是 1NF，另外包含两部分内容，<strong>一是表必须有一个主键</strong>；二是没有包含在主键中的<strong>列必须完全依赖于主键，而不能只依赖于主键的一部分</strong>。否则可拆表。</p>
 <p> <strong>第三范式</strong>：在1NF基础上，<strong>任何非主属性不依赖于其它非主属性</strong>[在2NF基础上消除传递依赖]。</p>
-<h2 id="mysql有关权限的表"><a href="#mysql有关权限的表" class="headerlink" title="mysql有关权限的表"></a>mysql有关权限的表</h2><p>MySQL服务器通过权限表来控制用户对数据库的访问，权限表存放在mysql数据库里，由mysql_install_db脚本初始化。这些权限表分别<strong>user，db，table_priv，columns_priv和host</strong>。下面分别介绍一下这些表的结构和内容：</p>
+<h2 id="mysql有关权限的表"><a href="#mysql有关权限的表" class="headerlink" title="mysql有关权限的表"></a>mysql有关权限的表</h2><p>MySQL服务器通过权限表来控制用户对数据库的访问，权限表存放在mysql数据库里，由mysql_install_db脚本初始化。这些权限表分别<strong>user，db，table_priv，columns_priv和host</strong>。</p>
 <p>user权限表：记录允许连接到服务器的用户帐号信息，里面的权限是全局级的。</p>
 <p>db权限表：记录各个帐号在各个数据库上的操作权限。</p>
 <p>table_priv权限表：记录数据表级的操作权限。</p>
@@ -795,7 +800,7 @@
 </tbody></table>
 <p>事务隔离机制的实现基于锁机制和并发调度。</p>
 <p>并发调度使用的是MVCC（多版本并发控制），通过保存修改的旧版本信息来支持并发一致性读和回滚等特性。</p>
-<h2 id="锁"><a href="#锁" class="headerlink" title="锁"></a>锁</h2><p>当数据库有并发事务的时候，可能会产生数据的不一致，这时候需要一些机制来保证访问的次序，锁机制就是这样的一个机制。</p>
+<h2 id="锁"><a href="#锁" class="headerlink" title="锁"></a>锁</h2><p>当数据库有并发事务的时候，可能会产生数据的不一致，需要一些机制来保证访问的次序，锁机制就是这样的一个机制。</p>
 <h3 id="锁分类"><a href="#锁分类" class="headerlink" title="锁分类"></a>锁分类</h3><p>按照锁的粒度把数据库锁分为行级锁（INNODB引擎）、表级锁（MYISAM引擎）和页级锁（BDB引擎 ）。</p>
 <p><strong>行级锁</strong> </p>
 <p>分为共享锁 和 排他锁。</p>
@@ -818,7 +823,7 @@
 <p>第二种情况：<strong>多表级联</strong>。事务涉及多个表，比较复杂的关联查询，很可能引起死锁，造成大量事务回滚。这种情况若能一次性锁定事务涉及的表，从而可以避免死锁、减少数据库因事务回滚带来的开销。</p>
 <p>也可手动加锁：</p>
 <pre class="line-numbers language-mysql"><code class="language-mysql">lock table xxx read/write;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h3 id="什么时候加间隙锁？"><a href="#什么时候加间隙锁？" class="headerlink" title="什么时候加间隙锁？"></a>什么时候加间隙锁？</h3><p>当我们用范围条件检索数据，并请求共享或排他锁时，InnoDB会给符合条件的已有数据记录的索引项加锁；对于键值在条件范围内但并不存在的记录，叫做间隙(GAP)</p>
+<h3 id="什么时候加间隙锁？"><a href="#什么时候加间隙锁？" class="headerlink" title="什么时候加间隙锁？"></a>什么时候加间隙锁？</h3><p>当我们用范围条件检索数据，并请求共享或排他锁时，InnoDB会给符合条件的已有数据记录的索引项加锁；对于键值在条件范围内但并不存在的记录，叫做间隙</p>
 <h3 id="InnoDB存储引擎的锁的算法"><a href="#InnoDB存储引擎的锁的算法" class="headerlink" title="InnoDB存储引擎的锁的算法"></a>InnoDB存储引擎的锁的算法</h3><p>Record lock：单个行记录上的锁</p>
 <p>Gap lock：间隙锁，锁定一个范围，不包括记录本身</p>
 <p>Next-key lock：record+gap 锁定一个范围，包含记录本身</p>
@@ -962,7 +967,7 @@
 </tr>
 </tbody></table>
 <h2 id="SQL优化"><a href="#SQL优化" class="headerlink" title="SQL优化"></a>SQL优化</h2><h3 id="如何定位及优化SQL语句的性能问题？"><a href="#如何定位及优化SQL语句的性能问题？" class="headerlink" title="如何定位及优化SQL语句的性能问题？"></a>如何定位及优化SQL语句的性能问题？</h3><p>MySQL提供了<strong>explain命令来查看语句的执行计划</strong> 。执行计划，显示数据库引擎对于SQL语句的执行的详细情况，其中包含了<strong>是否使用索引，使用什么索引，使用的索引的相关信息</strong>等。</p>
-<p><strong>select_type</strong>查询类型。</p>
+<p><strong>select_type查询类型。</strong></p>
 <table>
 <thead>
 <tr>
@@ -995,7 +1000,7 @@
 <td>从UNION中获取结果集，例如上文的第三个例子</td>
 </tr>
 </tbody></table>
-<p><strong>type</strong>访问类型</p>
+<p><strong>type访问类型</strong></p>
 <p>ALL 扫描全表数据</p>
 <p>index 遍历索引</p>
 <p>range 索引范围查找</p>
@@ -1005,10 +1010,10 @@
 <p>fulltext 使用全文索引</p>
 <p>ref 使用非唯一索引查找数据</p>
 <p>eq_ref 在join查询中使用PRIMARY KEYorUNIQUE NOT NULL索引关联。</p>
-<p><strong>key</strong> ，实际使用的索引。</p>
-<p><strong>ref</strong> 表示上述表的连接匹配条件，即哪些列或常量被用于查找索引列上的值</p>
-<p><strong>rows</strong> ：估算的结果集数目，并不是一个准确的值。</p>
-<p><strong>extra</strong> 的信息非常丰富，常见的有：</p>
+<p><strong>key ，实际使用的索引。</strong></p>
+<p><strong>ref 表示上述表的连接匹配条件，即哪些列或常量被用于查找索引列上的值</strong></p>
+<p><strong>rows ：估算的结果集数目，并不是一个准确的值。</strong></p>
+<p><strong>extra 的信息非常丰富，常见的有：</strong></p>
 <ul>
 <li><p>Using index 使用覆盖索引</p>
 </li>
@@ -1021,10 +1026,11 @@
 </ul>
 <h3 id="超大分页怎么处理？"><a href="#超大分页怎么处理？" class="headerlink" title="超大分页怎么处理？"></a>超大分页怎么处理？</h3><ul>
 <li>数据库层面,类似于<strong>select * from table where age &gt; 20 limit 1000000,10</strong>这种查询其实也是有可以优化的余地的. 这条语句需要load1000000数据然后基本上全部丢弃,只取10条当然比较慢. 当时我们可以修改为<code>select * from table where id in (select id from table where age &gt; 20 limit 1000000,10)</code>。<strong>这样虽然也load了一百万的数据,但是由于</strong>索引覆盖<em><em>,要查询的所有字段都在索引中,所以速度会很快. </em></em></li>
-<li>如果ID连续，我们还可以<code>select * from table where id &gt; 1000000 limit 10</code>效率也是不错的，优化的可能性有许多种，但是核心思想都一样，就是减少load的数据.</li>
+<li>如果ID连续，我们还可以<code>select * from table where id &gt; 1000000 limit 10</code>效率也是不错的</li>
 <li>从需求的角度减少这种请求，主要是不做类似的需求（直接跳转到几百万页之后的具体某一页，只允许逐页查看或者按照给定的路线走，这样可预测、可缓存）以及防止ID泄漏且连续被人恶意攻击。</li>
 </ul>
-<h3 id="mysql-分页"><a href="#mysql-分页" class="headerlink" title="mysql 分页"></a>mysql 分页</h3><p>LIMIT 子句可以被用于强制 SELECT 语句返回指定的记录数。LIMIT 接受一个或两个数字参数。参数必须是一个整数常量。如果给定两个参数，第一个参数指定第一个返回记录行的偏移量，第二个参数指定返回记录行的最大数目。初始记录行的偏移量是 0</p>
+<h3 id="mysql-分页"><a href="#mysql-分页" class="headerlink" title="mysql 分页"></a>mysql 分页</h3><p>LIMIT 子句可以被用于强制 SELECT 语句返回指定的记录数。</p>
+<p>LIMIT 接受一个或两个数字参数。返回记录行的偏移量+ 返回记录行的最大数目</p>
 <blockquote>
 <p> mysql&gt; SELECT * FROM table LIMIT 5,10; // 检索记录行 6-15</p>
 </blockquote>
@@ -1041,7 +1047,7 @@
 <h3 id="为什么要尽量设定一个主键？"><a href="#为什么要尽量设定一个主键？" class="headerlink" title="为什么要尽量设定一个主键？"></a>为什么要尽量设定一个主键？</h3><p>主键是数据库确保数据行在整张表唯一性的保障，即使业务上本张表没有主键，也建议添加一个自增长的ID列作为主键。</p>
 <p>设定了主键之后，在后续的删改查的时候可能更加快速以及确保操作数据范围安全。</p>
 <h3 id="主键使用自增ID还是UUID？"><a href="#主键使用自增ID还是UUID？" class="headerlink" title="主键使用自增ID还是UUID？"></a>主键使用自增ID还是UUID？</h3><p>使用自增ID。 </p>
-<p>因为在InnoDB存储引擎中，主键索引是作为聚簇索引存在的。主键索引的B+树叶子节点上存储了主键索引和数据，如果主键索引是自增ID，那么只需要不断向后排列即可，如果是UUID，由于到来的ID与原来的大小不确定，会造成非常多的数据插入，数据移动，然后导致产生很多的内存碎片，进而造成插入性能的下降。</p>
+<p>因为在InnoDB存储引擎中，主键索引是作为<strong>聚簇索引</strong>存在的。主键索引的B+树叶子节点上存储了主键索引和数据，如果是自增ID，那么只需要不断向后排列即可，如果是UUID，由于新ID与上一个的大小不确定，会造成非常多的数据插入，数据移动，然后导致产生很多的内存碎片，进而造成插入性能的下降。</p>
 <h3 id="自增ID达到上限用完了之后怎么办？"><a href="#自增ID达到上限用完了之后怎么办？" class="headerlink" title="自增ID达到上限用完了之后怎么办？"></a>自增ID达到上限用完了之后怎么办？</h3><p>分为两种情况：</p>
 <ol>
 <li>如果设置了主键，那么将会报错主键冲突。</li>
@@ -1067,19 +1073,18 @@
 <li>使用缓存，把经常访问到的数据而且不需要经常变化的数据放在缓存中，能节约磁盘 IO; </li>
 <li>优化硬件，采用 SSD，使用磁盘队列技术 (RAID0,RAID1,RDID5)等; </li>
 <li>采用 MySQL 内部自带的表分区技术，把数据分成不同的文件，能够提高磁盘的读取效率; </li>
-<li>主从分离读写</li>
+<li>主从读写分离</li>
 <li>垂直分表，把一些不经常读的数据放在一张表里，节约 磁盘 I/O; </li>
 <li>分库分表分机器，主要的原理就是数据路由; </li>
-<li>选择合适的表引擎，参数上的优化; </li>
 <li>进行架构级别的缓存，静态化和分布式</li>
 </ul>
 <h2 id="left-join-原理"><a href="#left-join-原理" class="headerlink" title="left join 原理"></a>left join 原理</h2><p><strong>Simple Nested-Loop Join</strong></p>
 <p>双层for 循环 ，通过循环外层表的行数据，逐个与内层表的所有行数据进行比较来获取结果</p>
 <p><strong>Index Nested-Loop Join</strong></p>
-<p> 通过外层表匹配条件 直接与内层表索引进行匹配，避免和内层表的每条记录去进行比较， 这样极大的减少了对内层表的匹配次数，从原来的匹配次数=外层表行数 <em> 内层表行数,变成了 外层表的行数 </em> 内层表索引的高度，极大的提升了 join的性能。</p>
+<p> 通过外层表匹配条件 直接与内层表索引进行匹配，避免和内层表的每条记录去进行比较， 这样极大的减少了对内层表的匹配次数，极大的提升了 join的性能。</p>
 <p><strong>Block Nested-Loop Join</strong></p>
 <p>通过一次性缓存外层表的多条数据，以此来减少内层表的扫表次数，从而达到提升性能的目的。如果无法使用<strong>Index Nested-Loop Join</strong>的时候，数据库是默认使用的是<strong>Block Nested-Loop Join算法的</strong></p>
-<p>基于后两者的时间复杂度，考虑小表驱动大表。SNLJ没有时间上的差异。</p>
+<p>基于后两者的时间复杂度，考虑小表驱动大表。<strong>Simple Nested-Loop Join</strong>没有时间上的差异。</p>
 <h2 id="集群"><a href="#集群" class="headerlink" title="集群"></a>集群</h2><h3 id="主从复制"><a href="#主从复制" class="headerlink" title="主从复制"></a>主从复制</h3><h4 id="异步复制"><a href="#异步复制" class="headerlink" title="异步复制"></a>异步复制</h4><ul>
 <li>在主库开启 binlog 的情况下，如果主库有增删改的语句，会记录到 binlog 中。</li>
 <li>主库通过 IO 线程把 binlog 里面的内容传给从库的中继日志（relay log）中，主库给客户端返回 commit 成功（不管从库是否已经收到了事务的 binlog）</li>
@@ -1123,7 +1128,7 @@ order by [排序条件]
 limit [offset,] count;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>执行顺序</p>
 <blockquote>
-<p>　　　　1. FROM：对FROM子句中前两个表执行笛卡尔积生成虚拟表vt1<br>　　　　2. ON: 对vt1表应用ON筛选器只有满足 join_condition 为真的行才被插入vt2<br>　　　　3. OUTER（join）：如果指定了 OUTER JOIN保留表中未找到的行将行作为外部行添加到vt2，生成t3，如果from包含两个以上表，则对上一个联结生成的结果表和下一个表重复执行步骤和步骤直接结束。<br>　　　　4. WHERE：对vt3应用 WHERE 筛选器只有使 where_condition 为true的行才被插入vt4<br>　　    　　5. GROUP BY：按GROUP BY子句中的列列表对vt4中的行分组生成vt5<br>　　　　7. HAVING：对vt6应用HAVING筛选器只有使 having_condition 为true的组才插入vt7<br>　　　　8. SELECT：处理select列表产生vt8<br>　　　　9. DISTINCT：将重复的行从vt8中去除产生vt9<br>　　　　10. ORDER BY：将vt9的行按order by子句中的列列表排序生成一个游标vc10</p>
+<p>   　　　　1. FROM：对FROM子句中前两个表执行笛卡尔积生成虚拟表vt1<br>   　　　　2. ON: 对vt1表应用ON筛选器只有满足 join_condition 为真的行才被插入vt2<br>   　　　　3. OUTER（join）：如果指定了 OUTER JOIN保留表中未找到的行将行作为外部行添加到vt2，生成t3，如果from包含两个以上表，则对上一个联结生成的结果表和下一个表重复执行步骤和步骤直接结束。<br>   　　　　4. WHERE：对vt3应用 WHERE 筛选器只有使 where_condition 为true的行才被插入vt4<br>   　　　　5. GROUP BY：按GROUP BY子句中的列列表对vt4中的行分组生成vt5<br>   　　　　6. HAVING：对vt6应用HAVING筛选器只有使 having_condition 为true的组才插入vt7<br>   　　　　7. SELECT：处理select列表产生vt8<br>   　　　　8. DISTINCT：将重复的行从vt8中去除产生vt9<br>   　　　　9. ORDER BY：将vt9的行按order by子句中的列列表排序生成一个游标vc10</p>
 </blockquote>
 <h2 id="高并发时，如何避免重复插入-？"><a href="#高并发时，如何避免重复插入-？" class="headerlink" title="高并发时，如何避免重复插入 ？"></a>高并发时，如何避免重复插入 ？</h2><ul>
 <li>幂等：保证多次同意请求后结果一致</li>
@@ -1882,7 +1887,7 @@ Kafka 主要有两大应用场景：
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">141.9k</span>
+            <span class="white-color">141.7k</span>
             
 
             <br>
