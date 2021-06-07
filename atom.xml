@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://wangyixin-tom.github.io/"/>
-  <updated>2021-06-07T10:43:59.887Z</updated>
+  <updated>2021-06-07T14:31:39.823Z</updated>
   <id>https://wangyixin-tom.github.io/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://wangyixin-tom.github.io/2021/06/30/cao-zuo-xi-tong/"/>
     <id>https://wangyixin-tom.github.io/2021/06/30/cao-zuo-xi-tong/</id>
     <published>2021-06-30T03:20:37.000Z</published>
-    <updated>2021-06-07T10:43:59.887Z</updated>
+    <updated>2021-06-07T14:31:39.823Z</updated>
     
     <summary type="html">
     
@@ -40,6 +40,32 @@
     
     
       <category term="interview" scheme="https://wangyixin-tom.github.io/tags/interview/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>多阶段构建</title>
+    <link href="https://wangyixin-tom.github.io/2021/06/07/duo-jie-duan-gou-jian/"/>
+    <id>https://wangyixin-tom.github.io/2021/06/07/duo-jie-duan-gou-jian/</id>
+    <published>2021-06-07T14:03:15.000Z</published>
+    <updated>2021-06-07T14:07:57.645Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;引入&quot;&gt;&lt;a href=&quot;#引入&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="docker" scheme="https://wangyixin-tom.github.io/categories/docker/"/>
+    
+    
+      <category term="docker" scheme="https://wangyixin-tom.github.io/tags/docker/"/>
     
   </entry>
   
@@ -507,32 +533,6 @@
     
     
       <category term="interview" scheme="https://wangyixin-tom.github.io/tags/interview/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>rabbitmq思维导图</title>
-    <link href="https://wangyixin-tom.github.io/2021/04/04/rabbitmq-si-wei-dao-tu/"/>
-    <id>https://wangyixin-tom.github.io/2021/04/04/rabbitmq-si-wei-dao-tu/</id>
-    <published>2021-04-04T06:58:19.000Z</published>
-    <updated>2021-04-04T06:59:45.233Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;&lt;img src=&quot;rabbitmq.png&quot;
-        
-      
-    
-    </summary>
-    
-      <category term="rabbitmq" scheme="https://wangyixin-tom.github.io/categories/rabbitmq/"/>
-    
-    
-      <category term="rabbitmq" scheme="https://wangyixin-tom.github.io/tags/rabbitmq/"/>
     
   </entry>
   

@@ -29,6 +29,31 @@
     
     
     <entry>
+      <title>多阶段构建</title>
+      <link href="/2021/06/07/duo-jie-duan-gou-jian/"/>
+      <url>/2021/06/07/duo-jie-duan-gou-jian/</url>
+      
+        <content type="html"><![CDATA[<h2 id="引入"><a href="#引入" class="headerlink" title="引入"></a>引入</h2><p>　在构建镜像过程中，我们可能只需要某些镜像的产物，比如在运行一个go程序需要先go程序包编译后才运行，如果在一个镜像里面完成，先要经过安装编译环境，程序编译完再安装运行环境，最后运行程序，这样的镜像体积往往比较大，不利于我们使用。而真正我们需要的镜像是只有程序包和运行环境，编译环境的构建在运行容器时候是不需要的，所以Docker提供了一种解决方案就是multi-stage（多阶段构建）。</p><h2 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h2><p>Docker允许多个镜像的构建可以使用同一个Dockerfile，每个镜像构建过程可以称之为一个stage，简单理解就是一个FROM指令到下一个FROM指令，而每个stage可使用上一个stage过程的产物或环境（其实还支持其他镜像的），这样一来，最终所得镜像体积相对较小。</p><p>不仅如此多阶段构建同样可以很方便地将多个彼此依赖的项目通过一个Dockerfile就可轻松构建出期望的容器镜像，而不用担心镜像太大、项目环境依赖等问题。</p><p>通过上述介绍，我们可以在第一个stage将go程序编译得到编译后程序包，然后在第二个stage中直接拷贝编译好的go程序包到运行环境中，最后的镜像中就只有程序包和运行环境。以下作为示例：</p><pre><code>FROM golang:1.7.3WORKDIR /go/src/github.com/alexellis/href-counter/RUN go get -d -v golang.org/x/net/html  COPY app.go .RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o app .FROM alpine:latest  RUN apk --no-cache add ca-certificatesWORKDIR /root/COPY --from=0 /go/src/github.com/alexellis/href-counter/app .CMD [&quot;./app&quot;]</code></pre><p>在以上Dockerfile中存在两个FROM指令，也就是两个stage，第一个stage用于构建产物，而在第二个stage中使用COPY –from=0 意思将第一个stage中的/go/src/github.com/alexellis/href-counter/app拷贝到.目录，第二个stage仅仅相当于执行copy就有了构建产物，不用在安装编译环境，镜像会很缩小。 </p><h3 id="命名stage"><a href="#命名stage" class="headerlink" title="命名stage"></a>命名stage</h3><p>默认情况下，stage未命名，可以通过整数来引用它们，第一个stage表示0，第二个表1以此类推。 但是，当有多个stage时候，这样会显得麻烦，Docker提供AS 语法可以为stage命名：</p><pre><code>FROM golang:1.7.3 as builder</code></pre><p>然后在另一个stage中使用：</p><pre><code>COPY --from=builder /go/src/github.com/alexellis/href-counter/app .</code></pre><h2 id="构建镜像建议"><a href="#构建镜像建议" class="headerlink" title="构建镜像建议"></a>构建镜像建议</h2><ol><li>基础镜像尽量选择比体积较小的镜像，如每个官方发行的alpine镜像。虽然这版本镜像比较小，但是与之带来的是利用该类镜像运行的容器中排错的命令很少;</li><li>使用RUN指令时候，尽量把多个RUN指令合并为一个，通常做法是使用&amp;&amp;符号;</li><li>通过multi-stage方法减少一些不必要使用的环境来减小镜像;</li><li>安装完成软件同时删除一些不需要的文件或目录； </li></ol><h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://www.cnblogs.com/wdliu/p/10469257.html" target="_blank" rel="noopener">https://www.cnblogs.com/wdliu/p/10469257.html</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> docker </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> docker </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>3. 无重复字符的最长子串</title>
       <link href="/2021/06/05/3-wu-chong-fu-zi-fu-de-zui-chang-zi-chuan/"/>
       <url>/2021/06/05/3-wu-chong-fu-zi-fu-de-zui-chang-zi-chuan/</url>
