@@ -8,11 +8,11 @@
     <meta name="baidu-site-verification" content="code-KoKq36g1n2">
     <meta name="google-site-verification" content="yCy2azpds5XSuGZvis6OuA-XIGF5GuGpYRAaGfD6o48">
     <meta name="360-site-verification" content="b7c11a830ef90fd1464ad6206bb7b6e7">
-    <meta name="description" content="Kafka 是什么？主要应用场景有哪些？Kafka 是一个分布式流式处理平台，可以作为企业级的消息引擎。
+    <meta name="description" content="概述Kafka 是什么？主要应用场景有哪些？Kafka 是一个分布式流式处理平台，可以作为企业级的消息引擎。
 Kafka 主要有两大应用场景：
 
 消息队列 ：建立实时流数据管道，以可靠地在系统或应用程序之间获取数据。
-数据处理： 构建实时的流数">
+数据处理： 构建实时的">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -270,7 +270,7 @@ Kafka 主要有两大应用场景：
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/6.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -425,14 +425,14 @@ Kafka 主要有两大应用场景：
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    4.8k
+                    5.7k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    17 分
+                    20 分
                 </div>
                 
                 
@@ -443,21 +443,125 @@ Kafka 主要有两大应用场景：
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="Kafka-是什么？主要应用场景有哪些？"><a href="#Kafka-是什么？主要应用场景有哪些？" class="headerlink" title="Kafka 是什么？主要应用场景有哪些？"></a>Kafka 是什么？主要应用场景有哪些？</h2><p>Kafka 是一个分布式流式处理平台，可以作为企业级的消息引擎。</p>
+                <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><h3 id="Kafka-是什么？主要应用场景有哪些？"><a href="#Kafka-是什么？主要应用场景有哪些？" class="headerlink" title="Kafka 是什么？主要应用场景有哪些？"></a>Kafka 是什么？主要应用场景有哪些？</h3><p>Kafka 是一个分布式流式处理平台，可以作为企业级的消息引擎。</p>
 <p>Kafka 主要有两大应用场景：</p>
 <ol>
 <li><strong>消息队列</strong> ：建立实时流数据管道，以可靠地在系统或应用程序之间获取数据。</li>
 <li><strong>数据处理：</strong> 构建实时的流数据处理程序来转换或处理数据流。</li>
 </ol>
-<h2 id="Kafka的优势在哪里？"><a href="#Kafka的优势在哪里？" class="headerlink" title="Kafka的优势在哪里？"></a>Kafka的优势在哪里？</h2><ol>
+<h3 id="Kafka的优势在哪里？"><a href="#Kafka的优势在哪里？" class="headerlink" title="Kafka的优势在哪里？"></a>Kafka的优势在哪里？</h3><ol>
 <li><strong>极致的性能</strong> ：最高可以每秒处理千万级别的消息。</li>
 <li><strong>生态系统兼容性无可匹敌</strong> ：尤其在大数据和流计算领域。</li>
 </ol>
-<h2 id="队列模型？Kafka-的消息模型？"><a href="#队列模型？Kafka-的消息模型？" class="headerlink" title="队列模型？Kafka 的消息模型？"></a>队列模型？Kafka 的消息模型？</h2><h3 id="队列模型"><a href="#队列模型" class="headerlink" title="队列模型"></a>队列模型</h3><p>使用队列作为消息通信载体，一条消息只能被一个消费者使用，未被消费的消息在队列中保留直到被消费或超时。 </p>
-<p><strong>问题</strong></p>
-<p>将生产者产生的消息分发给多个消费者难以处理。</p>
-<h3 id="发布-订阅模型（Kafka-消息模型）"><a href="#发布-订阅模型（Kafka-消息模型）" class="headerlink" title="发布-订阅模型（Kafka 消息模型）"></a>发布-订阅模型（Kafka 消息模型）</h3><p> 使用主题作为消息通信载体，类似于广播模式；生产者发布一条消息，该消息通过主题传递给所有的订阅者。</p>
-<p>如果只有一个订阅者，那就退化到队列模型。</p>
+<h3 id="Kafka和rabbitmq比较"><a href="#Kafka和rabbitmq比较" class="headerlink" title="Kafka和rabbitmq比较"></a>Kafka和rabbitmq比较</h3><p><strong>rabbitmq</strong></p>
+<ul>
+<li>Erlang 语言编写的，轻量级、迅捷。</li>
+<li>支持非常灵活的路由配置，和其他消息队列不同的是，它在生产者（Producer）和队列（Queue）之间增加了一个 Exchange 模块。</li>
+<li>队列模型：生产者将消息发送到Exchange，由交换器将消息通过匹配Exchange Type、Binding Key、Routing Key后路由到一个或者多个队列中。用于存储消息，消费者直接绑定Queue进行消费消息。</li>
+</ul>
+<p>问题：</p>
+<ul>
+<li>RabbitMQ 对消息堆积的支持并不好，当大量消息积压的时候，会导致 RabbitMQ 的性能急剧下降。</li>
+<li>性能一般，大概每秒钟可以处理几万到十几万条消息</li>
+</ul>
+<p><strong>kafka</strong></p>
+<ul>
+<li>使用 Scala 和 Java 语言开发，设计上大量使用了批量和异步的思想，这种设计使得 Kafka 能做到超高的性能。</li>
+<li>性能比较好，大约每秒钟可以处理几十万条消息，极限处理能力可以超过每秒 2000 万条消息。</li>
+<li>发布订阅模型：生产者直接发消息Topic，每个Topic可以包含多个Partition，多个Partition会平均分配给同一个Consumer Group里的不同Consumer进行消费。不在同一个Group 的Consumer能重复消费同一条消息（订阅），相同Group的Consumer存在消费竞争（负载均衡）</li>
+<li>Kafka具有消息存储的功能，消息被消费后不会被立即删除，因为需要被不同的Consumer Group多次消费同个消息，因此会在Topic维护一个Consumer Offset，每消费成功Offset自增1</li>
+</ul>
+<p>问题：</p>
+<p>同步收发消息的响应时延比较高，因为当客户端发送一条消息的时候，Kafka 并不会立即发送出去，而是要等一会儿攒一批再发送，每秒钟消息数量没有那么多的时候，Kafka 的时延反而会比较高。所以，Kafka 不太适合在线业务场景。</p>
+<table>
+<thead>
+<tr>
+<th><strong>对比项</strong></th>
+<th align="center"><strong>RabbitMQ</strong></th>
+<th align="center"><strong>Kafka</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>吞吐量</strong></td>
+<td align="center"><strong>低</strong></td>
+<td align="center"><strong>高</strong></td>
+</tr>
+<tr>
+<td><strong>有序性</strong></td>
+<td align="center"><strong>全局有序性</strong></td>
+<td align="center"><strong>分区有序性</strong></td>
+</tr>
+<tr>
+<td><strong>消息可靠性</strong></td>
+<td align="center"><strong>多策略组合</strong></td>
+<td align="center"><strong>消息持久化</strong></td>
+</tr>
+<tr>
+<td><strong>消费者模式</strong></td>
+<td align="center">推拉</td>
+<td align="center">拉</td>
+</tr>
+<tr>
+<td>消息堆积</td>
+<td align="center">无法支持较大的消息堆积</td>
+<td align="center">支持消息堆积，并批量持久化到磁盘</td>
+</tr>
+<tr>
+<td><strong>流处理</strong></td>
+<td align="center">不支持</td>
+<td align="center">支持</td>
+</tr>
+<tr>
+<td><strong>时效性</strong></td>
+<td align="center"><strong>高</strong></td>
+<td align="center"><strong>中</strong></td>
+</tr>
+<tr>
+<td><strong>运维便捷度</strong></td>
+<td align="center">高</td>
+<td align="center">中</td>
+</tr>
+<tr>
+<td><strong>系统依赖</strong></td>
+<td align="center"><strong>无</strong></td>
+<td align="center"><strong>zookeeper</strong></td>
+</tr>
+<tr>
+<td><strong>Web监控</strong></td>
+<td align="center">自带</td>
+<td align="center">第三方</td>
+</tr>
+<tr>
+<td><strong>优先级队列</strong></td>
+<td align="center">支持</td>
+<td align="center">不支持</td>
+</tr>
+<tr>
+<td><strong>死信</strong></td>
+<td align="center">支持</td>
+<td align="center">不支持</td>
+</tr>
+<tr>
+<td><strong>客户端支持</strong></td>
+<td align="center">支持多种语言</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><strong>社区生态</strong></td>
+<td align="center">好</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><strong>安全机制</strong></td>
+<td align="center">（TLS/SSL、SASL）身份认证和（读写）权限控制</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><strong>消息回溯</strong></td>
+<td align="center"><strong>支持</strong></td>
+<td align="center"><strong>不支持</strong></td>
+</tr>
+</tbody></table>
 <h2 id="Producer、Consumer、Broker、Topic、Partition、Record？"><a href="#Producer、Consumer、Broker、Topic、Partition、Record？" class="headerlink" title="Producer、Consumer、Broker、Topic、Partition、Record？"></a>Producer、Consumer、Broker、Topic、Partition、Record？</h2><ol>
 <li><strong>Producer（生产者）</strong> ： 产生消息的一方。</li>
 <li><strong>Consumer（消费者）</strong>：消费消息的一方。</li>
@@ -561,6 +665,11 @@ Kafka 主要有两大应用场景：
 <li>设置 <code>unclean.leader.election.enable = false</code>。如果一个 Broker 落后原先的 Leader 太多，那么它一旦成为新的 Leader，必然会造成消息的丢失。故一般设置成 false。</li>
 </ul>
 <h2 id="如何保证消息不重复消费"><a href="#如何保证消息不重复消费" class="headerlink" title="如何保证消息不重复消费"></a>如何保证消息不重复消费</h2><p>去重：将消息的唯一标识保存到外部介质中，每次消费处理时判断是否处理过。</p>
+<ol>
+<li>利用数据库的唯一约束实现幂等</li>
+<li>为更新的数据设置前置条件，比如版本号</li>
+<li>GUID：在发送消息时，给每条消息指定一个全局唯一的 ID，消费时，先根据这个 ID 检查这条消息是否有被消费过，如果没有消费过，才更新数据，然后将消费状态置为已消费。</li>
+</ol>
 <h2 id="怎么增加消费的能力？"><a href="#怎么增加消费的能力？" class="headerlink" title="怎么增加消费的能力？"></a>怎么增加消费的能力？</h2><p>1、broker 端参数 <code>num.replica.fetchers</code>表示的是 Follower 副本用多少个线程来拉取消息，默认使用 1 个线程。如果你的 Broker 端 CPU 资源很充足，不妨适当调大该参数值，加快 Follower 副本的同步速度。</p>
 <p>2、在 Producer 端，如果要改善吞吐量，通常的标配是增加消息批次的大小以及批次缓存时间，即 <code>batch.size</code> 和 <code>linger.ms</code>。</p>
 <p>3、压缩算法也配置上，以减少网络 I/O 传输量，从而间接提升吞吐量。当前，和 Kafka 适配最好的两个压缩算法是 LZ4 和 zstd</p>
@@ -640,6 +749,13 @@ Kafka 主要有两大应用场景：
 <h2 id="消费者如何消费数据"><a href="#消费者如何消费数据" class="headerlink" title="消费者如何消费数据"></a>消费者如何消费数据</h2><p>KafkaConsumer 类不是线程安全的 （thread-safe），不能在多个线程中共享同一个 KafkaConsumer 实例，否则程序会抛出 <code>ConcurrentModificationException</code>异常</p>
 <p>1.消费者程序启动多个线程，每个线程维护专属的 KafkaConsumer 实例，负责完整的消息获取、消息处理流程</p>
 <p>2.消费者程序使用单或多线程获取消息，同时创建多个消费线程执行消息处理逻辑。</p>
+<h2 id="分布式事务"><a href="#分布式事务" class="headerlink" title="分布式事务"></a>分布式事务</h2><p><strong>基于消息队列的事务实现。</strong></p>
+<ul>
+<li>订单系统在消息队列上开启一个事务。</li>
+<li>然后订单系统给消息服务器发送一个“半消息”，这个半消息不是说消息内容不完整，它包含的内容就是完整的消息内容，半消息和普通消息的唯一区别是，在事务提交之前，对于消费者来说，这个消息是不可见的</li>
+<li>半消息发送成功后，订单系统就可以执行本地事务了，在订单库中创建一条订单记录，并提交订单库的数据库事务。然后根据本地事务的执行结果决定提交或者回滚事务消息。</li>
+<li>如果订单创建成功，那就提交事务消息，购物车系统就可以消费到这条消息继续后续的流程。如果订单创建失败，那就回滚事务消息，购物车系统就不会收到这条消息。这样就基本实现了“要么都成功，要么都失败”的一致性要求。</li>
+</ul>
 
             </div>
             <hr />
@@ -1132,7 +1248,7 @@ Kafka 主要有两大应用场景：
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="mysql面试">
+                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="mysql面试">
                         
                         <span class="card-title">mysql面试</span>
                     </div>
@@ -1196,7 +1312,7 @@ Kafka 主要有两大应用场景：
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="rabbitmq面试">
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="rabbitmq面试">
                         
                         <span class="card-title">rabbitmq面试</span>
                     </div>
@@ -1404,7 +1520,7 @@ Kafka 主要有两大应用场景：
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">142.5k</span>
+            <span class="white-color">155.8k</span>
             
 
             <br>

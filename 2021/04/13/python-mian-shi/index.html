@@ -270,7 +270,7 @@ Python2 的默认编码是 ascii，Python 3 默认编码">
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/21.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/22.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -425,14 +425,14 @@ Python2 的默认编码是 ascii，Python 3 默认编码">
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    13.1k
+                    13.4k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    49 分
+                    50 分
                 </div>
                 
                 
@@ -808,7 +808,6 @@ add<span class="token punctuation">(</span><span class="token number">1</span><s
         <span class="token keyword">print</span><span class="token punctuation">(</span>line<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h3 id="编码和解码"><a href="#编码和解码" class="headerlink" title="编码和解码"></a>编码和解码</h3><h4 id="编码类型"><a href="#编码类型" class="headerlink" title="编码类型"></a>编码类型</h4><ul>
 <li>ascii ：一个字节表示一个字符，最多只能表示 256 个符号。</li>
-<li>unicode： 所有字符需要2个字节表示</li>
 <li>gbk：英文字符1个字节，中文字符两个字节</li>
 <li>utf-8：英文字符1个字节、 欧洲字符2个字节， 亚洲字符3个字节</li>
 </ul>
@@ -818,6 +817,15 @@ add<span class="token punctuation">(</span><span class="token number">1</span><s
 <p>如果我们从网络或磁盘上读取了字节流，那么读到的数据就是<code>bytes</code>。要把<code>bytes</code>变为<code>str</code>，就需要用<code>decode()</code>方法；</p>
 <p>如果要在网络上传输，或者保存到磁盘上，就需要把<code>str</code>变为以字节为单位的<code>bytes</code></p>
 </blockquote>
+<h4 id="unicode、utf-8和utf-16的区别"><a href="#unicode、utf-8和utf-16的区别" class="headerlink" title="unicode、utf-8和utf-16的区别"></a>unicode、utf-8和utf-16的区别</h4><p>Unicode 是字符集，UTF-8 是编码规则</p>
+<ul>
+<li>字符集：为每一个字符分配一个唯一的 ID（学名为码位 / 码点 / Code Point）</li>
+<li>编码规则：将「码位」转换为字节序列的规则（编码/解码 可以理解为 加密/解密 的过程）</li>
+</ul>
+<p>广义的 Unicode 是一个标准，定义了一个字符集以及一系列的编码规则，即 Unicode 字符集和 UTF-8、UTF-16、UTF-32 等等编码……</p>
+<p>Unicode 字符集为每一个字符分配一个码位，例如「知」的码位是 30693，记作 U+77E5（30693 的十六进制为 0x77E5）。</p>
+<p>UTF-8 顾名思义，是一套以 8 位为一个编码单位的可变长编码。会将一个码位编码为 1 到 4 个字节。</p>
+<p>utf-16是用两个字节来编码所有的字符。</p>
 <h3 id="pickling和unpickling？"><a href="#pickling和unpickling？" class="headerlink" title="pickling和unpickling？"></a>pickling和unpickling？</h3><p>模块 pickle 实现了对一个 Python 对象结构的二进制序列化和反序列化。</p>
 <p> “pickling” 是将 Python 对象及转化为一个字节流的过程</p>
 <p>“unpickling” 将字节流转化回一个对象层次结构。</p>
@@ -1324,6 +1332,20 @@ foo2 <span class="token operator">=</span> Foo<span class="token punctuation">(<
     <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> name<span class="token punctuation">)</span><span class="token punctuation">:</span>
         self<span class="token punctuation">.</span>name <span class="token operator">=</span> name<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h2 id="select-poll和epoll"><a href="#select-poll和epoll" class="headerlink" title="select,poll和epoll"></a>select,poll和epoll</h2><p> select，poll，epoll都是IO多路复用的机制。I/O多路复用就通过一种机制，可以监视多个描述符，一旦某个描述符就绪（一般是读就绪或者写就绪），能够通知程序进行相应的读写操作。但select，poll，epoll本质上都是同步I/O，因为他们都需要在读写事件就绪后自己负责进行读写，也就是说这个读写过程是阻塞的，而异步I/O则无需自己负责进行读写，异步I/O的实现会负责把数据从内核拷贝到用户空间。 </p>
+<h2 id="docker和virtualenv技术具体有什么不同？"><a href="#docker和virtualenv技术具体有什么不同？" class="headerlink" title="docker和virtualenv技术具体有什么不同？"></a>docker和virtualenv技术具体有什么不同？</h2><ul>
+<li>virtualenv是python的版本和库管理器，virtualenv虚拟python运行环境，保证系统python环境的整</li>
+<li>docker是虚拟化整个系统环境工具，docker不仅可以跑python，还可以跑其他的需要进程环境隔离的程序。</li>
+</ul>
+<p>环境的特点有二：</p>
+<ul>
+<li>Python版本固定。即使系统的Python升级了，虚拟环境中的仍然不受影响，保留开发状态。</li>
+<li>所有Python软件包，都只在这个环境生效。一旦退出，则回到用户+系统的默认环境中。</li>
+</ul>
+<p>这两个特点，由两个小手段实现。</p>
+<ul>
+<li>改变当前Shell的<code>PATH</code>。</li>
+<li>改变Python运行时的<code>sys.path</code>。</li>
+</ul>
 
             </div>
             <hr />
@@ -1816,7 +1838,7 @@ foo2 <span class="token operator">=</span> Foo<span class="token punctuation">(<
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="flask">
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="flask">
                         
                         <span class="card-title">flask</span>
                     </div>
@@ -1869,7 +1891,7 @@ run 方法调用werkzeug 的 run_simple
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/26.jpg" class="responsive-img" alt="redis面试">
+                        <img src="/medias/featureimages/27.jpg" class="responsive-img" alt="redis面试">
                         
                         <span class="card-title">redis面试</span>
                     </div>
@@ -2074,7 +2096,7 @@ run 方法调用werkzeug 的 run_simple
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">142.5k</span>
+            <span class="white-color">155.8k</span>
             
 
             <br>
