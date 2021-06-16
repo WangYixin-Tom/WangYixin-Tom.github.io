@@ -269,7 +269,7 @@ BST Trie树 红黑树的了解
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/3.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/4.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -397,7 +397,7 @@ BST Trie树 红黑树的了解
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-06-15
+                    2021-06-16
                 </div>
 
                 <div class="post-author info-break-policy">
@@ -411,14 +411,14 @@ BST Trie树 红黑树的了解
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    4.5k
+                    3.5k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    15 分
+                    12 分
                 </div>
                 
                 
@@ -465,7 +465,7 @@ BST Trie树 红黑树的了解
 <p>段页式管理每一次数据访问要访问几次内存，如果有缓存呢？用什么缓存？有哪些缓存？（给我问懵了）</p>
 <p>线程有哪些状态？wait和block的区别？Wait超时后会怎样？ </p>
 <p>怎么创建一个进程</p>
-<p>epoll为什么高效? (<a href="https://www.nowcoder.com/jump/super-jump/word?word=红黑树" target="_blank" rel="noopener">红黑树</a> 通过回调实现 时间就绪到添加到就绪列表的时间复杂度是O(1)))</p>
+<p>epoll为什么高效? 红黑树通过回调实现 时间就绪到添加到就绪列表的时间复杂度是O(1)))</p>
 <p>fork、exec</p>
 <p>进程的内存空间分为哪几个部分</p>
 <p>解释下内存对齐，为什么要内存对齐</p>
@@ -477,44 +477,15 @@ BST Trie树 红黑树的了解
 <li>ctrl + c，会发送<code>SIGINT</code>的信号，等同于<code>kill -2</code>(interrupt)，程序那边接收到这个信号后做处理</li>
 <li>ctrl + z，会发送<code>SIGTSTP</code>的信号</li>
 </ul>
-<h1 id="网络"><a href="#网络" class="headerlink" title="网络"></a>网络</h1><p>一个TCP支持多少个HTTP？了解HTTP复用吗？</p>
-<p>Ping的过程以及原理</p>
-<p>FTP是什么协议 </p>
-<p>HTTp 201，302，401，405，504。</p>
-<p>ARP是什么？在哪层</p>
-<p>发生502，应该先查看什么，发生500应该先查看什么</p>
-<p>说一下HTTP是如何保持长连接的</p>
+<h1 id="网络"><a href="#网络" class="headerlink" title="网络"></a>网络</h1><p>Ping的过程以及原理</p>
 <p>token用的是jwt对吗 ？为什么安全性得到保证</p>
-<p>校验和一定可以判断tcp包没有被调换吗</p>
-<p>十六位校验和怎么实现的</p>
-<p>ip报文头部有哪些东西</p>
-<p>http里header中content-type用途，cookie用途    </p>
-<p>小端字节序和大端字节序，这个对什么产生影响，做什么事情会出现问题，<br>传一个字符串，定义为大端和小端一样吗？如果传一个数字有影响吗？</p>
-<p>TCP窗口过大会引发问题，能详细解释一下吗？哪个传输节点会出现问题？</p>
-<p>11、UDP可以实现可靠吗？</p>
-<p> TCP为什么数据量比UDP大？ 如果有1M数据，两者会差多少？</p>
-<ol>
-<li><p>ICMP协议是干什么的</p>
-<p>是否了解RIP协议和OSPF协议？<br>RIP（路由信息协议）</p>
-</li>
-</ol>
-<p>RIP协议是一种采用距离向量算法的路由协议，基于距离-向量的路由选择协议。其设计思想简单，它要求路由器周期性地通知相邻路由器自己可以到达的网路，以及到达网络的距离（跳数），这里的“距离”实际上指的是“最短距离”。</p>
-<p>简述RIP协议的工作原理： 路由器每30秒把自己的路由表发给邻居。路由器用邻居发来的路由表根据距离向量算法修改自己的路由表。初始时每个路由器只有到直连网距离为1的路由。</p>
-<p>OSPF（开放最短路径优先协议）</p>
-<p>OSPF不受某一家厂商控制，而是公开发表的。使用Dijikstra最短路径算法，使用分布式的链路状态协议。</p>
-<p>简述OSPF协议的工作原理： 路由器互相发送直接相连的链路信息和它拥有的到其它路由器的链路信息。每个 OSPF 路由器维护相同自治系统拓扑结构的数据库。从这个数据库里，构造出最短路径树来计算出路由表。当拓扑结构发生变化时，OSPF 能迅速重新计算出路径，而只产生少量的路由协议流量。此外，所有 OSPF 路由选择协议的交换都是经过身份验证的。</p>
-<p>SSL安全套阶层为什么运用了对称加密和非对称加密？如果非对称加密安全性更高，为什么还要用对称加密？<br>实现信息保密和信息完整性，防止了某些用户通过使用IP数据包嗅探工具非法窃听。尽管数据包嗅探仍能捕捉到通信的内容，但却无法破译。<br>因为非对称加密算法强度复杂、安全性依赖于算法与密钥。但对称加密主要为位运算，而非对称加密主要为幂运算，对称加密较快。</p>
+<p>UDP可以实现可靠吗？</p>
+<p>ICMP协议是干什么的</p>
 <p>sessionId 如何维护（cookie 里带有 sessionId)</p>
 <p>如果token被其他人拦截了，拦截者是否可以直接通过token来访问服务器呢？</p>
 <p>讲一下JWT（Json Web Token）→怎么提取JWT的值？ → SSO? Auth2? (不会)</p>
-<p>token的结构、<a href="https://www.nowcoder.com/jump/super-jump/word?word=项目" target="_blank" rel="noopener">项目</a>中登录的逻辑（简述）、token有什么问题、其他保持状态的方式</p>
-<p>ssl握手原理，发生在什么时候</p>
-<p>IPv6？为什么 v4 不够？怎么缓解不够(子网，NAT)？还知道4和6哪些区别？</p>
-<p>为什么网络中会发生丢包？（接收到的分组校验出错、分组在网络中超出最大存活时间、路由器接收分组数量达到上限后，会丢弃多余分组）</p>
-<p>为什么会发生网络卡顿现象？（网络拥塞）</p>
-<p>大小端，常用的系统是大端还是小端</p>
+<p>token的结构、<a href="https://www.nowcoder.com/jump/super-jump/word?word=项目" target="_blank" rel="noopener">项目</a>中登录的逻辑（简述）、token有什么问题、其他保持状态的方式<br>DNS怎么保证最短路径</p>
 <p>IP是怎么寻址的<br>IP包是怎么发的（路由器转发）路由器怎么转发</p>
-<p>设计一个 TCP 上的应用层协议，怎么拆包：答的首部长度字段，不太确定</p>
 <h1 id="kafka"><a href="#kafka" class="headerlink" title="kafka"></a>kafka</h1><p>说一下kafka分区设置，怎么持久化的，怎么确定向哪一个分区写消息</p>
 <h1 id="场景题"><a href="#场景题" class="headerlink" title="场景题"></a>场景题</h1><p>场景：我在聊天框发送消息，你跟我聊天这是咋做的</p>
 <p>设计一个聊天系统，数据库咋设计，从头到尾的框架，消息怎么通过服务器转发的</p>
@@ -537,8 +508,8 @@ BST Trie树 红黑树的了解
 <h1 id="mysql"><a href="#mysql" class="headerlink" title="mysql"></a>mysql</h1><p>mysql分片知道吗？有实际应用吗？具体说一下？</p>
 <p>b+树的叶子节点之间是单链还是双链，页与页之间，页内部呢。（后两个没弄过，说了一下自己理解）</p>
 <p>binlog、redolog，两阶段提交、宕机数据恢复流程</p>
-<h1 id="redis"><a href="#redis" class="headerlink" title="redis"></a>redis</h1><p>3：<a href="https://www.nowcoder.com/jump/super-jump/word?word=redis" target="_blank" rel="noopener">redis</a> 的跳表底层实现复杂度等等</p>
-<p>4：<a href="https://www.nowcoder.com/jump/super-jump/word?word=redis" target="_blank" rel="noopener">redis</a>为何用跳表而不用<a href="https://www.nowcoder.com/jump/super-jump/word?word=红黑树" target="_blank" rel="noopener">红黑树</a></p>
+<h1 id="redis"><a href="#redis" class="headerlink" title="redis"></a>redis</h1><p><a href="https://www.nowcoder.com/jump/super-jump/word?word=redis" target="_blank" rel="noopener">redis</a> 的跳表底层实现复杂度等等</p>
+<p>redis为何用跳表而不用<a href="https://www.nowcoder.com/jump/super-jump/word?word=红黑树" target="_blank" rel="noopener">红黑树</a></p>
 <p><a href="https://www.nowcoder.com/jump/super-jump/word?word=redis" target="_blank" rel="noopener">redis</a>里面的zset，跳表怎么实现，怎么增删，</p>
 <p><a href="https://jzwdsb.github.io/2019/02/redis_pipeline_mget/" target="_blank" rel="noopener">mget和pipeline区别</a></p>
 <ul>
@@ -570,7 +541,8 @@ BST Trie树 红黑树的了解
 <p>如果当前面试界面崩溃了，如何排查问题</p>
 <p> 设计一个限流器</p>
 <p>大v发消息，设计什么机制让他发的消息能快速被刷新出来？</p>
-<p>如果要你实现微博或者朋友圈的功能，数据库需要那些表？具体功能要求为<br>用户可以关注其他用户<br>用户可以发微博<br>用户可以在主页中看到关注用户的动态<br>python字典原理，实现一个能排序的字典如何实现，从数据结构出发</p>
+<p>如果要你实现微博或者朋友圈的功能，数据库需要那些表？具体功能要求为<br>用户可以关注其他用户<br>用户可以发微博<br>用户可以在主页中看到关注用户的动态</p>
+<p>python字典原理，实现一个能排序的字典如何实现，从数据结构出发</p>
 <p>Python yield关键字讲一下</p>
 <p>断点续传的原理是什么</p>
 <p>1，每个结点是红的或黑的</p>
@@ -580,29 +552,31 @@ BST Trie树 红黑树的了解
 <p>5，对每个结点，从该结点到其子孙结点所有路径上的包含相同数目的黑结点</p>
 <p>CA证书是啥，干啥用的<br>系统介绍一下数据库中的索引<br>什么是索引 -&gt; 索引的作用 -&gt; MySQL 有哪些索引及其适用场景和优缺点 -&gt; 索引的底层数据结构 B+ 树 -&gt; InnoDB 和 MyISAM 索引的区别 -&gt; 最左匹配原则 -&gt; 建索引注意点 -&gt; 索引调优思路。</p>
 <p>系统调用也算中断吗，也要保存东西吗？</p>
-<p>mysql 如何保持一致性<br>16.traceroute命令用处<br>12.IPv4和iPv6的区别（不知道）<br>DNS怎么保证最短路径<br>操作系统？调度算法，抢占式非抢占式时间片轮转的区别<br>操作系统里避免死锁的办法<br>docker镜像的结构是什么样子的？<br>虚拟内存和共享内存有什么区别</p>
+<p>mysql 如何保持一致性<br>操作系统？调度算法，抢占式非抢占式时间片轮转的区别<br>操作系统里避免死锁的办法<br>docker镜像的结构是什么样子的？<br>虚拟内存和共享内存有什么区别</p>
 <p>3.地址映射有哪些算法<br>线程同步有哪些方式，临界区算法了解哪些，信号量模型了解哪些<br>场景题，怎么保存用户最近浏览记录（答了两方面，本地缓存（用带头尾指针的链表），服务端用redis（zset）） </p>
-<p>什么是跨域问题?如何解决?<br>怎么解析http报文<br>从A地往B运送3000L汽油，两地相距1000KM，一辆汽车最多可装载1000L汽油，每行驶1KM耗油1L，请问从B地最多可以得到多少L汽油？<br>（汽油可以在中途放下且只有一辆车）<br>算了二十分钟只给了个250L的错误答案，最后问面试官说是533L，具体过程有很多方法解，本渣到现在还没算出来。 </p>
+<p>什么是跨域问题?如何解决?</p>
+<p>从A地往B运送3000L汽油，两地相距1000KM，一辆汽车最多可装载1000L汽油，每行驶1KM耗油1L，请问从B地最多可以得到多少L汽油？<br>（汽油可以在中途放下且只有一辆车）<br>算了二十分钟只给了个250L的错误答案，最后问面试官说是533L，具体过程有很多方法解，本渣到现在还没算出来。 </p>
 <p>Unicode UTF-8 ASCII编码方式有什么区别<br>一个汉字占ASCII多少字节  UTF-8中呢 </p>
-<p>路由地址你了解多少</p>
 <p>计算机系统为什么64位之后就没有128位了（不是很懂）</p>
 <ol start="6">
 <li>epoll使用场景?select具体性能消耗在哪? </li>
 <li>epoll需要拷贝文件描述符吗？     </li>
 </ol>
-<p>怎么保证又快又安全呢？把TCP和UDP的优点结合。（不懂的人快去看QUIC）<br>17.cookie是怎么被种到浏览器里的<br>18.cookie包含哪几项内容(格式)<br>19.cookie有一个字段叫做http only(好像是这么拼来着(大概发这个音)有去了解过吗<br>20.禁用cookie的话后怎么处理, 在url中添加cookie id是怎么样的传输过程<br>文件描述符是什么<br>线程池的核心线程数大小如何确定（计算密集型为N+1，IO密集型为2N）<br>红黑树说一下，跳表说一下，那你知道什么地方用了红黑树和跳表吗<br>4、用cookie和session实现用户登录的过程是咋样的，大概说下</p>
-<p>linux中统计软中断调用的命令是啥？<br>MySQL里的锁底层是怎么实现的<br>keep-alive在HTTP请求的哪个部分<br>浏览器禁用cookie怎么办<br>mmap和direct_IO的区别？<br>python中的多进程，知道是怎么一回事么？<br>讲一下二叉树，排序二叉树，平衡二叉树，红黑树，B类树（我讲的很详细，大概讲了15分钟）</p>
+<p>怎么保证又快又安全呢？把TCP和UDP的优点结合。（不懂的人快去看QUIC）</p>
+<p>文件描述符是什么<br>线程池的核心线程数大小如何确定（计算密集型为N+1，IO密集型为2N）<br>红黑树说一下，跳表说一下，那你知道什么地方用了红黑树和跳表吗<br>4、用cookie和session实现用户登录的过程是咋样的，大概说下</p>
+<p>linux中统计软中断调用的命令是啥？<br>MySQL里的锁底层是怎么实现的</p>
+<p>mmap和direct_IO的区别？<br>python中的多进程，知道是怎么一回事么？<br>讲一下二叉树，排序二叉树，平衡二叉树，红黑树，B类树（我讲的很详细，大概讲了15分钟）</p>
 <p>Docker的四种网络模式和实现<br>Kubernetes 的优雅启动和优雅停止<br>对Kubernetes和Docker的理解</p>
 <p>1，进程的调度如何实现，如何使用红黑树的，<br>2，关于内存管理怎么跟红黑树有关系<br>3.网卡数据，<br>在以上这些场景，如何使用红黑树的？</p>
 <p>jwt是对称加密，它是分成三部分了，一个是hash算法，一个是明文数据，以及签名<br>给你10000个IP，你如何快速查找这个IP是否存在，使用什么数据结构?</p>
-<p>说一下主从复制怎么实现<br>是通过执行sql还是事务来实现主从复制?</p>
 <p> 你熟悉什么排序，各种排序的时间复杂度 </p>
 <ol start="2">
 <li>堆排序建堆过程，建堆时间复杂度<br>陷入内核态的时候要保存一些啥</li>
 </ol>
-<p>逻辑地址呢？（我回答虚拟地址就是逻辑地址。。）<br>快表是存储在哪里的<br>延迟ACK了解么</p>
-<p>刷过堆排序吗？（我：没有）面试官：那更好<br>堆排序的heap_insert函数<br>了解Docker的资源隔离原理吗（只知道是用了Linux的某个特性）<br>十万（一亿）广东考生分数，找出其中中位数。<br>说一下AMQP协议是怎么定义一个MQ的</p>
-<p>docker的隔离性 ？namespace技术。docker为啥要分层？<br>kafka的rebalence</p>
+<p>快表是存储在哪里的 </p>
+<p>刷过堆排序吗？（我：没有）面试官：那更好<br>堆排序的heap_insert函数<br>了解Docker的资源隔离原理吗（只知道是用了Linux的某个特性） </p>
+<p>docker的隔离性 ？namespace技术。docker为啥要分层？</p>
+<p>十万（一亿）广东考生分数，找出其中中位数。<br>说一下AMQP协议是怎么定义一个MQ的</p>
 <h1 id="python"><a href="#python" class="headerlink" title="python"></a>python</h1><p>8.python字典原理，实现一个能<a href="https://www.nowcoder.com/jump/super-jump/word?word=排序" target="_blank" rel="noopener">排序</a>的字典如何实现，从数据结构出发</p>
 <p>多线程中线程崩溃会产生什么影响？</p>
 
@@ -765,7 +739,7 @@ BST Trie树 红黑树的了解
                   property="dct:title" rel="dct:type">
                     《》
                 </span> 由
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2021/06/15/question-2/" property="cc:attributionName"
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2021/06/16/question-2/" property="cc:attributionName"
                rel="cc:attributionURL">
                 wangyixin-tom
             </a> 采用
@@ -806,7 +780,7 @@ BST Trie树 红黑树的了解
         repo: 'wangyixin-tom.github.io',
         owner: 'WangYixin-Tom',
         admin: "WangYixin-Tom",
-        id: '2021/06/15/question-2/',
+        id: '2021/06/16/question-2/',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -1097,7 +1071,7 @@ BST Trie树 红黑树的了解
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="操作系统">
+                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="操作系统">
                         
                         <span class="card-title">操作系统</span>
                     </div>
@@ -1150,7 +1124,7 @@ BST Trie树 红黑树的了解
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="基础数据结构">
+                        <img src="/medias/featureimages/28.jpg" class="responsive-img" alt="基础数据结构">
                         
                         <span class="card-title">基础数据结构</span>
                     </div>
@@ -1340,7 +1314,7 @@ BST Trie树 红黑树的了解
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">158.8k</span>
+            <span class="white-color">161.1k</span>
             
 
             <br>
