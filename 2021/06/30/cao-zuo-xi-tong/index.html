@@ -270,7 +270,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/13.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -425,14 +425,14 @@
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    16k
+                    16.4k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    54 分
+                    55 分
                 </div>
                 
                 
@@ -449,6 +449,12 @@
 <li>操作系统为用户提供一个与系统交互的操作界面 ；</li>
 <li>操作系统分内核与外壳（我们可以把外壳理解成围绕着内核的应用程序，而内核就是能操作硬件的程序）。</li>
 </ol>
+<h3 id="32位64位操作系统的区别？"><a href="#32位64位操作系统的区别？" class="headerlink" title="32位64位操作系统的区别？"></a>32位64位操作系统的区别？</h3><p>64位平台不管是在性能上，还是在功能上，都要领先于目前的32位平台。</p>
+<ul>
+<li>32位处理器一次只能处理32位，也就是4个字节的数据；而64位处理器一次就能处理64位，即8个字节的数据。如果将总长128位的指令分别按16位、32位、64位为单位进行编辑的话：32位的处理器需要4个指令，而64位处理器则只要两个指令。显然，在工作频率相同的情况下，64位处理器的处理速度比32位的更快。</li>
+<li>由于地址使用的是特殊的整数，而64位处理器的一个ALU（算术逻辑运算器）和寄存器可以处理更大的整数，也就是更大的地址。传统32位处理器的寻址空间最大为4GB，而64位的处理器在理论上则可以达到1800万个TB（1TB=1024GB）。</li>
+<li>从32位到64位，使寻址范围、最大内存容量、数据传输和处理速度、数值精度等指标也成倍增加，带来的结果就是CPU的处理能力得到大幅提升，尤其是对强烈依赖数值运算、存在巨量数据吞吐和需要超大并发处理的应用提升效果非常明显，如科学计算、人工智能、平面设计、视频处理、3D动画和游戏、数据库以及各种网络服务器等。</li>
+</ul>
 <h3 id="系统调用"><a href="#系统调用" class="headerlink" title="系统调用"></a>系统调用</h3><p>根据进程访问资源的特点，我们可以把进程在系统上的运行分为两个级别：用户态和系统态。</p>
 <p>我们运行的程序基本都是运行在用户态，通过系统调用使用操作系统提供的系统态级别的子功能。</p>
 <p>文件管理、进程控制、内存管理等都必须通过系统调用方式向操作系统提出服务请求，并由操作系统代为完成。</p>
@@ -776,8 +782,8 @@
 <h3 id="不同进程间是如何实现共享内存的"><a href="#不同进程间是如何实现共享内存的" class="headerlink" title="不同进程间是如何实现共享内存的"></a>不同进程间是如何实现共享内存的</h3><p>在Linux中，每个进程都有属于自己的进程控制块（PCB）和地址空间（Addr Space），并且都有一个与之对应的页表，负责将进程的虚拟地址与物理地址进行映射，<strong>通过内存管理单元（MMU）进行管理</strong>。<strong>两个不同的虚拟地址通过页表映射到物理空间的同一区域，它们所指向的这块区域即共享内存。</strong></p>
 <p>当两个进程通过页表将虚拟地址映射到物理地址时，在物理地址中有一块共同的内存区，即共享内存，这块内存可以被两个进程同时看到。<strong>这样当一个进程进行写操作，另一个进程读操作就可以实现进程间通信。但是，我们要确保一个进程在写的时候不能被读，因此我们使用信号量来实现同步与互斥。</strong></p>
 <h3 id="进程的调度算法"><a href="#进程的调度算法" class="headerlink" title="进程的调度算法"></a><strong>进程的调度算法</strong></h3><ul>
-<li><strong>先到先服务(FCFS)调度算法</strong> : 从就绪队列中选择一个最先进入该队列的进程为之分配资源，使它立即执行并一直执行到完成或发生某事件而被阻塞放弃占用 CPU 时再重新调度。</li>
-<li><strong>短作业优先(SJF)的调度算法</strong> : 从就绪队列中选出一个估计运行时间最短的进程为之分配资源，使它立即执行并一直执行到完成或发生某事件而被阻塞放弃占用 CPU 时再重新调度。</li>
+<li><strong>先到先服务（FCFS）调度算法</strong> : 从就绪队列中选择一个最先进入该队列的进程为之分配资源，使它立即执行并一直执行到完成或发生某事件而被阻塞放弃占用 CPU 时再重新调度。</li>
+<li><strong>短作业优先（SJF）的调度算法</strong> : 从就绪队列中选出一个估计运行时间最短的进程为之分配资源，使它立即执行并一直执行到完成或发生某事件而被阻塞放弃占用 CPU 时再重新调度。</li>
 <li><strong>时间片轮转调度算法</strong> : 时间片轮转调度是一种最古老，最简单，最公平且使用最广的算法，又称 Round robin调度。每个进程被分配一个时间段，称作它的时间片，即该进程允许运行的时间。</li>
 <li><strong>多级反馈队列调度算法</strong> ：前面介绍的几种进程调度的算法都有一定的局限性。如<strong>短进程优先的调度算法，仅照顾了短进程而忽略了长进程</strong> 。多级反馈队列调度算法既能使高优先级的作业得到响应又能使短作业（进程）迅速完成。，因而它是目前<strong>被公认的一种较好的进程调度算法</strong>，UNIX 操作系统采取的便是这种调度算法。</li>
 <li><strong>优先级调度</strong> ： 为每个流程分配优先级，首先执行具有最高优先级的进程，依此类推。具有相同优先级的进程以 FCFS 方式执行。可以根据内存要求，时间要求或任何其他资源要求来确定优先级。</li>
@@ -1319,7 +1325,7 @@
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="操作系统">
+                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="操作系统">
                         
                         <span class="card-title">操作系统</span>
                     </div>
@@ -1373,7 +1379,7 @@
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="">
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="">
                         
                         <span class="card-title"></span>
                     </div>
@@ -1566,7 +1572,7 @@ BST Trie树 红黑树的了解
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">158.1k</span>
+            <span class="white-color">158.8k</span>
             
 
             <br>

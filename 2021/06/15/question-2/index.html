@@ -269,7 +269,7 @@ BST Trie树 红黑树的了解
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/2.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/3.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -411,14 +411,14 @@ BST Trie树 红黑树的了解
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    4.7k
+                    4.5k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    16 分
+                    15 分
                 </div>
                 
                 
@@ -449,9 +449,7 @@ BST Trie树 红黑树的了解
 </ul>
 <h1 id="操作系统"><a href="#操作系统" class="headerlink" title="操作系统"></a>操作系统</h1><p>段页式管理CPU每次从内存地址读取一次数据要访问几次</p>
 <p>讲一下页，页表怎么实现</p>
-<p>① 32位64位操作系统的区别？<br>②内存寻址？内存管理？</p>
-<p>分页分段区别</p>
-<p>CPU任务调度的基本方式<br>程序计数器的作用<br>进程和线程的调度区别 </p>
+<p>分页分段区别程序计数器的作用<br>进程和线程的调度区别 </p>
 <p>阻塞态能直接到运行态吗<br>就绪态到运行态的条件（上一个进程时间片用完，本进程被系统调度）</p>
 <p>线程的上下文是什么、进程的上下文是什么</p>
 <p>操作系统：两进程同时操作一个文件，父子进程操作同一文件，有什么区别 </p>
@@ -462,12 +460,7 @@ BST Trie树 红黑树的了解
 <p>mv的话 inode会+1么</p>
 <p>共享内存通信和 进程之间内存隔离是不是冲突？</p>
 <p>内存管理机制，连续和非连续的优缺点是什么，各自有哪些方法，连续分配为什么会有碎片<br>20）段页式里面，段和页各自的作用是什么，段和页的大小分别是多少</p>
-<h4 id="线程共享进程的资源，具体是指什么资源？线程之间的资源是如何通信的？"><a href="#线程共享进程的资源，具体是指什么资源？线程之间的资源是如何通信的？" class="headerlink" title="线程共享进程的资源，具体是指什么资源？线程之间的资源是如何通信的？"></a>线程共享进程的资源，具体是指什么资源？线程之间的资源是如何通信的？</h4><ol>
-<li>线程共享的资源有：全局堆，全局变量，静态变量，进程的各种文件等公用资源</li>
-<li>线程独享的资源有：栈，局部堆，寄存器组的值，线程ID、错误返回码、信号屏蔽码等</li>
-</ol>
 <p>如果是单核 CPU，多进程/线程还有优化吗？为什么？</p>
-<p>内存管理机制吗 A:块 页 段 段页</p>
 <p>段页式查询一次数据总共需要几次访存 如何减少访存次数</p>
 <p>段页式管理每一次数据访问要访问几次内存，如果有缓存呢？用什么缓存？有哪些缓存？（给我问懵了）</p>
 <p>线程有哪些状态？wait和block的区别？Wait超时后会怎样？ </p>
@@ -486,7 +479,10 @@ BST Trie树 红黑树的了解
 </ul>
 <h1 id="网络"><a href="#网络" class="headerlink" title="网络"></a>网络</h1><p>一个TCP支持多少个HTTP？了解HTTP复用吗？</p>
 <p>Ping的过程以及原理</p>
+<p>FTP是什么协议 </p>
+<p>HTTp 201，302，401，405，504。</p>
 <p>ARP是什么？在哪层</p>
+<p>发生502，应该先查看什么，发生500应该先查看什么</p>
 <p>说一下HTTP是如何保持长连接的</p>
 <p>token用的是jwt对吗 ？为什么安全性得到保证</p>
 <p>校验和一定可以判断tcp包没有被调换吗</p>
@@ -512,18 +508,14 @@ BST Trie树 红黑树的了解
 <p>如果token被其他人拦截了，拦截者是否可以直接通过token来访问服务器呢？</p>
 <p>讲一下JWT（Json Web Token）→怎么提取JWT的值？ → SSO? Auth2? (不会)</p>
 <p>token的结构、<a href="https://www.nowcoder.com/jump/super-jump/word?word=项目" target="_blank" rel="noopener">项目</a>中登录的逻辑（简述）、token有什么问题、其他保持状态的方式</p>
-<p>3.ARP协议的具体过程，ARP的表存储在哪里？</p>
-<p>8.对于tcp来说，服务端断电和进程挂掉有什么区别？</p>
 <p>ssl握手原理，发生在什么时候</p>
 <p>IPv6？为什么 v4 不够？怎么缓解不够(子网，NAT)？还知道4和6哪些区别？</p>
 <p>为什么网络中会发生丢包？（接收到的分组校验出错、分组在网络中超出最大存活时间、路由器接收分组数量达到上限后，会丢弃多余分组）</p>
 <p>为什么会发生网络卡顿现象？（网络拥塞）</p>
 <p>大小端，常用的系统是大端还是小端</p>
-<p>DNS劫持是什么；DNS被劫持了怎么办</p>
-<p>多久没收到会丢失重传，往返时间怎么预估</p>
-<p>RTT怎么计算出来的</p>
 <p>IP是怎么寻址的<br>IP包是怎么发的（路由器转发）路由器怎么转发</p>
 <p>设计一个 TCP 上的应用层协议，怎么拆包：答的首部长度字段，不太确定</p>
+<h1 id="kafka"><a href="#kafka" class="headerlink" title="kafka"></a>kafka</h1><p>说一下kafka分区设置，怎么持久化的，怎么确定向哪一个分区写消息</p>
 <h1 id="场景题"><a href="#场景题" class="headerlink" title="场景题"></a>场景题</h1><p>场景：我在聊天框发送消息，你跟我聊天这是咋做的</p>
 <p>设计一个聊天系统，数据库咋设计，从头到尾的框架，消息怎么通过服务器转发的</p>
 <p>我说使用TCP做，问为啥就能可靠，（balabala一堆）</p>
@@ -545,7 +537,9 @@ BST Trie树 红黑树的了解
 <h1 id="mysql"><a href="#mysql" class="headerlink" title="mysql"></a>mysql</h1><p>mysql分片知道吗？有实际应用吗？具体说一下？</p>
 <p>b+树的叶子节点之间是单链还是双链，页与页之间，页内部呢。（后两个没弄过，说了一下自己理解）</p>
 <p>binlog、redolog，两阶段提交、宕机数据恢复流程</p>
-<h1 id="redis"><a href="#redis" class="headerlink" title="redis"></a>redis</h1><p><a href="https://www.nowcoder.com/jump/super-jump/word?word=redis" target="_blank" rel="noopener">redis</a>里面的zset，跳表怎么实现，怎么增删，</p>
+<h1 id="redis"><a href="#redis" class="headerlink" title="redis"></a>redis</h1><p>3：<a href="https://www.nowcoder.com/jump/super-jump/word?word=redis" target="_blank" rel="noopener">redis</a> 的跳表底层实现复杂度等等</p>
+<p>4：<a href="https://www.nowcoder.com/jump/super-jump/word?word=redis" target="_blank" rel="noopener">redis</a>为何用跳表而不用<a href="https://www.nowcoder.com/jump/super-jump/word?word=红黑树" target="_blank" rel="noopener">红黑树</a></p>
+<p><a href="https://www.nowcoder.com/jump/super-jump/word?word=redis" target="_blank" rel="noopener">redis</a>里面的zset，跳表怎么实现，怎么增删，</p>
 <p><a href="https://jzwdsb.github.io/2019/02/redis_pipeline_mget/" target="_blank" rel="noopener">mget和pipeline区别</a></p>
 <ul>
 <li><p>mget和pipeline都是多命令一起执行，只有一次往返的网络IO</p>
@@ -579,8 +573,6 @@ BST Trie树 红黑树的了解
 <p>如果要你实现微博或者朋友圈的功能，数据库需要那些表？具体功能要求为<br>用户可以关注其他用户<br>用户可以发微博<br>用户可以在主页中看到关注用户的动态<br>python字典原理，实现一个能排序的字典如何实现，从数据结构出发</p>
 <p>Python yield关键字讲一下</p>
 <p>断点续传的原理是什么</p>
-<p>FTP是什么协议 </p>
-<p>HTTp 201，302，401，405，504。</p>
 <p>1，每个结点是红的或黑的</p>
 <p>2，根结点是黑的</p>
 <p>3，每个叶子结点是黑的</p>
@@ -1105,7 +1097,7 @@ BST Trie树 红黑树的了解
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="操作系统">
+                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="操作系统">
                         
                         <span class="card-title">操作系统</span>
                     </div>
@@ -1158,7 +1150,7 @@ BST Trie树 红黑树的了解
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="基础数据结构">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="基础数据结构">
                         
                         <span class="card-title">基础数据结构</span>
                     </div>
@@ -1348,7 +1340,7 @@ BST Trie树 红黑树的了解
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">158.1k</span>
+            <span class="white-color">158.8k</span>
             
 
             <br>
