@@ -268,7 +268,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/22.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/23.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -423,14 +423,14 @@
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    6.5k
+                    7.4k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    23 分
+                    26 分
                 </div>
                 
                 
@@ -533,6 +533,40 @@
 <li>认证中心<strong>根据带过来的Cookie</strong>发现已经与用户建立了全局会话了，认证中心<strong>重定向回系统B</strong>，并把Token携带过去给系统B</li>
 <li>系统B去sso认证中心验证这个Token是否正确，如果正确，则系统B和用户建立局部会话（<strong>创建Session</strong>）。到此，系统B和用户已经是登录状态了。</li>
 </ul>
+<h3 id="JWT"><a href="#JWT" class="headerlink" title="JWT"></a>JWT</h3><h4 id="令牌结构"><a href="#令牌结构" class="headerlink" title="令牌结构"></a><strong>令牌结构</strong></h4><p>由三部分组成，这些部分由点分隔</p>
+<ul>
+<li>Header：包括令牌的类型（即JWT）和所使用的签名算法（SHA256或者RSA）</li>
+<li>Payload：有关实体（通常是用户）和其他数据的声明<ul>
+<li>注册声明：提供一组有用的可互操作的权利要求。其中一些是： iss（JWT的签发者）， exp（expires,到期时间）， sub（主题）， aud（JWT接收者），iat(issued at，签发时间)等</li>
+<li>公开声明：一般添加用户的相关信息或其他业务需要的必要信息。不建议添加敏感信息，因为该部分在客户端可解密。</li>
+<li>私有声明：提供者和消费者所共同定义的声明，一般不建议存放敏感信息</li>
+</ul>
+</li>
+<li>Signature：Signature部分的生成需要base64编码之后的Header,base64编码之后的Payload,密钥（secret）,Header需要指定签字的算法。</li>
+</ul>
+<h4 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h4><ul>
+<li>JWT 的最大缺点是，由于服务器不保存 session 状态，因此无法在使用过程中废止某个 token，或者更改 token 的权限。也就是说，一旦 JWT 签发了，<strong>在到期之前就会始终有效</strong>，除非服务器部署额外的逻辑。</li>
+<li>JWT 本身包含了认证信息，<strong>一旦泄露，任何人都可以获得该令牌的所有权限</strong>。为了减少盗用，JWT 的有效期应该设置得比较短。对于一些比较重要的权限，使用时应该再次对用户进行认证。</li>
+<li>为了减少盗用，<strong>JWT 不应该使用 HTTP 协议明码传输，要使用 HTTPS 协议传输</strong>。</li>
+</ul>
+<h4 id="用户登出，如何设置token无效？"><a href="#用户登出，如何设置token无效？" class="headerlink" title="用户登出，如何设置token无效？"></a>用户登出，如何设置token无效？</h4><p>JWT是无状态的，用户登出设置token无效就已经违背了JWT的设计原则，但是在实际应用场景中，这种功能是需要的，那该如何实现呢？提供几种思路：</p>
+<ul>
+<li>用户登出，浏览器端丢弃token</li>
+<li>使用redis数据库，用户登出，从redis中删除对应的token,请求访问时，需要从redis库中取出对应的token,若没有，则表明已经登出</li>
+</ul>
+<blockquote>
+<p>为了保持数据的一致性，每一次认证都需要从redis中取出对应的token，每一次都以redis中的token为准。</p>
+</blockquote>
+<h4 id="使用redis-两个不同的设备，一个设备登出，另外一个设备如何处理？"><a href="#使用redis-两个不同的设备，一个设备登出，另外一个设备如何处理？" class="headerlink" title="使用redis,两个不同的设备，一个设备登出，另外一个设备如何处理？"></a>使用redis,两个不同的设备，一个设备登出，另外一个设备如何处理？</h4><p>请思考这样一种场景：</p>
+<ul>
+<li>同一个用户从两个设备登陆到服务端（设备1，设备2）；</li>
+<li>设备1登出，删除redis中的对应的token - 设备2再次请求数据时，redis中的数据为空，需要重新登录。</li>
+</ul>
+<p>很明显，这种情况是不应该出现的，说一下自己的想法：</p>
+<ul>
+<li>每一个设备与用户生成唯一的key,保存在redis中，即设备1的用户登出，只删除对应的token，设备2的token仍然存在</li>
+</ul>
+<h3 id="OAuth"><a href="#OAuth" class="headerlink" title="OAuth"></a>OAuth</h3><p>OAuth 就是一种授权机制。数据的所有者告诉系统，同意授权第三方应用进入系统，获取这些数据。系统从而产生一个短期的进入令牌（token），用来代替密码，供第三方应用使用。</p>
 <h2 id="逻辑题"><a href="#逻辑题" class="headerlink" title="逻辑题"></a>逻辑题</h2><p>1、很多根绳子，每一根都不一样且粗细不均匀，每根绳子从头烧到尾都是60分钟烧完，怎么用绳子去测量15分钟的时间</p>
 <pre><code>取出三条绳子。1、同时点燃“第一根的两头”和“第二根的一头”，第一根烧完时间过了“30分钟”；2、第一根烧完后马上点燃第二根的另一头，到第二根烧完时间又过了“15分钟”；</code></pre><p>2、1000杯水，其中一杯有毒，用老鼠试毒，老鼠24h才会死，需要多少只才能找出这杯有毒的水（可以稀释）</p>
 <pre><code>将1000杯水编号(1-1000),将其转化为2进制码，取10只小白鼠（为什么是10只，因为其1000的2进制码长度是10位），给10只小白鼠编号1-10，第一只小白鼠喝第一位2进制码为1的（1000杯中2进制码第一位为1的都要喝），第二只小白鼠喝第二位2进制为1的（1000杯中2进制码第二位的都要喝）以此类推一直到第10只小白鼠喝完，然后1小时后看那几只小白鼠会死，死掉的小白鼠用1表示，未死的用0表示整理出10位2进制码</code></pre><p>3、10个箱子，每个箱子100跟金条，每个1两，一个贪官，在其中一个箱子里面，每根都磨去了一钱，只能称一次，哪个箱子被磨去了一钱。</p>
@@ -570,11 +604,18 @@
 <p>ABCDE时，98,0,1,0,1</p>
 </blockquote>
 <p>11、小明离家有50米，每走一米吃一个苹果，起点有100个苹果，每次最多背50个苹果，请问最多可以拿回家多少苹果？</p>
-<p>1(50)     -x-&gt;    1(50-x)</p>
-<p>1(50)     &lt;-x-    1(5-2x)</p>
-<p>1(0)      -x-&gt;      1(50-x + 50-2x) &lt;=50</p>
-<p>xiaohao 50+2x,</p>
-<p>剩50-2x</p>
+<ul>
+<li>每走1m，消耗3个苹果，可以走16米，抛弃2个苹果</li>
+<li>一直走，剩16个苹果</li>
+</ul>
+<blockquote>
+<p>从A地往B运送3000L汽油，两地相距1000KM，一辆汽车最多可装载1000L汽油，每行驶1KM耗油1L，请问从B地最多可以得到多少L汽油？ </p>
+<ul>
+<li>每走1km，消耗5升油，可以走200米</li>
+<li>每走1km，消耗3升油，可以走333米，抛弃剩下的1L,</li>
+<li>一直走就行，最后剩533L油</li>
+</ul>
+</blockquote>
 <p>12、圆形湖中间一只鸭，岸边一只老虎，鸭的速度为s，老虎速度为4s，湖半径为r，鸭子到岸边即可安全逃脱，问什么情况下鸭子能顺利逃脱？</p>
 <blockquote>
 <p>我们暂且假定它就在一个半径为R/4的小圆上围绕圆心游走，只要经过一段时间追赶，鸭子一定会游到这样一个位置，它和老虎在同一条直径上，但位置在圆心的两边。</p>
@@ -627,6 +668,9 @@
 <li>上传阻塞 主播的手机在推流时会源源不断地产生音视频数据，但如果手机的上传网速太小，那么产生的音视频数据都会被堆积在主播的手机里传不出去，上传阻塞会导致全部观众的观看体验都很卡顿。</li>
 <li>下行不佳 就是观众的下载带宽跟不上或者网络很波动</li>
 </ul>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="http://www.ruanyifeng.com/blog/2018/07/json_web_token-tutorial.html" target="_blank" rel="noopener">http://www.ruanyifeng.com/blog/2018/07/json_web_token-tutorial.html</a></p>
+<p><a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html" target="_blank" rel="noopener">http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html</a></p>
+<p><a href="http://www.ruanyifeng.com/blog/2019/04/oauth_design.html" target="_blank" rel="noopener">http://www.ruanyifeng.com/blog/2019/04/oauth_design.html</a></p>
 
             </div>
             <hr />
@@ -1119,7 +1163,7 @@
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="最长公共子串">
+                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="最长公共子串">
                         
                         <span class="card-title">最长公共子串</span>
                     </div>
@@ -1174,7 +1218,7 @@ cl
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="网络">
+                        <img src="/medias/featureimages/24.jpg" class="responsive-img" alt="网络">
                         
                         <span class="card-title">网络</span>
                     </div>
@@ -1381,7 +1425,7 @@ IP报文
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">161.1k</span>
+            <span class="white-color">165.1k</span>
             
 
             <br>

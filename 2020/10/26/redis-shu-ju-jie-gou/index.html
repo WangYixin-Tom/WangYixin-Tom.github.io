@@ -284,7 +284,7 @@ Hash
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/11.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/10.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -439,14 +439,14 @@ Hash
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.1k
+                    2.4k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    7 分
+                    8 分
                 </div>
                 
                 
@@ -620,6 +620,16 @@ Hash
 <td><code>O(N)</code></td>
 </tr>
 </tbody></table>
+<h2 id="Bitmap"><a href="#Bitmap" class="headerlink" title="Bitmap"></a>Bitmap</h2><p>Bitmap 本身是用 String 类型作为底层数据结构实现的一种统计二值状态的数据类型。</p>
+<p>可用于用户连续签到，可在记录海量数据时，Bitmap 能够有效地节省内存空间。</p>
+<h2 id="HyperLogLog"><a href="#HyperLogLog" class="headerlink" title="HyperLogLog"></a>HyperLogLog</h2><p>Hyperloglog 提供了一种不太精确的基数统计方法，用来统计一个集合中不重复的元素个数，比如统计网站的UV，或者应用的日活、月活，存在一定的误差。</p>
+<h2 id="GEO"><a href="#GEO" class="headerlink" title="GEO"></a>GEO</h2><p>适用于位置信息服务（Location-Based Service，LBS）的应用。</p>
+<p><strong>实现原理</strong></p>
+<p>GEO 类型的底层数据结构就是用 Sorted Set 来实现的。Sorted Set 元素的权重分数是一个浮点数（float 类型），而一组经纬度包含的是经度和纬度两个值。因袭需要对一组经纬度进行 GeoHash 编码，基本原理就是<code>二分区间，区间编码</code>，经纬度编码需要交叉组合成一个数。</p>
+<h2 id="Streams（5-0）"><a href="#Streams（5-0）" class="headerlink" title="Streams（5.0）"></a>Streams（5.0）</h2><p>Streams 是 Redis 专门为消息队列设计的数据类型。</p>
+<p>对于插入的每一条消息，Streams 可以自动为其生成一个全局唯一的 ID。</p>
+<p>Streams支持消费组。消息队列中的消息一旦被消费组里的一个消费者读取了，就不能再被该消费组内的其他消费者读取了。</p>
+<p>Streams 会自动使用内部队列（也称为 PENDING List）留存消费组里每个消费者读取的消息，直到消费者使用 XACK 命令通知 Streams“消息已经处理完成”</p>
 
             </div>
             <hr />
@@ -1112,7 +1122,7 @@ Hash
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="redis网络IO模型">
+                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="redis网络IO模型">
                         
                         <span class="card-title">redis网络IO模型</span>
                     </div>
@@ -1163,7 +1173,7 @@ Hash
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/24.jpg" class="responsive-img" alt="redis变慢以及优化方法">
+                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="redis变慢以及优化方法">
                         
                         <span class="card-title">redis变慢以及优化方法</span>
                     </div>
@@ -1369,7 +1379,7 @@ Hash
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">161.1k</span>
+            <span class="white-color">165.1k</span>
             
 
             <br>

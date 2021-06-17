@@ -4,18 +4,14 @@
 
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="rabbitmq概念, python rabbitmq redis flask kafka">
+    <meta name="keywords" content="python rabbitmq redis flask kafka">
     <meta name="baidu-site-verification" content="code-KoKq36g1n2">
     <meta name="google-site-verification" content="yCy2azpds5XSuGZvis6OuA-XIGF5GuGpYRAaGfD6o48">
     <meta name="360-site-verification" content="b7c11a830ef90fd1464ad6206bb7b6e7">
-    <meta name="description" content="Rabbitmq是生产者与消费者模型，负责接收、存储、转发消息。
-
-Producer：生产者
-消息包含2部分：
-
-消息体（payload）：一般是一个带有业务逻辑结构的数据，比如一个JSON字符串。
-
-标签（Label）：用来描述这条消息，">
+    <meta name="description" content="数据结构跳表怎么实现堆结构是什么，是如何去调整堆结构的.虚拟内存是什么，逻辑地址是怎么映射到物理地址的
+BST Trie树 红黑树的了解
+-好的，那你说一下堆排序吧 
+ （好吧，错失一个表现机会，堆排序的原理说了一下，面试官接着深挖堆排代码">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -23,7 +19,7 @@ Producer：生产者
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>rabbitmq概念 | 好好学习</title>
+    <title>好好学习</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -273,13 +269,13 @@ Producer：生产者
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/14.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/5.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        rabbitmq概念
+                        
                     </div>
                 </div>
             </div>
@@ -389,24 +385,11 @@ Producer：生产者
                 <div class="col s7">
                     
                     <div class="article-tag">
-                        
-                        <a href="/tags/rabbitmq/" target="_blank">
-                            <span class="chip bg-color">rabbitmq</span>
-                        </a>
-                        
+                        <span class="chip bg-color">无标签</span>
                     </div>
                     
                 </div>
                 <div class="col s5 right-align">
-                    
-                    <div class="post-cate">
-                        <i class="fa fa-bookmark fa-fw icon-category"></i>
-                        
-                        <a href="/categories/rabbitmq/" class="post-category" target="_blank">
-                            rabbitmq
-                        </a>
-                        
-                    </div>
                     
                 </div>
             </div>
@@ -414,7 +397,7 @@ Producer：生产者
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-04-03
+                    2021-06-17
                 </div>
 
                 <div class="post-author info-break-policy">
@@ -428,14 +411,14 @@ Producer：生产者
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    769
+                    2.6k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    2 分
+                    9 分
                 </div>
                 
                 
@@ -446,61 +429,121 @@ Producer：生产者
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>Rabbitmq是生产者与消费者模型，负责接收、存储、转发消息。</p>
-<p><img src="moxin.png" alt></p>
-<p><strong>Producer：生产者</strong></p>
-<p><strong>消息</strong>包含2部分：</p>
+                <h1 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h1><p>跳表怎么实现<br>堆结构是什么，是如何去调整堆结构的<br>.虚拟内存是什么，逻辑地址是怎么映射到物理地址的</p>
+<p>BST Trie树 <a href="https://www.nowcoder.com/jump/super-jump/word?word=红黑树" target="_blank" rel="noopener">红黑树</a>的了解</p>
+<p>-好的，那你说一下堆排序吧 </p>
+<p> （好吧，错失一个表现机会，堆排序的原理说了一下，面试官接着深挖堆排代码） </p>
+<p> -你刚刚说调整堆的顺序是从上至下？ </p>
+<p> -是的 </p>
+<p> -你确定吗？ </p>
+<p> -我确定，建堆才是从下至上（心中一咚） </p>
+<p> -是吗？那万一从上到下调的时候，下面出现很大的数怎么办？ </p>
+<p> -这不可能，每一轮都得保证堆这个结构</p>
+<p>红黑树是怎么新增一个节点和删除一个节点</p>
+<p>我：只提到了左旋右旋</p>
+<h1 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h1><p>算法了解动态规划吗？什么情况用动态规划<br>最优子结构<br>那跟分治法有什么区别？<br>堆排序和快排的区别和应用<br>排序算法有哪些？冒泡排序与快速排序的时间复杂度是多少？是否O(n^一定要比O(nlong)差？<br>讲一讲归并排序和他的时间复杂度。<br>为什么归并排序的时间复杂度为nlogn</p>
+<p>分治和贪心的概念以及具体应用<br>排序是稳定的吗<br>堆排序建堆及排序过程<br>堆调整的时间复杂度<br>手推快排的时间复杂度<br>算法 令牌桶<br>快排：时空复杂度、稳定性、影响快排效率的因素？<br>第k大的数，写了快排的思路,复杂度推导</p>
 <ul>
-<li><p><strong>消息体（payload）：</strong>一般是一个带有业务逻辑结构的数据，比如一个JSON字符串。</p>
-</li>
-<li><p><strong>标签（Label）：</strong>用来描述这条消息，比如一个交换器的名称和一个路由键。</p>
-</li>
+<li>假设我有多个连接但是那些数据一起涌进来怎么办？</li>
+<li>多路复用让你设计你会怎样设计？</li>
 </ul>
-<p><strong>Consumer：消费者</strong></p>
-<p>当消费者消费一条消息时，只是消费消息的消息体（payload）。在消息路由的过程中，消息的标签会丢弃，存入到队列中的消息只有消息体，消费者也只会消费到消息体。</p>
-<p><strong>Broker：服务节点</strong></p>
-<p><strong>Virtual host：</strong>虚拟主机，用于逻辑隔离，最上层消息的路由。一个Virtual host可以若干个Exchange和Queue，同一个Virtual host不能有同名的Exchange或Queue</p>
-<p><strong>Queue：队列</strong>，RabbitMQ的内部对象，用于存储信息。多个消费可以订阅同一个队列，但消息会被平均分摊，而不是每个消费者都会受到所有的消息。</p>
-<p><strong>Exchange：交换器</strong>，生产者将消息发送到交换器，交换器将消息路由到一个或者多个队列中</p>
-<p><strong>RoutingKey：路由键</strong>，生产者将消息发给交换器的时候会指定一个路由键，用来指定路由规则</p>
-<p><strong>Binding：绑定</strong>，RabbitMQ通过绑定将交换器与队列关联起来，绑定时会指定BindingKey</p>
-<p><strong>Connection：连接</strong>，生产者或消费者和Broker之间的一条TCP连接</p>
-<p><strong>Channel：信道</strong>，建立在Connection上的虚拟连接，每条AMQP指令都通过信道完成</p>
-<p><strong>交换器类型</strong></p>
-<p>fanout：把所有发送到该交换器的消息路由到所有与该交换器绑定的队列中</p>
-<p>direct：把消息路由到BindingKey和RoutingKey完全匹配的队列中</p>
-<p>topic：把消息路由到BindingKey和RoutingKey相匹配的队列中</p>
-<p>headers：根据发送消息内容中的headers进行匹配，性能比较差<br><strong>运转流程</strong><br><strong>生产者发送消息</strong></p>
+<h1 id="操作系统"><a href="#操作系统" class="headerlink" title="操作系统"></a>操作系统</h1><p>段页式管理CPU每次从内存地址读取一次数据要访问几次</p>
+<p>讲一下页，页表怎么实现</p>
+<p>系统调用也算中断吗，也要保存东西吗？<br>操作系统？调度算法，抢占式非抢占式时间片轮转的区别<br>操作系统里避免死锁的办法</p>
+<p>虚拟内存和共享内存有什么区别</p>
+<p>分页分段区别程序计数器的作用<br>进程和线程的调度区别 </p>
+<p>阻塞态能直接到运行态吗<br>就绪态到运行态的条件（上一个进程时间片用完，本进程被系统调度）</p>
+<p>线程的上下文是什么、进程的上下文是什么</p>
+<p>操作系统：两进程同时操作一个文件，父子进程操作同一文件，有什么区别 </p>
+<p>共享内存的底层实现原理？数据会拷贝几份</p>
+<p>有名管道和匿名管道的区别</p>
+<p>inode的内容</p>
+<p>软连接 硬链接</p>
+<p>mv的话 inode会+1么</p>
+<p>共享内存通信和 进程之间内存隔离是不是冲突？</p>
+<p>内存管理机制，连续和非连续的优缺点是什么，各自有哪些方法，连续分配为什么会有碎片<br>20）段页式里面，段和页各自的作用是什么，段和页的大小分别是多少</p>
+<p>如果是单核 CPU，多进程/线程还有优化吗？为什么？</p>
+<p>段页式查询一次数据总共需要几次访存 如何减少访存次数</p>
+<p>linux中统计软中断调用的命令是啥？</p>
+<p>mmap和direct_IO的区别？</p>
+<p>段页式管理每一次数据访问要访问几次内存，如果有缓存呢？用什么缓存？有哪些缓存？（给我问懵了）</p>
+<p>线程有哪些状态？wait和block的区别？Wait超时后会怎样？ </p>
+<p>怎么创建一个进程</p>
+<p>epoll为什么高效? 红黑树通过回调实现 时间就绪到添加到就绪列表的时间复杂度是O(1)))</p>
+<p>fork、exec</p>
+<p>进程的内存空间分为哪几个部分</p>
+<p>解释下内存对齐，为什么要内存对齐</p>
+<p>写时复制COW</p>
+<p> 其实wait的线程被唤醒后其实会进入block的状态去抢锁，而国内大部分博客都画成唤醒后进入就绪状态。我当时说这个观点，面试官也疑惑了一下，然后解释了这个原因。因为wait是在同步代码块中运行的，所以被唤醒后会要去抢锁，抢到锁才会进入就绪状态，这不乏是个小亮点。可以看下老外的这张线程状态转换图 </p>
+<p>fork之后的父子进程同时读取一个文件，有什么结果？</p>
+<p> <a href="https://www.zhihu.com/question/27654579" target="_blank" rel="noopener">https://www.zhihu.com/question/27654579</a></p>
 <ul>
-<li><p>生产者连接到 RabbitMQ Broker，建立一个连接（Connection），开启一个信道（Channel）</p>
-</li>
-<li><p>生产者声明一个交换器，并设置相关属性（交换机类型、持久化）</p>
-</li>
-<li><p>生产者声明一个队列，并设置相关属性（排他、持久化、自动删除）</p>
-</li>
-<li><p>生产者通过路由键将交换器和队列绑定起来</p>
-</li>
-<li><p>生产者发消息至RabbitMQ Broker（包含路由键、交换器信息）</p>
-</li>
-<li><p>相应的交换器根据接收到的路由键查找相匹配的队列</p>
-</li>
-<li><p>若找到队列，则把消息存入；若没有，则丢弃或者回退给生产者</p>
-</li>
-<li><p>关闭信道</p>
-</li>
-<li><p>关闭连接</p>
-</li>
+<li>ctrl + c，会发送<code>SIGINT</code>的信号，等同于<code>kill -2</code>(interrupt)，程序那边接收到这个信号后做处理</li>
+<li>ctrl + z，会发送<code>SIGTSTP</code>的信号</li>
 </ul>
-<p><strong>消费者接收消息</strong></p>
-<ul>
-<li>消费者连接到 RabbitMQ Broker ，建立一个连接（Connection），开启一个信道（Channel）</li>
-<li>消费者向 RabbitMQ Broker 请求消费对应队列中的消息</li>
-<li>等待 RabbitMQ Broker 回应并投递相应队列中的消息，消费者接收消息</li>
-<li>消费者确认（ack）接收到的消息</li>
-<li>RabbitMQ 从队列中删除相应已经被确认的消息</li>
-<li>关闭信道</li>
-<li>关闭连接</li>
-</ul>
+<h1 id="网络"><a href="#网络" class="headerlink" title="网络"></a>网络</h1><p>如果token被其他人拦截了，拦截者是否可以直接通过token来访问服务器呢？</p>
+<p>讲一下JWT（Json Web Token）→怎么提取JWT的值？ → SSO? OAuth2? (不会)</p>
+<p>token的结构、登录的逻辑（简述）、token有什么问题、其他保持状态的方式</p>
+<p>token用的是jwt对吗 ？为什么安全性得到保证</p>
+<p>OAuth2 和 JWT 的区别和作用？</p>
+<p>登录流程，验证码怎么生成的，存储在哪里</p>
+<p> 设计一个登录系统，包括账户密码登录，验证码登录，第三方授权等等</p>
+<p>CA证书是啥，干啥用的 </p>
+<p>什么是跨域问题?如何解决?</p>
+<h1 id="kafka"><a href="#kafka" class="headerlink" title="kafka"></a>kafka</h1><p>一台机器8G  redis配置6G  采取rdb模式 读写请求比例为2比8  问会有什么问题？</p>
+<p>说一下kafka分区设置，怎么持久化的，怎么确定向哪一个分区写消息</p>
+<h1 id="场景题"><a href="#场景题" class="headerlink" title="场景题"></a>场景题</h1><p>场景：我在聊天框发送消息，你跟我聊天这是咋做的</p>
+<p>设计一个聊天系统，数据库咋设计，从头到尾的框架，消息怎么通过服务器转发的</p>
+<p>我说使用TCP做，问为啥就能可靠，（balabala一堆）</p>
+<p>一定可靠吗（无法保证应用层可靠），不可靠有哪些情况（网络崩溃 程序崩溃等 我了解的不多</p>
+<ol>
+<li>ip地址映射城市，设计一个数据结构</li>
+<li>超买超卖问题</li>
+</ol>
+<p>用过抖音，微信吧，当你的手机打开抖音和微信时，你觉得后台在做一些什么事情？</p>
+<p> 怎么避免哈希冲突</p>
+<p><strong>两个球，100层楼，每个球在一定高度扔下去会碎，怎么用最少的次数判断几层楼会把球摔碎？</strong> </p>
+<p>  一开始答的100/x+x-1的最小值，面试官提示还可以优化，纸笔算了一会得出了14次的答案（1+2+……+14&gt;100），面试官说这是动规的思想，让给出状态转移方程，这里卡了大概5分钟面试官给了个提示才做出来</p>
+<p>路由器和交换机具体都实现了什么功能？路由选择是如何实现的？</p>
+<p>群聊怎么实现的？消息怎么存储的？消息怎么推送的？如果这个群特别大，怎么去优化？</p>
+<p>如果让你设计一个直播系统，你会怎么设计？弹幕怎么存储？</p>
+<p><strong>怎么实现一个线程池</strong></p>
+<h1 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h1><p>一个服务器，每秒QPS最多有十万，查询一个小时内查询最多的十个IP地址，要怎么设计。</p>
+<p><strong>多线程：两个线程交替打印1-10</strong></p>
+<p>三个线程同时启动，优先级相同，分别打印A、B、C，问如何保证打印顺序为ABC。没答好，三个信号量，初始时刻 Sa=1,Sb=0,Sc=0</p>
+<p>线程池是什么，讲讲里面具体的参数，线程池分什么种类，如何自己实现一个线程池</p>
+<p>如果当前面试界面崩溃了，如何排查问题</p>
+<p> 设计一个限流器</p>
+<p>又是一个限流题，问设计了一个5分钟限流1000次的接口，怎么统计前两分钟</p>
+<p>1，每个结点是红的或黑的</p>
+<p>2，根结点是黑的</p>
+<p>3，每个叶子结点是黑的</p>
+<p>4，如果一个结点是红的，则它的两个儿子都是黑的</p>
+<p>5，对每个结点，从该结点到其子孙结点所有路径上的包含相同数目的黑结点</p>
+<p>docker镜像的结构是什么样子的？</p>
+<p>3.地址映射有哪些算法<br>线程同步有哪些方式，临界区算法了解哪些，信号量模型了解哪些</p>
+<p>Unicode UTF-8 ASCII编码方式有什么区别<br>一个汉字占ASCII多少字节  UTF-8中呢 </p>
+<p>epoll使用场景?select具体性能消耗在哪? </p>
+<p>epoll需要拷贝文件描述符吗？     </p>
+<p>怎么保证又快又安全呢？把TCP和UDP的优点结合。（不懂的人快去看QUIC）</p>
+<p>文件描述符是什么<br>线程池的核心线程数大小如何确定（计算密集型为N+1，IO密集型为2N）<br>红黑树说一下，跳表说一下，那你知道什么地方用了红黑树和跳表吗<br>用cookie和session实现用户登录的过程是咋样的，大概说下讲一下二叉树，排序二叉树，平衡二叉树，红黑树，B类树（我讲的很详细，大概讲了15分钟）</p>
+<p>Docker的四种网络模式和实现<br>Kubernetes 的优雅启动和优雅停止<br>对Kubernetes和Docker的理解</p>
+<p>了解Docker的资源隔离原理吗（只知道是用了Linux的某个特性） </p>
+<p>docker的隔离性 ？namespace技术。docker为啥要分层？</p>
+<p>kuberntes在<a href="https://www.nowcoder.com/jump/super-jump/word?word=项目" target="_blank" rel="noopener">项目</a>中的作用有哪方面，kuberntes中的可靠性如何保证 master挂了怎么办 etcd的安全怎么保证</p>
+<p>docker和虚拟机的区别</p>
+<p>1，进程的调度如何实现，如何使用红黑树的，<br>2，关于内存管理怎么跟红黑树有关系<br>3.网卡数据，<br>在以上这些场景，如何使用红黑树的？</p>
+<p>给你10000个IP，你如何快速查找这个IP是否存在，使用什么数据结构?</p>
+<p> 你熟悉什么排序，各种排序的时间复杂度 </p>
+<ol start="2">
+<li>堆排序建堆过程，建堆时间复杂度<br>陷入内核态的时候要保存一些啥</li>
+</ol>
+<p>快表是存储在哪里的 </p>
+<p>刷过堆排序吗？（我：没有）面试官：那更好<br>堆排序的heap_insert函数</p>
+<p>十万（一亿）广东考生分数，找出其中中位数。<br>说一下AMQP协议是怎么定义一个MQ的</p>
+<h1 id="python"><a href="#python" class="headerlink" title="python"></a>python</h1><p>Python yield关键字讲一下</p>
+<p>协程的实现原理</p>
+<p>实现一个能排序的字典如何实现</p>
 
             </div>
             <hr />
@@ -659,9 +702,9 @@ Producer：生产者
             <br/>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
                   property="dct:title" rel="dct:type">
-                    《rabbitmq概念》
+                    《》
                 </span> 由
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2021/04/03/rabbitmq-gai-nian/" property="cc:attributionName"
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2021/06/17/question-2/" property="cc:attributionName"
                rel="cc:attributionURL">
                 wangyixin-tom
             </a> 采用
@@ -702,7 +745,7 @@ Producer：生产者
         repo: 'wangyixin-tom.github.io',
         owner: 'WangYixin-Tom',
         admin: "WangYixin-Tom",
-        id: '2021/04/03/rabbitmq-gai-nian/',
+        id: '2021/06/17/question-2/',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -989,31 +1032,35 @@ Producer：生产者
             <div class="article-badge left-badge text-color">
                 <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/04/03/rabbitmq-ke-hu-duan-kai-fa/">
+                <a href="/2021/06/30/cao-zuo-xi-tong/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="rabbitmq客户端开发">
+                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="操作系统">
                         
-                        <span class="card-title">rabbitmq客户端开发</span>
+                        <span class="card-title">操作系统</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            rabbitmq客户端开发的说明。
+                            操作系统
+操作系统（Operating System，简称 OS）是管理计算机硬件与软件资源的程序，是计算机系统的内核与基石；
+操作系统本质上是运行在计算机上的软件程序 ；
+操作系统为用户提供一个与系统交互的操作界面 ；
+操作系统分内核与外
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2021-04-03
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2021-06-30
                         </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/rabbitmq/" class="post-category" target="_blank">
-                                    rabbitmq
+                            <a href="/categories/interview/" class="post-category" target="_blank">
+                                    interview
                                 </a>
                             
                             
@@ -1023,8 +1070,8 @@ Producer：生产者
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/rabbitmq/" target="_blank">
-                        <span class="chip bg-color">rabbitmq</span>
+                    <a href="/tags/interview/" target="_blank">
+                        <span class="chip bg-color">interview</span>
                     </a>
                     
                 </div>
@@ -1038,31 +1085,35 @@ Producer：生产者
                 下一篇&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/04/02/mysql-si-wei-dao-tu/">
+                <a href="/2021/06/09/ji-chu-shu-ju-jie-gou/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="mysql思维导图">
+                        <img src="/medias/featureimages/27.jpg" class="responsive-img" alt="基础数据结构">
                         
-                        <span class="card-title">mysql思维导图</span>
+                        <span class="card-title">基础数据结构</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            博客中mysql相关思维导图
+                            树二查找查找树二叉查找树的特点就是左子树的节点值比父亲节点小，而右子树的节点值比父亲节点大
+缺点：二叉查找树近似退化为一条链表，这样的二叉查找树的查找时间复杂度顿时变成了O(n)
+平衡二叉树解决二叉查找树退化成链表。
+平衡树具有如下特点：
+
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-04-02
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-06-09
                             </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/mysql/" class="post-category" target="_blank">
-                                    mysql
+                            <a href="/categories/interview/" class="post-category" target="_blank">
+                                    interview
                                 </a>
                             
                             
@@ -1072,8 +1123,8 @@ Producer：生产者
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/mysql/" target="_blank">
-                        <span class="chip bg-color">mysql</span>
+                    <a href="/tags/interview/" target="_blank">
+                        <span class="chip bg-color">interview</span>
                     </a>
                     
                 </div>
@@ -1219,25 +1270,6 @@ Producer：生产者
     
 
 </main>
-
-
-<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-<script>
-    MathJax.Hub.Config({
-        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
-    });
-</script>
-
-<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
-<!-- 代码语言 -->
-<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
-<!-- 代码块复制 -->
-<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
-<script type="text/javascript" src="/libs/codeBlock/clipboard.min.js"></script>
-<!-- 代码块收缩 -->
-<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script> 
-<!-- 代码块折行 -->
-<style type="text/css">code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }</style>
 
 
     <footer class="page-footer bg-color">

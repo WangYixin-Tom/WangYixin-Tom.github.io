@@ -1,20 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://wangyixin-tom.github.io/2021/06/30/cao-zuo-xi-tong/</loc>
-    <lastmod>2021-06-16</lastmod>
+    <loc>https://wangyixin-tom.github.io/2021/05/24/chang-jian-chang-jing-ti/</loc>
+    <lastmod>2021-06-17</lastmod>
   </url>  <url>
-    <loc>https://wangyixin-tom.github.io/2021/06/16/question-2/</loc>
-    <lastmod>2021-06-16</lastmod>
+    <loc>https://wangyixin-tom.github.io/2021/06/17/question-2/</loc>
+    <lastmod>2021-06-17</lastmod>
   </url>  <url>
     <loc>https://wangyixin-tom.github.io/2021/05/20/wang-luo/</loc>
-    <lastmod>2021-06-16</lastmod>
+    <lastmod>2021-06-17</lastmod>
   </url>  <url>
-    <loc>https://wangyixin-tom.github.io/2021/05/24/chang-jian-chang-jing-ti/</loc>
-    <lastmod>2021-06-15</lastmod>
+    <loc>https://wangyixin-tom.github.io/2021/04/12/redis-mian-shi/</loc>
+    <lastmod>2021-06-17</lastmod>
+  </url>  <url>
+    <loc>https://wangyixin-tom.github.io/2020/10/26/redis-shu-ju-jie-gou/</loc>
+    <lastmod>2021-06-17</lastmod>
   </url>  <url>
     <loc>https://wangyixin-tom.github.io/2021/04/10/mysql-mian-shi/</loc>
-    <lastmod>2021-06-14</lastmod>
+    <lastmod>2021-06-17</lastmod>
+  </url>  <url>
+    <loc>https://wangyixin-tom.github.io/2021/06/30/cao-zuo-xi-tong/</loc>
+    <lastmod>2021-06-16</lastmod>
   </url>  <url>
     <loc>https://wangyixin-tom.github.io/2021/06/05/215-shu-zu-zhong-de-di-k-ge-zui-da-yuan-su/</loc>
     <lastmod>2021-06-11</lastmod>
@@ -27,9 +33,6 @@
   </url>  <url>
     <loc>https://wangyixin-tom.github.io/2021/04/08/kafka-mian-shi/</loc>
     <lastmod>2021-06-09</lastmod>
-  </url>  <url>
-    <loc>https://wangyixin-tom.github.io/2021/04/12/redis-mian-shi/</loc>
-    <lastmod>2021-06-08</lastmod>
   </url>  <url>
     <loc>https://wangyixin-tom.github.io/2021/06/07/duo-jie-duan-gou-jian/</loc>
     <lastmod>2021-06-07</lastmod>
@@ -59,9 +62,6 @@
     <lastmod>2021-06-01</lastmod>
   </url>  <url>
     <loc>https://wangyixin-tom.github.io/2021/05/31/zui-chang-gong-gong-zi-xu-lie/</loc>
-    <lastmod>2021-05-31</lastmod>
-  </url>  <url>
-    <loc>https://wangyixin-tom.github.io/2020/10/26/redis-shu-ju-jie-gou/</loc>
     <lastmod>2021-05-31</lastmod>
   </url>  <url>
     <loc>https://wangyixin-tom.github.io/2020/10/25/redis-shao-bing-ji-zhi/</loc>
