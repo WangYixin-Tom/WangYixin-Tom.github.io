@@ -270,7 +270,7 @@ Python2 的默认编码是 ascii，Python 3 默认编码">
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/22.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/23.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -425,14 +425,14 @@ Python2 的默认编码是 ascii，Python 3 默认编码">
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    13.4k
+                    13.6k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    50 分
+                    51 分
                 </div>
                 
                 
@@ -1022,6 +1022,10 @@ d<span class="token punctuation">.</span>foo1<span class="token punctuation">(</
 </ul>
 <p><strong>应用场景</strong></p>
 <p>ORM：所有的类都只能动态定义，因为只有使用者才能根据表的结构定义出对应的类来。</p>
+<blockquote>
+<p>元类中的<code>__call__</code>会在你每次实例化的时候调用, 其实和<code>Foo.__new__</code>是一样的, 如果你的Foo定义了<code>__new__</code>, 元类中的<code>__call__</code>便不会执行</p>
+<p>元类中的<code>__new__</code>会在加载类的时候执行一次，在创建类的时候会调用类的<code>__new__</code>或者元类的<code>__call__</code></p>
+</blockquote>
 <h2 id="字典"><a href="#字典" class="headerlink" title="字典"></a>字典</h2><p>字典的查询、添加、删除的平均时间复杂度都是<code>O(1)</code>。因为字典是通过哈希表来实现的.</p>
 <ul>
 <li><p>计算key的hash值<code>hash(key)</code>，再和mask做与操作【mask=字典最小长度（DictMinSize） - 1】，运算后会得到一个数字【index】，这个index就是要插入的enteies哈希表中的下标位置</p>
@@ -1134,7 +1138,7 @@ d<span class="token punctuation">.</span>foo1<span class="token punctuation">(</
 <p><strong>共享变量</strong></p>
 <p>使用 Process 定义的多进程之间（父子或者兄弟）共享变量可以直接使用 multiprocessing 下的 Value，Array，Queue 等，如果要共享 list，dict，可以使用强大的 Manager 模块。</p>
 <h3 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h3><p>线程是cpu调度执行的最小单位，依赖进程存在，一个进程至少有一个线程。在python中，线程适合IO密集型任务。</p>
-<p>同一个进程下的线程共享程序的内存空间<strong>（如代码段，全局变量，堆栈等）</strong></p>
+<p>同一个进程下的线程共享程序的内存空间<strong>（如代码段，全局变量，堆等）</strong></p>
 <h4 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h4><p>继承Thread，重写run方法，通过start方法开线程</p>
 <p>将要执行的方法作为参数传给Thread的构造方法</p>
 <h4 id="状态"><a href="#状态" class="headerlink" title="状态"></a>状态</h4><p>线程有五种状态:创建、就绪、运行、阻塞、死亡。 </p>
@@ -1196,16 +1200,16 @@ d<span class="token punctuation">.</span>foo1<span class="token punctuation">(</
 <p>数据库查询， asyncpg, databases</p>
 <p><strong>协程优于线程</strong></p>
 <ul>
-<li>python 线程调度方式是，每执行 100 个字节码或者遇到阻塞就停止当前线程，然后进行一个系统调用，让 os 内核选出下一个线程。但是协程 只会在 阻塞的时候，切换到下一个协程。100个字节码，说多不多，说少不少，你调用两个库函数说不定就没了，因此线程的切换存在很多是无效的切换，当线程数量越大，这种因为调度策略的先天不足带来的性能损耗就越大。</li>
+<li>python 线程调度方式是，每执行 100 个字节码或者遇到阻塞就停止当前线程，然后进行一个系统调用，让 os 内核选出下一个线程。但是协程只会在阻塞的时候，切换到下一个协程。因此线程的切换存在很多是无效的切换，当线程数量越大，这种因为调度策略的先天不足带来的性能损耗就越大。</li>
 <li>线程需要进行系统调用，协程不需要。系统调用需要进入内核态，无效的调度会让这部分开销显得更大</li>
 <li>协程可以自主调度，而线程只能决定合适退出，但是下一个线程是谁则依赖于操作系统。</li>
 </ul>
 <h3 id="僵尸进程和孤儿进程"><a href="#僵尸进程和孤儿进程" class="headerlink" title="僵尸进程和孤儿进程"></a>僵尸进程和孤儿进程</h3><p>孤儿进程： <strong>父进程退出，子进程还在运行的这些子进程都是孤儿进程，</strong>孤儿进程将被init 进程（进程号为1）所收养，并由init 进程对他们完成状态收集工作。</p>
 <p>僵尸进程： 进程使用fork 创建子进程<strong>，如果子进程退出，而父进程并没有调用wait 获取子进程的状态信息</strong>，那么子进程的进程描述符仍然保存在系统中，这些进程是僵尸进程。</p>
 <p>避免僵尸进程的方法：</p>
-<p>1.用<code>wait()</code>函数使父进程阻塞</p>
-<p>2.使用信号量，在signal handler 中调用waitpid，这样父进程不用阻塞</p>
-<p><strong>3.fork 两次用孙子进程去完成子进程的任务（？？？）</strong></p>
+<p>1.用<code>wait()</code>函数使父进程阻塞，这个<code>wait()</code>操作就负责回收子进程，这样也不会产生僵尸进程。但这样做有个致命的问题，wait是阻塞的，如果进行wait，主进程就什么都做不了。</p>
+<p>2.使用信号量，子进程退出时向父进程发送SIGCHILD信号，在signal handler 中调用waitpid，这样父进程不用阻塞</p>
+<p>3.fork 两次用孙子进程去完成子进程的任务，孙子进程刚产生，它的父亲就退出了，成了孤儿进程，由init收养</p>
 <h2 id="Global-Interpreter-Lock-全局解释器锁"><a href="#Global-Interpreter-Lock-全局解释器锁" class="headerlink" title="Global Interpreter Lock(全局解释器锁)"></a>Global Interpreter Lock(全局解释器锁)</h2><p>Python 默认的解释器是 CPython，<strong>GIL 是存在于 CPython 解释器中的</strong>。</p>
 <p>执行 Python 字节码时，为了保护访问 Python 对象而阻止多个线程执行的一把互斥锁。主要是因为 CPython 解释器的内存管理不是线程安全的。</p>
 <p>常见的 Python 解释器：IPython（基于Cython）、IPython、Jython（可以把 Python 代码编译成 Java 字节码，依赖 Java 平台，不存在 GIL）、IronPython（运行在微软的 .Net 平台下的 Python 解释器，可以把 Python 代码编译成 .Net 字节码，不存在 GIL）</p>
@@ -1314,8 +1318,7 @@ foo2 <span class="token operator">=</span> Foo<span class="token punctuation">(<
 <span class="token comment" spellcheck="true"># Python2</span>
 <span class="token keyword">class</span> <span class="token class-name">Foo</span><span class="token punctuation">(</span>object<span class="token punctuation">)</span><span class="token punctuation">:</span>
     __metaclass__ <span class="token operator">=</span> Singleton<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="线程安全装饰器"><a href="#线程安全装饰器" class="headerlink" title="线程安全装饰器"></a><strong>线程安全装饰器</strong></h3><pre class="line-numbers language-python"><code class="language-python"><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h3 id="线程安全–元类"><a href="#线程安全–元类" class="headerlink" title="线程安全–元类"></a><strong>线程安全–元类</strong></h3><pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">import</span> threading
+<h3 id="线程安全–元类"><a href="#线程安全–元类" class="headerlink" title="线程安全–元类"></a>线程安全–元类</h3><pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">import</span> threading
 
 <span class="token keyword">class</span> <span class="token class-name">MetaSingleton</span><span class="token punctuation">(</span>type<span class="token punctuation">)</span><span class="token punctuation">:</span>
     _instance_lock <span class="token operator">=</span> threading<span class="token punctuation">.</span>Lock<span class="token punctuation">(</span><span class="token punctuation">)</span>
@@ -1333,7 +1336,7 @@ foo2 <span class="token operator">=</span> Foo<span class="token punctuation">(<
         self<span class="token punctuation">.</span>name <span class="token operator">=</span> name<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h2 id="select-poll和epoll"><a href="#select-poll和epoll" class="headerlink" title="select,poll和epoll"></a>select,poll和epoll</h2><p> select，poll，epoll都是IO多路复用的机制。I/O多路复用就通过一种机制，可以监视多个描述符，一旦某个描述符就绪（一般是读就绪或者写就绪），能够通知程序进行相应的读写操作。但select，poll，epoll本质上都是同步I/O，因为他们都需要在读写事件就绪后自己负责进行读写，也就是说这个读写过程是阻塞的，而异步I/O则无需自己负责进行读写，异步I/O的实现会负责把数据从内核拷贝到用户空间。 </p>
 <h2 id="docker和virtualenv技术具体有什么不同？"><a href="#docker和virtualenv技术具体有什么不同？" class="headerlink" title="docker和virtualenv技术具体有什么不同？"></a>docker和virtualenv技术具体有什么不同？</h2><ul>
-<li>virtualenv是python的版本和库管理器，virtualenv虚拟python运行环境，保证系统python环境的整</li>
+<li>virtualenv是python的版本和库管理器，virtualenv虚拟python运行环境</li>
 <li>docker是虚拟化整个系统环境工具，docker不仅可以跑python，还可以跑其他的需要进程环境隔离的程序。</li>
 </ul>
 <p>环境的特点有二：</p>
@@ -1838,7 +1841,7 @@ foo2 <span class="token operator">=</span> Foo<span class="token punctuation">(<
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="flask">
+                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="flask">
                         
                         <span class="card-title">flask</span>
                     </div>
@@ -1891,7 +1894,7 @@ run 方法调用werkzeug 的 run_simple
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/27.jpg" class="responsive-img" alt="redis面试">
+                        <img src="/medias/featureimages/28.jpg" class="responsive-img" alt="redis面试">
                         
                         <span class="card-title">redis面试</span>
                     </div>
@@ -2096,7 +2099,7 @@ run 方法调用werkzeug 的 run_simple
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">167k</span>
+            <span class="white-color">167.3k</span>
             
 
             <br>
