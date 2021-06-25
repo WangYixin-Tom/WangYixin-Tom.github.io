@@ -274,7 +274,7 @@ Redis为旁路缓存，因为读取缓存、读取数据库和更新缓存的操
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/22.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/24.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -570,7 +570,7 @@ Redis为旁路缓存，因为读取缓存、读取数据库和更新缓存的操
 <li>原因1：避免给大量的数据设置相同的过期时间，数据的过期时间增加一个较小的随机数</li>
 <li>原因1：服务降级：非核心数据（例如电商商品属性）时，暂时停止从缓存中查询这些数据，而是直接返回预定义信息、空值或是错误信息；核心数据（例如电商商品库存）时，仍然允许查询缓存，如果缓存缺失，也可以继续通过数据库读取</li>
 <li>原因2：业务系统中实现服务熔断或请求限流机制。暂停业务应用对缓存系统的接口访问。业务系统的请求入口前端控制每秒进入系统的请求数，避免过多的请求被发送到数据库。</li>
-<li>事前预防。建 里Redis 缓存高可靠主从集群。</li>
+<li>事前预防。建立Redis 缓存高可靠主从集群。</li>
 </ul>
 <h3 id="缓存击穿"><a href="#缓存击穿" class="headerlink" title="缓存击穿"></a>缓存击穿</h3><p>某个访问非常频繁的热点数据，无法在缓存中进行处理，访问该数据的大量请求，一下子都发送到了后端数据库，导致了数据库压力激增，会影响数据库处理其他请求。</p>
 <p><strong>解决办法</strong></p>
@@ -1082,7 +1082,7 @@ Redis为旁路缓存，因为读取缓存、读取数据库和更新缓存的操
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="redis分布式锁">
+                        <img src="/medias/featureimages/28.jpg" class="responsive-img" alt="redis分布式锁">
                         
                         <span class="card-title">redis分布式锁</span>
                     </div>
@@ -1137,7 +1137,7 @@ Redis为旁路缓存，因为读取缓存、读取数据库和更新缓存的操
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="rabbitmq消息可靠性">
+                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="rabbitmq消息可靠性">
                         
                         <span class="card-title">rabbitmq消息可靠性</span>
                     </div>
@@ -1345,7 +1345,7 @@ Redis为旁路缓存，因为读取缓存、读取数据库和更新缓存的操
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">167.3k</span>
+            <span class="white-color">172.7k</span>
             
 
             <br>

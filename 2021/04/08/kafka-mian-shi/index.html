@@ -270,7 +270,7 @@ Kafka 主要有两大应用场景：
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/5.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/3.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -457,9 +457,9 @@ Kafka 主要有两大应用场景：
 <ul>
 <li>Erlang 语言编写的，轻量级、迅捷。</li>
 <li>支持非常灵活的路由配置，和其他消息队列不同的是，它在生产者（Producer）和队列（Queue）之间增加了一个 Exchange 模块。</li>
-<li>队列模型：生产者将消息发送到Exchange，由交换器将消息通过匹配Exchange Type、Binding Key、Routing Key后路由到一个或者多个队列中。用于存储消息，消费者直接绑定Queue进行消费消息。</li>
+<li>队列模型：生产者将消息发送到交换器，由交换器将消息通过匹配Exchange Type、Binding Key、Routing Key后路由到一个或者多个队列中。队列用于存储消息，消费者直接绑定队列进行消费消息。</li>
 </ul>
-<p>问题：</p>
+<p><strong>问题：</strong></p>
 <ul>
 <li>RabbitMQ 对消息堆积的支持并不好，当大量消息积压的时候，会导致 RabbitMQ 的性能急剧下降。</li>
 <li>性能一般，大概每秒钟可以处理几万到十几万条消息</li>
@@ -471,7 +471,7 @@ Kafka 主要有两大应用场景：
 <li>发布订阅模型：生产者直接发消息Topic，每个Topic可以包含多个Partition，多个Partition会平均分配给同一个Consumer Group里的不同Consumer进行消费。不在同一个Group 的Consumer能重复消费同一条消息（订阅），相同Group的Consumer存在消费竞争（负载均衡）</li>
 <li>Kafka具有消息存储的功能，消息被消费后不会被立即删除，因为需要被不同的Consumer Group多次消费同个消息，因此会在Topic维护一个Consumer Offset，每消费成功Offset自增1</li>
 </ul>
-<p>问题：</p>
+<p><strong>问题：</strong></p>
 <p>同步收发消息的响应时延比较高，因为当客户端发送一条消息的时候，Kafka 并不会立即发送出去，而是要等一会儿攒一批再发送，每秒钟消息数量没有那么多的时候，Kafka 的时延反而会比较高。所以，Kafka 不太适合在线业务场景。</p>
 <table>
 <thead>
@@ -492,9 +492,9 @@ Kafka 主要有两大应用场景：
 <td align="center"><strong>分区有序性</strong></td>
 </tr>
 <tr>
-<td><strong>消息可靠性</strong></td>
-<td align="center"><strong>多策略组合</strong></td>
-<td align="center"><strong>消息持久化</strong></td>
+<td>消息可靠性</td>
+<td align="center">多策略组合</td>
+<td align="center">消息持久化</td>
 </tr>
 <tr>
 <td><strong>消费者模式</strong></td>
@@ -502,7 +502,7 @@ Kafka 主要有两大应用场景：
 <td align="center">拉</td>
 </tr>
 <tr>
-<td>消息堆积</td>
+<td><strong>消息堆积</strong></td>
 <td align="center">无法支持较大的消息堆积</td>
 <td align="center">支持消息堆积，并批量持久化到磁盘</td>
 </tr>
@@ -517,7 +517,7 @@ Kafka 主要有两大应用场景：
 <td align="center"><strong>中</strong></td>
 </tr>
 <tr>
-<td><strong>运维便捷度</strong></td>
+<td>运维便捷度</td>
 <td align="center">高</td>
 <td align="center">中</td>
 </tr>
@@ -527,7 +527,7 @@ Kafka 主要有两大应用场景：
 <td align="center"><strong>zookeeper</strong></td>
 </tr>
 <tr>
-<td><strong>Web监控</strong></td>
+<td>Web监控</td>
 <td align="center">自带</td>
 <td align="center">第三方</td>
 </tr>
@@ -540,21 +540,6 @@ Kafka 主要有两大应用场景：
 <td><strong>死信</strong></td>
 <td align="center">支持</td>
 <td align="center">不支持</td>
-</tr>
-<tr>
-<td><strong>客户端支持</strong></td>
-<td align="center">支持多种语言</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td><strong>社区生态</strong></td>
-<td align="center">好</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td><strong>安全机制</strong></td>
-<td align="center">（TLS/SSL、SASL）身份认证和（读写）权限控制</td>
-<td align="center"></td>
 </tr>
 <tr>
 <td><strong>消息回溯</strong></td>
@@ -598,7 +583,7 @@ Kafka 主要有两大应用场景：
 <li>当某个消费者挂掉的时候，其他消费者会自动地承担起它负责消费的分区。 </li>
 </ul>
 <h3 id="如何保证消息的消费顺序？"><a href="#如何保证消息的消费顺序？" class="headerlink" title="如何保证消息的消费顺序？"></a>如何保证消息的消费顺序？</h3><p>分区是真正保存消息的地方。Topic 可以指定多个 Partition。</p>
-<p>Kafka 只能为我们保证分区中的消息有序，而不能保证 主题中的消息有序。</p>
+<p>Kafka 只能为我们保证分区中的消息有序，而不能保证主题中的消息有序。</p>
 <ol>
 <li>1 个 Topic 只对应一个 Partition。</li>
 <li>（推荐）发送消息的时候指定 key/Partition。</li>
@@ -630,7 +615,7 @@ Kafka 主要有两大应用场景：
 <li>用于删除消费者组过期位移、删除消费者组的消息。tombstone 消息，即墓碑消息</li>
 </ul>
 <h2 id="多副本机制？好处？"><a href="#多副本机制？好处？" class="headerlink" title="多副本机制？好处？"></a>多副本机制？好处？</h2><ul>
-<li>Kafka副本当前分为领导者副本和追随者副本。每个分区在创建时都要选举一个副本，称为领导者副本，其余的副本自动称为追随者副本。</li>
+<li>Kafka副本当前分为领导者副本和追随者副本。每个分区在创建时都要选举一个副本，作为领导者副本，其余的副本自动为追随者副本。</li>
 <li>只有Leader副本才能对外提供读写服务。</li>
 <li>Follower副本只是采用拉的方式，同步Leader副本中的数据</li>
 <li>在Leader副本所在的Broker宕机后，Kafka 依托于 ZooKeeper 提供的监控，实时感知到，并立即开启新一轮的领导者选举，从追随者副本中选一个作为新的领导者。</li>
@@ -651,7 +636,7 @@ Kafka 主要有两大应用场景：
 <h2 id="如何保证消息不丢失"><a href="#如何保证消息不丢失" class="headerlink" title="如何保证消息不丢失"></a>如何保证消息不丢失</h2><h3 id="生产者丢失消息"><a href="#生产者丢失消息" class="headerlink" title="生产者丢失消息"></a>生产者丢失消息</h3><ul>
 <li><p>生产者调用<code>send</code>方法发送消息之后，消息可能因为网络问题并没有发送过去。 为了确定消息是发送成功，我们要判断消息发送的结果。可以采用回调函数的形式，如果消息发送失败的话，我们检查失败的原因之后重新发送即可。</p>
 </li>
-<li><p>为 生产者的<code>retries</code>（重试次数）设置一个比较合理的值，一般是 3 。</p>
+<li><p>为 生产者的<code>retries</code>（重试次数）设置一个比较合理的值，一般是3。</p>
 </li>
 <li><p><strong>设置 acks = all</strong>，则表明所有副本 Broker 都要接收到消息，该消息才算是已提交</p>
 </li>
@@ -677,7 +662,7 @@ Kafka 主要有两大应用场景：
 <h2 id="为什么性能好"><a href="#为什么性能好" class="headerlink" title="为什么性能好"></a>为什么性能好</h2><h3 id="顺序写"><a href="#顺序写" class="headerlink" title="顺序写"></a>顺序写</h3><blockquote>
 <p>操作系统读写磁盘时，需要先寻址，再进行数据读写。如果是机械硬盘，寻址就需要较长的时间。</p>
 </blockquote>
-<p> Kafka 用的是顺序写，追加数据是追加到末尾，磁盘顺序写（？？pagecache）的性能极高。</p>
+<p> Kafka 用的是顺序写，追加数据是追加到末尾，磁盘顺序写（pagecache）的性能极高。</p>
 <h3 id="零拷贝"><a href="#零拷贝" class="headerlink" title="零拷贝"></a>零拷贝</h3><p>Kafka使用了零拷贝技术，使用<code>mmap+write</code>持久化数据，发送数据使用<code>sendfile</code>。</p>
 <blockquote>
 <p>传统的IO<code>read+write</code>方式会产生2次DMA拷贝+2次CPU拷贝，同时有4次上下文切换。</p>
@@ -693,7 +678,7 @@ Kafka 主要有两大应用场景：
 <p>将影响主题的创建、修改、删除操作的信息同步。</p>
 <h2 id="Java-Consumer-为什么采用单线程来获取消息？"><a href="#Java-Consumer-为什么采用单线程来获取消息？" class="headerlink" title="Java Consumer 为什么采用单线程来获取消息？"></a>Java Consumer 为什么采用单线程来获取消息？</h2><p>Java Consumer是双线程的设计。用户主线程，负责获取消息；心跳线程，负责向Kafka汇报消费者存活情况。将心跳单独放入专属的线程，能够有效地规避因消息处理速度慢而被视为下线的“假死”情况。</p>
 <ul>
-<li>单线程获取消息的设计能够避免阻塞式的消息获取方式。单线程轮询方式容易实现异步非阻塞式，这样便于将消费者扩展成支持实时流处理的操作算子。因为很多实时流处理操作算子都不能是阻塞式的。</li>
+<li>单线程获取消息的设计能够避免阻塞式的消息获取方式。单线程轮询方式容易实现<strong>异步非阻塞式</strong>，这样便于将消费者扩展成支持实时流处理的操作算子。因为很多实时流处理操作算子都不能是阻塞式的。</li>
 <li>可以简化代码的开发。多线程交互的代码是非常容易出错的。</li>
 </ul>
 <h2 id="Follower副本消息同步的流程？"><a href="#Follower副本消息同步的流程？" class="headerlink" title="Follower副本消息同步的流程？"></a>Follower副本消息同步的流程？</h2><ul>
@@ -752,9 +737,9 @@ Kafka 主要有两大应用场景：
 <h2 id="分布式事务"><a href="#分布式事务" class="headerlink" title="分布式事务"></a>分布式事务</h2><p><strong>基于消息队列的事务实现。</strong></p>
 <ul>
 <li>订单系统在消息队列上开启一个事务。</li>
-<li>然后订单系统给消息服务器发送一个“半消息”，这个半消息不是说消息内容不完整，它包含的内容就是完整的消息内容，半消息和普通消息的唯一区别是，在事务提交之前，对于消费者来说，这个消息是不可见的</li>
-<li>半消息发送成功后，订单系统就可以执行本地事务了，在订单库中创建一条订单记录，并提交订单库的数据库事务。然后根据本地事务的执行结果决定提交或者回滚事务消息。</li>
-<li>如果订单创建成功，那就提交事务消息，购物车系统就可以消费到这条消息继续后续的流程。如果订单创建失败，那就回滚事务消息，购物车系统就不会收到这条消息。这样就基本实现了“要么都成功，要么都失败”的一致性要求。</li>
+<li>然后订单系统给消息服务器<strong>发送一个“半消息”</strong>，这个半消息不是说消息内容不完整，它包含的内容就是完整的消息内容，半消息和普通消息的唯一区别是，在事务提交之前，<strong>对于消费者来说，这个消息是不可见的</strong></li>
+<li>半消息发送成功后，<strong>订单系统就可以执行本地事务</strong>了，在订单库中创建一条订单记录，并提交订单库的数据库事务。然后根据本地事务的执行结果决定提交或者回滚事务消息。</li>
+<li>如果订单创建成功，那就<strong>提交事务消息</strong>，购物车系统就可以消费到这条消息继续后续的流程。如果订单创建失败，那就<strong>回滚事务消息</strong>，购物车系统就不会收到这条消息。这样就基本实现了“要么都成功，要么都失败”的一致性要求。</li>
 </ul>
 
             </div>
@@ -1248,7 +1233,7 @@ Kafka 主要有两大应用场景：
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="mysql面试">
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="mysql面试">
                         
                         <span class="card-title">mysql面试</span>
                     </div>
@@ -1312,7 +1297,7 @@ Kafka 主要有两大应用场景：
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="rabbitmq面试">
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="rabbitmq面试">
                         
                         <span class="card-title">rabbitmq面试</span>
                     </div>
@@ -1520,7 +1505,7 @@ Kafka 主要有两大应用场景：
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">167.3k</span>
+            <span class="white-color">172.7k</span>
             
 
             <br>

@@ -1,4 +1,7 @@
 https://wangyixin-tom.github.io/2021/06/30/cao-zuo-xi-tong/
+https://wangyixin-tom.github.io/2021/06/25/paxos-yu-raft/
+https://wangyixin-tom.github.io/2021/06/23/2pc-yu-3pc/
+https://wangyixin-tom.github.io/2021/06/23/cap-he-base-li-lun/
 https://wangyixin-tom.github.io/2021/06/21/question-2/
 https://wangyixin-tom.github.io/2021/06/09/ji-chu-shu-ju-jie-gou/
 https://wangyixin-tom.github.io/2021/06/07/duo-jie-duan-gou-jian/
@@ -61,7 +64,6 @@ https://wangyixin-tom.github.io/2021/03/08/redis-si-wei-dao-tu/
 https://wangyixin-tom.github.io/2020/12/10/kafka-ji-qun-pei-zhi/
 https://wangyixin-tom.github.io/2020/12/09/redis6-0/
 https://wangyixin-tom.github.io/2020/11/02/redis-xiao-xi-dui-lie/
-https://wangyixin-tom.github.io/2020/11/02/redis-nei-cun-sui-pian/
 https://wangyixin-tom.github.io/2020/11/01/redis-shi-wu/
 https://wangyixin-tom.github.io/2020/10/29/redis-fen-bu-shi-suo/
 https://wangyixin-tom.github.io/2020/10/27/redis-huan-cun/

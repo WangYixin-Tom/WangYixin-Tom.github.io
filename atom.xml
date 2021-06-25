@@ -44,11 +44,92 @@
   </entry>
   
   <entry>
+    <title>Paxos与Raft</title>
+    <link href="https://wangyixin-tom.github.io/2021/06/25/paxos-yu-raft/"/>
+    <id>https://wangyixin-tom.github.io/2021/06/25/paxos-yu-raft/</id>
+    <published>2021-06-24T21:45:09.000Z</published>
+    <updated>2021-06-24T22:13:07.041Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;Paxos&quot;&gt;&lt;a href=&quot;#Paxos&quot; class=&quot;headerlink&quot; title=&quot;Paxos&quot;&gt;&lt;/a&gt;Paxos&lt;/h2&gt;&lt;p&gt;解决了一致性问题。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;在一个分布式系统中，有一组的 process，每个
+        
+      
+    
+    </summary>
+    
+      <category term="分布式" scheme="https://wangyixin-tom.github.io/categories/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
+    
+    
+      <category term="分布式" scheme="https://wangyixin-tom.github.io/tags/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>2PC与3PC</title>
+    <link href="https://wangyixin-tom.github.io/2021/06/23/2pc-yu-3pc/"/>
+    <id>https://wangyixin-tom.github.io/2021/06/23/2pc-yu-3pc/</id>
+    <published>2021-06-23T14:14:45.000Z</published>
+    <updated>2021-06-24T21:45:06.639Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;2PC&quot;&gt;&lt;a href=&quot;#2PC&quot; class=&quot;headerlink&quot; title=&quot;2PC&quot;&gt;&lt;/a&gt;2PC&lt;/h2&gt;&lt;p&gt;二阶段提交就是将事务的提交过程分成了两个阶段来进行处理。&lt;/p&gt;
+&lt;h3 id=&quot;阶段一&quot;&gt;&lt;a href=&quot;#阶段一&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="分布式" scheme="https://wangyixin-tom.github.io/categories/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
+    
+    
+      <category term="分布式" scheme="https://wangyixin-tom.github.io/tags/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>CAP和BASE理论</title>
+    <link href="https://wangyixin-tom.github.io/2021/06/23/cap-he-base-li-lun/"/>
+    <id>https://wangyixin-tom.github.io/2021/06/23/cap-he-base-li-lun/</id>
+    <published>2021-06-23T13:41:02.000Z</published>
+    <updated>2021-06-23T14:10:39.388Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;CAP定理&quot;&gt;&lt;a href=&quot;#CAP定理&quot; class=&quot;headerlink&quot; title=&quot;CAP定理&quot;&gt;&lt;/a&gt;CAP定理&lt;/h2&gt;&lt;p&gt;一个分布式系统不可能同时满足一致性（C:Consistency)，可用性（A:
+        
+      
+    
+    </summary>
+    
+      <category term="分布式" scheme="https://wangyixin-tom.github.io/categories/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
+    
+    
+      <category term="分布式" scheme="https://wangyixin-tom.github.io/tags/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
+    
+  </entry>
+  
+  <entry>
     <title></title>
     <link href="https://wangyixin-tom.github.io/2021/06/21/question-2/"/>
     <id>https://wangyixin-tom.github.io/2021/06/21/question-2/</id>
     <published>2021-06-21T10:59:55.208Z</published>
-    <updated>2021-06-21T23:12:21.591Z</updated>
+    <updated>2021-06-24T22:31:07.848Z</updated>
     
     <summary type="html">
     
@@ -305,7 +386,7 @@
     <link href="https://wangyixin-tom.github.io/2021/05/20/wang-luo/"/>
     <id>https://wangyixin-tom.github.io/2021/05/20/wang-luo/</id>
     <published>2021-05-19T22:20:37.000Z</published>
-    <updated>2021-06-21T10:59:55.222Z</updated>
+    <updated>2021-06-24T02:44:44.851Z</updated>
     
     <summary type="html">
     
@@ -357,7 +438,7 @@
     <link href="https://wangyixin-tom.github.io/2021/04/13/python-mian-shi/"/>
     <id>https://wangyixin-tom.github.io/2021/04/13/python-mian-shi/</id>
     <published>2021-04-13T11:58:48.000Z</published>
-    <updated>2021-06-22T22:29:50.963Z</updated>
+    <updated>2021-06-24T12:11:27.567Z</updated>
     
     <summary type="html">
     
@@ -383,7 +464,7 @@
     <link href="https://wangyixin-tom.github.io/2021/04/12/redis-mian-shi/"/>
     <id>https://wangyixin-tom.github.io/2021/04/12/redis-mian-shi/</id>
     <published>2021-04-12T11:16:53.000Z</published>
-    <updated>2021-06-20T22:54:52.264Z</updated>
+    <updated>2021-06-23T10:49:57.378Z</updated>
     
     <summary type="html">
     
@@ -453,86 +534,6 @@
     
     
       <category term="mysql" scheme="https://wangyixin-tom.github.io/tags/mysql/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>mysql日志系统</title>
-    <link href="https://wangyixin-tom.github.io/2021/04/11/mysql-ri-zhi-xi-tong/"/>
-    <id>https://wangyixin-tom.github.io/2021/04/11/mysql-ri-zhi-xi-tong/</id>
-    <published>2021-04-11T01:04:56.000Z</published>
-    <updated>2021-04-29T00:08:42.008Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h2 id=&quot;日志系统&quot;&gt;&lt;a href=&quot;#日志系统&quot; class=&quot;headerlink&quot; title=&quot;日志系统&quot;&gt;&lt;/a&gt;日志系统&lt;/h2&gt;&lt;h3 id=&quot;redo-log（重做日志）&quot;&gt;&lt;a href=&quot;#redo-log（重做日志）&quot;
-        
-      
-    
-    </summary>
-    
-      <category term="mysql" scheme="https://wangyixin-tom.github.io/categories/mysql/"/>
-    
-    
-      <category term="mysql" scheme="https://wangyixin-tom.github.io/tags/mysql/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>mysql面试</title>
-    <link href="https://wangyixin-tom.github.io/2021/04/10/mysql-mian-shi/"/>
-    <id>https://wangyixin-tom.github.io/2021/04/10/mysql-mian-shi/</id>
-    <published>2021-04-10T10:45:14.000Z</published>
-    <updated>2021-06-22T23:48:57.783Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h2 id=&quot;架构&quot;&gt;&lt;a href=&quot;#架构&quot; class=&quot;headerlink&quot; title=&quot;架构&quot;&gt;&lt;/a&gt;架构&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;server层&lt;/strong&gt;&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;连接器：管理连接，权限验证 
-        
-      
-    
-    </summary>
-    
-      <category term="interview" scheme="https://wangyixin-tom.github.io/categories/interview/"/>
-    
-    
-      <category term="interview" scheme="https://wangyixin-tom.github.io/tags/interview/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>kafka面试</title>
-    <link href="https://wangyixin-tom.github.io/2021/04/08/kafka-mian-shi/"/>
-    <id>https://wangyixin-tom.github.io/2021/04/08/kafka-mian-shi/</id>
-    <published>2021-04-08T11:55:21.000Z</published>
-    <updated>2021-06-09T23:35:01.945Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h2 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot; title=&quot;概述&quot;&gt;&lt;/a&gt;概述&lt;/h2&gt;&lt;h3 id=&quot;Kafka-是什么？主要应用场景有哪些？&quot;&gt;&lt;a href=&quot;#Kafka-是什么？主要应用场景有哪些？&quot;
-        
-      
-    
-    </summary>
-    
-      <category term="interview" scheme="https://wangyixin-tom.github.io/categories/interview/"/>
-    
-    
-      <category term="interview" scheme="https://wangyixin-tom.github.io/tags/interview/"/>
     
   </entry>
   

@@ -267,7 +267,7 @@ CAPC - Consistent ，一致性A - Availability ，可用性P - Partition toleran
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/17.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/15.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -488,14 +488,14 @@ CAPC - Consistent ，一致性A - Availability ，可用性P - Partition toleran
 <li>外部程序监控主从库间的复制进度（INFO replication ），依据从库和主库间的复制进度，设置客户端从库连接</li>
 </ul>
 <h2 id="读取数据过期"><a href="#读取数据过期" class="headerlink" title="读取数据过期"></a>读取数据过期</h2><h3 id="过期策略"><a href="#过期策略" class="headerlink" title="过期策略"></a>过期策略</h3><p>定期删除策略：Redis 每隔一段时间（默认 100ms），就会随机选出一定数量的数据，检查它们是否过期，并把其中过期的数据删除。注意避免大量key同时过期，否则可能因redis删除过期key阻塞用户请求；</p>
-<p><strong>惰性删除策略</strong>：数据只有被再次访问时，才会被实际删除。从库本身不会执行删除操作，如果客户端在从库中访问留存的过期数据，从库并不会触发数据删除。<strong>在 3.2 版本后</strong>，如果读取的数据已经过期了，从库虽然不会删除，但是会返回空值。</p>
+<p><strong>惰性删除策略</strong>：数据只有被再次访问时，才会被实际删除。从库本身不会执行删除操作，如果客户端在从库中访问留存的过期数据，<strong>从库并不会触发数据删除</strong>。<strong>在 3.2 版本后</strong>，如果读取的数据已经过期了，从库虽然不会删除，但是会返回空值。</p>
 <h3 id="过期命令"><a href="#过期命令" class="headerlink" title="过期命令"></a>过期命令</h3><ul>
 <li>EXPIRE 和 PEXPIRE：它们给数据设置的是从命令执行时开始计算的存活时间；</li>
 <li><strong>EXPIREAT 和 PEXPIREA</strong>：它们会直接把数据的过期时间设置为具体的一个时间点</li>
 </ul>
 <p>当主从库全量同步时，如果主库接收到了一条 EXPIRE 命令，那么，主库会直接执行这条命令。这条命令会在全量同步完成后，发给从库执行。而从库在执行时，就会在<strong>当前时间的基础上加上数据的存活时间</strong>，从库上数据的过期时间就会比主库上延后了</p>
 <h3 id="解决-1"><a href="#解决-1" class="headerlink" title="解决"></a>解决</h3><ul>
-<li>使用 Redis 3.2 及以上版本和惰性删除策略</li>
+<li>使用 <strong>Redis 3.2 及以上版本和惰性删除策略</strong></li>
 <li>在业务应用中使用 EXPIREAT/PEXPIREAT 命令，把数据的过期时间设置为具体的时间点，避免读到过期数据</li>
 </ul>
 <h3 id="同步异常"><a href="#同步异常" class="headerlink" title="同步异常"></a>同步异常</h3><p><code>protected-mode</code>：yes ，哨兵实例只能在部署的服务器本地进行访问。no ，其他服务器也可以访问这个哨兵实例。同时，bind 配置项设置为其它哨兵实例的 IP 地址。</p>
@@ -994,7 +994,7 @@ CAPC - Consistent ，一致性A - Availability ，可用性P - Partition toleran
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="redis哨兵机制">
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="redis哨兵机制">
                         
                         <span class="card-title">redis哨兵机制</span>
                     </div>
@@ -1050,7 +1050,7 @@ CAPC - Consistent ，一致性A - Availability ，可用性P - Partition toleran
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="十大经典排序算法整理汇总（附代码）">
+                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="十大经典排序算法整理汇总（附代码）">
                         
                         <span class="card-title">十大经典排序算法整理汇总（附代码）</span>
                     </div>
@@ -1255,7 +1255,7 @@ CAPC - Consistent ，一致性A - Availability ，可用性P - Partition toleran
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">167.3k</span>
+            <span class="white-color">172.7k</span>
             
 
             <br>

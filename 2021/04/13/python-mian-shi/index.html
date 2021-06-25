@@ -270,7 +270,7 @@ Python2 的默认编码是 ascii，Python 3 默认编码">
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/23.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/25.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -425,14 +425,14 @@ Python2 的默认编码是 ascii，Python 3 默认编码">
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    13.6k
+                    13.9k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    51 分
+                    52 分
                 </div>
                 
                 
@@ -1218,13 +1218,36 @@ d<span class="token punctuation">.</span>foo1<span class="token punctuation">(</
 <p> Python 3.x 基于固定时间的调度方式，就是每执行固定时间的字节码，或遇到系统 IO 时，强制释放 GIL，触发系统的线程调度。</p>
 <h3 id="为什么会有GIL"><a href="#为什么会有GIL" class="headerlink" title="为什么会有GIL"></a>为什么会有GIL</h3><p>Python 设计者在设计解释器时，可能没有想到 CPU 的性能提升会这么快转为多核心方向发展，所以在当时的场景下，设计一个全局锁是<strong>那个时代保护多线程资源一致性最简单经济的设计方案</strong>。</p>
 <p>多核心时代来临，当大家试图去拆分和去除 GIL 的时候，发现大量库的代码和开发者已经重度依赖 GIL（默认认为 Python内部对象是线程安全的，无需在开发时额外加锁），所以这个去除 GIL 的任务变得复杂且难以实现。</p>
-<h2 id="性能分析"><a href="#性能分析" class="headerlink" title="性能分析"></a>性能分析</h2><p>python 内置了丰富的性能分析工具，<strong>如 profile,cProfile 与 hotshot 等</strong>。其中 Profiler 是 python 自带的一组程序，能够描述程序运行时候的性能，并提供各种统计帮助用户定位程序的性能瓶颈。</p>
-<p>Python 标准库提供了同一分析接口的两种不同实现：</p>
+<h2 id="性能优化"><a href="#性能优化" class="headerlink" title="性能优化"></a>性能优化</h2><h3 id="性能分析"><a href="#性能分析" class="headerlink" title="性能分析"></a>性能分析</h3><p>Python 标准库提供了同一分析接口的两种不同实现：</p>
 <ol>
 <li>建议使用 <a href="https://docs.python.org/zh-cn/3/library/profile.html#module-cProfile" target="_blank" rel="noopener"><code>cProfile</code></a> ；这是一个 C 扩展插件，因为其合理的运行开销，所以适合于分析长时间运行的程序。</li>
 <li><a href="https://docs.python.org/zh-cn/3/library/profile.html#module-profile" target="_blank" rel="noopener"><code>profile</code></a> 是一个纯 Python 模块（<a href="https://docs.python.org/zh-cn/3/library/profile.html#module-cProfile" target="_blank" rel="noopener"><code>cProfile</code></a> 就是模拟其接口的 C 语言实现），但它会显著增加配置程序的开销。如果你正在尝试以某种方式扩展分析器，则使用此模块可能会更容易完成任务</li>
 </ol>
 <p>支持输出：调用次数、在指定函数中消耗的总时间（不包括调用子函数的时间）、指定的函数及其所有子函数（从调用到退出）消耗的累积时间、函数运行一次的平均时间</p>
+<h3 id="加速python运行"><a href="#加速python运行" class="headerlink" title="加速python运行"></a>加速python运行</h3><ol>
+<li><p>优化代码和算法</p>
+<ul>
+<li>避免全局变量</li>
+<li>避免模块和函数属性访问：对于频繁访问的变量<code>sqrt</code>，通过将其改为局部变量可以加速运行。</li>
+<li>避免类内属性访问：通过将需要频繁访问的类内属性赋值给一个局部变量，可以提升代码运行速度。</li>
+<li>避免数据复制：交换值时不使用中间变量、避免无意义的数据复制、字符串拼接用join而不是+</li>
+<li>利用if条件的短路特性</li>
+<li>使用numba.jit</li>
+<li>循环优化： 用for循环代替while循环、使用隐式for循环代替显式for循环</li>
+<li>选择合适的数据结构：如果有频繁的新增、删除操作，新增、删除的元素数量又很多时，list的效率不高。此时，应该考虑使用collections.deque。</li>
+</ul>
+</li>
+<li><p>使用 PyPy</p>
+<p>PyPy通过使用一种 Just-in-time（JIT，即时编译）技术来实现的。CPython 使用解释来执行代码，虽然这一做法提供了很大的灵活性，但速度也变得慢了下来。使用 JIT，你的代码是在运行程序时即时编译的。它结合了 Ahead-of-time（AOT，提前编译）技术的速度优势（由 C 和 C++ 等语言使用）和解释的灵活性。另一个优点是 JIT 编译器可以在运行时不断优化代码。代码运行的时间越长，它就会变得越优化。</p>
+</li>
+<li><p>使用线程</p>
+</li>
+<li><p>使用 Asyncio</p>
+</li>
+<li><p>同时使用多个处理器</p>
+</li>
+</ol>
+<p>使用多个进程，使用分布式方案等。</p>
 <h2 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h2><h3 id="使用装饰器"><a href="#使用装饰器" class="headerlink" title="使用装饰器"></a><strong>使用装饰器</strong></h3><pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">singleton</span><span class="token punctuation">(</span>cls<span class="token punctuation">)</span><span class="token punctuation">:</span>
   instances <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
   <span class="token keyword">def</span> <span class="token function">wrapper</span><span class="token punctuation">(</span><span class="token operator">*</span>args<span class="token punctuation">,</span> <span class="token operator">**</span>kwargs<span class="token punctuation">)</span><span class="token punctuation">:</span>
@@ -1841,7 +1864,7 @@ foo2 <span class="token operator">=</span> Foo<span class="token punctuation">(<
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="flask">
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="flask">
                         
                         <span class="card-title">flask</span>
                     </div>
@@ -1894,7 +1917,7 @@ run 方法调用werkzeug 的 run_simple
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/28.jpg" class="responsive-img" alt="redis面试">
+                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="redis面试">
                         
                         <span class="card-title">redis面试</span>
                     </div>
@@ -2099,7 +2122,7 @@ run 方法调用werkzeug 的 run_simple
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">167.3k</span>
+            <span class="white-color">172.7k</span>
             
 
             <br>

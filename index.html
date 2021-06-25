@@ -446,7 +446,7 @@ $(function () {
     
     
     <div class="col s12 m6" >
-        <div class="post-card" style="background-image: url('/medias/featureimages/28.jpg')">
+        <div class="post-card" style="background-image: url('/medias/featureimages/1.jpg')">
             <div class="post-body">
                 <div class="post-categories">
                     
@@ -471,7 +471,7 @@ $(function () {
     
     
     <div class="col s12 m6" >
-        <div class="post-card" style="background-image: url('/medias/featureimages/21.jpg')">
+        <div class="post-card" style="background-image: url('/medias/featureimages/19.jpg')">
             <div class="post-body">
                 <div class="post-categories">
                     
@@ -496,7 +496,7 @@ $(function () {
     
     
     <div class="col s12 m6" data-aos="zoom-in-up">
-        <div class="post-card" style="background-image: url('/medias/featureimages/28.jpg')">
+        <div class="post-card" style="background-image: url('/medias/featureimages/26.jpg')">
             <div class="post-body">
                 <div class="post-categories">
                     
@@ -521,7 +521,7 @@ $(function () {
     
     
     <div class="col s12 m6" data-aos="zoom-in-up">
-        <div class="post-card" style="background-image: url('/medias/featureimages/15.jpg')">
+        <div class="post-card" style="background-image: url('/medias/featureimages/13.jpg')">
             <div class="post-body">
                 <div class="post-categories">
                     
@@ -567,7 +567,7 @@ $(function () {
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="操作系统">
+                            <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="操作系统">
                             
                             <span class="card-title">操作系统</span>
                         </div>
@@ -614,11 +614,159 @@ $(function () {
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
+                    <a href="/2021/06/25/paxos-yu-raft/" target="_blank">
+                        <div class="card-image">
+                            
+                            
+                            <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="Paxos与Raft">
+                            
+                            <span class="card-title">Paxos与Raft</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                            Paxos解决了一致性问题。
+
+在一个分布式系统中，有一组的 process，每个 process 都可以提出一个 value，consensus 算法就是用来从这些 values 里选定一个最终 value。如果没有 value 被提出来
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-06-25
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fa fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/分布式/" class="post-category" target="_blank">
+                                    分布式
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/分布式/" target="_blank">
+                            <span class="chip bg-color">分布式</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2021/06/23/2pc-yu-3pc/" target="_blank">
+                        <div class="card-image">
+                            
+                            
+                            <img src="/medias/featureimages/24.jpg" class="responsive-img" alt="2PC与3PC">
+                            
+                            <span class="card-title">2PC与3PC</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                            2PC二阶段提交就是将事务的提交过程分成了两个阶段来进行处理。
+阶段一
+事务询问协调者向所有的参与者询问，是否准备好了执行事务，并开始等待各参与者的响应。
+
+执行事务各参与者节点执行事务操作，并将 Undo 和 Redo 信息记入事务日志中
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-06-23
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fa fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/分布式/" class="post-category" target="_blank">
+                                    分布式
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/分布式/" target="_blank">
+                            <span class="chip bg-color">分布式</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2021/06/23/cap-he-base-li-lun/" target="_blank">
+                        <div class="card-image">
+                            
+                            
+                            <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="CAP和BASE理论">
+                            
+                            <span class="card-title">CAP和BASE理论</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                            CAP定理一个分布式系统不可能同时满足一致性（C:Consistency)，可用性（A: Availability）和分区容错性（P：Partition tolerance）这三个基本需求，最多只能同时满足其中的2个。
+一致性，指数据在多个
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-06-23
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fa fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/分布式/" class="post-category" target="_blank">
+                                    分布式
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/分布式/" target="_blank">
+                            <span class="chip bg-color">分布式</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
                     <a href="/2021/06/21/question-2/" target="_blank">
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="">
+                            <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="">
                             
                             <span class="card-title"></span>
                         </div>
@@ -627,10 +775,10 @@ $(function () {
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                            数据结构跳表怎么实现堆结构是什么，是如何去调整堆结构的.虚拟内存是什么，逻辑地址是怎么映射到物理地址的
+                            数据结构跳表怎么实现堆结构是什么，是如何去调整堆结构的虚拟内存是什么，逻辑地址是怎么映射到物理地址的
 BST Trie树 红黑树的了解
 -好的，那你说一下堆排序吧 
- （好吧，错失一个表现机会，堆排序的原理说了一下，面试官接着深挖堆排代码
+ （好吧，错失一个表现机会，堆排序的原理说了一下，面试官接着深挖堆排代码）
                             
                         </div>
                         <div class="publish-info">
@@ -653,7 +801,7 @@ BST Trie树 红黑树的了解
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="基础数据结构">
+                            <img src="/medias/featureimages/27.jpg" class="responsive-img" alt="基础数据结构">
                             
                             <span class="card-title">基础数据结构</span>
                         </div>
@@ -704,7 +852,7 @@ BST Trie树 红黑树的了解
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="多阶段构建">
+                            <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="多阶段构建">
                             
                             <span class="card-title">多阶段构建</span>
                         </div>
@@ -751,7 +899,7 @@ BST Trie树 红黑树的了解
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="3. 无重复字符的最长子串">
+                            <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="3. 无重复字符的最长子串">
                             
                             <span class="card-title">3. 无重复字符的最长子串</span>
                         </div>
@@ -787,7 +935,7 @@ BST Trie树 红黑树的了解
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/27.jpg" class="responsive-img" alt="53最大自序和">
+                            <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="53最大自序和">
                             
                             <span class="card-title">53最大自序和</span>
                         </div>
@@ -838,7 +986,7 @@ BST Trie树 红黑树的了解
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="215数组中的第K个最大元素">
+                            <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="215数组中的第K个最大元素">
                             
                             <span class="card-title">215数组中的第K个最大元素</span>
                         </div>
@@ -889,7 +1037,7 @@ BST Trie树 红黑树的了解
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="121买卖股票最佳时机">
+                            <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="121买卖股票最佳时机">
                             
                             <span class="card-title">121买卖股票最佳时机</span>
                         </div>
@@ -938,7 +1086,7 @@ BST Trie树 红黑树的了解
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="最长公共子序列">
+                            <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="最长公共子序列">
                             
                             <span class="card-title">最长公共子序列</span>
                         </div>
@@ -979,157 +1127,6 @@ BST Trie树 红黑树的了解
                 </div>
             </div>
             
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2021/05/30/zui-chang-gong-gong-zi-chuan/" target="_blank">
-                        <div class="card-image">
-                            
-                            
-                            <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="最长公共子串">
-                            
-                            <span class="card-title">最长公共子串</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                            思路：动态规划。
-dp[i][j]标识str1[i]和str[j]结尾的最长公共子串，递推关系如下：
-
-若str1[i] == str2[j]，则dp[i][j] = dp[i-1][j-1] + 1
-否则，dp[i][j] = 0
-
-cl
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-05-30
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fa fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/算法/" class="post-category" target="_blank">
-                                    算法
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/算法/" target="_blank">
-                            <span class="chip bg-color">算法</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-            
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2021/05/24/chang-jian-chang-jing-ti/" target="_blank">
-                        <div class="card-image">
-                            
-                            
-                            <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="常见场景题">
-                            
-                            <span class="card-title">常见场景题</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                            大数据1、100G 的手机号文件，找到重复的手机号，将重复手机号放入另一个文件。PC 机内存1G
-按照手机前三位分成1000 个文件，然后hashmap 或者bitmap 进行重复校验）2、1G大小的一个文件中找出出现频率最高的100个数
-
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-05-24
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fa fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/interview/" class="post-category" target="_blank">
-                                    interview
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/interview/" target="_blank">
-                            <span class="chip bg-color">interview</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-            
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2021/05/20/wang-luo/" target="_blank">
-                        <div class="card-image">
-                            
-                            
-                            <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="网络">
-                            
-                            <span class="card-title">网络</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                            报文头部网络包的格式MAC头+IP头+TCP头+HTTP头+HTTP正文
-IP报文
-（1） 版本号：IP协议的版本。对于IPv4来说值是4（2） 头部长度：4位最大为0xF，注意该字段表示单位是字（4字节）（3） 服务类型（Type Of 
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-05-20
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fa fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/interview/" class="post-category" target="_blank">
-                                    interview
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/interview/" target="_blank">
-                            <span class="chip bg-color">interview</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-            
         </div>
     </article>
 
@@ -1146,7 +1143,7 @@ IP报文
             
         </div>
         <div class="page-info col m4 l4 hide-on-small-only">
-            <div class="center-align b-text-gray">1 / 7</div>
+            <div class="center-align b-text-gray">1 / 8</div>
         </div>
         <div class="col s6 m4 l4">
             
@@ -1167,7 +1164,7 @@ IP报文
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">167.3k</span>
+            <span class="white-color">172.7k</span>
             
 
             <br>
