@@ -10,14 +10,17 @@
     <meta name="360-site-verification" content="b7c11a830ef90fd1464ad6206bb7b6e7">
     <meta name="description" content="前言本文整理并总结了十大经典的排序算法（冒泡排序、选择排序、插入排序、快速排序、归并排序、希尔排序、计数排序、基数排序、桶排序、堆排序）的时间复杂度、空间复杂度等性质。
 性质汇总
-如果发现表中有错误，请留言告知。
-
-
 
 
 算法
 最好
 最坏
+平均
+空间
+稳定性
+是否基于比较
+
+
 ">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -276,7 +279,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/6.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/1.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -431,7 +434,7 @@
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.5k
+                    1.6k
                 </div>
                 
 
@@ -450,10 +453,7 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文整理并总结了十大经典的排序算法（冒泡排序、选择排序、插入排序、快速排序、归并排序、希尔排序、计数排序、基数排序、桶排序、堆排序）的时间复杂度、空间复杂度等性质。</p>
-<h2 id="性质汇总"><a href="#性质汇总" class="headerlink" title="性质汇总"></a>性质汇总</h2><blockquote>
-<p>如果发现表中有错误，请留言告知。</p>
-</blockquote>
-<table>
+<h2 id="性质汇总"><a href="#性质汇总" class="headerlink" title="性质汇总"></a>性质汇总</h2><table>
 <thead>
 <tr>
 <th>算法</th>
@@ -556,51 +556,43 @@
 <td align="center">$\checkmark$</td>
 </tr>
 </tbody></table>
-<p>我觉得还是英文维基百科讲的比较详细、严谨。如果大家看的比较累的话，可以自己百度搜索相应的教程。</p>
-<p><strong>冒泡排序</strong><br><a href="https://en.wikipedia.org/wiki/Bubble_sort" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Bubble_sort</a></p>
-<p><strong>选择排序</strong><br><a href="https://en.wikipedia.org/wiki/Selection_sort" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Selection_sort</a></p>
-<p><strong>插入排序</strong><br><a href="https://en.wikipedia.org/wiki/Insertion_sort" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Insertion_sort</a></p>
-<p><strong>快速排序</strong><br><a href="https://en.wikipedia.org/wiki/Quicksort" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Quicksort</a></p>
-<p><strong>归并排序</strong><br><a href="https://en.wikipedia.org/wiki/Merge_sort" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Merge_sort</a></p>
-<p><strong>希尔排序</strong><br><a href="https://en.wikipedia.org/wiki/Shellsort" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Shellsort</a></p>
-<p><strong>计数排序</strong><br><a href="https://en.wikipedia.org/wiki/Counting_sort" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Counting_sort</a></p>
-<p><strong>基数排序</strong><br><a href="https://en.wikipedia.org/wiki/Radix_sort" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Radix_sort</a></p>
-<p><strong>桶排序</strong><br><a href="https://en.wikipedia.org/wiki/Bucket_sort" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Bucket_sort</a></p>
-<p><strong>堆排序</strong><br><a href="https://en.wikipedia.org/wiki/Heapsort" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Heapsort</a></p>
-<h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><p><strong>主流排序算法</strong></p>
-<pre class="line-numbers language-python"><code class="language-python"><span class="token comment" spellcheck="true"># 冒泡排序</span>
-<span class="token comment" spellcheck="true"># 比较前一个数和后一个数，如果前比后大，对换他们的位置；从左往右冒泡泡</span>
-<span class="token keyword">def</span> <span class="token function">bubbleSort</span><span class="token punctuation">(</span>l<span class="token punctuation">)</span><span class="token punctuation">:</span>
+<h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><h3 id="主流排序算法"><a href="#主流排序算法" class="headerlink" title="主流排序算法"></a><strong>主流排序算法</strong></h3><h4 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h4><p>比较前一个数和后一个数，如果前比后大，对换他们的位置；从左往右冒泡泡</p>
+<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">bubbleSort</span><span class="token punctuation">(</span>l<span class="token punctuation">)</span><span class="token punctuation">:</span>
     <span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> len<span class="token punctuation">(</span>l<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
         <span class="token keyword">for</span> j <span class="token keyword">in</span> range<span class="token punctuation">(</span>len<span class="token punctuation">(</span>l<span class="token punctuation">)</span> <span class="token operator">-</span> i<span class="token punctuation">)</span><span class="token punctuation">:</span>
             <span class="token keyword">if</span> l<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">></span> l<span class="token punctuation">[</span>j <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">:</span>
-                l<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">,</span> l<span class="token punctuation">[</span>j <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> l<span class="token punctuation">[</span>j <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> l<span class="token punctuation">[</span>j<span class="token punctuation">]</span>
-
-<span class="token comment" spellcheck="true"># 选择排序</span>
-<span class="token comment" spellcheck="true"># 在未排序序列中找到最小（大）元素，存放到排序序列的起始位置。</span>
-<span class="token keyword">def</span> <span class="token function">select_sort</span><span class="token punctuation">(</span>l<span class="token punctuation">)</span><span class="token punctuation">:</span>  
+                l<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">,</span> l<span class="token punctuation">[</span>j <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> l<span class="token punctuation">[</span>j <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> l<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h4><p>在未排序序列中找到最小元素，存放到排序序列的起始位置。</p>
+<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">select_sort</span><span class="token punctuation">(</span>l<span class="token punctuation">)</span><span class="token punctuation">:</span>  
     <span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span>len<span class="token punctuation">(</span>l<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>  
         small_index <span class="token operator">=</span> i  
         <span class="token keyword">for</span> j <span class="token keyword">in</span> range<span class="token punctuation">(</span>i<span class="token punctuation">,</span> len<span class="token punctuation">(</span>l<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>  
             <span class="token keyword">if</span> l<span class="token punctuation">[</span>small_index<span class="token punctuation">]</span> <span class="token operator">></span> l<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">:</span>  
                 small_index <span class="token operator">=</span> j  
-        l<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> l<span class="token punctuation">[</span>small_index<span class="token punctuation">]</span> <span class="token operator">=</span> l<span class="token punctuation">[</span>small_index<span class="token punctuation">]</span><span class="token punctuation">,</span> l<span class="token punctuation">[</span>i<span class="token punctuation">]</span>  
-
-
-<span class="token comment" spellcheck="true"># 插入排序（超时）</span>
-<span class="token comment" spellcheck="true"># 从第一个元素开始，该元素可以认为已经被排序  </span>
-<span class="token comment" spellcheck="true"># 取出下一个元素，在已经排序的元素序列中从后向前扫描  </span>
-<span class="token comment" spellcheck="true"># 如果被扫描的元素（已排序）大于新元素，将该元素后移一位</span>
-<span class="token keyword">def</span> <span class="token function">insertSort</span><span class="token punctuation">(</span>l<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        l<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> l<span class="token punctuation">[</span>small_index<span class="token punctuation">]</span> <span class="token operator">=</span> l<span class="token punctuation">[</span>small_index<span class="token punctuation">]</span><span class="token punctuation">,</span> l<span class="token punctuation">[</span>i<span class="token punctuation">]</span>  <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h4><ol>
+<li>从第一个元素开始，该元素可以认为已经被排序  </li>
+<li>取出下一个元素，在已经排序的元素序列中从后向前扫描  </li>
+<li>如果被扫描的元素（已排序）大于新元素，将该元素后移一位</li>
+</ol>
+<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">insertSort</span><span class="token punctuation">(</span>l<span class="token punctuation">)</span><span class="token punctuation">:</span>
     <span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> len<span class="token punctuation">(</span>l<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
         <span class="token keyword">for</span> j <span class="token keyword">in</span> range<span class="token punctuation">(</span>i<span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
             <span class="token keyword">if</span> l<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">&lt;</span> l<span class="token punctuation">[</span>j<span class="token number">-1</span><span class="token punctuation">]</span><span class="token punctuation">:</span>
-                l<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">,</span> l<span class="token punctuation">[</span>j<span class="token number">-1</span><span class="token punctuation">]</span> <span class="token operator">=</span> l<span class="token punctuation">[</span>j<span class="token number">-1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> l<span class="token punctuation">[</span>j<span class="token punctuation">]</span>
-
-
-<span class="token comment" spellcheck="true"># 从数列中挑出一个元素作为基准数。  </span>
-<span class="token comment" spellcheck="true">#分区过程，将比基准数大的放到右边，小于或等于它的数都放到左边。  </span>
-<span class="token keyword">class</span> <span class="token class-name">Solution</span><span class="token punctuation">:</span>
+                l<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">,</span> l<span class="token punctuation">[</span>j<span class="token number">-1</span><span class="token punctuation">]</span> <span class="token operator">=</span> l<span class="token punctuation">[</span>j<span class="token number">-1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> l<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="快排"><a href="#快排" class="headerlink" title="快排"></a>快排</h4><ul>
+<li>从数列中挑出一个元素作为基准数。  </li>
+<li>分区过程，将比基准数大的放到右边，小于或等于它的数都放到左边。  </li>
+</ul>
+<p><strong>优化</strong></p>
+<p>1、三数取中作基准</p>
+<p>2、当待排序序列的长度分割到一定大小后，使用插入排序：对于很小和部分有序的数组，快排不如插排好。当待排序序列的长度分割到一定大小后，继续分割的效率比插入排序要差，此时可以使用插排而不是快排</p>
+<p>3、在一次分割结束后，可以把与pivot相等的元素聚在一起，继续下次分割时，不用再对与pivot相等元素分割：实现的时候先放2边，然后调整到中间。</p>
+<p><strong>复杂度分析</strong></p>
+<p><a href="https://zhuanlan.zhihu.com/p/341201904" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/341201904</a></p>
+<p><strong>应用</strong></p>
+<p>TOPK问题，可基于划分得到。</p>
+<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">Solution</span><span class="token punctuation">:</span>
     <span class="token keyword">def</span> <span class="token function">randomized_partition</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> nums<span class="token punctuation">,</span> l<span class="token punctuation">,</span> r<span class="token punctuation">)</span><span class="token punctuation">:</span>
         pivot <span class="token operator">=</span> random<span class="token punctuation">.</span>randint<span class="token punctuation">(</span>l<span class="token punctuation">,</span> r<span class="token punctuation">)</span>
         nums<span class="token punctuation">[</span>pivot<span class="token punctuation">]</span><span class="token punctuation">,</span> nums<span class="token punctuation">[</span>r<span class="token punctuation">]</span> <span class="token operator">=</span> nums<span class="token punctuation">[</span>r<span class="token punctuation">]</span><span class="token punctuation">,</span> nums<span class="token punctuation">[</span>pivot<span class="token punctuation">]</span>
@@ -622,89 +614,65 @@
 
     <span class="token keyword">def</span> <span class="token function">sortArray</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> nums<span class="token punctuation">:</span> List<span class="token punctuation">[</span>int<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> List<span class="token punctuation">[</span>int<span class="token punctuation">]</span><span class="token punctuation">:</span>
         self<span class="token punctuation">.</span>randomized_quicksort<span class="token punctuation">(</span>nums<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> len<span class="token punctuation">(</span>nums<span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span>
-        <span class="token keyword">return</span> nums
+        <span class="token keyword">return</span> nums<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="堆排序"><a href="#堆排序" class="headerlink" title="堆排序"></a>堆排序</h4><ol>
+<li>先将待排序的序列建成大根堆，使得每个父节点的元素大于等于它的子节点。</li>
+<li>此时整个序列最大值即为堆顶元素，我们将其与末尾元素交换，使末尾元素为最大值，然后再调整堆顶元素使得剩下的 n-1个元素仍为大根堆</li>
+</ol>
+<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">Solution</span><span class="token punctuation">:</span>
+    <span class="token keyword">def</span> <span class="token function">max_heapify</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> heap<span class="token punctuation">,</span> root<span class="token punctuation">,</span> heap_len<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        p <span class="token operator">=</span> root
+        <span class="token keyword">while</span> p <span class="token operator">*</span> <span class="token number">2</span> <span class="token operator">+</span> <span class="token number">1</span> <span class="token operator">&lt;</span> heap_len<span class="token punctuation">:</span>
+            l<span class="token punctuation">,</span> r <span class="token operator">=</span> p <span class="token operator">*</span> <span class="token number">2</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">,</span> p <span class="token operator">*</span> <span class="token number">2</span> <span class="token operator">+</span> <span class="token number">2</span>
+            <span class="token keyword">if</span> heap_len <span class="token operator">&lt;=</span> r <span class="token operator">or</span> heap<span class="token punctuation">[</span>r<span class="token punctuation">]</span> <span class="token operator">&lt;</span> heap<span class="token punctuation">[</span>l<span class="token punctuation">]</span><span class="token punctuation">:</span>
+                nex <span class="token operator">=</span> l
+            <span class="token keyword">else</span><span class="token punctuation">:</span>
+                nex <span class="token operator">=</span> r
+            <span class="token keyword">if</span> heap<span class="token punctuation">[</span>p<span class="token punctuation">]</span> <span class="token operator">&lt;</span> heap<span class="token punctuation">[</span>nex<span class="token punctuation">]</span><span class="token punctuation">:</span>
+                heap<span class="token punctuation">[</span>p<span class="token punctuation">]</span><span class="token punctuation">,</span> heap<span class="token punctuation">[</span>nex<span class="token punctuation">]</span> <span class="token operator">=</span> heap<span class="token punctuation">[</span>nex<span class="token punctuation">]</span><span class="token punctuation">,</span> heap<span class="token punctuation">[</span>p<span class="token punctuation">]</span>
+                p <span class="token operator">=</span> nex
+            <span class="token keyword">else</span><span class="token punctuation">:</span>
+                <span class="token keyword">break</span>
 
-    <span class="token operator">//</span> 堆排序（<span class="token number">32</span> ms）
-    void adjust<span class="token punctuation">(</span>vector<span class="token operator">&lt;</span>int<span class="token operator">></span><span class="token operator">&amp;</span> nums<span class="token punctuation">,</span> int p<span class="token punctuation">,</span> int s<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token number">2</span><span class="token operator">*</span>p<span class="token operator">+</span><span class="token number">1</span> <span class="token operator">&lt;</span> s<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            int c1 <span class="token operator">=</span> <span class="token number">2</span><span class="token operator">*</span>p<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">;</span>
-            int c2 <span class="token operator">=</span> <span class="token number">2</span><span class="token operator">*</span>p<span class="token operator">+</span><span class="token number">2</span><span class="token punctuation">;</span>
-            int c <span class="token operator">=</span> <span class="token punctuation">(</span>c2<span class="token operator">&lt;</span>s <span class="token operator">&amp;</span><span class="token operator">&amp;</span> nums<span class="token punctuation">[</span>c2<span class="token punctuation">]</span><span class="token operator">></span>nums<span class="token punctuation">[</span>c1<span class="token punctuation">]</span><span class="token punctuation">)</span> ? c2 <span class="token punctuation">:</span> c1<span class="token punctuation">;</span>
-            <span class="token keyword">if</span> <span class="token punctuation">(</span>nums<span class="token punctuation">[</span>c<span class="token punctuation">]</span> <span class="token operator">></span> nums<span class="token punctuation">[</span>p<span class="token punctuation">]</span><span class="token punctuation">)</span> swap<span class="token punctuation">(</span>nums<span class="token punctuation">[</span>c<span class="token punctuation">]</span><span class="token punctuation">,</span> nums<span class="token punctuation">[</span>p<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token keyword">else</span> <span class="token keyword">break</span><span class="token punctuation">;</span>
-            p <span class="token operator">=</span> c<span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
+    <span class="token keyword">def</span> <span class="token function">build_heap</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> heap<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span>len<span class="token punctuation">(</span>heap<span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            self<span class="token punctuation">.</span>max_heapify<span class="token punctuation">(</span>heap<span class="token punctuation">,</span> i<span class="token punctuation">,</span> len<span class="token punctuation">(</span>heap<span class="token punctuation">)</span><span class="token punctuation">)</span>
 
-    vector<span class="token operator">&lt;</span>int<span class="token operator">></span> heapSort<span class="token punctuation">(</span>vector<span class="token operator">&lt;</span>int<span class="token operator">></span><span class="token operator">&amp;</span> nums<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        int n <span class="token operator">=</span> nums<span class="token punctuation">.</span>size<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">for</span> <span class="token punctuation">(</span>int i <span class="token operator">=</span> n<span class="token operator">/</span><span class="token number">2</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">>=</span> <span class="token number">0</span><span class="token punctuation">;</span> <span class="token operator">-</span><span class="token operator">-</span>i<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            adjust<span class="token punctuation">(</span>nums<span class="token punctuation">,</span> i<span class="token punctuation">,</span> n<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-        <span class="token keyword">for</span> <span class="token punctuation">(</span>int i <span class="token operator">=</span> n<span class="token number">-1</span><span class="token punctuation">;</span> i <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">;</span> <span class="token operator">-</span><span class="token operator">-</span>i<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            swap<span class="token punctuation">(</span>nums<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            adjust<span class="token punctuation">(</span>nums<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> i<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-        <span class="token keyword">return</span> nums<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
+    <span class="token keyword">def</span> <span class="token function">heap_sort</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> nums<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        self<span class="token punctuation">.</span>build_heap<span class="token punctuation">(</span>nums<span class="token punctuation">)</span>
+        <span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span>len<span class="token punctuation">(</span>nums<span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> nums<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> nums<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
+            self<span class="token punctuation">.</span>max_heapify<span class="token punctuation">(</span>nums<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> i<span class="token punctuation">)</span>
 
-    <span class="token operator">//</span> 归并排序（<span class="token number">192</span> ms）
-    vector<span class="token operator">&lt;</span>int<span class="token operator">></span> mSort<span class="token punctuation">(</span>vector<span class="token operator">&lt;</span>int<span class="token operator">></span><span class="token operator">&amp;</span> nums<span class="token punctuation">,</span> int l<span class="token punctuation">,</span> int r<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>l <span class="token operator">>=</span> r<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token punctuation">{</span>nums<span class="token punctuation">[</span>l<span class="token punctuation">]</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
-        int m <span class="token operator">=</span> l<span class="token operator">+</span><span class="token punctuation">(</span>r<span class="token operator">-</span>l<span class="token punctuation">)</span><span class="token operator">/</span><span class="token number">2</span><span class="token punctuation">;</span>
-        vector<span class="token operator">&lt;</span>int<span class="token operator">></span> lnums <span class="token operator">=</span> mSort<span class="token punctuation">(</span>nums<span class="token punctuation">,</span> l<span class="token punctuation">,</span> m<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        vector<span class="token operator">&lt;</span>int<span class="token operator">></span> rnums <span class="token operator">=</span> mSort<span class="token punctuation">(</span>nums<span class="token punctuation">,</span> m<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">,</span> r<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        vector<span class="token operator">&lt;</span>int<span class="token operator">></span> res<span class="token punctuation">;</span>
-        int i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-        <span class="token keyword">while</span> <span class="token punctuation">(</span>i <span class="token operator">&lt;=</span> m<span class="token operator">-</span>l <span class="token operator">&amp;</span><span class="token operator">&amp;</span> j <span class="token operator">&lt;=</span> r<span class="token operator">-</span>m<span class="token number">-1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            <span class="token keyword">if</span> <span class="token punctuation">(</span>lnums<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">&lt;</span> rnums<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-                res<span class="token punctuation">.</span>push_back<span class="token punctuation">(</span>lnums<span class="token punctuation">[</span>i<span class="token operator">+</span><span class="token operator">+</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
-                res<span class="token punctuation">.</span>push_back<span class="token punctuation">(</span>rnums<span class="token punctuation">[</span>j<span class="token operator">+</span><span class="token operator">+</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token punctuation">}</span>
-        <span class="token punctuation">}</span>
-        <span class="token keyword">while</span> <span class="token punctuation">(</span>i <span class="token operator">&lt;=</span> m<span class="token operator">-</span>l<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            res<span class="token punctuation">.</span>push_back<span class="token punctuation">(</span>lnums<span class="token punctuation">[</span>i<span class="token operator">+</span><span class="token operator">+</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-        <span class="token keyword">while</span> <span class="token punctuation">(</span>j <span class="token operator">&lt;=</span> r<span class="token operator">-</span>m<span class="token number">-1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            res<span class="token punctuation">.</span>push_back<span class="token punctuation">(</span>rnums<span class="token punctuation">[</span>j<span class="token operator">+</span><span class="token operator">+</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-        <span class="token keyword">return</span> res<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
+    <span class="token keyword">def</span> <span class="token function">sortArray</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> nums<span class="token punctuation">:</span> List<span class="token punctuation">[</span>int<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> List<span class="token punctuation">[</span>int<span class="token punctuation">]</span><span class="token punctuation">:</span>
+        self<span class="token punctuation">.</span>heap_sort<span class="token punctuation">(</span>nums<span class="token punctuation">)</span>
+        <span class="token keyword">return</span> nums<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h4><ol>
+<li>分治的思想来对序列进行排序。对一个长为 n 的待排序的序列，我们将其分解成两个长度为n/2的子序列。</li>
+<li>每次先递归调用函数使两个子序列有序，然后我们再线性合并两个有序的子序列使整个序列有序。</li>
+</ol>
+<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">Solution</span><span class="token punctuation">:</span>
+    <span class="token keyword">def</span> <span class="token function">merge_sort</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> nums<span class="token punctuation">,</span> l<span class="token punctuation">,</span> r<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">if</span> l <span class="token operator">==</span> r<span class="token punctuation">:</span>
+            <span class="token keyword">return</span>
+        mid <span class="token operator">=</span> <span class="token punctuation">(</span>l <span class="token operator">+</span> r<span class="token punctuation">)</span> <span class="token operator">//</span> <span class="token number">2</span>
+        self<span class="token punctuation">.</span>merge_sort<span class="token punctuation">(</span>nums<span class="token punctuation">,</span> l<span class="token punctuation">,</span> mid<span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>merge_sort<span class="token punctuation">(</span>nums<span class="token punctuation">,</span> mid <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">,</span> r<span class="token punctuation">)</span>
+        tmp <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+        i<span class="token punctuation">,</span> j <span class="token operator">=</span> l<span class="token punctuation">,</span> mid <span class="token operator">+</span> <span class="token number">1</span>
+        <span class="token keyword">while</span> i <span class="token operator">&lt;=</span> mid <span class="token operator">or</span> j <span class="token operator">&lt;=</span> r<span class="token punctuation">:</span>
+            <span class="token keyword">if</span> i <span class="token operator">></span> mid <span class="token operator">or</span> <span class="token punctuation">(</span>j <span class="token operator">&lt;=</span> r <span class="token operator">and</span> nums<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">&lt;</span> nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+                tmp<span class="token punctuation">.</span>append<span class="token punctuation">(</span>nums<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">)</span>
+                j <span class="token operator">+=</span> <span class="token number">1</span>
+            <span class="token keyword">else</span><span class="token punctuation">:</span>
+                tmp<span class="token punctuation">.</span>append<span class="token punctuation">(</span>nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span>
+                i <span class="token operator">+=</span> <span class="token number">1</span>
+        nums<span class="token punctuation">[</span>l<span class="token punctuation">:</span> r <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> tmp
 
-    vector<span class="token operator">&lt;</span>int<span class="token operator">></span> mergeSort<span class="token punctuation">(</span>vector<span class="token operator">&lt;</span>int<span class="token operator">></span><span class="token operator">&amp;</span> nums<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        int n <span class="token operator">=</span> nums<span class="token punctuation">.</span>size<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        nums <span class="token operator">=</span> mSort<span class="token punctuation">(</span>nums<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> n<span class="token number">-1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">return</span> nums<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-
-<span class="token keyword">def</span> <span class="token function">merge_sort</span><span class="token punctuation">(</span>arr<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token comment" spellcheck="true"># divide to two</span>
-    <span class="token keyword">if</span> len<span class="token punctuation">(</span>arr<span class="token punctuation">)</span> <span class="token operator">&lt;</span> <span class="token number">2</span><span class="token punctuation">:</span>
-        <span class="token keyword">return</span> arr
-    mid <span class="token operator">=</span> int<span class="token punctuation">(</span>len<span class="token punctuation">(</span>arr<span class="token punctuation">)</span><span class="token operator">/</span><span class="token number">2</span><span class="token punctuation">)</span>
-    left <span class="token operator">=</span> merge_sort<span class="token punctuation">(</span>arr<span class="token punctuation">[</span><span class="token punctuation">:</span>mid<span class="token punctuation">]</span><span class="token punctuation">)</span>
-    right <span class="token operator">=</span> merge_sort<span class="token punctuation">(</span>arr<span class="token punctuation">[</span>mid<span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-    <span class="token keyword">return</span> merge<span class="token punctuation">(</span>left<span class="token punctuation">,</span> right<span class="token punctuation">)</span>
-
-<span class="token keyword">def</span> <span class="token function">merge</span><span class="token punctuation">(</span>left<span class="token punctuation">,</span> right<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    result <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
-    j <span class="token operator">=</span> <span class="token number">0</span>
-    i <span class="token operator">=</span> <span class="token number">0</span>
-    <span class="token keyword">while</span> i <span class="token operator">&lt;</span> len<span class="token punctuation">(</span>left<span class="token punctuation">)</span> <span class="token operator">and</span> j <span class="token operator">&lt;</span> len<span class="token punctuation">(</span>right<span class="token punctuation">)</span><span class="token punctuation">:</span>
-        <span class="token keyword">if</span> left<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">&lt;</span> right<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">:</span>
-            result<span class="token punctuation">.</span>append<span class="token punctuation">(</span>left<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span>
-            i <span class="token operator">+=</span> <span class="token number">1</span>
-        <span class="token keyword">else</span><span class="token punctuation">:</span>
-            result<span class="token punctuation">.</span>append<span class="token punctuation">(</span>right<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">)</span>
-            j <span class="token operator">+=</span> <span class="token number">1</span>
-    <span class="token comment" spellcheck="true"># add the larger part both left and right</span>
-    result <span class="token operator">+=</span> left<span class="token punctuation">[</span>i<span class="token punctuation">:</span><span class="token punctuation">]</span>
-    result <span class="token operator">+=</span> right<span class="token punctuation">[</span>j<span class="token punctuation">:</span><span class="token punctuation">]</span>
-    <span class="token keyword">return</span> result
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><strong>其他排序算法</strong></p>
-<pre><code>// 希尔排序（40 ms）
+    <span class="token keyword">def</span> <span class="token function">sortArray</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> nums<span class="token punctuation">:</span> List<span class="token punctuation">[</span>int<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> List<span class="token punctuation">[</span>int<span class="token punctuation">]</span><span class="token punctuation">:</span>
+        self<span class="token punctuation">.</span>merge_sort<span class="token punctuation">(</span>nums<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> len<span class="token punctuation">(</span>nums<span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span>
+        <span class="token keyword">return</span> nums<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="其他排序算法"><a href="#其他排序算法" class="headerlink" title="其他排序算法"></a><strong>其他排序算法</strong></h3><pre><code>// 希尔排序（40 ms）
 vector&lt;int&gt; shellSort(vector&lt;int&gt;&amp; nums) {
     int n = nums.size();
     for (int gap = n/2; gap &gt; 0; gap /= 2) {
@@ -1276,32 +1244,31 @@ vector&lt;int&gt; bucketSort(vector&lt;int&gt;&amp; nums) {
             <div class="article-badge left-badge text-color">
                 <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2020/10/25/redis-zhu-cong-tong-bu/">
+                <a href="/2020/02/16/algorithm-method/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="redis主从同步">
+                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="分治、贪心、动态规划">
                         
-                        <span class="card-title">redis主从同步</span>
+                        <span class="card-title">分治、贪心、动态规划</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            主从库之间采用读写分离。读操作：主库、从库都可以接收；写操作：首先到主库执行，然后，主库将写操作同步给从库。
-CAPC - Consistent ，一致性A - Availability ，可用性P - Partition toleranc
+                            本文介绍算法基本概念和适用场景。
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2020-10-25
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2020-02-16
                         </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/redis/" class="post-category" target="_blank">
-                                    redis
+                            <a href="/categories/算法/" class="post-category" target="_blank">
+                                    算法
                                 </a>
                             
                             
@@ -1311,8 +1278,8 @@ CAPC - Consistent ，一致性A - Availability ，可用性P - Partition toleran
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/redis/" target="_blank">
-                        <span class="chip bg-color">redis</span>
+                    <a href="/tags/算法/" target="_blank">
+                        <span class="chip bg-color">算法</span>
                     </a>
                     
                 </div>
@@ -1330,7 +1297,7 @@ CAPC - Consistent ，一致性A - Availability ，可用性P - Partition toleran
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="十大经典排序算法整理汇总（附代码）">
+                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="十大经典排序算法整理汇总（附代码）">
                         
                         <span class="card-title">十大经典排序算法整理汇总（附代码）</span>
                     </div>
@@ -1536,7 +1503,7 @@ CAPC - Consistent ，一致性A - Availability ，可用性P - Partition toleran
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">172.7k</span>
+            <span class="white-color">177.8k</span>
             
 
             <br>

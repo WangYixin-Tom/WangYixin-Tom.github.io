@@ -1,0 +1,1650 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="常见场景题, python rabbitmq redis flask kafka">
+    <meta name="baidu-site-verification" content="code-KoKq36g1n2">
+    <meta name="google-site-verification" content="yCy2azpds5XSuGZvis6OuA-XIGF5GuGpYRAaGfD6o48">
+    <meta name="360-site-verification" content="b7c11a830ef90fd1464ad6206bb7b6e7">
+    <meta name="description" content="大数据1、100G 的手机号文件，找到重复的手机号，将重复手机号放入另一个文件。PC 机内存1G
+按照手机前三位分成1000 个文件，然后hashmap 或者bitmap 进行重复校验）2、1G大小的一个文件中找出出现频率最高的100个数
+">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>常见场景题 | 好好学习</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    <style type="text/css">
+        
+    </style>
+
+    <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
+    <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?46e79e71af0709a5b9106bf20cecc493";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+    
+        <script>
+            (function(){
+                var bp = document.createElement('script');
+                var curProtocol = window.location.protocol.split(':')[0];
+                if (curProtocol === 'https') {
+                    bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+                }
+                else {
+                    bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+                }
+                var s = document.getElementsByTagName("script")[0];
+                s.parentNode.insertBefore(bp, s);
+            })();
+        </script>
+    
+
+    <script>
+        (function(){
+        var src = "https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
+        document.write('<script src="' + src + '" id="sozz"><\/script>');
+        })();
+    </script>
+
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+
+<body>
+
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">好好学习</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fa fa-navicon"></i></a>
+<ul class="right">
+    
+    <li class="hide-on-med-and-down">
+        <a href="/" class="waves-effect waves-light">
+            
+            <i class="fa fa-home"></i>
+            
+            <span>首页</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/tags" class="waves-effect waves-light">
+            
+            <i class="fa fa-tags"></i>
+            
+            <span>标签</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/categories" class="waves-effect waves-light">
+            
+            <i class="fa fa-bookmark"></i>
+            
+            <span>分类</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/archives" class="waves-effect waves-light">
+            
+            <i class="fa fa-archive"></i>
+            
+            <span>归档</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/about" class="waves-effect waves-light">
+            
+            <i class="fa fa-user-circle-o"></i>
+            
+            <span>关于</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/friends" class="waves-effect waves-light">
+            
+            <i class="fa fa-address-book"></i>
+            
+            <span>友情链接</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/contact" class="waves-effect waves-light">
+            
+            <i class="fa fa-comments"></i>
+            
+            <span>留言板</span>
+        </a>
+    </li>
+    
+    <li>
+        <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+            <i id="searchIcon" class="fa fa-search" title="搜索"></i>
+        </a>
+    </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">好好学习</div>
+        <div class="logo-desc">
+            
+            业精于勤荒于嬉，行成于思毁于随
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li>
+            <a href="/" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-home"></i>
+                
+                首页
+            </a>
+        </li>
+        
+        <li>
+            <a href="/tags" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-tags"></i>
+                
+                标签
+            </a>
+        </li>
+        
+        <li>
+            <a href="/categories" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-bookmark"></i>
+                
+                分类
+            </a>
+        </li>
+        
+        <li>
+            <a href="/archives" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-archive"></i>
+                
+                归档
+            </a>
+        </li>
+        
+        <li>
+            <a href="/about" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-user-circle-o"></i>
+                
+                关于
+            </a>
+        </li>
+        
+        <li>
+            <a href="/friends" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-address-book"></i>
+                
+                友情链接
+            </a>
+        </li>
+        
+        <li>
+            <a href="/contact" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-comments"></i>
+                
+                留言板
+            </a>
+        </li>
+        
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+<script src="/libs/cryptojs/crypto-js.min.js"></script>
+<script>
+    (function() {
+        let pwd = '';
+        if (pwd && pwd.length > 0) {
+            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                alert('密码错误，将返回主页！');
+                location.href = '/';
+            }
+        }
+    })();
+</script>
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/18.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        常见场景题
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 20px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                        <a href="/tags/interview/" target="_blank">
+                            <span class="chip bg-color">interview</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fa fa-bookmark fa-fw icon-category"></i>
+                        
+                        <a href="/categories/interview/" class="post-category" target="_blank">
+                            interview
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                <div class="post-date info-break-policy">
+                    <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2021-05-24
+                </div>
+
+                <div class="post-author info-break-policy">
+                    <i class="fa fa-user-o fa-fw"></i>作者:&nbsp;&nbsp;
+                    
+                    wangyixin-tom
+                    
+                </div>
+
+                
+                
+                <div class="info-break-policy">
+                    <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    8.9k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    32 分
+                </div>
+                
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h2 id="大数据"><a href="#大数据" class="headerlink" title="大数据"></a>大数据</h2><p><strong>1、100G 的手机号文件，找到重复的手机号，将重复手机号放入另一个文件。PC 机内存1G</strong></p>
+<pre><code>按照手机前三位分成1000 个文件，然后hashmap 或者bitmap 进行重复校验）</code></pre><p><strong>2、1G大小的一个文件中找出出现频率最高的100个数</strong></p>
+<pre><code>（1）此处1G文件远远大于1M内存，分治法，先hash映射把大文件分成很多个小文件，具体操作如下：读文件中，对于每个词x，取hash(x)%5000，然后按照该值存到5000个小文件(记为f0,f1,...,f4999)中，这样每个文件大概是200k左右（每个相同的词一定被映射到了同一文件中）
+（2）对于每个文件fi，都用hash_map做词和出现频率的统计，取出频率大的前100个词（怎么取？topK问题，建立一个100个节点的最小堆），把这100个词和出现频率再单独存入一个文件
+（3）根据上述处理，我们又得到了5000个文件，归并文件取出top100（Top K 问题，比较最大的前100个频数）</code></pre><p><strong>3、海量日志数据，提取出某日访问百度次数最多的那个IP。</strong></p>
+<pre><code>分而治之+Hash
+1.IP地址最多有2^32=4G种取值情况，所以不能完全加载到内存中处理；
+2.可以考虑采用“分而治之”的思想，按照IP地址的Hash(IP)%1024值，把海量IP日志分别存储到1024个小文件中。这样，每个小文件最多包含4MB个IP地址；
+3.对于每一个小文件，可以构建一个IP为key，出现次数为value的Hash map，同时记录当前出现次数最多的那个IP地址；
+4.可以得到1024个小文件中的出现次数最多的IP，再依据常规的排序算法得到总体上出现次数最多的IP；</code></pre><p><strong>4、统计最热门的10个查询串，要求使用的内存不能超过1G，搜索引擎会通过日志文件把用户每次检索使用的所有检索串都记录下来，每个查询串的长度为1-255字节。</strong></p>
+<pre><code>第一步、先对这批海量数据预处理，在O（N）的时间内用Hash表完成统计;
+第二步、借助堆这个数据结构，找出Top K，时间复杂度为N&#39;logK。
+即，借助堆结构，我们可以在log量级的时间内查找和调整/移动。因此，维护一个K(该题目中是10)大小的小根堆，然后遍历300万的Query，分别 和根元素进行对比所以，我们最终的时间复杂度是：O（N） + N&#39;*O（logK），（N为1000万，N&#39;为300万）。</code></pre><p><strong>5、给定a、b两个文件，各存放50亿个url，每个url各占64字节，内存限制是4G，让你找出a、b文件共同的url？</strong></p>
+<pre><code>可以估计每个文件安的大小为5G×64=320G，远远大于内存限制的4G。所以不可能将其完全加载到内存中处理。考虑采取分而治之的方法。
+
+遍历文件a，对每个url求取hash(url)%1000，然后根据所取得的值将url分别存储到1000个小文件（记为a0,a1,…,a999）中。这样每个小文件的大约为300M。
+
+遍历文件b，采取和a相同的方式将url分别存储到1000小文件（记为b0,b1,…,b999）。这样处理后，所有可能相同的url都在对应的小文件（a0vsb0,a1vsb1,…,a999vsb999）中，不对应的小文件不可能有相同的url。然后我们只要求出1000对小文件中相同的 url即可。
+
+求每对小文件中相同的url时，可以把其中一个小文件的url存储到hash_set中。然后遍历另一个小文件的每个url，看其是否在刚才构建的hash_set中，如果是，那么就是共同的url，存到文件里面就可以了。</code></pre><p><strong>6、2.5亿个整数中找出不重复的整数，注，内存不足以容纳这2.5亿个整数。</strong></p>
+<pre><code>采用2-Bitmap（每个数分配2bit，00表示不存在，01表示出现一次，10表示多次，11无意义）进行，共需内存2^32 * 2 bit=1 GB内存，还可以接受。然后扫描这2.5亿个整数，查看Bitmap中相对应位，如果是00变01，01变10，10保持不变。所描完事后，查看 bitmap，把对应位是01的整数输出即可。</code></pre><p><strong>7、给40亿个不重复的unsigned int的整数，没排过序的，然后再给一个数，如何快速判断这个数是否在那40亿个数当中？</strong></p>
+<p>申请512M的内存，一个bit位代表一个unsigned int值。读入40亿个数，设置相应的bit位，读入要查询的数，查看相应bit位是否为1，为1表示存在，为0表示不存在。</p>
+<p><strong>8、大日志中获取到指定时间段的数据</strong></p>
+<blockquote>
+<p>与传统的二分搜索不一样，日志文件中的每一条日志长度都是不一样的，我们使用<code>mid = start + (end - start) / 2</code>得到mid时，并不直接指向一行的行首。所以我们需要找到<code>mid</code>所在行的行首。</p>
+</blockquote>
+<p><strong>9、海量数据如何排序</strong></p>
+<p><strong>外部排序</strong></p>
+<p>海量数据不能一次性读入内存，在对海量数据进行排序时，首先需要将海量数据拆分到多台机器或者多个文件，这些机器或文件称为拆分节点；然后在每个拆分节点上将数据全部读入内存并使用快速排序等方法进行排序；最后在合并节点使用<strong>多路归并方法</strong>将所有拆分节点的部分排序结果整合成最终的排序结果。外部排序也可以被称为外部归并排序。<br>如果不进行额外处理，<strong>合并节点仍然无法将所有数据读入内存中。可以使用小顶堆</strong>来解决这个问题：</p>
+<ul>
+<li>假设有 k 个拆分节点，从这 k 个拆分节点分别读取一个最小的数据到小顶堆中。</li>
+<li>将堆顶数据移出堆并写入合并节点的最终结果文件中。</li>
+<li>确定刚才从堆中移除的数据属于哪个拆分节点，并从该拆分节点再读入一个数据。</li>
+</ul>
+<p>上面的做法需要频繁地读写磁盘，可以设置输入缓存和输出缓存来解决这个问题。为每个拆分节点都设置一个输入缓存，每次将一部分数据读入输入缓存中，只有当输入缓存数据为空时才再从磁盘读入数据。并设置一个输出缓存，只有输出缓存满时才将数据写出磁盘中。</p>
+<p><strong>BitMap</strong></p>
+<p>如果待排序的数据是整数，或者其它范围比较小的数据时，可以使用 BitMap 对其进行排序。BitMap 相当于一个比特数组，如果某个数据存在时就将对应的比特数组位置设置为 1，最后从头遍历比特数组就能得到一个排序的整数序列。</p>
+<p>这种方法<strong>只能处理数据不重复的情况</strong>，如果数据重复，就要将<strong>比特数组转换成整数数组用于计数</strong>，这种排序方法叫做计数排序。可以把整数数组看成 32 个比特数组，32 比特可以存放的计数最大值为 232 ，在某些场景下数据的重复量不会这么大，只需要几个比特数组就能完成计数操作。</p>
+<p><strong>10、100亿数据找中位数</strong></p>
+<blockquote>
+<p>（1）我们要划分映射区域，一个有符号的32位整数的取值范围是[-2^31, 2^31-1]，总共有4294967296个取值，因此我们将它划分成100000组，即43000个数映射到一个组，将a1的区间[-2^31，-2^31+43000)，a2的区间[-2^31+43000，-2^31+86000)……一直到a100000的区间；（这是组数与项数的一个平衡问题）；</p>
+<p>（2.1）我们首先装载第一个1亿个数，遍历这些数，比较大小，看他落入a1至a100000的哪个区间，落入的对应区间统计计数增1；这次是对这里面的数区间的组映射；</p>
+<p>（2.2）重复步骤（2.1），装载100次，这样我们就得到了a1至a100000的区间统计计数的取值；</p>
+<p>（2.3）内存分析：1亿个数用来装载，100000个区间统计计数耗费400000个字节，足够使用；剩余内存（128M-1亿-100000）*4B;</p>
+<p>（3.1）使用sum依次累加a1至a100000的区间统计计数，直到累加某区间ai后sum大于50亿了；那么第50亿个数就在该区间中，用sum减去该区间ai的统计数的到first；即前面的区间统计总数位置为第first个（其中first &lt; 50亿）;</p>
+<p>（3.2）那么我就在ai区间找到第50亿-first个数，或第50亿-first+1个数（第50亿-first+1个数这个数可能在ai后面的区间，但是概率很小，但是找到的原理类似）；</p>
+<p>（3.3）内存分析：每一个区间分割比较要花费100000个区间比较数，耗费400000个字节，足够使用；剩余内存（128M-1亿-100000-100000-2）*4B;</p>
+<p>（4.1）再次遍历这100亿个数，还是每组1亿个数，一共100组；对于若在ai区间的43000个数的每一个都开一个统计计数器 ，跟上面类似，这次是对这里面的数单个映射；</p>
+<p>（4.2）同样使用sum依次累加这1至43000的的统计计数，直到累加某区间后sum大于50亿-first；那么我们可以得到第（50亿-first）个数就在对应的位置；而且第（50亿-first+1）个数位置也有可能在，或在下一个统计计数大于0的位置；当然也有可能不在ai区间；（但原理类似）；</p>
+<p>（4.3）得到了第（50亿-first）个数值；而且第（50亿-first+1）个数值，可算出中位数了；</p>
+<p>（4.4）内存分析：上述的100000个比较数，此时我们只需要两个比较数；100000个区间统计计数全部释放掉，但增加了43000位置统计计数；剩余内存（128M-1亿-43000-2-2）*4B；还是足够使用的；</p>
+<p>（5）总共遍历两遍100亿数据</p>
+</blockquote>
+<p>11、10000个IP，快速查找某IP是否存在，使用什么数据结构?</p>
+<blockquote>
+<p>使用BitMap，需要使用32位。</p>
+</blockquote>
+<h2 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h2><h3 id="银行家算法"><a href="#银行家算法" class="headerlink" title="银行家算法"></a><strong>银行家算法</strong></h3><p>我们可以把操作系统看作是银行家，操作系统管理的资源相当于银行家管理的资金，进程向操作系统请求分配资源相当于用户向银行家贷款。<br>为保证资金的安全,银行家规定:</p>
+<ul>
+<li>当一个顾客对资金的最大需求量不超过银行家现有的资金时就可接纳该顾客;</li>
+<li>顾客可以分期贷款,但贷款的总数不能超过最大需求量;</li>
+<li>当银行家现有的资金不能满足顾客尚需的贷款数额时,对顾客的贷款可推迟支付,但总能使顾客在有限的时间里得到贷款;</li>
+<li>当顾客得到所需的全部资金后,一定能在有限的时间里归还所有的资金.</li>
+</ul>
+<h3 id="哲学家吃饭问题怎么解决？"><a href="#哲学家吃饭问题怎么解决？" class="headerlink" title="哲学家吃饭问题怎么解决？"></a>哲学家吃饭问题怎么解决？</h3><blockquote>
+<p>五个哲学家共用一张圆桌，分别坐在周围的五张椅子上，在桌子上有五只碗和五只筷子，他们的生活方式是交替地进行思考和进餐。平时，一个哲学家进行思考，饥饿时便试图取用其左右最靠近他的筷子，只有在他拿到两只筷子时才能进餐。进餐毕，放下筷子继续思考。</p>
+</blockquote>
+<p>可以用一个信号量表示筷子，由这<strong>五个信号量构成信号量数组</strong>。下面是死锁的解决：</p>
+<p><strong>策略一</strong>原理：至多只允许四个哲学家同时进餐，以保证至少有一个哲学家能够进餐，最终总会释放出他所使用过的两支筷子，从而可使更多的哲学家进餐。定义信号量count，只允许4个哲学家同时进餐，这样就能保证至少有一个哲学家可以就餐。</p>
+<p><strong>策略二</strong>原理：仅当哲学家的<strong>左右两支筷子都可用</strong>时，才允许他拿起筷子进餐。可以利用AND 型信号量机制实现，也可以利用信号量的保护机制实现。利用信号量的保护机制实现的思想是通过记录型信号量mutex对取左侧和右侧筷子的操作进行保护，使之成为一个原子操作，这样可以防止死锁的出现。</p>
+<p><strong>策略三</strong>原理：规定奇数号的哲学家先拿起<strong>他左边</strong>的筷子，然后再去拿他右边的筷子；而偶数号的哲学家则先拿起<strong>他右边</strong>的筷子，然后再去拿他左边的筷子。</p>
+<h2 id="系统设计"><a href="#系统设计" class="headerlink" title="系统设计"></a>系统设计</h2><h3 id="单点登录"><a href="#单点登录" class="headerlink" title="单点登录"></a>单点登录</h3><p>单点登录就是<strong>在多个系统中，用户只需一次登录，各个系统即可感知该用户已经登录。</strong></p>
+<p><strong>Session不共享问题</strong></p>
+<blockquote>
+<ul>
+<li>SSO系统生成一个token，并将用户信息存到Redis中，并设置过期时间</li>
+<li>其他系统请求SSO系统进行登录，得到SSO返回的token，写到Cookie中</li>
+<li>每次请求时，Cookie都会带上，拦截器得到token，判断是否已经登录</li>
+</ul>
+</blockquote>
+<p>针对Cookie存在<strong>跨域问题</strong>，有几种解决方案：</p>
+<ol>
+<li>服务端将Cookie写到客户端后，客户端对Cookie进行解析，将Token解析出来，此后请求都把这个Token带上就行了</li>
+<li>多个域名共享Cookie，在写到客户端的时候设置Cookie的domain。</li>
+<li>将Token保存在SessionStroage中（不依赖Cookie就没有跨域的问题了）</li>
+</ol>
+<p><strong>CAS（Central Authentication Service）原理</strong></p>
+<ul>
+<li>用户想要访问系统A<code>www.java3y.com</code>受限的资源，系统A<code>www.java3y.com</code>发现用户并没有登录，于是<strong>重定向到sso认证中心，并将自己的地址作为参数</strong>。</li>
+<li>sso认证中心发现用户未登录，将用户引导至登录页面，用户进行输入用户名和密码进行登录，用户与认证中心建立<strong>全局会话（生成一份Token，写到Cookie中，保存在浏览器上）</strong></li>
+<li>认证中心<strong>重定向回系统A</strong>，并把Token携带过去给系统A</li>
+<li>系统A去sso认证中心验证这个Token是否正确，如果正确，则系统A和用户建立局部会话（<strong>创建Session</strong>）。到此，系统A和用户已经是登录状态了。</li>
+<li>此时，用户想要访问系统B<code>www.java4y.com</code>受限的资源，系统B<code>www.java4y.com</code>发现用户并没有登录，于是<strong>重定向到sso认证中心，并将自己的地址作为参数</strong>，这次系统B<strong>重定向</strong>到认证中心<code>www.sso.com</code>是可以带上Cookie的。</li>
+<li>认证中心<strong>根据带过来的Cookie</strong>发现已经与用户建立了全局会话了，认证中心<strong>重定向回系统B</strong>，并把Token携带过去给系统B</li>
+<li>系统B去sso认证中心验证这个Token是否正确，如果正确，则系统B和用户建立局部会话（<strong>创建Session</strong>）。到此，系统B和用户已经是登录状态了。</li>
+</ul>
+<h3 id="JWT"><a href="#JWT" class="headerlink" title="JWT"></a>JWT</h3><h4 id="令牌结构"><a href="#令牌结构" class="headerlink" title="令牌结构"></a><strong>令牌结构</strong></h4><p>由三部分组成，这些部分由点分隔</p>
+<ul>
+<li>Header：包括令牌的类型（即JWT）和所使用的签名算法（SHA256或者RSA）</li>
+<li>Payload：有关实体（通常是用户）和其他数据的声明<ul>
+<li>注册声明：提供一组有用的可互操作的权利要求。其中一些是： iss（JWT的签发者）， exp（expires,到期时间）， sub（主题）， aud（JWT接收者），iat(issued at，签发时间)等</li>
+<li>公开声明：一般添加用户的相关信息或其他业务需要的必要信息。不建议添加敏感信息，因为该部分在客户端可解密。</li>
+<li>私有声明：提供者和消费者所共同定义的声明，一般不建议存放敏感信息</li>
+</ul>
+</li>
+<li>Signature：Signature部分的生成需要base64编码之后的Header,base64编码之后的Payload,密钥（secret）,Header需要指定签字的算法。</li>
+</ul>
+<h4 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h4><ul>
+<li>JWT 的最大缺点是，由于服务器不保存 session 状态，因此无法在使用过程中废止某个 token，或者更改 token 的权限。也就是说，一旦 JWT 签发了，<strong>在到期之前就会始终有效</strong>，除非服务器部署额外的逻辑。</li>
+<li>JWT 本身包含了认证信息，<strong>一旦泄露，任何人都可以获得该令牌的所有权限</strong>。为了减少盗用，JWT 的有效期应该设置得比较短。对于一些比较重要的权限，使用时应该再次对用户进行认证。</li>
+<li>为了减少盗用，<strong>JWT 不应该使用 HTTP 协议明码传输，要使用 HTTPS 协议传输</strong>。</li>
+</ul>
+<h4 id="用户登出，如何设置token无效？"><a href="#用户登出，如何设置token无效？" class="headerlink" title="用户登出，如何设置token无效？"></a>用户登出，如何设置token无效？</h4><p>JWT是无状态的，用户登出设置token无效就已经违背了JWT的设计原则，但是在实际应用场景中，这种功能是需要的，那该如何实现呢？提供几种思路：</p>
+<ul>
+<li>用户登出，浏览器端丢弃token</li>
+<li>使用redis数据库，用户登出，从redis中删除对应的token,请求访问时，需要从redis库中取出对应的token,若没有，则表明已经登出</li>
+</ul>
+<blockquote>
+<p>为了保持数据的一致性，每一次认证都需要从redis中取出对应的token，每一次都以redis中的token为准。</p>
+</blockquote>
+<h4 id="使用redis-两个不同的设备，一个设备登出，另外一个设备如何处理？"><a href="#使用redis-两个不同的设备，一个设备登出，另外一个设备如何处理？" class="headerlink" title="使用redis,两个不同的设备，一个设备登出，另外一个设备如何处理？"></a>使用redis,两个不同的设备，一个设备登出，另外一个设备如何处理？</h4><p>请思考这样一种场景：</p>
+<ul>
+<li>同一个用户从两个设备登陆到服务端（设备1，设备2）；</li>
+<li>设备1登出，删除redis中的对应的token - 设备2再次请求数据时，redis中的数据为空，需要重新登录。</li>
+</ul>
+<p>很明显，这种情况是不应该出现的，说一下自己的想法：</p>
+<ul>
+<li>每一个设备与用户生成唯一的key,保存在redis中，即设备1的用户登出，只删除对应的token，设备2的token仍然存在</li>
+</ul>
+<h3 id="OAuth"><a href="#OAuth" class="headerlink" title="OAuth"></a>OAuth</h3><p>OAuth 就是一种授权机制。数据的所有者告诉系统，同意授权第三方应用进入系统，获取这些数据。系统从而产生一个短期的进入令牌（token），用来代替密码，供第三方应用使用。</p>
+<p><strong>OAuth 2.0 规定了四种获得令牌的流程。</strong></p>
+<ul>
+<li>授权码（authorization-code）</li>
+</ul>
+<p><strong>指的是第三方应用先申请一个授权码，然后再用该码获取令牌。</strong></p>
+<blockquote>
+<ol>
+<li>A 网站让用户跳转到 GitHub。</li>
+<li>GitHub 要求用户登录，然后询问”A 网站要求获得 xx 权限，你是否同意？”</li>
+<li>用户同意，GitHub 就会重定向回 A 网站，同时发回一个授权码。</li>
+<li>A 网站使用授权码，向 GitHub 请求令牌。</li>
+<li>GitHub 返回令牌.</li>
+<li>A 网站使用令牌，向 GitHub 请求用户数据。</li>
+</ol>
+</blockquote>
+<ul>
+<li>隐藏式（implicit）</li>
+<li>密码式（password）：</li>
+<li>客户端凭证（client credentials）</li>
+</ul>
+<h3 id="验证码登录"><a href="#验证码登录" class="headerlink" title="验证码登录"></a>验证码登录</h3><p>验证码是由服务端产生，以图片的形式展示在客户端或页面，</p>
+<p>用户端的用户根据图片识别验证码，并进行注册提交，</p>
+<p>提交的验证码在服务层进行校验，如果校验成功，则用户注册成功并登陆</p>
+<h3 id="限流器"><a href="#限流器" class="headerlink" title="限流器"></a>限流器</h3><h4 id="令牌桶"><a href="#令牌桶" class="headerlink" title="令牌桶"></a>令牌桶</h4><p> 假设允许的请求速率为<code>r</code>次每秒，那么每过<code>1/r</code>秒就会向桶里面添加一个令牌。桶的最大大小是<code>b</code>。当请求到来时，检查桶内令牌数是否足够，如果足够，令牌数减少，请求通过。不够的话就会触发拒绝策略。</p>
+<p>如果令牌不被消耗，或者被消耗的速度小于产生的速度，令牌就会不断地增多，直到把桶填满。令牌桶在保持整体上的请求速率的同时，允许某种程度的突发传输。</p>
+<ul>
+<li>限制调用的平均速率的同时还允许一定程度的突发调用</li>
+</ul>
+<h4 id="漏斗桶"><a href="#漏斗桶" class="headerlink" title="漏斗桶"></a>漏斗桶</h4><p>漏斗桶控制请求必须在最大某个速率被消费，就像一个漏斗一样，入水量可大可小，但是最大速率只能到某一量值，不会像令牌桶一样，会有小的尖峰。</p>
+<p> 主要实现方式是通过一个 FIFO （First in first out）的队列实现，这个队列是一个有界队列，大小为<code>b</code>，如果请求堆积满了队列，就会触发丢弃策略。假设允许的请求速率为<code>r</code>次每秒，那么这个队列中的请求，就会以这个速率进行消费。</p>
+<ul>
+<li>能够限制请求调用的速率</li>
+</ul>
+<blockquote>
+<p><strong>漏桶</strong></p>
+<p>漏桶的出水速度是恒定的，那么意味着如果瞬时大流量的话，将有大部分请求被丢弃掉（也就是所谓的溢出）。</p>
+<p><strong>令牌桶</strong></p>
+<p>生成令牌的速度是恒定的，而请求去拿令牌是没有速度限制的。这意味，面对瞬时大流量，该算法可以在短时间内请求拿到大量令牌，而且拿令牌的过程并不是消耗很大的事情。</p>
+<p>个人觉得令牌桶是一个更加精细化的东西，因此避免了集中丢失，本质无太大差别。网上说法可参考，个人觉得不一定对。</p>
+</blockquote>
+<h4 id="滑动日志"><a href="#滑动日志" class="headerlink" title="滑动日志"></a>滑动日志</h4><p>根据缓存之前接受请求对应的时间戳，与当前请求的时间戳进行计算，控制速率。这样可以严格限制请求速率。</p>
+<p>假设<code>n</code>秒内最多处理<code>b</code>个请求。那么会最多缓存 <code>b</code> 个通过的请求与对应的时间戳，假设这个缓存集合为<code>B</code>。每当有请求到来时，从<code>B</code>中删除掉<code>n</code>秒前的所有请求，查看集合是否满了，如果没满，则通过请求，并放入集合，如果满了就触发拒绝策略。</p>
+<h4 id="固定时间窗口"><a href="#固定时间窗口" class="headerlink" title="固定时间窗口"></a>固定时间窗口</h4><p> 假设<code>n</code>秒内最多处理<code>b</code>个请求，那么每隔<code>n</code>秒将计数器重置为<code>b</code>。请求到来时，如果计数器值足够，则扣除并请求通过，不够则触发拒绝策略。实现简单，适用于一些要求不严格的场景。</p>
+<ul>
+<li><code>突刺现象</code>：如果我在单位时间1s内的前10ms，已经通过了100个请求，那后面的990ms，只能眼巴巴的把请求拒绝</li>
+</ul>
+<h2 id="逻辑题"><a href="#逻辑题" class="headerlink" title="逻辑题"></a>逻辑题</h2><p>1、很多根绳子，每一根都不一样且粗细不均匀，每根绳子从头烧到尾都是60分钟烧完，怎么用绳子去测量15分钟的时间</p>
+<pre><code>取出三条绳子。1、同时点燃“第一根的两头”和“第二根的一头”，第一根烧完时间过了“30分钟”；2、第一根烧完后马上点燃第二根的另一头，到第二根烧完时间又过了“15分钟”；</code></pre><p>2、1000杯水，其中一杯有毒，用老鼠试毒，老鼠24h才会死，需要多少只才能找出这杯有毒的水（可以稀释）</p>
+<pre><code>将1000杯水编号(1-1000),将其转化为2进制码，取10只小白鼠（为什么是10只，因为其1000的2进制码长度是10位），给10只小白鼠编号1-10，第一只小白鼠喝第一位2进制码为1的（1000杯中2进制码第一位为1的都要喝），第二只小白鼠喝第二位2进制为1的（1000杯中2进制码第二位的都要喝）以此类推一直到第10只小白鼠喝完，然后1小时后看那几只小白鼠会死，死掉的小白鼠用1表示，未死的用0表示整理出10位2进制码</code></pre><p>3、10个箱子，每个箱子100跟金条，每个1两，一个贪官，在其中一个箱子里面，每根都磨去了一钱，只能称一次，哪个箱子被磨去了一钱。</p>
+<pre><code>第一箱子拿1块，第二箱子拿2块，第n箱子拿n块，然后放在一起称，看看缺了几钱，缺了n钱就说明是第n个箱子。</code></pre><p>4、有八个球，只能称两次（天平称）只有一个球最重谁能找出？</p>
+<blockquote>
+<p>8个球分成3份，分别是2个球，3个球，3个球</p>
+<p>3个球和3个球称，如果一样重的话，那证明重的球在那一份2个球的，两边各放一个，重的球就可以找到了。</p>
+</blockquote>
+<p>5、回到扑克牌的这个主题，要求把一堆乱序的扑克牌进行 排序 ，如果要极致地压榨性能，应该怎么做？时间复杂度能达到多少？</p>
+<blockquote>
+<p>扑克牌本身规律8个1,8个2…</p>
+</blockquote>
+<p>6、假设现在有1-100号乘客顺序登机，正常情况下1号乘客需要坐1号位置，以此类推，大家顺序入座。假设现在1号乘客随机选择了一个座位坐下，2-100号乘客优先看自己的座位是否被占，自己座位被占的情况下会从剩下的座位中随机选一个坐下，否则坐自己的座位； 那么这种情况下，100号乘客可以做到100号位置的概率会是多少?</p>
+<blockquote>
+<p>等价于这个描述：2-99号乘客登机后如果发现1号(疯子)坐在本属于自己的位子上，就会请疯子离开，然后疯子再随机找个空座。这样到100号登机时，2-99号都在自己座位上，1号疯子在自己座位上和100号乘客座位上概率相同，所以是1/2。</p>
+<p>假设疯子坐到了第2号位置上，第二个人因此根据题目随机坐到1和3-100位置上，如果2号把疯子赶走后疯子再随机坐到1和3-100位置上，对于第3号人没有任何区别。从3号的角度看都是有一个坐在2号座位上的人，还有一个随机找座位的“疯子”</p>
+</blockquote>
+<p>7、河里的水是无限的,现在有两个水桶分别是5L、6L，问如何从河里取3L水?</p>
+<blockquote>
+<p>解1<br>设：A为5L 。B为6L。<br>解：<br>（1）5L的装满,全倒向6L中；此时B中有5L水（空1L）.<br>（2）5L的再装满,再倒向6L中,此时只能倒入1L；此时A剩有4L水.<br>（3）把B中的的水全倒掉,把A中的4L倒入B中；此时B中有4L水（空2L）,A为空.<br>（4）把A装满,倒向B,只能倒入2L,A中还剩3L.</p>
+</blockquote>
+<p>8、64匹马，8个赛道，找出跑得最快的4匹马</p>
+<blockquote>
+<p>1、全部马分为8组，每组8匹，每组各跑一次，然后淘汰掉每组的后四名</p>
+<p>2、8组，取每组第一名进行一次比赛，然后淘汰最后四名所在组的所有马，产生了总冠军</p>
+<p>3、第一名组取前3名，第二名组取前3名，第三名组取前2名，第四名组第一名暂时不比。</p>
+<p>4、如果出现第1，2是二三组的第一名，那么第四组第一名需要加赛一场。</p>
+</blockquote>
+<p>10、A B C D E 海盗，他们要瓜分 100 个金币。A B C D E，轮流提议，提议的人需要获得半票及以上，不然就会被杀死，下一个继续提议，你是 A 会怎么分配？</p>
+<blockquote>
+<p>反推方案：</p>
+<p>D E 时， 100,0</p>
+<p>C D E 时， 99,0,1</p>
+<p>B C D E时，99,0,1,0</p>
+<p>ABCDE时，98,0,1,0,1</p>
+</blockquote>
+<p>11、小明离家有50米，每走一米吃一个苹果，起点有100个苹果，每次最多背50个苹果，请问最多可以拿回家多少苹果？</p>
+<ul>
+<li>每走1m，消耗3个苹果，可以走16米，抛弃2个苹果</li>
+<li>一直走，剩16个苹果</li>
+</ul>
+<blockquote>
+<p>从A地往B运送3000L汽油，两地相距1000KM，一辆汽车最多可装载1000L汽油，每行驶1KM耗油1L，请问从B地最多可以得到多少L汽油？ </p>
+<ul>
+<li>每走1km，消耗5升油，可以走200米</li>
+<li>每走1km，消耗3升油，可以走333米，抛弃剩下的1L,</li>
+<li>一直走就行，最后剩533L油</li>
+</ul>
+</blockquote>
+<p>12、圆形湖中间一只鸭，岸边一只老虎，鸭的速度为s，老虎速度为4s，湖半径为r，鸭子到岸边即可安全逃脱，问什么情况下鸭子能顺利逃脱？</p>
+<blockquote>
+<p>我们暂且假定它就在一个半径为R/4的小圆上围绕圆心游走，只要经过一段时间追赶，鸭子一定会游到这样一个位置，它和老虎在同一条直径上，但位置在圆心的两边。</p>
+<p>此时鸭子立即改为沿半径方向往岸边P点游，显然，它离岸边的距离为3R/4，它登岸需要的时间是3R/4V；而老虎到P点的距离正好是半圆，即Rπ，老虎需要的时间是Rπ/4V。因为π=3.14&gt;3，所以 鸭子先上岸。</p>
+</blockquote>
+<p>13、抛硬币，先抛到正面的赢，第一个抛的人赢的概率</p>
+<blockquote>
+<p>1/2 +1/8 + …，等比数列求和，答案2/3</p>
+</blockquote>
+<p>14、23枚硬币，有10个正面朝上。现在蒙住你的眼睛，如何将硬币分为两堆，保证两堆硬币中，正面朝上的硬币数相同。 </p>
+<blockquote>
+<p>先将硬币分为两组，A组10个，B组13个，假设此时B组有x个朝上，那么A组有10-x个朝上。再将A组每个硬币翻转，此时A组有<code>(10-(10-x))=x</code>枚硬币朝上，和B组朝上的硬币数相等。</p>
+</blockquote>
+<p>15.有两个技巧相当的赌徒 A 和 B（即两人赌博胜率各为0.5），现在设定这样的获胜规则：</p>
+<ol>
+<li>A只要赢了2局或以上就获</li>
+<li>B要赢3局或以上才能获胜。</li>
+</ol>
+<p>问双方胜率各为多少？</p>
+<blockquote>
+<p> <code>1/4+2/8+3/16=11/16</code>，另一方获胜5/16</p>
+</blockquote>
+<p>16、在岛上有100只老虎和1只羊，老虎可以吃草，但他们更愿意吃羊。老虎吃羊会变成羊。问羊会不会被吃？</p>
+<blockquote>
+<pre class="line-numbers language-undefined"><code class="language-undefined">1. 1 只老虎，肯定吃;
+2. 2 只老虎肯定不吃，否则就被另一只吃了;
+3. 3 只老虎，如果一只老虎吃掉了羊，这样问题就转换为 2 只老虎和 1 只羊的情况，显然另外两种老虎不敢轻举妄动，所以羊会被吃；
+4. 4 只老虎，如果某一只老虎吃了羊，问题转化为 3 只老虎和 1 只羊的问题，它肯定会被接下来的某一只吃掉，然后其他两只只能等着，所以 4 只老虎，大家都不敢吃羊；
+我们就可以发现如果老虎数目是奇数，那么羊肯定被吃，如果是偶数，那么羊肯定不会被吃。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</blockquote>
+<p>17、两个人数数字，1~30，最少说一个，最多说三个，怎么保证第一个人一定输或者一定赢</p>
+<blockquote>
+<p>4个时，先说是输的，即4n+4的状态。即谁处于这个状态就是输的</p>
+<p>先说的30需要将对方转换到4n+4的状态，即先说2个，剩28，后面根据对方说的数字补充4-x即可。</p>
+</blockquote>
+<p>18、Rand5 实现 Rand7</p>
+<blockquote>
+<p>rand5 *5 + rand5=rand25，小于等于21时对7求余数</p>
+</blockquote>
+<p>19、有n个灯泡，按环状摆放，0为关，1为开，现在你单次操作能改变相邻三个灯泡的状态。能否将所有灯泡关掉？试着去证明你做法的正确性</p>
+<blockquote>
+<p>如果给100个灯泡编号0～99 ，顺序往下走，如果灯是亮的就不管，灭的就按下后面灯泡使这个灯亮（在第一循环内，也就是还没有从99走到0）。</p>
+<p>98号灯是灭的，看99号灯是灭还是亮。如果99号灯是灭的，那就再按一下99号灯的开关，这样全环只有一个灭的灯（0号灯）；如果99号灯是亮的，这样只有98号灯是灭的。总之，全环只有一个灯是灭的。</p>
+<p>第二阶段，将那个灭的灯标记为0号灯，后面的灯依次按顺序排序，每3个一组，中间的那个灯按开关，整个循环跑完，所有的灯都灭了。</p>
+<p>第三阶段，每个灯泡的开关都按一遍。以上步骤就可以使最后的灯泡全亮。</p>
+</blockquote>
+<p>20、两个球，100层楼，每个球在一定高度扔下去会碎，怎么用最少的次数判断几层楼会把球摔碎？</p>
+<blockquote>
+<p>动态规划</p>
+<p>找到子问题。做如下的分析，假设f{n}表示从第n层楼扔下鸡蛋，没有摔碎的最少尝试次数。第一个鸡蛋，可能的落下位置(1,n)，第一个鸡蛋从第i层扔下，有两个情况：</p>
+<ul>
+<li>碎了，第二个鸡蛋，需要从第一层开始试验，有i-1次机会</li>
+<li>没碎，两个鸡蛋，还有n-i层。这个就是子问题了f{n-i} 所以，当第一个鸡蛋，由第i个位置落下的时候，要尝试的次数为1 + max(i - 1, f{n - i})，那么对于每一个i，尝试次数最少的，就是f{n}的值。状态转移方程如下： f{n} = min(1 + max(i - 1, f{n - 1}) ) 其中: i的范围为(1, n), f{1} = 1 。</li>
+</ul>
+<p>数学推导</p>
+<p>假设最少尝试次数为x，那么，第一个鸡蛋必须要从第x层扔下，如果碎了，前面还有x - 1层楼可以尝试，如果没碎，后面还有x-1次机会。如果没碎，第一个鸡蛋，第二次就可以从x +（x - 1）层进行尝试，为什么是加上x - 1，因为，当此时，第一个鸡蛋碎了，第二个鸡蛋还有可以从x+1 到 x + (x - 1) - 1层进行尝试，有x - 2次。如果还没碎，那第一个鸡蛋，第三次从 x + (x - 1) + (x - 2)层尝试。碎或者没碎，都有x - 3次尝试机会，依次类推。那么，x次的最少尝试，可以确定的最高的楼层是多少呢？ x + (x - 1) + (x - 2) + … + 1 = x(x+1) / 2 那反过来问，当最高楼层是100层，最少需要多少次呢？x(x+1)/2 &gt;= 100, 得到x&gt;=14，最少要尝试14次。</p>
+</blockquote>
+<h2 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h2><h3 id="哈希函数的冲突如何避免？"><a href="#哈希函数的冲突如何避免？" class="headerlink" title="哈希函数的冲突如何避免？"></a>哈希函数的冲突如何避免？</h3><p>双哈希或者多哈希</p>
+<h3 id="直播视频卡住了，分析原因"><a href="#直播视频卡住了，分析原因" class="headerlink" title="直播视频卡住了，分析原因"></a>直播视频卡住了，分析原因</h3><ul>
+<li>帧率太低 如果主播端手机性能较差，或者有很占 CPU 的后台程序在运行，可能导致视频的帧率太低。</li>
+<li>上传阻塞 主播的手机在推流时会源源不断地产生音视频数据，但如果手机的上传网速太小，那么产生的音视频数据都会被堆积在主播的手机里传不出去，上传阻塞会导致全部观众的观看体验都很卡顿。</li>
+<li>下行不佳 就是观众的下载带宽跟不上或者网络很波动</li>
+</ul>
+<h3 id="线程池的核心线程数大小如何确定"><a href="#线程池的核心线程数大小如何确定" class="headerlink" title="线程池的核心线程数大小如何确定"></a>线程池的核心线程数大小如何确定</h3><ul>
+<li>计算密集型为N（N为CPU总核数）+1，IO密集型为2N。</li>
+</ul>
+<p>$N_{threads}=N_{cpu}<em>U_{cpu}</em>(1+W/C),W等待时间,C计算时间$</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="http://www.ruanyifeng.com/blog/2018/07/json_web_token-tutorial.html" target="_blank" rel="noopener">http://www.ruanyifeng.com/blog/2018/07/json_web_token-tutorial.html</a></p>
+<p><a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html" target="_blank" rel="noopener">http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html</a></p>
+<p><a href="http://www.ruanyifeng.com/blog/2019/04/oauth_design.html" target="_blank" rel="noopener">http://www.ruanyifeng.com/blog/2019/04/oauth_design.html</a></p>
+
+            </div>
+            <hr />
+
+            
+            <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.88rem;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-large waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fa fa-close"></i></a>
+            <h4 class="reward-title">写作不易，客官能否打赏一杯奶茶？</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+            
+
+            <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    <div class="social-share" data-disabled="qzone" data-wechat-qrcode-helper="<p>微信里点“发现”->“扫一扫”二维码便可查看分享。</p>"></div>
+    
+</div>
+
+<script src="/libs/share/js/social-share.min.js"></script>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        <p class="reprint-tip">
+            <i class="fa fa-exclamation-triangle"></i>&nbsp;&nbsp;
+            <span>转载规则</span>
+        </p>
+        
+            <div class="center-align">
+                <a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
+                    <img alt=""
+                         style="border-width:0"
+                         src="https://i.creativecommons.org/l/by/4.0/88x31.png"/>
+                </a>
+            </div>
+            <br/>
+            <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
+                  property="dct:title" rel="dct:type">
+                    《常见场景题》
+                </span> 由
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2021/05/24/interview-changjin/" property="cc:attributionName"
+               rel="cc:attributionURL">
+                wangyixin-tom
+            </a> 采用
+            <a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
+                知识共享署名 4.0 国际许可协议
+            </a>进行许可。
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+        </div>
+    </div>
+
+    
+    <link rel="stylesheet" href="/libs/gitalk/gitalk.css">
+<link rel="stylesheet" href="/css/my-gitalk.css">
+
+<div class="card gitalk-card" data-aos="fade-up">
+    <div id="gitalk-container" class="card-content"></div>
+</div>
+
+<script src="/libs/gitalk/gitalk.min.js"></script>
+<script>
+    let gitalk = new Gitalk({
+        clientID: 'ea3985c0f8fdba464dea',
+        clientSecret: '2856369f95a20dce67cacde330ad344d409acb09',
+        repo: 'wangyixin-tom.github.io',
+        owner: 'WangYixin-Tom',
+        admin: "WangYixin-Tom",
+        id: '2021/05/24/interview-changjin/',
+        distractionFreeMode: false  // Facebook-like distraction free mode
+    });
+
+    gitalk.render('gitalk-container');
+</script>
+    
+
+    
+
+    
+
+    
+
+    
+    <style>
+    .valine-card {
+        margin: 1.5rem auto;
+    }
+
+    .valine-card .card-content {
+        padding: 20px 20px 5px 20px;
+    }
+
+    #vcomments input[type=text],
+    #vcomments input[type=email],
+    #vcomments input[type=url],
+    #vcomments textarea {
+        box-sizing: border-box;
+    }
+
+    #vcomments p {
+        margin: 2px 2px 10px;
+        font-size: 1.05rem;
+        line-height: 1.78rem;
+    }
+
+    #vcomments blockquote p {
+        text-indent: 0.2rem;
+    }
+
+    #vcomments a {
+        padding: 0 2px;
+        color: #42b983;
+        font-weight: 500;
+        text-decoration: underline;
+    }
+
+    #vcomments img {
+        max-width: 100%;
+        height: auto;
+        cursor: pointer;
+    }
+
+    #vcomments ol li {
+        list-style-type: decimal;
+    }
+
+    #vcomments ol,
+    ul {
+        display: block;
+        padding-left: 2em;
+        word-spacing: 0.05rem;
+    }
+
+    #vcomments ul li,
+    ol li {
+        display: list-item;
+        line-height: 1.8rem;
+        font-size: 1rem;
+    }
+
+    #vcomments ul li {
+        list-style-type: disc;
+    }
+
+    #vcomments ul ul li {
+        list-style-type: circle;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    #vcomments table, th, td {
+        border: 0;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments h1 {
+        font-size: 1.85rem;
+        font-weight: bold;
+        line-height: 2.2rem;
+    }
+
+    #vcomments h2 {
+        font-size: 1.65rem;
+        font-weight: bold;
+        line-height: 1.9rem;
+    }
+
+    #vcomments h3 {
+        font-size: 1.45rem;
+        font-weight: bold;
+        line-height: 1.7rem;
+    }
+
+    #vcomments h4 {
+        font-size: 1.25rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    #vcomments h5 {
+        font-size: 1.1rem;
+        font-weight: bold;
+        line-height: 1.4rem;
+    }
+
+    #vcomments h6 {
+        font-size: 1rem;
+        line-height: 1.3rem;
+    }
+
+    #vcomments p {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+
+    #vcomments hr {
+        margin: 12px 0;
+        border: 0;
+        border-top: 1px solid #ccc;
+    }
+
+    #vcomments blockquote {
+        margin: 15px 0;
+        border-left: 5px solid #42b983;
+        padding: 1rem 0.8rem 0.3rem 0.8rem;
+        color: #666;
+        background-color: rgba(66, 185, 131, .1);
+    }
+
+    #vcomments pre {
+        font-family: monospace, monospace;
+        padding: 1.2em;
+        margin: .5em 0;
+        background: #272822;
+        overflow: auto;
+        border-radius: 0.3em;
+        tab-size: 4;
+    }
+
+    #vcomments code {
+        font-family: monospace, monospace;
+        padding: 1px 3px;
+        font-size: 0.92rem;
+        color: #e96900;
+        background-color: #f8f8f8;
+        border-radius: 2px;
+    }
+
+    #vcomments pre code {
+        font-family: monospace, monospace;
+        padding: 0;
+        color: #e8eaf6;
+        background-color: #272822;
+    }
+
+    #vcomments pre[class*="language-"] {
+        padding: 1.2em;
+        margin: .5em 0;
+    }
+
+    #vcomments code[class*="language-"],
+    pre[class*="language-"] {
+        color: #e8eaf6;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+
+    #vcomments b,
+    strong {
+        font-weight: bold;
+    }
+
+    #vcomments dfn {
+        font-style: italic;
+    }
+
+    #vcomments small {
+        font-size: 85%;
+    }
+
+    #vcomments cite {
+        font-style: normal;
+    }
+
+    #vcomments mark {
+        background-color: #fcf8e3;
+        padding: .2em;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+</style>
+
+<div class="card valine-card" data-aos="fade-up">
+    <div id="vcomments" class="card-content"></div>
+</div>
+
+<script src="/libs/valine/av-min.js"></script>
+<script src="/libs/valine/Valine.min.js"></script>
+<!-- <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script> -->
+
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: '',
+        appKey: '',
+        notify: 'false' === 'true',
+        verify: 'false' === 'true',
+        visitor: 'false' === 'true',
+        avatar: 'wavatar',
+        pageSize: '10',
+        lang: 'zh-cn',
+        placeholder: '如果你没有GitHub账号，还可以在这里评论啦！'
+    });
+</script>
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2021/05/30/zui-chang-gong-gong-zi-chuan/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="最长公共子串">
+                        
+                        <span class="card-title">最长公共子串</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            思路：动态规划。
+dp[i][j]标识str1[i]和str[j]结尾的最长公共子串，递推关系如下：
+
+若str1[i] == str2[j]，则dp[i][j] = dp[i-1][j-1] + 1
+否则，dp[i][j] = 0
+
+cl
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2021-05-30
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/算法/" class="post-category" target="_blank">
+                                    算法
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/算法/" target="_blank">
+                        <span class="chip bg-color">算法</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fa fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2021/05/20/interview-network/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="网络">
+                        
+                        <span class="card-title">网络</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            报文头部网络包的格式MAC头+IP头+TCP头+HTTP头+HTTP正文
+IP报文
+（1） 版本号：IP协议的版本。对于IPv4来说值是4（2） 头部长度：4位最大为0xF，注意该字段表示单位是字（4字节）（3） 服务类型（Type Of 
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-05-20
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/interview/" class="post-category" target="_blank">
+                                    interview
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/interview/" target="_blank">
+                        <span class="chip bg-color">interview</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: 好好学习<br />'
+            + '作者: wangyixin-tom<br />'
+            + '链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () { bodyElement.removeChild(newdiv); }, 200);
+    });
+</script>
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="fa fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fa fa-list"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h1, h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h1, h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).slideUp(500);
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).slideDown(500);
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+    
+
+</main>
+
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
+
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+<!-- 代码语言 -->
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+<!-- 代码块复制 -->
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+<script type="text/javascript" src="/libs/codeBlock/clipboard.min.js"></script>
+<!-- 代码块收缩 -->
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script> 
+<!-- 代码块折行 -->
+<style type="text/css">code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }</style>
+
+
+    <footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            &copy; 2010-2021 yixin. 版权所有
+
+            
+            &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
+            <span class="white-color">177.8k</span>
+            
+
+            <br>
+            <span id="sitetime"></span>
+
+            
+            
+        </div>
+        <div class="col s12 m4 l4 social-link ">
+    <a href="https://github.com/WangYixin-Tom" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fa fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:tomwangyx@gmail.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fa fa-envelope-open"></i>
+    </a>
+
+
+
+    <a href="https://zhihu.com/people/WangYixin-Tom" class="tooltipped" target="_blank" data-tooltip="访问我的知乎" data-position="top" data-delay="50">
+        <i class="fa fa-inverse">知</i>
+    </a>
+
+
+
+    <a href="http://wpa.qq.com/msgrd?v=3&uin=2276505170&site=qq&menu=yes" class="tooltipped" target="_blank" data-tooltip="访问我的知乎" data-position="top" data-delay="50">
+        <i class="fa fa-qq"></i>
+    </a>
+
+
+
+    <a href="https://weibo.com/WangYixin-Tom" class="tooltipped" target="_blank" data-tooltip="关注我的微博" data-position="top" data-delay="50">
+        <i class="fa fa-weibo"></i>
+    </a>
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fa fa-rss"></i>
+    </a>
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+<!-- 不蒜子计数初始值纠正 -->
+<script>
+    $(document).ready(function () {
+
+        var int = setInterval(fixCount, 50);
+        var pvcountOffset = 80000;
+        var uvcountOffset = 20000;
+
+        function fixCount() {
+            if (document.getElementById("busuanzi_container_site_pv").style.display != "none") {
+                $("#busuanzi_value_site_pv").html(parseInt($("#busuanzi_value_site_pv").html()) + pvcountOffset);
+                clearInterval(int);
+            }
+            if ($("#busuanzi_container_site_pv").css("display") != "none") {
+                $("#busuanzi_value_site_uv").html(parseInt($("#busuanzi_value_site_uv").html()) + uvcountOffset); // 加上初始数据 
+                clearInterval(int);
+            }
+        }
+    });
+</script>
+
+<script language=javascript>
+    function siteTime() {
+        window.setTimeout("siteTime()", 1000);
+        var seconds = 1000;
+        var minutes = seconds * 60;
+        var hours = minutes * 60;
+        var days = hours * 24;
+        var years = days * 365;
+        var today = new Date();
+        var todayYear = today.getFullYear();
+        var todayMonth = today.getMonth() + 1;
+        var todayDate = today.getDate();
+        var todayHour = today.getHours();
+        var todayMinute = today.getMinutes();
+        var todaySecond = today.getSeconds();
+        /* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+        year - 作为date对象的年份，为4位年份值
+        month - 0-11之间的整数，做为date对象的月份
+        day - 1-31之间的整数，做为date对象的天数
+        hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+        minutes - 0-59之间的整数，做为date对象的分钟数
+        seconds - 0-59之间的整数，做为date对象的秒数
+        microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+        var t1 = Date.UTC(2020, 10, 25, 00, 00, 00); //北京时间2018-2-13 00:00:00
+        var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+        var diff = t2 - t1;
+        var diffYears = Math.floor(diff / years);
+        var diffDays = Math.floor((diff / days) - diffYears * 365);
+        var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+        var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) / minutes);
+        var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours - diffMinutes * minutes) / seconds);
+        document.getElementById("sitetime").innerHTML = "本站已运行 " + diffYears + " 年 " + diffDays + " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+    }/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
+    siteTime();
+</script>
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fa fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fa fa-angle-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <script type="text/javascript"> var OriginTitile = document.title, st; document.addEventListener("visibilitychange", function () { document.hidden ? (document.title = "Σ(っ °Д °;)っ喔哟，崩溃啦！", clearTimeout(st)) : (document.title = "φ(゜▽゜*)♪咦，又好了！", st = setTimeout(function () { document.title = OriginTitile }, 3e3)) })
+    </script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+
+    
+    <script src="/libs/others/clicklove.js"></script>
+    
+
+    
+
+    <!-- 雪花特效 -->
+    
+
+</body>
+
+</html>
