@@ -1,0 +1,2203 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="mysql面试, python rabbitmq redis flask kafka">
+    <meta name="baidu-site-verification" content="code-KoKq36g1n2">
+    <meta name="google-site-verification" content="yCy2azpds5XSuGZvis6OuA-XIGF5GuGpYRAaGfD6o48">
+    <meta name="360-site-verification" content="b7c11a830ef90fd1464ad6206bb7b6e7">
+    <meta name="description" content="架构server层
+
+连接器：管理连接，权限验证  
+
+查询缓存  
+
+分析器：词法、语法解析
+
+优化器：生成执行计划，索引选择
+
+执行器：操作引擎，返回结果
+
+
+存储引擎层
+
+负责数据存储和提取，插件式，支持InnoDB、MyISAM多个">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>mysql面试 | 好好学习</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    <style type="text/css">
+        
+    </style>
+
+    <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
+    <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?46e79e71af0709a5b9106bf20cecc493";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+    
+        <script>
+            (function(){
+                var bp = document.createElement('script');
+                var curProtocol = window.location.protocol.split(':')[0];
+                if (curProtocol === 'https') {
+                    bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+                }
+                else {
+                    bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+                }
+                var s = document.getElementsByTagName("script")[0];
+                s.parentNode.insertBefore(bp, s);
+            })();
+        </script>
+    
+
+    <script>
+        (function(){
+        var src = "https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
+        document.write('<script src="' + src + '" id="sozz"><\/script>');
+        })();
+    </script>
+
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+
+<body>
+
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">好好学习</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fa fa-navicon"></i></a>
+<ul class="right">
+    
+    <li class="hide-on-med-and-down">
+        <a href="/" class="waves-effect waves-light">
+            
+            <i class="fa fa-home"></i>
+            
+            <span>首页</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/tags" class="waves-effect waves-light">
+            
+            <i class="fa fa-tags"></i>
+            
+            <span>标签</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/categories" class="waves-effect waves-light">
+            
+            <i class="fa fa-bookmark"></i>
+            
+            <span>分类</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/archives" class="waves-effect waves-light">
+            
+            <i class="fa fa-archive"></i>
+            
+            <span>归档</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/about" class="waves-effect waves-light">
+            
+            <i class="fa fa-user-circle-o"></i>
+            
+            <span>关于</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/friends" class="waves-effect waves-light">
+            
+            <i class="fa fa-address-book"></i>
+            
+            <span>友情链接</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/contact" class="waves-effect waves-light">
+            
+            <i class="fa fa-comments"></i>
+            
+            <span>留言板</span>
+        </a>
+    </li>
+    
+    <li>
+        <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+            <i id="searchIcon" class="fa fa-search" title="搜索"></i>
+        </a>
+    </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">好好学习</div>
+        <div class="logo-desc">
+            
+            业精于勤荒于嬉，行成于思毁于随
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li>
+            <a href="/" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-home"></i>
+                
+                首页
+            </a>
+        </li>
+        
+        <li>
+            <a href="/tags" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-tags"></i>
+                
+                标签
+            </a>
+        </li>
+        
+        <li>
+            <a href="/categories" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-bookmark"></i>
+                
+                分类
+            </a>
+        </li>
+        
+        <li>
+            <a href="/archives" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-archive"></i>
+                
+                归档
+            </a>
+        </li>
+        
+        <li>
+            <a href="/about" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-user-circle-o"></i>
+                
+                关于
+            </a>
+        </li>
+        
+        <li>
+            <a href="/friends" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-address-book"></i>
+                
+                友情链接
+            </a>
+        </li>
+        
+        <li>
+            <a href="/contact" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-comments"></i>
+                
+                留言板
+            </a>
+        </li>
+        
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+<script src="/libs/cryptojs/crypto-js.min.js"></script>
+<script>
+    (function() {
+        let pwd = '';
+        if (pwd && pwd.length > 0) {
+            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                alert('密码错误，将返回主页！');
+                location.href = '/';
+            }
+        }
+    })();
+</script>
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/1.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        mysql面试
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 20px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                        <a href="/tags/interview/" target="_blank">
+                            <span class="chip bg-color">interview</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fa fa-bookmark fa-fw icon-category"></i>
+                        
+                        <a href="/categories/interview/" class="post-category" target="_blank">
+                            interview
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                <div class="post-date info-break-policy">
+                    <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2021-04-10
+                </div>
+
+                <div class="post-author info-break-policy">
+                    <i class="fa fa-user-o fa-fw"></i>作者:&nbsp;&nbsp;
+                    
+                    wangyixin-tom
+                    
+                </div>
+
+                
+                
+                <div class="info-break-policy">
+                    <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    18.9k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    66 分
+                </div>
+                
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h2 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h2><p><strong>server层</strong></p>
+<ol>
+<li><p>连接器：管理连接，权限验证  </p>
+</li>
+<li><p>查询缓存  </p>
+</li>
+<li><p>分析器：词法、语法解析</p>
+</li>
+<li><p>优化器：生成执行计划，索引选择</p>
+</li>
+<li><p>执行器：操作引擎，返回结果</p>
+</li>
+</ol>
+<p><strong>存储引擎层</strong></p>
+<ol>
+<li>负责数据存储和提取，插件式，支持InnoDB、MyISAM多个存储引擎</li>
+</ol>
+<h2 id="日志系统"><a href="#日志系统" class="headerlink" title="日志系统"></a>日志系统</h2><h3 id="redo-log（重做日志）"><a href="#redo-log（重做日志）" class="headerlink" title="redo log（重做日志）"></a>redo log（重做日志）</h3><ol>
+<li>InnoDB引擎的日志，redo log 保证数据库异常重启之前提交的记录不会丢失（crash-safe），<strong>确保事务的持久性</strong>。</li>
+<li>在一条更新语句进行执行的时候，InnoDB引擎会把更新记录写到 redo log 日志中，然后更新内存（buffer pool），此时算是语句执行完了，然后在空闲的时候或者是按照设定的更新策略<strong>将 redo log 中的内容更新到磁盘中</strong>，这里涉及到WAL即Write Ahead logging技术（先写日志再写磁盘）</li>
+<li>redo log 是物理日志，记录的是在某个数据页上做了什么修改</li>
+<li>redo log是循环写，空间固定会用完</li>
+</ol>
+<blockquote>
+<p>出现 MySQL 宕机或者断电时，如果有缓存页的数据还没来得及刷入磁盘，当 MySQL 重新启动时，可以根据 redo log 日志文件，进行数据重做，将数据恢复到宕机或者断电前的状态</p>
+<p>redo log 日志文件是持久化在磁盘上的，磁盘上可以有多个 redo log 文件，MySQL 默认有 2 个 redo log 文件，每个文件大小为 48M</p>
+<p> redo log 日志是存储在磁盘上的，那么此时是不是立马就将 redo log 日志写入磁盘呢？显然不是的，而是先写入一个叫做 redo log buffer 的缓存中，redo log buffer 是一块不同于 buffer pool 的内存缓存区</p>
+</blockquote>
+<p><strong>为什么MySQL 要写到 redo log buff 内存</strong></p>
+<p>因为一个事务中可能涉及到多次读写操作，写入Buffer中分组写入，比起一条条的写入磁盘文件，效率会高很多。</p>
+<h3 id="binlog（归档日志）"><a href="#binlog（归档日志）" class="headerlink" title="binlog（归档日志）"></a>binlog（归档日志）</h3><ol>
+<li><p>server层日志，记录了MySQL对数据库执行更改的所有操作，没有crash-safe能力</p>
+</li>
+<li><p>binlog是逻辑日志，记录的是记录所有数据库表结构变更（例如CREATE、ALTER、TABLE…）以及表数据修改（INSERT、UPDATE、DELETE…）的二进制日志</p>
+</li>
+<li><p>binlog采用追加写的模式</p>
+</li>
+<li><p><strong>用途：</strong>  </p>
+</li>
+</ol>
+<ul>
+<li>恢复：binlog日志恢复数据库数据  </li>
+<li>复制：主库有一个log dump线程，将binlog传给从库，从库有两个线程，一个I/O线程，一个SQL线程，I/O线程读取主库传过来的binlog内容并写入到relay log，SQL线程从relay log里面读取内容，写入从库的数据库  </li>
+<li>审计：用户可以通过二进制日志中的信息来进行审计，判断是否有对数据库进行注入攻击</li>
+</ul>
+<p><strong>binlog常见格式</strong></p>
+<table>
+<thead>
+<tr>
+<th>format</th>
+<th>定义</th>
+<th>优点</th>
+<th>缺点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>statement</td>
+<td>记录的是修改SQL语句</td>
+<td>日志文件小，节约IO，提高性能</td>
+<td>准确性差，有些语句的执行结果是依赖于上下文命令可能会导致主备不一致（delete带limit，很可能会出现主备数据不一致的情况）</td>
+</tr>
+<tr>
+<td>row</td>
+<td>记录的是每行实际数据的变更</td>
+<td>准确性强，能准确复制数据的变更</td>
+<td>日志文件大，较大的网络IO和磁盘IO</td>
+</tr>
+<tr>
+<td>mixed</td>
+<td>statement和row模式的混合</td>
+<td>准确性强，文件大小适中</td>
+<td>有可能发生主从不一致问题</td>
+</tr>
+</tbody></table>
+<h3 id="两段提交"><a href="#两段提交" class="headerlink" title="两段提交"></a>两段提交</h3><ol>
+<li><p>两段提交保证数据库binlog状态和日志redo log恢复出来的数据库状态保持一致</p>
+</li>
+<li><p>两段提交： 写入redo log处于prepare阶段 –写入bin log –提交事务处于commit状态 </p>
+</li>
+</ol>
+<ul>
+<li>时刻A崩溃恢复： redo log未提交， bin log 未写，不会传到备库，这时事务会回滚  </li>
+<li>时刻B崩溃恢复：如果 redo log 事务完整有commit标识则直接提交，如果 redo log 事务只有完整的prepare，则判断对应事务 bin log 是否完整，是提交事务，否则回滚事务</li>
+</ul>
+<ol start="3">
+<li>bin log完整性判断:  </li>
+</ol>
+<ul>
+<li>statement格式最后有commit  </li>
+<li>row格式最有有一个XID event（redo log 和 bin log关联：共同字段XID）</li>
+</ul>
+<p>MySQL 重启后，进行数据重做时，在 redo log 日志中由于该事务的 redo log 日志没有 commit 标识，那么就不会进行数据重做，磁盘上数据还是原来的数据，也就是事务没有提交。</p>
+<h3 id="如何来保证数据不丢失的"><a href="#如何来保证数据不丢失的" class="headerlink" title="如何来保证数据不丢失的"></a>如何来保证数据不丢失的</h3><ol>
+<li>MySQL Server 层的执行器调用 InnoDB 存储引擎的数据更新接口；</li>
+<li>存储引擎更新 Buffer Pool 中的缓存页，</li>
+<li>同时存储引擎记录一条 redo log 到 redo log buffer 中，并将该条 redo log 的状态标记为 prepare 状态；</li>
+<li>接着存储引擎告诉执行器，可以提交事务了。执行器接到通知后，会写 binlog 日志，然后提交事务；</li>
+<li>存储引擎接到提交事务的通知后，将 redo log 的日志状态标记为 commit 状态；</li>
+<li>接着根据 innodb_flush_log_at_commit 参数的配置，决定是否将 redo log buffer 中的日志刷入到磁盘（真正的事务提交）。</li>
+</ol>
+<h3 id="undo-log"><a href="#undo-log" class="headerlink" title="undo log"></a>undo log</h3><ol>
+<li><p>undo log是逻辑日志，可以认为当delete一条记录时，undo log中会记录一条对应的insert记录，反之亦然，当update一条记录时，它记录一条对应相反的update记录</p>
+</li>
+<li><p>undo log 作用  </p>
+</li>
+</ol>
+<ul>
+<li>提供回滚  </li>
+<li>多版本并发控制（MVCC）</li>
+</ul>
+<h3 id="宕机恢复流程？"><a href="#宕机恢复流程？" class="headerlink" title="宕机恢复流程？"></a>宕机恢复流程？</h3><p>1.启动开始时检测是否发生崩溃</p>
+<p>2.定位到最近的一个checkpoint</p>
+<p>3.定位在这个checkpoint时flush到磁盘的数据页，检查checksum。如果不正确，说明这个页在上次写入是不完整的，从doublewrite buffer里把正确的页读出来，更新到buffer中的页</p>
+<p>4.分析redo log，标识出未提交事务</p>
+<p>5.顺序执行redo，读取到buffer pool中</p>
+<p>6.rollback未提交的事务</p>
+<h3 id="Mysql抖动"><a href="#Mysql抖动" class="headerlink" title="Mysql抖动"></a>Mysql抖动</h3><p>当内存数据页跟磁盘数据页内容不一致的时候，称这个内存页为脏页，把内存里的数据写入磁盘。</p>
+<p><strong>flush场景</strong></p>
+<ol>
+<li>InnoDB 的 redo log 写满了，系统会停止所有更新操作，把 checkpoint 对应的所有脏页都 flush 到磁盘</li>
+<li>系统内存不足，当需要新的内存页，就要淘汰一些数据页，空出内存给别的数据页使用。如果淘汰的是”脏页”，就要先将脏页写到磁盘</li>
+<li>MySQL 认为系统空闲的时候，会flush脏页</li>
+<li>MySQL 正常关闭的情况，MySQL 会把内存的脏页都 flush 到磁盘上</li>
+</ol>
+<p>InnoDB 的刷盘速度参考两个因素：一个是脏页比例，一个是 redo log 写盘速度</p>
+<h2 id="存储引擎"><a href="#存储引擎" class="headerlink" title="存储引擎"></a>存储引擎</h2><h3 id="MyISAM与InnoDB索引区别"><a href="#MyISAM与InnoDB索引区别" class="headerlink" title="MyISAM与InnoDB索引区别"></a>MyISAM与InnoDB索引区别</h3><p>InnoDB索引是<strong>聚簇索引</strong>，MyISAM索引是<strong>非聚簇索引</strong>。</p>
+<p>InnoDB的主键索引的叶子节点存储着行数据，因此主键索引非常高效；MyISAM索引的叶子节点存储的是行数据地址，需要再寻址一次才能得到数据。</p>
+<p>InnoDB非主键索引的叶子节点存储的是主键和其他带索引的列数据，因此查询时做到覆盖索引会非常高效</p>
+<h3 id="为什么myisam-的查询要比innoDB-快"><a href="#为什么myisam-的查询要比innoDB-快" class="headerlink" title="为什么myisam 的查询要比innoDB 快"></a>为什么myisam 的查询要比innoDB 快</h3><p>1）InnoDB 要缓存数据和索引，MyISAM只缓存索引块， 这中间还有换进换出的减少；</p>
+<p>2）InnoDB寻址要映射到块，再到行，MyISAM记录的直接是文件的OFFSET，定位比InnoDB要快</p>
+<p>3）InnoDB还需要维护MVCC一致； 虽然你的场景没有，但他还是需要去检查和维护MVCC 。</p>
+<h3 id="b-树为什么能三层能存2000多万个，计算过程。"><a href="#b-树为什么能三层能存2000多万个，计算过程。" class="headerlink" title="b+树为什么能三层能存2000多万个，计算过程。"></a>b+树为什么能三层能存2000多万个，计算过程。</h3><p>InnoDB存储引擎也有自己的最小储存单元——页（Page），一个页的大小是16K。假设一行数据的大小是1k，那么一个页可以存放16行这样的数据。</p>
+<p>在B+树中叶子节点存放数据，非叶子节点存放键值+指针。我们假设主键ID为bigint类型，长度为8字节，而指针大小在InnoDB源码中设置为6字节，这样一共14字节，我们一个页中能存放多少这样的单元，其实就代表有多少指针，即<code>16384/14=1170</code>。那么可以算出一棵高度为2的B+树，能存放<code>1170*16=18720</code>条这样的数据记录。根据同样的原理我们可以算出一个高度为3的B+树可以存放：<code>1170*1170*16=21902400</code>条这样的记录。</p>
+<p>所以在InnoDB中B+树高度一般为1-3层，它就能满足千万级的数据存储。</p>
+<h3 id="Innodb引擎特性"><a href="#Innodb引擎特性" class="headerlink" title="Innodb引擎特性"></a>Innodb引擎特性</h3><h4 id="写缓冲（change-buffer）"><a href="#写缓冲（change-buffer）" class="headerlink" title="写缓冲（change buffer）"></a>写缓冲（change buffer）</h4><p>Insert Buffer 用于非聚集索引的插入和更新操作。先判断插入的非聚集索引是否在缓存池中，如果在则直接插入，否则插入到 Insert Buffer 对象里。再以一定的频率进行 Insert Buffer 和辅助索引叶子节点的 merge 操作，将多次插入合并到一个操作中，减少随机IO带来性能损耗，提高对非聚集索引的插入性能。</p>
+<h4 id="二次写"><a href="#二次写" class="headerlink" title="二次写"></a>二次写</h4><p>mysql最小的io单位是16k，文件系统io最小的单位是4k，因此存在IO写入导致page损坏的风险</p>
+<p>如果数据库发生宕机时，可以通过重做日志对该页进行恢复，但是如果该页本身已经损坏了，进行重做恢复是没有意义的。因此引入了”二次写”方案，解决部分写失败，提高数据页的稳定性。</p>
+<h4 id="自适应哈希索引"><a href="#自适应哈希索引" class="headerlink" title="自适应哈希索引"></a>自适应哈希索引</h4><p>InnoDB 会监控对表上各个索引页的查询，如果观察到通过哈希索引可以带来性能提升，则自动建立哈希索引。自适应哈希索引通过缓存池的 B+ 树页构造而来，因此建立速度很快。</p>
+<h4 id="预读"><a href="#预读" class="headerlink" title="预读"></a>预读</h4><p>数据库访问通常都遵循集中读取原则，使用一些数据大概率会使用附近的数据，这就是所谓的局部性原理，它表明提前加载是有效的，能减少磁盘的i/o。</p>
+<p>预读机制就是发起一个i/o请求，异步的在缓冲池中预先回迁若干个页面，预计将会用到的页面回迁。</p>
+<h3 id="MyISAM为什么不支持事务"><a href="#MyISAM为什么不支持事务" class="headerlink" title="MyISAM为什么不支持事务"></a>MyISAM为什么不支持事务</h3><p>MyISAM存储引擎没有redo和undo文件，没法支持事务的ACID特性，锁也只有表锁</p>
+<h2 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h2><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>数据库索引，是数据库管理系统中一个排序的数据结构，以协助快速查询、更新数据库表中数据。索引的实现通常使用B树及其变种B+树。</p>
+<p>通俗的说，索引就相当于目录。为了方便查找书中的内容，通过对内容建立索引形成目录。</p>
+<p>索引是一种特殊的文件，需要占据物理空间的，它们包含着对数据表里所有记录的引用指针。</p>
+<h3 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h3><p><strong>索引的优点</strong></p>
+<ul>
+<li>加快数据的检索速度。</li>
+<li>减少查询中<strong>分组和排序</strong>的时间</li>
+<li>唯一性索引，可以保证数据库表中每一行数据的唯一性</li>
+<li>将随机 I/O 变为<strong>顺序 I/O</strong>（B+Tree 索引是有序的，会将相邻的数据都存储在一起）</li>
+</ul>
+<p><strong>索引的缺点</strong></p>
+<ul>
+<li>建立和维护索引耗费时间空间</li>
+</ul>
+<h3 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h3><p><strong>where</strong></p>
+<p><strong>order by</strong></p>
+<p>使用order by按照某个字段排序时，如果该字段没有建立索引，那么会将查询出的所有符合条件的数据<strong>使用磁盘临时文件完成外部排序或者在内存中完成排序</strong>。具体取决于排序所需的内存和参数sort_buffer_size。</p>
+<p>如果我们对该字段建立索引，由于索引本身是有序的，因此直接<strong>按照索引的顺序和映射关系逐条取出数据即可</strong>。</p>
+<p><strong>join</strong></p>
+<p>对join语句匹配关系（on）涉及的字段建立索引能够提高效率（一般小表驱动大表，避免了大表的全表扫描）</p>
+<p><strong>覆盖索引</strong></p>
+<p>辅助索引可以直接提供查询结果，不需要回表。称为覆盖索引。</p>
+<p>如果要查询的字段都在某一索引中，那么可以直接在索引表中查询而不会访问原始数据。</p>
+<blockquote>
+<p>尽可能的在select后只写必要的查询字段，以增加覆盖索引的几率。</p>
+</blockquote>
+<h3 id="索引类型"><a href="#索引类型" class="headerlink" title="索引类型"></a>索引类型</h3><p><strong>主键索引</strong>： 不允许重复，不允许为NULL，一个表只能有一个主键。</p>
+<p><strong>唯一索引</strong>：不允许重复，允许为NULL，一个表允许多唯一索引。</p>
+<p><strong>普通索引</strong>：基本的索引类型，没有唯一性的限制，允许为NULL值。</p>
+<p><strong>全文索引</strong>： 是目前搜索引擎使用的一种关键技术。</p>
+<h3 id="索引的数据结构"><a href="#索引的数据结构" class="headerlink" title="索引的数据结构"></a>索引的数据结构</h3><p>和具体存储引擎的实现有关，在MySQL中使用较多的索引有Hash索引，B+树索引等。</p>
+<p>InnoDB存储引擎的默认索引实现为：B+树索引。</p>
+<p>哈希索引底层的数据结构是哈希表，适合场景为绝大多数查询为单条记录查询。</p>
+<h3 id="索引设计的原则"><a href="#索引设计的原则" class="headerlink" title="索引设计的原则"></a>索引设计的原则</h3><p><strong>适合索引的列</strong>是出现在where子句中的列，或者连接子句中指定的列</p>
+<p><strong>使用短索引</strong>，如果对长字符串列进行索引，应该指定一个前缀长度，这样能够节省大量索引空间</p>
+<p><strong>不要过度索引</strong>。索引需要额外的磁盘空间，并降低写操作的性能。在修改表内容的时候，索引会进行更新甚至重构。</p>
+<h3 id="创建索引的原则"><a href="#创建索引的原则" class="headerlink" title="创建索引的原则"></a>创建索引的原则</h3><p>1） 联合索引的最左前缀匹配原则，mysql会一直向右匹配直到遇到范围查询（&gt;、&lt;、between、like）就停止匹配，比如a = 1 and b = 2 and c &gt; 3 and d = 4 如果建立<code>(a,b,c,d)</code>顺序的索引，d是用不到索引的，如果建立<code>(a,b,d,c)</code>的索引则都可以用到，a,b,d的顺序可以任意调整。</p>
+<p>2）较频繁作为查询条件的字段才去创建索引</p>
+<p>3）更新频繁字段不适合创建索引</p>
+<p>4）若是不能有效区分数据的列不适合做索引列（如性别），选择基数较大的列做索引</p>
+<p>5）尽量的扩展索引，不要新建索引。比如表中已经有a的索引，现在要加<code>(a,b)</code>的索引，那么只需要修改原来的索引即可。联合索引比单个索引的性价比更高。</p>
+<p>6）定义有外键的数据列一定要建立索引。</p>
+<h3 id="创建索引注意点"><a href="#创建索引注意点" class="headerlink" title="创建索引注意点"></a>创建索引注意点</h3><p><strong>非空字段：</strong>应该指定列为NOT NULL，除非你想存储NULL。在mysql中，含有空值的列很难进行查询优化，因为它们使得索引、索引的统计信息以及比较运算更加复杂。你应该用0、一个特殊的值或者一个空串代替空值；</p>
+<p><strong>取值离散大的字段：</strong>（变量各个取值之间的差异程度）的列放到联合索引的前面，可以通过<code>count()</code>函数查看字段的差异值</p>
+<p><strong>索引字段越小越好</strong>：数据库的数据存储以页为单位，一页存储的数据越多一次IO操作获取的数据越大，效率越高。</p>
+<h3 id="使用索引查询一定能提高查询的性能吗"><a href="#使用索引查询一定能提高查询的性能吗" class="headerlink" title="使用索引查询一定能提高查询的性能吗"></a>使用索引查询一定能提高查询的性能吗</h3><p>使用索引查询不一定能提高查询性能，索引范围查询（INDEX RANGE SCAN）适用于两种情况:</p>
+<ul>
+<li>基于一个范围的检索，一般查询返回结果集小于表中记录数的30%</li>
+<li><strong>基于非唯一性索引的检索（？？？）</strong></li>
+</ul>
+<p><strong>通常，通过索引查询数据比全表扫描要快。</strong>但是我们也必须注意到它的代价。</p>
+<p><strong>索引需要空间来存储，也需要定期维护，</strong> 每当有记录在表中增减或索引列被修改时，索引本身也会被修改。 这意味着每条记录的INSERT，DELETE，UPDATE将为此多付出4，5 次的磁盘I/O。 因为索引需要额外的存储空间和处理，那些不必要的索引反而会使查询反应时间变慢。</p>
+<h3 id="百万级别或以上的数据如何删除"><a href="#百万级别或以上的数据如何删除" class="headerlink" title="百万级别或以上的数据如何删除"></a>百万级别或以上的数据如何删除</h3><blockquote>
+<p>索引需要额外的维护成本，因为索引文件是单独存在的文件,所以当我们对数据的增加,修改,删除,都会产生额外的对索引文件的操作,这些操作需要消耗额外的IO,会降低增/改/删的执行效率。所以，在我们删除数据库百万级别数据的时候，删除数据的速度和创建的索引数量是成正比的。</p>
+</blockquote>
+<p>所以删除百万数据的时候可以先删除索引（此时大概耗时三分多钟）</p>
+<p>然后删除其中无用数据（此过程需要不到两分钟）</p>
+<p>删除完成后重新创建索引（此时数据较少了，创建索引也非常快，约十分钟左右。）</p>
+<h3 id="前缀索引"><a href="#前缀索引" class="headerlink" title="前缀索引"></a>前缀索引</h3><p>语法：<code>index(field(10))</code>，使用字段值的前10个字符建立索引，默认是使用字段的全部内容建立索引。</p>
+<p>前提：前缀的标识度高。比如密码就适合建立前缀索引，因为密码几乎各不相同。</p>
+<p>实操的难度：<strong>在于前缀截取的长度。</strong></p>
+<p>我们可以利用<code>select count(*)/count(distinct left(password,prefixLen));</code>，通过从调整prefixLen的值（从1自增）查看不同前缀长度的一个平均匹配度，接近1时就可以了（表示一个密码的前prefixLen个字符几乎能确定唯一一条记录）</p>
+<h3 id="B树和B-树的区别"><a href="#B树和B-树的区别" class="headerlink" title="B树和B+树的区别"></a>B树和B+树的区别</h3><p>B树中，键和值存放在内部节点和叶子节点；</p>
+<p>B+树中，内部节点都是键，没有值，叶子节点同时存放键和值。</p>
+<p>B+数的叶子节点是一个页。B+树的叶子节点有一条<strong>双向链表</strong>相连，而B树的叶子节点各自独立。</p>
+<h3 id="使用B树的好处"><a href="#使用B树的好处" class="headerlink" title="使用B树的好处"></a>使用B树的好处</h3><p>B树可以在<strong>内部节点同时存储键和值</strong>，因此，<strong>把频繁访问的数据放在靠近根节点的地方将会大大提高热点数据的查询效率。</strong>这种特性使得B树在特定数据重复多次查询的场景中更加高效。</p>
+<h3 id="使用B-树的好处"><a href="#使用B-树的好处" class="headerlink" title="使用B+树的好处"></a>使用B+树的好处</h3><ul>
+<li><p>由于<strong>B+树的内部节点只存放键</strong>，不存放值，因此，<strong>一次读取，可以在内存页中获取更多的键，有利于更快地缩小查找范围</strong>。</p>
+</li>
+<li><p>B+树的叶节点由一条链相连，因此，当需要进行一次全数据遍历的时候，<strong>B+树只需要使用<code>O(logN)</code>时间找到最小的一个节点，然后通过链进行<code>O(N)</code>的顺序遍历即可。</strong>而B树则需要对树的每一层进行遍历，这会需要更多的内存置换次数，因此也就需要花费更多的时间</p>
+</li>
+</ul>
+<h3 id="Hash索引和B-树优劣"><a href="#Hash索引和B-树优劣" class="headerlink" title="Hash索引和B+树优劣"></a>Hash索引和B+树优劣</h3><p><strong>hash索引底层就是hash表</strong>，进行查找时，调用一次hash函数就可以获取到相应的键值，之后进行回表查询获得实际数据。</p>
+<p>B+树底层实现是<strong>多路平衡查找树</strong>。对于每一次的查询都是从根节点出发，查找到叶子节点方可以获得所查键值，然后根据查询判断是否需要回表查询数据。</p>
+<p>那么可以看出他们有以下的不同：</p>
+<ul>
+<li><p>hash索引进行<strong>等值查询更快（一般情况下），但是却无法进行范围查询</strong>。</p>
+</li>
+<li><p>hash索引<strong>不支持使用索引进行排序</strong>，原理同上。</p>
+</li>
+<li><p>hash索引不<strong>支持模糊查询以及多列索引的最左前缀匹配。</strong>原理也是因为hash函数的不可预测。AAAA和AAAAB的索引没有相关性。</p>
+</li>
+<li><p>hash索引任何时候都<strong>避免不了回表查询数据</strong>，而B+树在符合某些条件（聚簇索引，覆盖索引等）的时候可以只通过索引完成查询。</p>
+</li>
+<li><p>hash<strong>索引不稳定</strong>。性能不可预测，当某个键值存在大量重复的时候，发生hash碰撞，此时效率可能极差。而B+树的查询效率比较稳定，对于所有的查询都是从根节点到叶子节点，且树的高度较低。</p>
+</li>
+</ul>
+<p>因此，在大多数情况下，直接选择B+树索引可以获得稳定且较好的查询速度。而不需要使用hash索引。</p>
+<h3 id="使用B-树而不是B树"><a href="#使用B-树而不是B树" class="headerlink" title="使用B+树而不是B树"></a>使用B+树而不是B树</h3><ul>
+<li><strong>B+树空间利用率更高，可减少I/O次数，磁盘读写代价更低。</strong>B+树的内部结点只存放索引，能容纳的数据更多，让索引树更加矮胖。</li>
+<li><strong>B+树的查询效率更加稳定。</strong>B树搜索越靠近根节点的记录查找时间越短。B+树中，任何关键字的查找都必须走一条从根节点到叶节点的路，查找路径长度相同，查询效率相当。</li>
+<li><strong>B树在提高了磁盘IO性能的同时并没有解决元素遍历的效率低下的问题。</strong>B+树的叶子节点使用双向指针，只要遍历叶子节点就可以实现整棵树的遍历。</li>
+</ul>
+<h3 id="B-树分裂与合并"><a href="#B-树分裂与合并" class="headerlink" title="B+树分裂与合并"></a>B+树分裂与合并</h3><p><strong>分裂</strong></p>
+<p>只需要将这个节点分裂成两个节点。但是，节点分裂之后，其上层父节点的子节点个数就有可能超过 m 个。</p>
+<p>我们可以用同样的方法，将父节点也分裂成两个节点。</p>
+<p>这种级联反应会从下往上，一直影响到根节点。</p>
+<p><strong>合并</strong></p>
+<p>在 B+ 树中，这个阈值等于 m/2。如果某个节点的子节点个数小于 m/2，我们就将它跟相邻的兄弟节点合并。</p>
+<p>不过，合并之后结点的子节点个数有可能会超过 m。针对这种情况，我们可以借助插入数据时候的处理方法，再分裂节点。</p>
+<h3 id="聚簇索引"><a href="#聚簇索引" class="headerlink" title="聚簇索引"></a>聚簇索引</h3><p><strong>聚簇索引</strong>：将数据存储与索引放到了一块，找到索引也就找到了数据</p>
+<p><strong>非聚簇索引</strong>：将数据存储于索引分开结构，索引结构的叶子节点指向了数据的对应行，myisam通过key_buffer把索引先缓存到内存中，当需要访问数据时（通过索引访问数据），在内存中直接搜索索引，然后通过索引找到磁盘相应数据，因此索引不在key buffer命中时，速度慢。</p>
+<p><strong>澄清一个概念：</strong>innodb中，在聚簇索引之上创建的索引称之为辅助索引，辅助索引访问数据总是需要二次查找。</p>
+<h3 id="为什么InnoDB表必须有主键"><a href="#为什么InnoDB表必须有主键" class="headerlink" title="为什么InnoDB表必须有主键"></a>为什么InnoDB表必须有主键</h3><p>InnoDB表必须有主键，并且推荐使用整型的自增主键。</p>
+<p>1、如果设置了主键，那么InnoDB会选择主键作为聚集索引、如果没有显式定义主键，则InnoDB会选择第一个不包含有NULL值的唯一索引作为主键索引、如果也没有这样的唯一索引，则InnoDB会选择内置6字节长的ROWID作为隐含的聚集索引（ROWID随着行记录的写入而主键递增）。</p>
+<p>2、如果表使用自增主键<br>每次插入新的记录，记录就会顺序添加到当前索引节点的后续位置，主键的顺序按照数据记录的插入顺序排列，自动有序。</p>
+<p>当一页写满，就会自动开辟一个新的页</p>
+<p>3、如果使用非自增主键（如果身份证号或学号等）<br>由于每次插入主键的值近似于随机，因此每次新纪录都要被插到现有索引页的中间某个位置，此时MySQL需要移动数据，频繁的移动、分页操作造成了大量的碎片，得到了不够紧凑的索引结构。</p>
+<h3 id="为什么非主键索引结构叶子结点存储的是主键值"><a href="#为什么非主键索引结构叶子结点存储的是主键值" class="headerlink" title="为什么非主键索引结构叶子结点存储的是主键值"></a>为什么非主键索引结构叶子结点存储的是主键值</h3><p>减少了出现<strong>行移动或者数据页分裂时二级索引的维护工作</strong>（当数据需要更新的时候，二级索引不需要修改，只需要修改聚簇索引，一个表只能有一个聚簇索引，其他的都是二级索引，这样只需要修改聚簇索引就可以了，不需要重新构建二级索引）</p>
+<p>聚簇索引也称为主键索引，其索引树的叶子节点中存的是整行数据，表中行的物理顺序与键值的逻辑（索引）顺序相同。</p>
+<p>非聚簇索引（普通索引）的叶子节点内容是主键的值。在 InnoDB 里，非主键索引也被称为二级索引。</p>
+<h3 id="非聚簇索引一定会回表查询吗？"><a href="#非聚簇索引一定会回表查询吗？" class="headerlink" title="非聚簇索引一定会回表查询吗？"></a>非聚簇索引一定会回表查询吗？</h3><p>不一定，这查询语句所要求的字段全部命中了索引，那么就不必再进行回表查询。</p>
+<h3 id="联合索引"><a href="#联合索引" class="headerlink" title="联合索引"></a>联合索引</h3><p>MySQL可以使用多个字段同时建立一个索引，叫做联合索引。</p>
+<ul>
+<li><p>一般情况下，将查询需求频繁或者字段选择性高的列放在前面。</p>
+</li>
+<li><p>组合索引的最左前缀匹配原则，mysql会一直向右匹配直到遇到范围查询。</p>
+</li>
+</ul>
+<h3 id="唯一索引和非唯一索引的区别"><a href="#唯一索引和非唯一索引的区别" class="headerlink" title="唯一索引和非唯一索引的区别"></a>唯一索引和非唯一索引的区别</h3><p>1、普通索引的字段可以写入重复的值，唯一索引的字段不可以写入重复的值。</p>
+<p>2、如果对数据有修改操作，则普通索引可以用 Change Buffer，而唯一索引不行。</p>
+<pre><code>- 在内存：普通索引找位置，插入值，结束。唯一索引找位置，**判断没有冲突**，插入值，结束。一个判断的差别，耗费微小CPU时间。
+- 不在内存：唯一索引**将数据页读入内存，判断到没有冲突**，插入值，结束。普通索引将更新记录在change buffer，结束。</code></pre><p>3、查询数据时，普通索引查到满足条件的第一条记录还需要继续查找下一个记录，而唯一索引查找到第一个记录就可以直接返回结果了，但是普通索引多出的查找次数所消耗的资源多数情况可以忽略不计。</p>
+<h3 id="COUNT-id-好还是COUNT-好"><a href="#COUNT-id-好还是COUNT-好" class="headerlink" title="COUNT(id)好还是COUNT(*)好"></a><code>COUNT(id)</code>好还是<code>COUNT(*)</code>好</h3><p>当 count 统计某一列时，比如<code>count(a)</code>，是不统计 null 的。</p>
+<p>而 <code>count(*)</code>无论是否包含空值，都会统计。5.7.18 开始，通过遍历最小的可用二级索引来处理 <code>count(*)</code>语句。优化器基于成本的考虑，优先选择的是二级索引。所以<code>count(id)</code> 其实没<code>count (*)</code>快。</p>
+<p><code>COUNT(1)</code>与<code>count(*)</code>执行计划相同，速度没有明显差别。</p>
+<h3 id="如果一张表没有主键怎么办？"><a href="#如果一张表没有主键怎么办？" class="headerlink" title="如果一张表没有主键怎么办？"></a>如果一张表没有主键怎么办？</h3><ul>
+<li>如果我们定义了主键，那么 InnoDB 会选择主键作为聚集索引。</li>
+<li>如果没有显式定义主键，则 InnoDB 会选择第一个不包含有 NULL 值的唯一索引作为主键索引。</li>
+<li>如果也没有这样的唯一索引，则 InnoDB 会选择内置 6 字节长的 ROWID 作为隐藏的聚集索引，它会随着行记录的写入而主键递增。 <code>select _rowid name from t2;</code></li>
+</ul>
+<h3 id="几千万记录，数据库表结构如何平滑变更？"><a href="#几千万记录，数据库表结构如何平滑变更？" class="headerlink" title="几千万记录，数据库表结构如何平滑变更？"></a>几千万记录，数据库表结构如何平滑变更？</h3><p><strong>pt-online-schema-change</strong></p>
+<p>假设：</p>
+<p><em>user(uid, name, passwd)</em>要扩展到： <em>user(uid, name, passwd, age, sex)</em></p>
+<p><strong>第一步</strong>，先创建一个扩充字段后的新表：<em>user_new(uid, name, passwd, age, sex)</em></p>
+<p><strong>第二步</strong>，在原表 user 上创建三个触发器，对原表 user 进行的所有 insert/delete/update 操作，都会对新表 user_new 进行相同的操作；</p>
+<p><strong>第三步</strong>，分批将原表 user 中的数据 insert 到新表 user_new，直至数据迁移完成；</p>
+<p><strong>第四步</strong>，删掉触发器，把原表移走（默认是 drop 掉）；<br><strong>第五步</strong>，把新表 user_new 重命名（rename）成原表 user；扩充字段完成，整个过程不需要锁表，可以持续对外提供服务。</p>
+<blockquote>
+<p>（1）变更过程中，最重要的是冲突的处理，一条原则，以触发器的新数据为准，这就要求被迁移的表<strong>必须有主键</strong>（这个要求基本都满足）；</p>
+<p>（2）变更过程中，写操作需要建立触发器，所以如果原表已经有很多触发器，方案就不行（互联网大数据高并发的在线业务，一般都禁止使用触发器）；<br>（3）触发器的建立，会影响原表的性能，所以这个操作必须在流量低峰期进行；</p>
+</blockquote>
+<h3 id="这个自增主键用完了该怎么办"><a href="#这个自增主键用完了该怎么办" class="headerlink" title="这个自增主键用完了该怎么办?"></a>这个自增主键用完了该怎么办?</h3><p><strong>把自增主键的类型改为BigInt类型就好了，int范围20亿，一般不会用完，用完前早就分库分表，采用分布式id了</strong></p>
+<p>1、pt-online-schema-change/gh-ost</p>
+<blockquote>
+<p>1、创建一个新的表，表结构为修改后的数据表，用于从源数据表向新表中导入数据。</p>
+<p>2、创建触发器，用于记录从拷贝数据开始之后，对源数据表继续进行数据修改的操作记录下来，用于数据拷贝结束后，执行这些操作，保证数据不会丢失。</p>
+<p>3、拷贝数据，从源数据表中拷贝数据到新表中。</p>
+<p>4、rename源数据表为old表，把新表rename为源表名，并将old表删除。</p>
+<p>5、删除触发器。</p>
+</blockquote>
+<h2 id="数据库范式"><a href="#数据库范式" class="headerlink" title="数据库范式"></a>数据库范式</h2><p><strong>第一范式：</strong>要求数据库表的每一列都是不可分割的原子数据项。</p>
+<p> <strong>第二范式</strong>： 1NF的基础上，需要确保数据库表中的每一列都和主键相关，而不能只与主键的某一部分相关（主要针对联合主键而言）。</p>
+<p> <strong>第三范式</strong>：在2NF基础上，任何非主属性不依赖于其它非主属性（在2NF基础上消除传递依赖）。第三范式需要确保数据表中的每一列数据都和主键直接相关，而不能间接相关。</p>
+<p>第四范式：消除多值依赖。例如，职工表（职工编号，职工孩子姓名，职工选修课程），在这个表中，同一个职工可能会有多个职工孩子姓名，同样，同一个职工也可能会有多个职工选修课程，即这里存在着多值事实，不符合第四范式</p>
+<h2 id="mysql有关权限的表"><a href="#mysql有关权限的表" class="headerlink" title="mysql有关权限的表"></a>mysql有关权限的表</h2><p>MySQL服务器通过权限表来控制用户对数据库的访问，权限表存放在mysql数据库里，由mysql_install_db脚本初始化。这些权限表分别<strong>user，db，table_priv，columns_priv和host</strong>。</p>
+<p>user权限表：记录允许连接到服务器的用户帐号信息，里面的权限是全局级的。</p>
+<p>db权限表：记录各个帐号在各个数据库上的操作权限。</p>
+<p>table_priv权限表：记录数据表级的操作权限。</p>
+<p>columns_priv权限表：记录数据列级的操作权限。</p>
+<p>host权限表：配合db权限表对给定主机上数据库级操作权限作更细致的控制。这个权限表不受GRANT和REVOKE语句的影响。</p>
+<h2 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h2><p>视图是虚拟的表，视图只包含使用时动态检索数据的查询；不包含任何列或数据。</p>
+<p>使用视图可以简化复杂的sql操作，隐藏具体的细节，保护数据;</p>
+<p>视图创建后，可以使用与表相同的方式利用它们。</p>
+<blockquote>
+<p>视图不能被索引，也不能有关联的触发器或默认值，如果视图本身内有order by则对视图再次order by将被覆盖。</p>
+</blockquote>
+<h3 id="视图有哪些特点？"><a href="#视图有哪些特点？" class="headerlink" title="视图有哪些特点？"></a>视图有哪些特点？</h3><ul>
+<li>视图是由基本表（实表）产生的表（虚表）。</li>
+<li>视图的建立和删除不影响基本表。</li>
+<li>对视图内容的更新（添加，删除和修改）直接影响基本表。</li>
+<li>视图的列可以来自不同的表，是表的抽象和在逻辑意义上建立的新关系。</li>
+<li>当视图来自多个基本表时，不允许添加和删除数据。</li>
+</ul>
+<h3 id="视图的使用场景有哪些？"><a href="#视图的使用场景有哪些？" class="headerlink" title="视图的使用场景有哪些？"></a>视图的使用场景有哪些？</h3><p>视图根本用途：简化sql查询，提高开发效率。</p>
+<p><strong>常见使用场景：</strong></p>
+<p>重用SQL语句；</p>
+<p><strong>简化复杂的SQL操作</strong>。在编写查询后，可以方便的重用它而不必知道它的基本查询细节；</p>
+<p><strong>保护数据</strong>。可以给用户授予表的特定部分的访问权限而不是整个表的访问权限；</p>
+<p><strong>更改数据格式和表示</strong>。视图可返回与底层表的表示和格式不同的数据。</p>
+<h3 id="视图的优点"><a href="#视图的优点" class="headerlink" title="视图的优点"></a>视图的优点</h3><p><strong>查询简单化</strong>。视图能简化用户的操作</p>
+<p><strong>数据安全性</strong>。视图使用户能以多种角度看待同一数据，能够对机密数据提供安全保护</p>
+<h3 id="视图的缺点"><a href="#视图的缺点" class="headerlink" title="视图的缺点"></a>视图的缺点</h3><p><strong>性能</strong>。数据库必须把视图的查询转化成对基本表的查询，如果这个视图是由复杂的多表查询所定义，那么，视图的查询，需要花费一定的时间。</p>
+<p><strong>修改限制</strong>。修改、插入、删除视图的某些行时，数据库把它转化为对基本表某些行的修改。对于比较复杂的视图，可能是不可修改的。</p>
+<h3 id="游标"><a href="#游标" class="headerlink" title="游标"></a>游标</h3><p>游标是系统为用户开设的一个数据缓冲区，存放SQL语句的执行结果。用户可以通过游标，逐一获取记录，进一步处理。</p>
+<h2 id="MVCC"><a href="#MVCC" class="headerlink" title="MVCC"></a>MVCC</h2><p>MVCC的实现，通过保存数据在某个时间点的快照来实现的。这意味着一个事务无论运行多长时间，在同一个事务里能够看到数据一致的视图。根据事务开始的时间不同，同时也意味着在同一个时刻不同事务看到的相同表里的数据可能是不同的。</p>
+<p><strong>实现策略</strong></p>
+<p>通过保存数据在某个时间点的快照来实现的：</p>
+<p>InnoDB 每一行数据都有一个隐藏的回滚指针，用于指向该行修改前的最后一个历史版本（存放在 UNDO LOG中）。</p>
+<p>每开始新的事务，系统版本号都会自动递增。事务开始时刻的系统版本号会作为事务的版本号，用来和查询记录的版本号进行比较。</p>
+<h2 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h2><h3 id="什么是数据库事务？"><a href="#什么是数据库事务？" class="headerlink" title="什么是数据库事务？"></a>什么是数据库事务？</h3><p>一个不可分割的数据库操作序列，是数据库并发控制的基本单位。</p>
+<p>事务是逻辑上的一组操作，要么都执行，要么都不执行。</p>
+<blockquote>
+<p>假如小明要给小红转账1000元：将小明的余额减少1000元，将小红的余额增加1000元。万一操作之间突然出现错误比如银行系统崩溃，导致小明余额减少而小红的余额没有增加，这样就不对了。事务就是保证这两个关键操作要么成功，要么都失败。</p>
+</blockquote>
+<h3 id="事务的特性"><a href="#事务的特性" class="headerlink" title="事务的特性"></a>事务的特性</h3><ul>
+<li>atomicity（原子性） ：要么全执行，要么全都不执行；</li>
+<li>consistency（一致性）：在事务开始和完成时，数据都必须保持一致状态；</li>
+<li>isolation（隔离性） ：事务处理过程中的中间状态对外部是不可见的；</li>
+<li>durability（持久性） ：事务完成之后，它对于数据的修改是永久性的。</li>
+</ul>
+<h3 id="怎么保证一致性的？"><a href="#怎么保证一致性的？" class="headerlink" title="怎么保证一致性的？"></a>怎么保证一致性的？</h3><p>从数据库层面，数据库通过原子性、隔离性、持久性来保证一致性。数据库必须要实现AID三大特性，才有可能实现一致性。例如，原子性无法保证，显然一致性也无法保证。</p>
+<p>但是，如果你在事务里故意写出违反约束的代码，一致性还是无法保证的。例如，你在转账的例子中，你的代码里故意不给B账户加钱，那一致性还是无法保证。因此，还必须从应用层角度考虑。</p>
+<h3 id="怎么保证原子性的？"><a href="#怎么保证原子性的？" class="headerlink" title="怎么保证原子性的？"></a>怎么保证原子性的？</h3><p>利用Innodb的undo log。</p>
+<p>undo log名为回滚日志，是实现原子性的关键，当事务回滚时能够撤销所有已经成功执行的sql语句，他需要记录你要回滚的相应日志信息。</p>
+<p>例如</p>
+<ul>
+<li>当delete一条数据的时候，就需要记录这条数据的信息，回滚的时候，insert这条旧数据</li>
+<li>当update一条数据的时候，就需要记录之前的旧值，回滚的时候，根据旧值执行update操作</li>
+<li>当insert一条数据的时候，就需要这条记录的主键，回滚的时候，根据主键执行delete操</li>
+</ul>
+<p>undo log记录了这些回滚需要的信息，当事务执行失败或调用了rollback，导致事务需要回滚，便可以利用undo log中的信息将数据回滚到修改之前的样子。</p>
+<h3 id="怎么保证持久性的？"><a href="#怎么保证持久性的？" class="headerlink" title="怎么保证持久性的？"></a>怎么保证持久性的？</h3><p>利用Innodb的redo log。</p>
+<p>正如之前说的，Mysql是先把磁盘上的数据加载到内存中，在内存中对数据进行修改，再刷回磁盘上。如果此时突然宕机，内存中的数据就会丢失。</p>
+<p><strong>怎么解决这个问题？</strong></p>
+<p>事务提交前直接把数据写入磁盘就行啊。</p>
+<p><strong>这么做有什么问题？</strong></p>
+<p>只修改一个页面里的一个字节，就要将整个页面刷入磁盘，太浪费资源了。毕竟一个页面16kb大小，你只改其中一点点东西，就要将16kb的内容刷入磁盘，听着也不合理。</p>
+<p>毕竟一个事务里的SQL可能牵涉到多个数据页的修改，而这些数据页可能不是相邻的，也就是属于随机IO。显然操作随机IO，速度会比较慢。</p>
+<p>于是，决定采用redo log解决上面的问题。当做数据修改的时候，不仅在内存中操作，还会在redo log中记录这次操作。当事务提交的时候，会将redo log日志进行刷盘（redo log一部分在内存中，一部分在磁盘上）。当数据库宕机重启的时候，会将redo log中的内容恢复到数据库中，再根据undo log和binlog内容决定回滚数据还是提交数据。</p>
+<h3 id="什么是脏读？幻读？不可重复读？"><a href="#什么是脏读？幻读？不可重复读？" class="headerlink" title="什么是脏读？幻读？不可重复读？"></a>什么是脏读？幻读？不可重复读？</h3><p>脏读：读取未提交的事务。</p>
+<p>不可重复读：多次读取同一数据，读取的数据不一致。</p>
+<p>幻读：幻读指的是一个事务在前后两次查询同一个范围的时候，后一次查询看到了前一次查询没有看到的行。</p>
+<h3 id="事务的隔离级别"><a href="#事务的隔离级别" class="headerlink" title="事务的隔离级别"></a>事务的隔离级别</h3><ul>
+<li><strong>未提交读</strong>（Read Uncommited）：在一个事务提交之前，它的执行结果对其它事务也是可见的。会导致脏读、不可重复读、幻读；</li>
+<li><strong>提交读</strong>（Read Commited）：一个事务只能看见已经提交的事务所作的改变。可避免脏读问题；</li>
+<li><strong>可重复读</strong>（Repeatable Read）：可以确保同一个事务在多次读取同样的数据时得到相同的结果。（MySQL的默认隔离级别）。可避免不可重复读；</li>
+<li><strong>可串行化</strong>（Serializable）：强制事务串行执行，使之不可能相互冲突，从而解决幻读问题。可能导致大量的超时现象和锁竞争，实际很少使用。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th><strong>隔离级别</strong></th>
+<th><strong>脏读</strong></th>
+<th><strong>不可重复读</strong></th>
+<th><strong>幻读</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>READ-UNCOMMITTED</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>READ-COMMITTED</td>
+<td>×</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>REPEATABLE-READ</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+</tr>
+<tr>
+<td>SERIALIZABLE</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+</tr>
+</tbody></table>
+<p>事务隔离机制的实现基于锁机制和并发调度。</p>
+<p>并发调度使用的是MVCC（多版本并发控制），通过保存修改的旧版本信息来支持并发一致性读和回滚等特性。</p>
+<h3 id="可重复读如何实现？"><a href="#可重复读如何实现？" class="headerlink" title="可重复读如何实现？"></a>可重复读如何实现？</h3><p>可重复读是指：一个事务执行过程中看到的数据，总是跟这个事务在启动时看到的数据是一致的。</p>
+<p>可重复读隔离级别下，事务在启动的时候就”拍了个快照“。</p>
+<ul>
+<li><p>InnoDB 里面每个事务都有一个唯一的事务 ID。它在事务开始的时候向 InnoDB 的事务系统申请的，是按申请顺序严格递增的。</p>
+</li>
+<li><p>每条记录在更新的时候都会同时记录一条 undo log，这条 log 就会记录上当前事务的 transaction id，记为 row trx_id。记录上的最新值，通过回滚操作，都可以得到前一个状态的值。</p>
+</li>
+<li><p>在可重复读隔离级别下，一个事务在启动时，InnoDB 会为事务构造一个数组，用来保存这个事务启动瞬间，当前正在”活跃“的所有事务ID。”活跃“指的是，启动了但还没提交。</p>
+</li>
+<li><p>视图数组和高水位，就组成了当前事务的一致性视图（read-view）。这个视图数组把所有的 row trx_id 分成了几种不同的情况。</p>
+<ul>
+<li><p>如果 trx_id 小于低水位，表示这个版本在事务启动前已经提交，可见；</p>
+<p>如果 trx_id 大于高水位，表示这个版本在事务启动后生成，不可见；</p>
+<p>如果 trx_id 大于低水位，小于高水位，分为两种情况：</p>
+<ol>
+<li>若 trx_id 在数组中，表示这个版本在事务启动时还未提交，不可见；</li>
+<li>若 trx_id 不在数组中，表示这个版本在事务启动时已经提交，可见。</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="锁"><a href="#锁" class="headerlink" title="锁"></a>锁</h2><p>当数据库有并发事务的时候，可能会产生数据的不一致，需要一些机制来保证访问的次序，锁机制就是这样的一个机制。</p>
+<h3 id="锁分类"><a href="#锁分类" class="headerlink" title="锁分类"></a>锁分类</h3><p>按照锁的粒度把数据库锁分为行级锁（INNODB引擎）、表级锁（MYISAM引擎）和页级锁（BDB引擎 ）。</p>
+<p><strong>行级锁</strong> </p>
+<p>分为共享锁 和 排他锁。</p>
+<p>特点：开销大，加锁慢；会出现死锁；锁定粒度最小，发生锁冲突的概率最低，并发度也最高。</p>
+<p><strong>表级锁</strong> </p>
+<p>分为表共享读锁（共享锁）与表独占写锁（排他锁）。</p>
+<p>特点：开销小，加锁快；不会出现死锁；锁定粒度大，发生锁冲突的概率最高，并发度最低。</p>
+<p><strong>页级锁</strong> </p>
+<p>特点：开销和加锁时间界于表锁和行锁之间；会出现死锁；锁定粒度界于表锁和行锁之间，并发度一般</p>
+<p><strong>从锁的类别上来讲，有共享锁和排他锁。</strong></p>
+<p><strong>共享锁:</strong> 又叫做读锁。 当用户要进行数据的读取时，对数据加上共享锁。共享锁可以同时加上多个。</p>
+<p><strong>排他锁:</strong> 又叫做写锁。 当用户要进行数据的写入时，对数据加上排他锁。排他锁只可以加一个，他和其他的排他锁，共享锁都相斥。</p>
+<h3 id="意向锁"><a href="#意向锁" class="headerlink" title="意向锁"></a>意向锁</h3><p>使用意向锁（Intention Locks）可以更容易地支持多粒度封锁。</p>
+<p>在存在行级锁和表级锁的情况下，事务 T 想要对表 A 加 X 锁，就需要先检测是否有其它事务对表 A 或者表 A 中的任意一行加了锁，那么就需要对表 A 的每一行都检测一次，这是非常耗时的。</p>
+<p>意向锁在原来的 X/S 锁之上引入了 IX/IS，IX/IS 都是表锁，用来表示一个事务想要在表中的某个数据行上加 X 锁或 S 锁。有以下两个规定：</p>
+<ul>
+<li>一个事务在获得某个数据行对象的 S 锁之前，必须先获得表的 IS 锁或者更强的锁；</li>
+<li>一个事务在获得某个数据行对象的 X 锁之前，必须先获得表的 IX 锁。</li>
+</ul>
+<p>通过引入意向锁，事务 T 想要对表 A 加 X 锁，只需要先检测是否有其它事务对表 A 加了 X/IX/S/IS 锁，如果加了就表示有其它事务正在使用这个表或者表中某一行的锁，因此事务 T 加 X 锁失败。</p>
+<h3 id="什么时候加行锁？"><a href="#什么时候加行锁？" class="headerlink" title="什么时候加行锁？"></a>什么时候加行锁？</h3><ul>
+<li>对于UPDATE、DELETE和INSERT语句，InnoDB会自动给涉及数据集加排他锁；</li>
+<li>对于普通SELECT语句，InnoDB不会加任何锁；</li>
+<li>可以显示加锁：<br>共享锁：<code>select * from tableName where ...  lock in share more</code><br>排他锁：<code>select * from tableName where ...  for update</code></li>
+</ul>
+<h3 id="什么时候加表锁"><a href="#什么时候加表锁" class="headerlink" title="什么时候加表锁"></a>什么时候加表锁</h3><p>InnoDB默认采用行锁，没有使用索引字段查询时，会使用表锁。</p>
+<p>第一种情况：<strong>全表更新</strong>。事务需要更新大部分或全部数据，且表又比较大。若使用行锁，会导致事务执行效率低，从而可能造成其他事务长时间锁等待和更多的锁冲突。</p>
+<p>第二种情况：<strong>多表级联</strong>。事务涉及多个表，比较复杂的关联查询，很可能引起死锁，造成大量事务回滚。这种情况若能一次性锁定事务涉及的表，从而可以避免死锁、减少数据库因事务回滚带来的开销。</p>
+<p>也可手动加锁：</p>
+<pre class="line-numbers language-mysql"><code class="language-mysql">lock table xxx read/write;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="什么时候加间隙锁？"><a href="#什么时候加间隙锁？" class="headerlink" title="什么时候加间隙锁？"></a>什么时候加间隙锁？</h3><p>当我们用范围条件检索数据，并请求共享或排他锁时，InnoDB会给符合条件的已有数据记录的索引项加锁；对于键值在条件范围内但并不存在的记录，加间隙锁</p>
+<h3 id="两阶段锁"><a href="#两阶段锁" class="headerlink" title="两阶段锁"></a>两阶段锁</h3><p>行锁是在需要的时候才加上的，但并不是不需要了就立刻释放，而是要等到事务结束时才释放。</p>
+<p>如果你的事务中需要锁多个行，要把最可能造成锁冲突、最可能影响并发度的锁尽量往后放。</p>
+<h3 id="InnoDB存储引擎的锁的算法"><a href="#InnoDB存储引擎的锁的算法" class="headerlink" title="InnoDB存储引擎的锁的算法"></a>InnoDB存储引擎的锁的算法</h3><p>Record lock：单个行记录上的锁</p>
+<p>Gap lock：间隙锁，锁定一个范围，不包括记录本身</p>
+<p>Next-key lock：record+gap 锁定一个范围，包含记录本身</p>
+<h3 id="死锁"><a href="#死锁" class="headerlink" title="死锁"></a>死锁</h3><p><strong>Mysql死锁策略</strong>  </p>
+<ul>
+<li>直接进入等待，直到超时，这个超时时间可以通过参数 innodb_lock_wait_timeout 来设置  </li>
+<li>发起死锁检测，发现死锁，主动回滚死锁链条中的某一个事务，让其他事务得以继续执行，将参数 innodb_deadlock_detect 设置为 on，表示开启这个逻辑</li>
+</ul>
+<p><strong>避免死锁的常用方法</strong>  </p>
+<ul>
+<li>在应用中，如果不同的程序会并发存取多个表，应尽量约定以相同的顺序来访问表，这样可以大大降低产生死锁的机会  </li>
+<li>在程序以批量方式处理数据的时候，如果事先对数据排序，保证每个线程按固定的顺序来处理记录，也可以大大降低出现死锁的可能  </li>
+</ul>
+<h3 id="什么是死锁？怎么解决？"><a href="#什么是死锁？怎么解决？" class="headerlink" title="什么是死锁？怎么解决？"></a>什么是死锁？怎么解决？</h3><p>死锁是指两个或多个事务在同一资源上相互占用，并请求锁定对方的资源，从而导致恶性循环的现象。</p>
+<h4 id="常见的避免死锁的方法"><a href="#常见的避免死锁的方法" class="headerlink" title="常见的避免死锁的方法"></a><strong>常见的避免死锁的方法</strong></h4><p>1、如果不同程序会并发存取多个表，尽量约定以相同的顺序访问表，可以大大降低死锁机会。</p>
+<p>2、在同一个事务中，尽可能做到一次锁定所需要的所有资源，减少死锁产生概率；</p>
+<p>3、对于非常容易产生死锁的业务部分，可以尝试使用升级锁定粒度，通过表级锁定来减少死锁产生的概率；</p>
+<p>4、在RR隔离级别下，如果两个线程同时对相同条件记录用 <code>SELECT...FOR UPDATE</code> 加排他锁，在没有符合该条件记录情况下，两个线程都会加间隙锁成功，程序发现记录尚不存在，就试图插入一条新记录，如果两个线程都这么做，就会出现死锁，这种情况下，<strong>将隔离级别改成RC不会产生间隙锁</strong>，就可避免问题  </p>
+<p>5、在程序设计中总是捕获并处理死锁异常是一个很好的编程习惯，如果出现死锁，可以用 <strong>show innodb status</strong> 命令来确定最后一个死锁产生的原因，返回结果中包括死锁相关事务的详细信息，如引发死锁的SQL语句，事务已经获得的锁，正在等待什么锁，以及被回滚的事务等</p>
+<p>如果业务处理不好可以用<strong>分布式事务锁或者使用乐观锁</strong></p>
+<h4 id="死锁的必要条件"><a href="#死锁的必要条件" class="headerlink" title="死锁的必要条件"></a>死锁的必要条件</h4><ol>
+<li>互斥条件：一个资源每次只能被一个进程使用。</li>
+<li>请求与保持条件：进程因请求资源而阻塞时，保持已获得的资源的占用。</li>
+<li>不剥夺条件：进程已占用的资源，在末使用完之前，不能强行剥夺。</li>
+<li>循环等待条件：若干进程之间存在一种循环等待关系。</li>
+</ol>
+<h4 id="如何避免互相转账的死锁问题"><a href="#如何避免互相转账的死锁问题" class="headerlink" title="如何避免互相转账的死锁问题"></a>如何避免互相转账的死锁问题</h4><p><strong>1、破坏请求与保持</strong></p>
+<p>单机下，可以使用同步方法，对两个账户同时加锁。处理请求前需要两个账户都没有锁的情况下才可以</p>
+<p><strong>2、破坏不剥夺条件</strong></p>
+<p>超时：在一段时间之内没有获取到锁，不是进入阻塞状态，而是返回一个错误，那这个线程也有机会释放曾经持有的锁。</p>
+<p>非阻塞地获取锁：如果尝试获取锁失败，并不进入阻塞状态，而是直接返回，那这个线程也有机会释放曾经持有的锁。</p>
+<p><strong>3、破坏循环等待条件</strong></p>
+<p>可以将需要获取的锁资源排序，按照顺序获取，这样就不会多个线程交叉获取相同的资源导致死锁，而是在获取相同的资源时就等待，直到它释放。</p>
+<p>比如根据账号的主键 id 进行排序，从小到大的获取锁，这样就可以避免循环等待。</p>
+<h3 id="乐观锁和悲观锁是什么？怎么实现的？"><a href="#乐观锁和悲观锁是什么？怎么实现的？" class="headerlink" title="乐观锁和悲观锁是什么？怎么实现的？"></a>乐观锁和悲观锁是什么？怎么实现的？</h3><p><strong>悲观锁：</strong>假定会发生并发冲突，屏蔽一切可能违反数据完整性的操作。在查询完数据的时候就把事务锁起来，直到提交事务。</p>
+<p><strong>实现方式</strong></p>
+<p>使用数据库中的锁机制</p>
+<p> <strong>乐观锁：</strong>假设不会发生并发冲突，只在提交操作时检查是否有别的事务更新这个数据，如果被更新过，则失败重试。</p>
+<p><strong>实现方式</strong></p>
+<ul>
+<li><p>加一个版本号或者时间戳字段，每次数据更新时同时更新这个字段，更新前比较是否一致；</p>
+</li>
+<li><p>先读取想要更新的字段或者所有字段，更新的时候比较一下，只有字段没有变化才进行更新</p>
+<p><strong>两种锁的使用场景</strong></p>
+<p>乐观锁适用于写比较少的情况下（多读场景），即冲突真的很少发生的时候，这样可以省去了锁的开销，加大了系统的整个吞吐量。</p>
+<p>多写的情况，一般会经常产生冲突，这就会导致上层应用会不断的进行retry，这样反倒是降低了性能，所以一般多写的场景下用悲观锁就比较合适。</p>
+</li>
+</ul>
+<h3 id="数据库中加锁的具体实现，这个锁是如何加到具体的记录行上去的？"><a href="#数据库中加锁的具体实现，这个锁是如何加到具体的记录行上去的？" class="headerlink" title="数据库中加锁的具体实现，这个锁是如何加到具体的记录行上去的？"></a>数据库中加锁的具体实现，这个锁是如何加到具体的记录行上去的？</h3><p><strong>行锁是加在索引上的</strong></p>
+<p>Innodb中的索引数据结构是 B+ 树，数据是有序排列的，从根节点到叶子节点一层层找到对应的数据。</p>
+<p>InnoDB 行锁是通过给索引项加锁来实现的</p>
+<p>只有通过索引条件检索数据，InnoDB 才使用行级锁，否则，InnoDB 将使用表锁。</p>
+<p>无论是使用主键索引、唯一索引或普通索引，InnoDB 都会使用行锁来对数据加锁。</p>
+<h3 id="写锁一定阻塞读吗？"><a href="#写锁一定阻塞读吗？" class="headerlink" title="写锁一定阻塞读吗？"></a>写锁一定阻塞读吗？</h3><p><strong>默认是 MVCC 机制（“一致性非锁定读-consistent nonlocking read”）保证 RR 级别的隔离正确性，是不上锁的</strong>。</p>
+<h3 id="mysql怎么实现分布式锁"><a href="#mysql怎么实现分布式锁" class="headerlink" title="mysql怎么实现分布式锁"></a>mysql怎么实现分布式锁</h3><h4 id="唯一索引实现"><a href="#唯一索引实现" class="headerlink" title="唯一索引实现"></a>唯一索引实现</h4><p><strong>实现</strong></p>
+<ul>
+<li>获取锁时在数据库中insert一条数据，包括id、方法名（唯一索引）、线程名（用于重入）、重入计数</li>
+<li>获取锁如果成功则返回true</li>
+<li>获取锁的动作放在while循环中，周期性尝试获取锁直到结束或者可以定义方法来限定时间内获取锁</li>
+<li>释放锁的时候，delete对应的数据</li>
+</ul>
+<blockquote>
+<p>做一个定时任务，每隔一定时间把数据库中的超时数据清理一遍。实现锁失效处理。</p>
+</blockquote>
+<p><strong>优点：</strong></p>
+<ul>
+<li>实现简单、易于理解</li>
+</ul>
+<p><strong>缺点</strong></p>
+<ul>
+<li>并发量大的时候请求量大，获取锁的间隔，如果较小会给系统和数据库造成压力；</li>
+</ul>
+<h4 id="排他锁实现"><a href="#排他锁实现" class="headerlink" title="排他锁实现"></a>排他锁实现</h4><p><strong>实现</strong></p>
+<ul>
+<li>获取锁可以通过，在select语句后增加<code>for update</code>，数据库会在查询过程中给数据库表增加排他锁。当某条记录被加上排他锁之后，其他线程无法再在该行记录上增加排他锁，我们可以认为获得排它锁的线程即可获得分布式锁；</li>
+<li>其余实现与使用唯一索引相同；</li>
+<li>释放锁通过<code>connection.commit();</code>操作，提交事务来实现。</li>
+</ul>
+<p><strong>优点：</strong></p>
+<ul>
+<li>实现简单、易于理解</li>
+</ul>
+<p><strong>缺点</strong></p>
+<ul>
+<li>排他锁会占用连接，产生连接爆满的问题</li>
+</ul>
+<h4 id="乐观锁实现"><a href="#乐观锁实现" class="headerlink" title="乐观锁实现"></a>乐观锁实现</h4><p><strong>实现</strong></p>
+<p>一般是通过为数据库表添加一个 <code>version</code> 字段来实现读取出数据时，将此版本号一同读出.</p>
+<p>之后更新时，对此版本号加1，在更新过程中，会对版本号进行比较，如果是一致的，没有发生改变，则会成功执行本次操作；如果版本号不一致，则会更新失败。</p>
+<p><strong>缺点:</strong></p>
+<ol>
+<li>这种操作方式，使原本一次的update操作，必须变为2次操作</li>
+<li>增加了数据库的冗余</li>
+<li>不支持高并发，秒杀场景行锁压力大，CAS重试等等</li>
+</ol>
+<h2 id="存储过程"><a href="#存储过程" class="headerlink" title="存储过程"></a>存储过程</h2><p>存储过程是一个预编译的SQL语句，只需要创建一次，就可以调用多次。</p>
+<p><strong>优点</strong></p>
+<p>1）存储过程是预编译过的，执行效率高。</p>
+<p>2）存储过程的代码直接存放于数据库中，通过存储过程名直接调用，减少网络通讯。</p>
+<p>3）安全性高，执行存储过程需要有一定权限的用户。</p>
+<p>4）存储过程可以重复使用，减少数据库开发人员的工作量。</p>
+<p><strong>缺点</strong></p>
+<p>1）调试麻烦，但是用 PL/SQL Developer 调试很方便！弥补这个缺点。</p>
+<p>2）移植问题，数据库端代码当然是与数据库相关的。</p>
+<p>3）重新编译问题，因为后端代码是运行前编译的，如果带有引用关系的对象发生改变时，受影响的存储过程、包将需要重新编译（不过也可以设置成运行时刻自动编译）。</p>
+<p>4）如果在一个程序系统中大量的使用存储过程，到程序交付使用的时候随着用户需求的增加会导致数据结构的变化，接着就是系统的相关问题了，最后如果用户想维护该系统可以说是很难很难、而且代价是空前的，维护起来更麻烦。</p>
+<h2 id="触发器"><a href="#触发器" class="headerlink" title="触发器"></a>触发器</h2><h3 id="什么是触发器"><a href="#什么是触发器" class="headerlink" title="什么是触发器"></a>什么是触发器</h3><p>触发器是用户定义在关系表上的一类<strong>由事件驱动的特殊的存储过程</strong>。触发器是指一段代码，当触发某个事件时，自动执行这些代码。</p>
+<p><strong>使用场景</strong></p>
+<p><strong>可以通过数据库中的相关表实现级联更改。</strong></p>
+<p>实时监控某张表中的某个字段的更改而需要做出相应的处理。</p>
+<h3 id="MySQL中都有哪些触发器？"><a href="#MySQL中都有哪些触发器？" class="headerlink" title="MySQL中都有哪些触发器？"></a>MySQL中都有哪些触发器？</h3><p><strong>在MySQL数据库中有如下六种触发器：</strong></p>
+<p>Before Insert、After Insert、Before Update、After Update、Before Delete、After Delete</p>
+<h2 id="常用SQL语句"><a href="#常用SQL语句" class="headerlink" title="常用SQL语句"></a>常用SQL语句</h2><h3 id="SQL语句主要分为哪几类"><a href="#SQL语句主要分为哪几类" class="headerlink" title="SQL语句主要分为哪几类"></a>SQL语句主要分为哪几类</h3><p>数据定义语言DDL（Data Ddefinition Language）CREATE，DROP，ALTER</p>
+<p>数据查询语言DQL（Data Query Language）SELECT</p>
+<p>数据操纵语言DML（Data Manipulation Language）INSERT，UPDATE，DELETE</p>
+<p>数据控制功能DCL（Data Control Language）GRANT，REVOKE，COMMIT，ROLLBACK</p>
+<h3 id="主键-超键-候选键-外键"><a href="#主键-超键-候选键-外键" class="headerlink" title="主键 超键 候选键 外键"></a>主键 超键 候选键 外键</h3><ul>
+<li><p>主键：数据库表中对<strong>存储数据对象予以唯一和完整标识</strong>的数据列或属性的组合。一个数据列只能有一个主键，且主键的取值不能缺失，即不能为空值</p>
+</li>
+<li><p>外键：在一个表中存在<strong>的另一个表的主键称此表的外键</strong>。</p>
+</li>
+<li><p>超键：<strong>在关系中能唯一标识元组的属性集称为超键。</strong>一个属性可以作为一个超键，多个属性组合在一起也可以作为一个超键。候选键和主键一定是超键。</p>
+</li>
+<li><p>候选键：是最小超键，即没有冗余元素的超键。</p>
+</li>
+</ul>
+<h3 id="SQL-约束有哪几种？"><a href="#SQL-约束有哪几种？" class="headerlink" title="SQL 约束有哪几种？"></a>SQL 约束有哪几种？</h3><p><strong>NOT NULL</strong>: 用于控制字段的内容一定不能为空。</p>
+<p><strong>UNIQUE</strong>: 控件字段内容不能重复，一个表允许有多个 Unique 约束。</p>
+<p><strong>PRIMARY KEY</strong>: 也是用于控件字段内容不能重复，但它在一个表只允许出现一个。</p>
+<p><strong>FOREIGN KEY:</strong> 用于预防破坏表之间连接的动作，也能防止非法数据插入外键列，因为它必须是它指向的那个表中的值之一。</p>
+<p><strong>CHECK</strong>: 用于控制字段的值范围。</p>
+<h3 id="关联查询"><a href="#关联查询" class="headerlink" title="关联查询"></a>关联查询</h3><p><strong>内连接</strong>（INNER JOIN）</p>
+<p><strong>外连接</strong>（LEFT JOIN/RIGHT JOIN）</p>
+<p><strong>联合查询</strong>（UNION与UNION ALL）</p>
+<p><strong>交叉连接</strong>（CROSS JOIN）</p>
+<p><strong>内连接分为三类</strong></p>
+<p>等值连接：ON A.id=B.id</p>
+<p>不等值连接：ON A.id &gt; B.id</p>
+<p>自连接：SELECT * FROM A T1 INNER JOIN A T2 ON T1.id=T2.pid</p>
+<p><strong>外连接（LEFT JOIN/RIGHT JOIN）</strong></p>
+<p>左外连接：以左表为主，先查询出左表，按照ON后的关联条件匹配右表，没有匹配到的用NULL填充，可以简写成LEFT JOIN</p>
+<p>右外连接： 以右表为主，先查询出右表，按照ON后的关联条件匹配左表，没有匹配到的用NULL填充，可以简写成RIGHT JOIN</p>
+<p><strong>联合查询（UNION与UNION ALL</strong>）</p>
+<p>就是把多个结果集集中在一起，UNION前的结果为基准，需要注意的是联合查询的列数要相等，相同的记录行会合并</p>
+<p>如果使用UNION ALL，不会合并重复的记录行</p>
+<p>效率 UNION ALL 高于 UNION</p>
+<h3 id="什么是子查询"><a href="#什么是子查询" class="headerlink" title="什么是子查询"></a>什么是子查询</h3><p>一条SQL语句的查询结果做为另一条查询语句的条件。多条SQL语句嵌套使用，内部的SQL查询语句称为子查询。</p>
+<h3 id="子查询的三种情况"><a href="#子查询的三种情况" class="headerlink" title="子查询的三种情况"></a>子查询的三种情况</h3><ul>
+<li><p>子查询是单行单列的情况：结果集是一个值，父查询使用：=、 &lt;、 &gt; 等运算符</p>
+</li>
+<li><p>子查询是多行单列的情况：结果集类似于一个数组，父查询使用：in 运算符</p>
+</li>
+<li><p>子查询是多行多列的情况：结果集类似于一张虚拟表，不能用于where条件，用于select子句中做为子表</p>
+</li>
+</ul>
+<h3 id="in-和-exists-区别"><a href="#in-和-exists-区别" class="headerlink" title="in 和 exists 区别"></a>in 和 exists 区别</h3><p>mysql中的in语句是<strong>把外表和内表作hash 连接</strong>，而<strong>exists语句是对外表作loop循环，每次loop循环再对内表进行查询</strong>。</p>
+<ul>
+<li><p>IN适合于外表大而子查询表小的情况。</p>
+</li>
+<li><p>EXISTS适合于外表小而子查询表大的情况。</p>
+</li>
+</ul>
+<p>not in 和not exists：如果查询语句使用了not in，那么内外表都进行全表扫描，没有用到索引；</p>
+<p>而not extsts的子查询依然能用到表上的索引。所以无论那个表大，用not exists都比not in要快。</p>
+<h3 id="drop-delete与truncate"><a href="#drop-delete与truncate" class="headerlink" title="drop,delete与truncate"></a>drop,delete与truncate</h3><p>drop直接删掉表，truncate、delete删除表中数据。</p>
+<p>1.delete 语句执行删除的过程是每次从表中删除一行，并且同时将该行的删除操作作为事务记录在日志中保存以便进行回滚操作。truncate table则一次性地从表中删除所有的数据并不把单独的删除操作记录记入日志保存，删除行是不能恢复的。在删除的过程中，不会激活与表有关的删除触发器，执行速度快。</p>
+<p>2.表和索引所占空间。当表被truncate后，这个表和索引所占用的空间会恢复到初始大小，而delete操作不会减少表或索引所占用的空间。drop语句将表所占用的空间全释放掉。</p>
+<p>3.应用范围。truncate只能对table，delete可以是table和view</p>
+<p><strong>使用场景:</strong> </p>
+<p>不再需要一张表的时候，用drop </p>
+<p>想删除部分数据行时候，用delete，并且带上where子句 </p>
+<p>保留表而删除所有数据的时候用truncate </p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>Delete</strong></th>
+<th><strong>Truncate</strong></th>
+<th><strong>Drop</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>类型</td>
+<td>属于DML</td>
+<td>属于DDL</td>
+<td>属于DDL</td>
+</tr>
+<tr>
+<td>回滚</td>
+<td>可回滚</td>
+<td>不可回滚</td>
+<td>不可回滚</td>
+</tr>
+<tr>
+<td>删除内容</td>
+<td>表结构还在，删除表的全部或者一部分数据行</td>
+<td>表结构还在，删除表中的所有数据</td>
+<td>从数据库中删除表，所有的数据行，索引和权限也会被删除</td>
+</tr>
+<tr>
+<td>删除速度</td>
+<td>删除速度慢，需要逐行删除</td>
+<td>删除速度快</td>
+<td>删除速度最快</td>
+</tr>
+</tbody></table>
+<h2 id="SQL优化"><a href="#SQL优化" class="headerlink" title="SQL优化"></a>SQL优化</h2><h3 id="如何定位及优化SQL语句的性能问题？"><a href="#如何定位及优化SQL语句的性能问题？" class="headerlink" title="如何定位及优化SQL语句的性能问题？"></a>如何定位及优化SQL语句的性能问题？</h3><p>MySQL提供了<strong>explain命令来查看语句的执行计划</strong> 。执行计划，显示数据库引擎对于SQL语句的执行的详细情况，其中包含了<strong>是否使用索引，使用什么索引，使用的索引的相关信息</strong>等。</p>
+<p><strong>select_type查询类型。</strong></p>
+<table>
+<thead>
+<tr>
+<th><strong>select_type</strong></th>
+<th><strong>description</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SIMPLE</td>
+<td>不包含任何子查询或union等查询</td>
+</tr>
+<tr>
+<td>PRIMARY</td>
+<td>包含子查询最外层查询就显示为 PRIMARY</td>
+</tr>
+<tr>
+<td>SUBQUERY</td>
+<td>在select或 where字句中包含的查询</td>
+</tr>
+<tr>
+<td>DERIVED</td>
+<td>from字句中包含的查询</td>
+</tr>
+<tr>
+<td>UNION</td>
+<td>出现在union后的查询语句中</td>
+</tr>
+<tr>
+<td>UNION RESULT</td>
+<td>从UNION中获取结果集，例如上文的第三个例子</td>
+</tr>
+</tbody></table>
+<p><strong>type访问类型</strong></p>
+<p>ALL 扫描全表数据</p>
+<p>index 遍历索引</p>
+<p>range 索引范围查找</p>
+<p>index_subquery 在子查询中使用 ref</p>
+<p>unique_subquery 在子查询中使用 eq_ref</p>
+<p>ref_or_null 对Null进行索引的优化的 ref</p>
+<p>fulltext 使用全文索引</p>
+<p>ref 使用非唯一索引查找数据</p>
+<p>eq_ref 在join查询中使用PRIMARY KEYorUNIQUE NOT NULL索引关联。</p>
+<p><strong>key ，实际使用的索引。</strong></p>
+<p><strong>ref 表示上述表的连接匹配条件，即哪些列或常量被用于查找索引列上的值</strong></p>
+<p><strong>rows ：估算的结果集数目，并不是一个准确的值。</strong></p>
+<p><strong>extra 的信息非常丰富，常见的有：</strong></p>
+<ul>
+<li><p><strong>Using index 使用覆盖索引</strong></p>
+</li>
+<li><p><strong>Using where 使用了用where子句来过滤结果集</strong></p>
+</li>
+<li><p>Using filesort 使用文件排序，使用非索引列进行排序时出现，非常消耗性能，尽量优化。</p>
+</li>
+<li><p>Using temporary 使用了临时表</p>
+</li>
+</ul>
+<h3 id="超大分页怎么处理？"><a href="#超大分页怎么处理？" class="headerlink" title="超大分页怎么处理？"></a>超大分页怎么处理？</h3><ul>
+<li>数据库层面,类似于<strong>select * from table where age &gt; 20 limit 1000000,10</strong>这种查询其实也是有可以优化的余地的. 这条语句需要load1000000数据然后基本上全部丢弃,只取10条当然比较慢. 当时我们可以修改为<code>select * from table where id in (select id from table where age &gt; 20 limit 1000000,10)</code>。<strong>这样虽然也load了一百万的数据,但是由于</strong>索引覆盖<em><em>,要查询的所有字段都在索引中,所以速度会很快. </em></em></li>
+<li>如果ID连续，我们还可以<code>select * from table where id &gt; 1000000 limit 10</code>效率也是不错的</li>
+<li>从需求的角度减少这种请求，主要是不做类似的需求（直接跳转到几百万页之后的具体某一页，只允许逐页查看或者按照给定的路线走，这样可预测、可缓存）以及防止ID泄漏且连续被人恶意攻击。</li>
+</ul>
+<h3 id="mysql-分页"><a href="#mysql-分页" class="headerlink" title="mysql 分页"></a>mysql 分页</h3><p>LIMIT 子句可以被用于强制 SELECT 语句返回指定的记录数。</p>
+<p>LIMIT 接受一个或两个数字参数。返回记录行的偏移量+ 返回记录行的最大数目</p>
+<blockquote>
+<p> mysql&gt; SELECT * FROM table LIMIT 5,10; // 检索记录行 6-15</p>
+</blockquote>
+<h3 id="慢查询日志"><a href="#慢查询日志" class="headerlink" title="慢查询日志"></a>慢查询日志</h3><p>用于记录执行时间超过某个临界值的SQL日志，用于快速定位慢查询，为我们的优化做参考。</p>
+<p><strong>开启慢查询日志</strong></p>
+<p>配置项：slow_query_log</p>
+<p>可以使用<code>show variables like &#39;slow_query_log&#39;’&#39;</code>查看是否开启，如果状态值为OFF，可以使用<code>set GLOBAL slow_query_log = on</code>来开启，它会在datadir下产生一个xxx-slow.log的文件。</p>
+<p><strong>设置临界时间</strong></p>
+<p>配置项：long_query_time</p>
+<p>查看：<code>show VARIABLES like &#39;long_query_time&#39;</code>，单位秒</p>
+<p>设置：set long_query_time=0.5</p>
+<p>实操时应该从长时间设置到短的时间，即将最慢的SQL优化掉</p>
+<p>查看日志，一旦SQL超过了我们设置的临界时间就会被记录到xxx-slow.log中</p>
+<h3 id="为什么要尽量设定一个主键？"><a href="#为什么要尽量设定一个主键？" class="headerlink" title="为什么要尽量设定一个主键？"></a>为什么要尽量设定一个主键？</h3><p>主键是数据库确保数据行在整张表唯一性的保障，即使业务上本张表没有主键，也建议添加一个自增长的ID列作为主键。</p>
+<p>设定了主键之后，在后续的删改查的时候<strong>可能更加快速以及确保操作数据范围安全</strong>。</p>
+<h3 id="主键使用自增ID还是UUID？"><a href="#主键使用自增ID还是UUID？" class="headerlink" title="主键使用自增ID还是UUID？"></a>主键使用自增ID还是UUID？</h3><p>使用自增ID。 </p>
+<p>因为在InnoDB存储引擎中，主键索引是作为<strong>聚簇索引</strong>存在的。主键索引的B+树叶子节点上存储了主键索引和数据，如果是自增ID，那么只需要不断向后排列即可，如果是UUID，由于新ID与上一个的大小不确定，会造成非常多的数据插入，数据移动，然后导致产生很多的内存碎片，进而造成插入性能的下降。</p>
+<h3 id="自增ID达到上限用完了之后怎么办？"><a href="#自增ID达到上限用完了之后怎么办？" class="headerlink" title="自增ID达到上限用完了之后怎么办？"></a>自增ID达到上限用完了之后怎么办？</h3><p>分为两种情况：</p>
+<ol>
+<li>如果设置了主键，那么将会报错主键冲突。</li>
+<li>如果没有设置主键，数据库则会帮我们自动生成一个全局的row_id，新数据会覆盖老数据</li>
+</ol>
+<h3 id="字段为什么要求定义为not-null？"><a href="#字段为什么要求定义为not-null？" class="headerlink" title="字段为什么要求定义为not null？"></a>字段为什么要求定义为not null？</h3><p>null值会占用更多的字节，且会在程序中造成很多与预期不符的情况。</p>
+<h3 id="varchar怎么实现"><a href="#varchar怎么实现" class="headerlink" title="varchar怎么实现"></a>varchar怎么实现</h3><p>VARCHAR需要使用1或者2个额外字节记录字符串的长度：如果列的最大长度小于或等于255字节，则只使用1个字节表示，否则使用2个字节。假设采用latin1字符集，一个VARCHAR(10)的列需要11个字节的存储空间。VARCHAR(1000)的列则需要1002个字节，因为需要2个字节存储长度信息。</p>
+<h3 id="如果要存储用户的密码散列，应该使用什么字段进行存储？"><a href="#如果要存储用户的密码散列，应该使用什么字段进行存储？" class="headerlink" title="如果要存储用户的密码散列，应该使用什么字段进行存储？"></a>如果要存储用户的密码散列，应该使用什么字段进行存储？</h3><p>密码散列，用户身份证号等固定长度的字符串应该使用char而不是varchar来存储，这样可以节省空间且提高检索效率。</p>
+<h3 id="SQL语句优化的一些方法"><a href="#SQL语句优化的一些方法" class="headerlink" title="SQL语句优化的一些方法"></a>SQL语句优化的一些方法</h3><ul>
+<li>尽量避免全表扫描，首先应考虑在 where 、JOIN ON、 order by 涉及的列上建立索引。</li>
+<li>不使用SELECT *，只查询必须的字段，避免加载无用数据，无法使用覆盖索引。 </li>
+<li>能用UNION ALL的时候就不用UNION，UNION过滤重复数据要耗费更多的cpu资源。 </li>
+</ul>
+<p><strong>避免索引失效</strong></p>
+<ul>
+<li>使用!= 或者 &lt;&gt; 或者或者or 来连接条件导致索引失效：需要判断索引成本</li>
+<li>筛选字段上的函数、运算符，或者条件判断时前后类型不一致，导致的索引失效</li>
+<li>模糊搜索的前缀模糊导致的索引失效</li>
+<li>NOT IN、NOT EXISTS导致索引失效：需要判断回表成本</li>
+<li>尽量避免在 where 子句中对字段进行 null 值判断</li>
+</ul>
+<h2 id="数据库优化"><a href="#数据库优化" class="headerlink" title="数据库优化"></a>数据库优化</h2><ul>
+<li>优化索引、SQL 语句、分析慢查询</li>
+<li>使用缓存，把经常访问到的数据而且不需要经常变化的数据放在缓存中，能节约磁盘 IO</li>
+<li>优化硬件，采用 SSD，使用磁盘队列技术（RAID0,RAID1,RDID5）等</li>
+<li>采用 MySQL 内部自带的表分区技术，把数据分成不同的文件，能够提高磁盘的读取效率</li>
+<li>主从读写分离</li>
+<li>垂直分表，把一些不经常读的数据放在一张表里，节约 磁盘 I/O</li>
+<li>水平分表，主要的原理就是数据路由</li>
+</ul>
+<h2 id="left-join-原理"><a href="#left-join-原理" class="headerlink" title="left join 原理"></a>left join 原理</h2><p><strong>Simple Nested-Loop Join</strong></p>
+<p>双层for 循环 ，通过循环外层表的行数据，逐个与内层表的所有行数据进行比较来获取结果</p>
+<p><strong>Index Nested-Loop Join</strong></p>
+<p> 通过外层表匹配条件 直接与内层表索引进行匹配，避免和内层表的每条记录去进行比较， 这样极大的减少了对内层表的匹配次数，极大的提升了 join的性能。</p>
+<p><strong>Block Nested-Loop Join</strong></p>
+<p>通过一次性缓存外层表的多条数据，以此来减少内层表的扫表次数，从而达到提升性能的目的。如果无法使用<strong>Index Nested-Loop Join</strong>的时候，数据库是默认使用的是<strong>Block Nested-Loop Join算法的</strong></p>
+<p>基于后两者的时间复杂度，考虑小表驱动大表。<strong>Simple Nested-Loop Join</strong>没有时间上的差异。</p>
+<h2 id="集群"><a href="#集群" class="headerlink" title="集群"></a>集群</h2><h3 id="主从复制"><a href="#主从复制" class="headerlink" title="主从复制"></a>主从复制</h3><h4 id="异步复制"><a href="#异步复制" class="headerlink" title="异步复制"></a>异步复制</h4><ul>
+<li>在主库开启 binlog 的情况下，如果主库有增删改的语句，会记录到 binlog 中。</li>
+<li>主库通过 IO 线程把 binlog 里面的内容传给从欧库，主库给客户端返回 commit 成功（不管从库是否已经收到了事务的 binlog）</li>
+<li>从库的 SQL 线程负责读取 relay log 并应用到从库数据库中。</li>
+</ul>
+<h4 id="半同步复制"><a href="#半同步复制" class="headerlink" title="半同步复制"></a>半同步复制</h4><ul>
+<li>在主库开启 binlog 的情况下，如果主库有增删改的语句，会记录到 binlog 中。</li>
+<li>主库通过 IO 线程把 binlog 里面的内容传给从库，<strong>从库收到 binlog 后，发送给主库一个 ACK，表示收到了，主库收到这个 ACK 以后，才能给客户端返回 commit 成功</strong></li>
+<li>从库的 SQL 线程负责读取 relay log 并应用到从库数据库中。</li>
+</ul>
+<h3 id="galera复制原理"><a href="#galera复制原理" class="headerlink" title="galera复制原理"></a>galera复制原理</h3><p>Galera采用的是多主同步复制。</p>
+<p>事务在本节点乐观执行，然后在提交时运行一个验证过程以保证全局数据一致性。</p>
+<p>所谓乐观执行是指，事务在一个节点提交时，被认为与其它节点上的事务没有冲突，首先在本地执行，然后再发送到所有节点做冲突检测，无冲突时在所有节点提交，否则在所有节点回滚。</p>
+<h3 id="分库分表后面临的问题"><a href="#分库分表后面临的问题" class="headerlink" title="分库分表后面临的问题"></a>分库分表后面临的问题</h3><p> <strong>事务支持</strong> 分库分表后，就成了分布式事务了。如果依赖数据库本身的分布式事务管理功能去执行事务，将付出高昂的性能代价； 如果由应用程序去协助控制，形成程序逻辑上的事务，又会造成编程方面的负担。</p>
+<p> <strong>跨库join</strong> </p>
+<p>只要是进行切分，跨节点Join的问题是不可避免的。但是良好的设计和切分却可以减少此类情况的发生。解决这一问题的普遍做法是分两次查询实现。在第一次查询的结果集中找出关联数据的id，根据这些id发起第二次请求得到关联数据。 </p>
+<p> <strong>跨节点的count，order by，group by以及聚合函数问题</strong> 这些是一类问题，因为它们都需要基于全部数据集合进行计算。多数的代理都不会自动处理合并工作。解决方案：分别在各个节点上得到结果后在应用程序端进行合并。和join不同的是每个结点的查询可以并行执行，因此很多时候它的速度要比单一大表快很多。但如果结果集很大，对应用程序内存的消耗是一个问题。</p>
+<p> <strong>数据迁移，容量规划，扩容等问题</strong> 来自淘宝综合业务平台团队，它利用对2的倍数取余具有向前兼容的特性（如对4取余得1的数对2取余也是1）来分配数据，避免了行级别的数据迁移，但是依然需要进行表级别的迁移，同时对扩容规模和分表数量都有限制。总得来说，这些方案都不是十分的理想，多多少少都存在一些缺点，这也从一个侧面反映出了Sharding扩容的难度。 </p>
+<p> <strong>ID问题</strong></p>
+<p>一旦数据库被切分到多个物理结点上，我们将不能再依赖数据库自身的主键生成机制。一方面，某个分区数据库自生成的ID无法保证在全局上是唯一的；另一方面，应用程序在插入数据之前需要先获得ID,以便进行SQL路由. 一些常见的主键生成策略</p>
+<p><strong>UUID 使用UUID作主键是最简单的方案</strong>，缺点是，除占用大量存储空间外，最主要的问题是在索引上，在建立索引和基于索引进行查询时都存在性能问题。 <strong>Twitter的分布式自增ID算法Snowflake</strong> 在分布式系统中，需要生成全局UID的场合还是比较多的，核心代码就是毫秒级时间41位、 机器ID 10位、同一毫秒内序列号12位。</p>
+<p><strong>Snowflake</strong></p>
+<p>64bit整数，41bit时间戳+10bit机器id+12bit序列号</p>
+<h2 id="备份"><a href="#备份" class="headerlink" title="备份"></a>备份</h2><p><strong>mysqldump工具备份</strong></p>
+<p>mysqldump由于是mysql自带的备份工具，所以也是最常用的mysql数据库的备份工具。支持基于InnoDB的热备份。但由于是逻辑备份，所以速度不是很快，适合备份数据量比较小的场景。</p>
+<p>mysqldump完全备份+二进制日志 —&gt;实现时间点恢复</p>
+<p>如果使用的是InnoDB引擎，就不必进行对数据库加锁的操作，加一个选项既可以进行热备份：–single-transaction</p>
+<p><strong>使用percona提供的xtrabackup（推荐）</strong></p>
+<p>支持InnoDB的物理热备份，支持完全备份，增量备份，而且速度非常快，而且支持InnoDB引擎的数据在不同数据库迁移</p>
+<h2 id="sql语句中where与having的区别"><a href="#sql语句中where与having的区别" class="headerlink" title="sql语句中where与having的区别"></a>sql语句中where与having的区别</h2><p>Where 是一个约束声明，使用Where约束来自数据库的数据，Where是在结果返回之前起作用的，Where中不能使用聚合函数。</p>
+<p>Having是一个过滤声明，是在查询返回结果集以后对查询结果进行的过滤操作，在Having中可以使用聚合函数。</p>
+<p>在查询过程中聚合语句（sum,min,max,avg,count）要比having子句优先执行。而where子句在查询过程中执行优先级高于聚合语句。</p>
+<pre class="line-numbers language-mysql"><code class="language-mysql">select 列 from
+表名
+join [表名]
+on [条件]
+where [查询条件]
+group by [分组表达式]
+having [分组过滤条件]
+order by [排序条件]
+limit [offset,] count;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>执行顺序</p>
+<blockquote>
+<p>   　　　　1. FROM：对FROM子句中前两个表执行笛卡尔积生成虚拟表vt1<br>   　　　　2. ON: 对vt1表应用ON筛选器只有满足 join_condition 为真的行才被插入vt2<br>   　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　3. OUTER（join）：如果指定了 OUTER JOIN保留表中未找到的行将行作为外部行添加到vt2，生成t3，如果from包含两个以上表，则对上一个联结生成的结果表和下一个表重复执行步骤和步骤直接结束。<br>   　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　4. WHERE：对vt3应用 WHERE 筛选器只有使 where_condition 为true的行才被插入vt4<br>   　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　5. GROUP BY：按GROUP BY子句中的列列表对vt4中的行分组生成vt5<br>   　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　6. HAVING：对vt6应用HAVING筛选器只有使 having_condition 为true的组才插入vt7<br>   　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　7. SELECT：处理select列表产生vt8<br>   　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　8. DISTINCT：将重复的行从vt8中去除产生vt9<br>   　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　9. ORDER BY：将vt9的行按order by子句中的列列表排序生成一个游标vc10</p>
+</blockquote>
+<h2 id="高并发时，如何避免重复插入-？"><a href="#高并发时，如何避免重复插入-？" class="headerlink" title="高并发时，如何避免重复插入 ？"></a>高并发时，如何避免重复插入 ？</h2><ul>
+<li>幂等：保证多次同意请求后结果一致</li>
+<li>并发控制：单表唯一索引、分布式多表分布式锁</li>
+</ul>
+
+            </div>
+            <hr />
+
+            
+            <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.88rem;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-large waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fa fa-close"></i></a>
+            <h4 class="reward-title">写作不易，客官能否打赏一杯奶茶？</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+            
+
+            <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    <div class="social-share" data-disabled="qzone" data-wechat-qrcode-helper="<p>微信里点“发现”->“扫一扫”二维码便可查看分享。</p>"></div>
+    
+</div>
+
+<script src="/libs/share/js/social-share.min.js"></script>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        <p class="reprint-tip">
+            <i class="fa fa-exclamation-triangle"></i>&nbsp;&nbsp;
+            <span>转载规则</span>
+        </p>
+        
+            <div class="center-align">
+                <a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
+                    <img alt=""
+                         style="border-width:0"
+                         src="https://i.creativecommons.org/l/by/4.0/88x31.png"/>
+                </a>
+            </div>
+            <br/>
+            <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
+                  property="dct:title" rel="dct:type">
+                    《mysql面试》
+                </span> 由
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2021/04/10/interview-mysql/" property="cc:attributionName"
+               rel="cc:attributionURL">
+                wangyixin-tom
+            </a> 采用
+            <a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
+                知识共享署名 4.0 国际许可协议
+            </a>进行许可。
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+        </div>
+    </div>
+
+    
+    <link rel="stylesheet" href="/libs/gitalk/gitalk.css">
+<link rel="stylesheet" href="/css/my-gitalk.css">
+
+<div class="card gitalk-card" data-aos="fade-up">
+    <div id="gitalk-container" class="card-content"></div>
+</div>
+
+<script src="/libs/gitalk/gitalk.min.js"></script>
+<script>
+    let gitalk = new Gitalk({
+        clientID: 'ea3985c0f8fdba464dea',
+        clientSecret: '2856369f95a20dce67cacde330ad344d409acb09',
+        repo: 'wangyixin-tom.github.io',
+        owner: 'WangYixin-Tom',
+        admin: "WangYixin-Tom",
+        id: '2021/04/10/interview-mysql/',
+        distractionFreeMode: false  // Facebook-like distraction free mode
+    });
+
+    gitalk.render('gitalk-container');
+</script>
+    
+
+    
+
+    
+
+    
+
+    
+    <style>
+    .valine-card {
+        margin: 1.5rem auto;
+    }
+
+    .valine-card .card-content {
+        padding: 20px 20px 5px 20px;
+    }
+
+    #vcomments input[type=text],
+    #vcomments input[type=email],
+    #vcomments input[type=url],
+    #vcomments textarea {
+        box-sizing: border-box;
+    }
+
+    #vcomments p {
+        margin: 2px 2px 10px;
+        font-size: 1.05rem;
+        line-height: 1.78rem;
+    }
+
+    #vcomments blockquote p {
+        text-indent: 0.2rem;
+    }
+
+    #vcomments a {
+        padding: 0 2px;
+        color: #42b983;
+        font-weight: 500;
+        text-decoration: underline;
+    }
+
+    #vcomments img {
+        max-width: 100%;
+        height: auto;
+        cursor: pointer;
+    }
+
+    #vcomments ol li {
+        list-style-type: decimal;
+    }
+
+    #vcomments ol,
+    ul {
+        display: block;
+        padding-left: 2em;
+        word-spacing: 0.05rem;
+    }
+
+    #vcomments ul li,
+    ol li {
+        display: list-item;
+        line-height: 1.8rem;
+        font-size: 1rem;
+    }
+
+    #vcomments ul li {
+        list-style-type: disc;
+    }
+
+    #vcomments ul ul li {
+        list-style-type: circle;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    #vcomments table, th, td {
+        border: 0;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments h1 {
+        font-size: 1.85rem;
+        font-weight: bold;
+        line-height: 2.2rem;
+    }
+
+    #vcomments h2 {
+        font-size: 1.65rem;
+        font-weight: bold;
+        line-height: 1.9rem;
+    }
+
+    #vcomments h3 {
+        font-size: 1.45rem;
+        font-weight: bold;
+        line-height: 1.7rem;
+    }
+
+    #vcomments h4 {
+        font-size: 1.25rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    #vcomments h5 {
+        font-size: 1.1rem;
+        font-weight: bold;
+        line-height: 1.4rem;
+    }
+
+    #vcomments h6 {
+        font-size: 1rem;
+        line-height: 1.3rem;
+    }
+
+    #vcomments p {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+
+    #vcomments hr {
+        margin: 12px 0;
+        border: 0;
+        border-top: 1px solid #ccc;
+    }
+
+    #vcomments blockquote {
+        margin: 15px 0;
+        border-left: 5px solid #42b983;
+        padding: 1rem 0.8rem 0.3rem 0.8rem;
+        color: #666;
+        background-color: rgba(66, 185, 131, .1);
+    }
+
+    #vcomments pre {
+        font-family: monospace, monospace;
+        padding: 1.2em;
+        margin: .5em 0;
+        background: #272822;
+        overflow: auto;
+        border-radius: 0.3em;
+        tab-size: 4;
+    }
+
+    #vcomments code {
+        font-family: monospace, monospace;
+        padding: 1px 3px;
+        font-size: 0.92rem;
+        color: #e96900;
+        background-color: #f8f8f8;
+        border-radius: 2px;
+    }
+
+    #vcomments pre code {
+        font-family: monospace, monospace;
+        padding: 0;
+        color: #e8eaf6;
+        background-color: #272822;
+    }
+
+    #vcomments pre[class*="language-"] {
+        padding: 1.2em;
+        margin: .5em 0;
+    }
+
+    #vcomments code[class*="language-"],
+    pre[class*="language-"] {
+        color: #e8eaf6;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+
+    #vcomments b,
+    strong {
+        font-weight: bold;
+    }
+
+    #vcomments dfn {
+        font-style: italic;
+    }
+
+    #vcomments small {
+        font-size: 85%;
+    }
+
+    #vcomments cite {
+        font-style: normal;
+    }
+
+    #vcomments mark {
+        background-color: #fcf8e3;
+        padding: .2em;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+</style>
+
+<div class="card valine-card" data-aos="fade-up">
+    <div id="vcomments" class="card-content"></div>
+</div>
+
+<script src="/libs/valine/av-min.js"></script>
+<script src="/libs/valine/Valine.min.js"></script>
+<!-- <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script> -->
+
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: '',
+        appKey: '',
+        notify: 'false' === 'true',
+        verify: 'false' === 'true',
+        visitor: 'false' === 'true',
+        avatar: 'wavatar',
+        pageSize: '10',
+        lang: 'zh-cn',
+        placeholder: '如果你没有GitHub账号，还可以在这里评论啦！'
+    });
+</script>
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2021/04/11/mysql-ri-zhi-xi-tong/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="mysql日志系统">
+                        
+                        <span class="card-title">mysql日志系统</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            日志系统redo log（重做日志）
+InnoDB引擎日志，redo log 保证数据库异常重启之前提交的记录不会丢失（crash-safe）
+
+在一条更新语句进行执行的时候，InnoDB引擎会把更新记录写到 redo log 日志中，然后
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2021-04-11
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/mysql/" class="post-category" target="_blank">
+                                    mysql
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/mysql/" target="_blank">
+                        <span class="chip bg-color">mysql</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fa fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2021/04/08/interview-kafka/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="kafka面试">
+                        
+                        <span class="card-title">kafka面试</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            概述Kafka 是什么？主要应用场景有哪些？Kafka 是一个分布式流式处理平台，可以作为企业级的消息引擎。
+Kafka 主要有两大应用场景：
+
+消息队列 ：建立实时流数据管道，以可靠地在系统或应用程序之间获取数据。
+数据处理： 构建实时的
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-04-08
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/interview/" class="post-category" target="_blank">
+                                    interview
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/interview/" target="_blank">
+                        <span class="chip bg-color">interview</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: 好好学习<br />'
+            + '作者: wangyixin-tom<br />'
+            + '链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () { bodyElement.removeChild(newdiv); }, 200);
+    });
+</script>
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="fa fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fa fa-list"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h1, h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h1, h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).slideUp(500);
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).slideDown(500);
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+    
+
+</main>
+
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
+
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+<!-- 代码语言 -->
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+<!-- 代码块复制 -->
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+<script type="text/javascript" src="/libs/codeBlock/clipboard.min.js"></script>
+<!-- 代码块收缩 -->
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script> 
+<!-- 代码块折行 -->
+<style type="text/css">code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }</style>
+
+
+    <footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            &copy; 2010-2021 yixin. 版权所有
+
+            
+            &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
+            <span class="white-color">179.9k</span>
+            
+
+            <br>
+            <span id="sitetime"></span>
+
+            
+            
+        </div>
+        <div class="col s12 m4 l4 social-link ">
+    <a href="https://github.com/WangYixin-Tom" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fa fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:tomwangyx@gmail.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fa fa-envelope-open"></i>
+    </a>
+
+
+
+    <a href="https://zhihu.com/people/WangYixin-Tom" class="tooltipped" target="_blank" data-tooltip="访问我的知乎" data-position="top" data-delay="50">
+        <i class="fa fa-inverse">知</i>
+    </a>
+
+
+
+    <a href="http://wpa.qq.com/msgrd?v=3&uin=2276505170&site=qq&menu=yes" class="tooltipped" target="_blank" data-tooltip="访问我的知乎" data-position="top" data-delay="50">
+        <i class="fa fa-qq"></i>
+    </a>
+
+
+
+    <a href="https://weibo.com/WangYixin-Tom" class="tooltipped" target="_blank" data-tooltip="关注我的微博" data-position="top" data-delay="50">
+        <i class="fa fa-weibo"></i>
+    </a>
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fa fa-rss"></i>
+    </a>
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+<!-- 不蒜子计数初始值纠正 -->
+<script>
+    $(document).ready(function () {
+
+        var int = setInterval(fixCount, 50);
+        var pvcountOffset = 80000;
+        var uvcountOffset = 20000;
+
+        function fixCount() {
+            if (document.getElementById("busuanzi_container_site_pv").style.display != "none") {
+                $("#busuanzi_value_site_pv").html(parseInt($("#busuanzi_value_site_pv").html()) + pvcountOffset);
+                clearInterval(int);
+            }
+            if ($("#busuanzi_container_site_pv").css("display") != "none") {
+                $("#busuanzi_value_site_uv").html(parseInt($("#busuanzi_value_site_uv").html()) + uvcountOffset); // 加上初始数据 
+                clearInterval(int);
+            }
+        }
+    });
+</script>
+
+<script language=javascript>
+    function siteTime() {
+        window.setTimeout("siteTime()", 1000);
+        var seconds = 1000;
+        var minutes = seconds * 60;
+        var hours = minutes * 60;
+        var days = hours * 24;
+        var years = days * 365;
+        var today = new Date();
+        var todayYear = today.getFullYear();
+        var todayMonth = today.getMonth() + 1;
+        var todayDate = today.getDate();
+        var todayHour = today.getHours();
+        var todayMinute = today.getMinutes();
+        var todaySecond = today.getSeconds();
+        /* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+        year - 作为date对象的年份，为4位年份值
+        month - 0-11之间的整数，做为date对象的月份
+        day - 1-31之间的整数，做为date对象的天数
+        hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+        minutes - 0-59之间的整数，做为date对象的分钟数
+        seconds - 0-59之间的整数，做为date对象的秒数
+        microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+        var t1 = Date.UTC(2020, 10, 25, 00, 00, 00); //北京时间2018-2-13 00:00:00
+        var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+        var diff = t2 - t1;
+        var diffYears = Math.floor(diff / years);
+        var diffDays = Math.floor((diff / days) - diffYears * 365);
+        var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+        var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) / minutes);
+        var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours - diffMinutes * minutes) / seconds);
+        document.getElementById("sitetime").innerHTML = "本站已运行 " + diffYears + " 年 " + diffDays + " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+    }/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
+    siteTime();
+</script>
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fa fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fa fa-angle-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <script type="text/javascript"> var OriginTitile = document.title, st; document.addEventListener("visibilitychange", function () { document.hidden ? (document.title = "Σ(っ °Д °;)っ喔哟，崩溃啦！", clearTimeout(st)) : (document.title = "φ(゜▽゜*)♪咦，又好了！", st = setTimeout(function () { document.title = OriginTitile }, 3e3)) })
+    </script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+
+    
+    <script src="/libs/others/clicklove.js"></script>
+    
+
+    
+
+    <!-- 雪花特效 -->
+    
+
+</body>
+
+</html>

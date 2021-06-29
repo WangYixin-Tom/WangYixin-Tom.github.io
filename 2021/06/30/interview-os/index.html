@@ -1,0 +1,1872 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="操作系统, python rabbitmq redis flask kafka">
+    <meta name="baidu-site-verification" content="code-KoKq36g1n2">
+    <meta name="google-site-verification" content="yCy2azpds5XSuGZvis6OuA-XIGF5GuGpYRAaGfD6o48">
+    <meta name="360-site-verification" content="b7c11a830ef90fd1464ad6206bb7b6e7">
+    <meta name="description" content="操作系统
+操作系统（Operating System，简称 OS）是管理计算机硬件与软件资源的程序，是计算机系统的内核与基石；
+操作系统本质上是运行在计算机上的软件程序 ；
+操作系统为用户提供一个与系统交互的操作界面 ；
+操作系统分内核与外">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>操作系统 | 好好学习</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    <style type="text/css">
+        
+    </style>
+
+    <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
+    <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?46e79e71af0709a5b9106bf20cecc493";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+    
+        <script>
+            (function(){
+                var bp = document.createElement('script');
+                var curProtocol = window.location.protocol.split(':')[0];
+                if (curProtocol === 'https') {
+                    bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+                }
+                else {
+                    bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+                }
+                var s = document.getElementsByTagName("script")[0];
+                s.parentNode.insertBefore(bp, s);
+            })();
+        </script>
+    
+
+    <script>
+        (function(){
+        var src = "https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
+        document.write('<script src="' + src + '" id="sozz"><\/script>');
+        })();
+    </script>
+
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+
+<body>
+
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">好好学习</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fa fa-navicon"></i></a>
+<ul class="right">
+    
+    <li class="hide-on-med-and-down">
+        <a href="/" class="waves-effect waves-light">
+            
+            <i class="fa fa-home"></i>
+            
+            <span>首页</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/tags" class="waves-effect waves-light">
+            
+            <i class="fa fa-tags"></i>
+            
+            <span>标签</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/categories" class="waves-effect waves-light">
+            
+            <i class="fa fa-bookmark"></i>
+            
+            <span>分类</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/archives" class="waves-effect waves-light">
+            
+            <i class="fa fa-archive"></i>
+            
+            <span>归档</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/about" class="waves-effect waves-light">
+            
+            <i class="fa fa-user-circle-o"></i>
+            
+            <span>关于</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/friends" class="waves-effect waves-light">
+            
+            <i class="fa fa-address-book"></i>
+            
+            <span>友情链接</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/contact" class="waves-effect waves-light">
+            
+            <i class="fa fa-comments"></i>
+            
+            <span>留言板</span>
+        </a>
+    </li>
+    
+    <li>
+        <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+            <i id="searchIcon" class="fa fa-search" title="搜索"></i>
+        </a>
+    </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">好好学习</div>
+        <div class="logo-desc">
+            
+            业精于勤荒于嬉，行成于思毁于随
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li>
+            <a href="/" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-home"></i>
+                
+                首页
+            </a>
+        </li>
+        
+        <li>
+            <a href="/tags" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-tags"></i>
+                
+                标签
+            </a>
+        </li>
+        
+        <li>
+            <a href="/categories" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-bookmark"></i>
+                
+                分类
+            </a>
+        </li>
+        
+        <li>
+            <a href="/archives" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-archive"></i>
+                
+                归档
+            </a>
+        </li>
+        
+        <li>
+            <a href="/about" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-user-circle-o"></i>
+                
+                关于
+            </a>
+        </li>
+        
+        <li>
+            <a href="/friends" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-address-book"></i>
+                
+                友情链接
+            </a>
+        </li>
+        
+        <li>
+            <a href="/contact" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-comments"></i>
+                
+                留言板
+            </a>
+        </li>
+        
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+<script src="/libs/cryptojs/crypto-js.min.js"></script>
+<script>
+    (function() {
+        let pwd = '';
+        if (pwd && pwd.length > 0) {
+            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                alert('密码错误，将返回主页！');
+                location.href = '/';
+            }
+        }
+    })();
+</script>
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        操作系统
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 20px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                        <a href="/tags/interview/" target="_blank">
+                            <span class="chip bg-color">interview</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fa fa-bookmark fa-fw icon-category"></i>
+                        
+                        <a href="/categories/interview/" class="post-category" target="_blank">
+                            interview
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                <div class="post-date info-break-policy">
+                    <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2021-06-30
+                </div>
+
+                <div class="post-author info-break-policy">
+                    <i class="fa fa-user-o fa-fw"></i>作者:&nbsp;&nbsp;
+                    
+                    wangyixin-tom
+                    
+                </div>
+
+                
+                
+                <div class="info-break-policy">
+                    <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    20.4k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    69 分
+                </div>
+                
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h2 id="操作系统"><a href="#操作系统" class="headerlink" title="操作系统"></a>操作系统</h2><ol>
+<li>操作系统（Operating System，简称 OS）是管理计算机硬件与软件资源的程序，是计算机系统的内核与基石；</li>
+<li>操作系统本质上是运行在计算机上的软件程序 ；</li>
+<li>操作系统为用户提供一个与系统交互的操作界面 ；</li>
+<li>操作系统分内核与外壳（我们可以把外壳理解成围绕着内核的应用程序，而内核就是能操作硬件的程序）。</li>
+</ol>
+<h3 id="32位64位操作系统的区别？"><a href="#32位64位操作系统的区别？" class="headerlink" title="32位64位操作系统的区别？"></a>32位64位操作系统的区别？</h3><p>64位平台不管是在性能上，还是在功能上，都要领先于目前的32位平台。</p>
+<ul>
+<li>32位处理器一次只能处理32位，也就是4个字节的数据；而64位处理器一次就能处理64位，即8个字节的数据。如果将总长128位的指令分别按16位、32位、64位为单位进行编辑的话：32位的处理器需要4个指令，而64位处理器则只要两个指令。显然，在工作频率相同的情况下，64位处理器的处理速度比32位的更快。</li>
+<li>由于地址使用的是特殊的整数，而64位处理器的一个ALU（算术逻辑运算器）和寄存器可以处理更大的整数，也就是更大的地址。传统32位处理器的寻址空间最大为4GB，而64位的处理器在理论上则可以达到1800万个TB（1TB=1024GB）。</li>
+<li>从32位到64位，使寻址范围、最大内存容量、数据传输和处理速度、数值精度等指标也成倍增加，带来的结果就是CPU的处理能力得到大幅提升，尤其是对强烈依赖数值运算、存在巨量数据吞吐和需要超大并发处理的应用提升效果非常明显，如科学计算、人工智能、平面设计、视频处理、3D动画和游戏、数据库以及各种网络服务器等。</li>
+</ul>
+<h3 id="系统调用"><a href="#系统调用" class="headerlink" title="系统调用"></a>系统调用</h3><p>根据进程访问资源的特点，我们可以把进程在系统上的运行分为两个级别：用户态和系统态。</p>
+<p>我们运行的程序基本都是运行在用户态，通过系统调用使用操作系统提供的系统态级别的子功能。</p>
+<p>文件管理、进程控制、内存管理等都必须通过系统调用方式向操作系统提出服务请求，并由操作系统代为完成。</p>
+<p>这些系统调用按功能大致可分为如下几类：</p>
+<ul>
+<li>设备管理。完成设备的请求或释放，以及设备启动等功能。</li>
+<li>文件管理。完成文件的读、写、创建及删除等功能。</li>
+<li>进程控制。完成进程的创建、撤销、阻塞及唤醒等功能。</li>
+<li>进程通信。完成进程之间的消息传递或信号传递等功能。</li>
+<li>内存管理。完成内存的分配、回收以及获取作业占用内存区大小及地址等功能。</li>
+</ul>
+<h3 id="系统调用和中断的关系"><a href="#系统调用和中断的关系" class="headerlink" title="系统调用和中断的关系"></a>系统调用和中断的关系</h3><p>系统调用：通过系统调用使用操作系统提供的系统态级别的子功能。</p>
+<p>中断：一个硬件或软件发出的请求，要求CPU暂停当前的工作转手取处理更加重要的事情。</p>
+<p>软中断和系统调用一样，都是CPU停止掉当前用户态上下文，保存工作现场，然后陷入到内核态继续工作。</p>
+<p>二者的唯一区别是系统调用是切换到同进程的内核态上下文，而软中断是则是切换到了另外一个内核进程ksoftirqd上。</p>
+<h2 id="零拷贝"><a href="#零拷贝" class="headerlink" title="零拷贝"></a>零拷贝</h2><h3 id="零拷贝-1"><a href="#零拷贝-1" class="headerlink" title="零拷贝"></a>零拷贝</h3><p>计算机执行操作时，CPU不需要先将数据从某处内存复制到另一个特定区域，通常用于通过网络传输文件时节省CPU周期和内存带宽。</p>
+<blockquote>
+<p>零拷贝并非真的是完全没有数据拷贝的过程，只不过是减少用户态和内核态的切换次数以及CPU拷贝的次数。</p>
+</blockquote>
+<h3 id="DMA拷贝"><a href="#DMA拷贝" class="headerlink" title="DMA拷贝"></a><strong>DMA</strong>拷贝</h3><p>因为对于一个IO操作而言，都是通过CPU发出对应的指令来完成，但是相比CPU来说，IO的速度太慢了，CPU有大量的时间处于等待IO的状态。</p>
+<p>因此就产生了DMA（Direct Memory Access）直接内存访问技术，本质上来说他就是一块主板上独立的芯片，通过它来进行内存和IO设备的数据传输，从而减少CPU的等待时间。</p>
+<h3 id="传统IO"><a href="#传统IO" class="headerlink" title="传统IO"></a>传统IO</h3><p>传统的IO<code>read+write</code>方式会产生2次DMA拷贝+2次CPU拷贝，同时有4次上下文切换。</p>
+<p><img src="%E4%BC%A0%E7%BB%9F%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93.png" alt></p>
+<h3 id="mmap-write"><a href="#mmap-write" class="headerlink" title="mmap + write"></a>mmap + write</h3><p>通过<code>mmap+write</code>方式则产生2次DMA拷贝+1次CPU拷贝，4次上下文切换，通过内存映射减少了一次CPU拷贝，可以减少内存使用，适合大文件的传输。</p>
+<p><img src="mmap-write.png" alt></p>
+<h3 id="sendfile"><a href="#sendfile" class="headerlink" title="sendfile"></a>sendfile</h3><p><code>sendfile</code>方式是新增的一个系统调用函数，产生2次DMA拷贝+1次CPU拷贝，但是只有2次上下文切换。因为只有一次调用，减少了上下文的切换，但是用户空间对IO数据不可见，适用于静态文件服务器。</p>
+<p><img src="senfile-3%E6%AC%A1%E6%8B%B7%E8%B4%9D.png" alt></p>
+<h3 id="sendfile-DMA-gather"><a href="#sendfile-DMA-gather" class="headerlink" title="sendfile+DMA gather"></a>sendfile+DMA gather</h3><p><code>sendfile+DMA gather</code>方式产生2次DMA拷贝，没有CPU拷贝，而且也只有2次上下文切换。虽然极大地提升了性能，但是需要依赖新的硬件设备支持。</p>
+<p><img src="senfile-%E9%9B%B6%E6%8B%B7%E8%B4%9D.png" alt></p>
+<h3 id="PageCache有什么用"><a href="#PageCache有什么用" class="headerlink" title="PageCache有什么用"></a>PageCache有什么用</h3><p>内核缓冲区实际上是磁盘高速缓存（PageCache）</p>
+<ul>
+<li>通过 DMA 把磁盘里的数据搬运到内存里，这样就可以用读内存替换读磁盘。用 PageCache 来缓存最近被访问的数据，当空间不足时淘汰最久未被访问的缓存。</li>
+<li>读磁盘数据的时候，优先在 PageCache 找，如果数据存在则可以直接返回；如果没有，则从磁盘中读取，然后缓存 PageCache 中。</li>
+<li>PageCache 使用了预读功能</li>
+</ul>
+<blockquote>
+<p>针对大文件的传输，不应该使用 PageCache，也就是说不应该使用零拷贝技术，因为可能由于 PageCache 被大文件占据，而导致「热点」小文件无法利用到 PageCache，这样在高并发的环境下，会带来严重的性能问题。</p>
+</blockquote>
+<h3 id="大文件的传输"><a href="#大文件的传输" class="headerlink" title="大文件的传输"></a>大文件的传输</h3><ul>
+<li>前半部分，内核向磁盘发起读请求，但是可以<strong>不等待数据就位就可以返回</strong>，于是进程此时可以处理其他任务；</li>
+<li>后半部分，当内核将磁盘中的数据拷贝到进程缓冲区后，进程将接收到内核的<strong>通知</strong>，再去处理数据；</li>
+<li>绕开 PageCache 的 I/O 叫直接 I/O，使用 PageCache 的 I/O 则叫缓存 I/O。通常，对于磁盘，异步 I/O 只支持直接 I/O</li>
+</ul>
+<h2 id="用户态内核态"><a href="#用户态内核态" class="headerlink" title="用户态内核态"></a>用户态内核态</h2><h3 id="内核态和用户态"><a href="#内核态和用户态" class="headerlink" title="内核态和用户态"></a>内核态和用户态</h3><p>为了限制不同程序的访问能力，CPU划分了用户态和内核态两个权限等级。</p>
+<ul>
+<li>用户态只能受限地访问内存，且不允许访问外围设备，没有占用CPU的能力，CPU资源可以被其它程序获取；</li>
+<li>内核态可以访问内存所有数据以及外围设备，也可以进行程序的切换。</li>
+</ul>
+<p>所有用户程序都运行在用户态，但有时需要进行一些内核态的操作，比如从硬盘或者键盘读数据，这时就需要进行系统调用，CPU切换到内核态，执行相应的服务，再切换为用户态并返回系统调用的结果。</p>
+<h3 id="为什么要有内核态和用户态"><a href="#为什么要有内核态和用户态" class="headerlink" title="为什么要有内核态和用户态"></a>为什么要有内核态和用户态</h3><ul>
+<li>安全性：防止用户程序恶意或者不小心破坏系统/内存/硬件资源；</li>
+<li>封装性：用户程序不需要实现更加底层的代码；</li>
+<li>利于调度：如果多个用户程序都在等待键盘输入，这时就需要进行调度；统一交给操作系统调度更加方便。</li>
+</ul>
+<h3 id="内核空间"><a href="#内核空间" class="headerlink" title="内核空间"></a>内核空间</h3><p>内核空间总是驻留在内存中，它是<strong>为操作系统的内核保留的</strong>。<strong>应用程序是不允许直接在该区域进行读写或直接调用内核代码定义的函数的</strong>。虚拟内存，按访问权限可以分为进程私有和进程共享两块区域。</p>
+<ul>
+<li>进程私有的虚拟内存：每个进程都有单独的<strong>内核栈</strong>、<strong>页表</strong>、<strong>task 结构以及 mem_map 结构</strong>等。</li>
+<li>进程共享的虚拟内存：属于所有进程共享的内存区域，包括<strong>物理存储器、内核数据和内核代码区域</strong>。</li>
+</ul>
+<h3 id="用户空间"><a href="#用户空间" class="headerlink" title="用户空间"></a>用户空间</h3><p>每个普通的用户进程都有一个单独的用户空间，处于用户态的进程不能访问内核空间中的数据，也不能直接调用内核函数的 ，因此要进行系统调用的时候，就要将进程切换到内核态才行。用户空间包括以下几个内存区域：</p>
+<ul>
+<li>运行时栈：<strong>由编译器自动释放，存放函数的参数值，局部变量和方法返回值等</strong>。每当一个函数被调用时，该函数的返回类型和一些调用的信息被存储到栈顶，调用结束后调用信息会被弹出弹出并释放掉内存。栈区是从高地址位向低地址位增长的，是一块连续的内在区域，最大容量是由系统预先定义好的，申请的栈空间超过这个界限时会提示溢出，用户能从栈中获取的空间较小。</li>
+<li>运行时堆：<strong>用于存放进程运行中被动态分配的内存段</strong>，位于 BSS 和栈中间的地址位。由开发人员申请分配（malloc）和释放（free）。堆是从低地址位向高地址位增长，采用链式存储结构。频繁地 malloc/free 造成内存空间的不连续，产生大量碎片。当申请堆空间时，库函数按照一定的算法搜索可用的足够大的空间。因此堆的效率比栈要低的多。</li>
+<li>代码段：<strong>存放 CPU 可以执行的机器指令，该部分内存只能读不能写。通常代码区是共享的，即其它执行程序可调用它。</strong>假如机器中有数个进程运行相同的一个程序，那么它们就可以使用同一个代码段。</li>
+<li>未初始化的数据段：<strong>存放未初始化的全局变量</strong>，BSS 的数据在程序开始执行之前被初始化为 0 或 NULL。</li>
+<li>已初始化的数据段：<strong>存放已初始化的全局变量</strong>，包括静态全局变量、静态局部变量以及常量。</li>
+<li>内存映射区域：<strong>例如将动态库，共享内存等虚拟空间的内存映射到物理空间的内存</strong>，一般是 mmap 函数所分配的虚拟内存空间。</li>
+</ul>
+<h3 id="内核态和用户态的区别"><a href="#内核态和用户态的区别" class="headerlink" title="内核态和用户态的区别"></a>内核态和用户态的区别</h3><p>内核态可以执行任意命令，调用系统的一切资源；</p>
+<p>用户态只能执行简单的运算，不能直接调用系统资源。用户态必须通过系统调用，才能向内核发出指令。</p>
+<ul>
+<li>内核空间可以访问所有的 CPU 指令和所有的内存空间、I/O 空间和硬件设备。</li>
+<li>用户空间只能访问受限的资源，如果需要特殊权限，可以通过系统调用获取相应的资源。</li>
+<li>所有内核进程（线程）共用一个地址空间，而用户进程都有各自的地址空间。</li>
+<li>用户空间允许页面中断，而内核空间则不允许。</li>
+<li>内核空间和用户空间是针对线性地址空间的</li>
+</ul>
+<h3 id="操作系统为什么知道什么时候进入内核态"><a href="#操作系统为什么知道什么时候进入内核态" class="headerlink" title="操作系统为什么知道什么时候进入内核态"></a>操作系统为什么知道什么时候进入内核态</h3><p>用户态切换到内核态的3种方式</p>
+<p><strong>a. 系统调用</strong></p>
+<p><strong>通过系统调用申请使用操作系统提供的服务程序完成工作</strong>，比如<code>fork()</code>，本质是通过中断来实现。</p>
+<p><strong>b. 异常</strong></p>
+<p>当CPU在执行运行在用户态下的程序时，发生了某些事先不可知的异常，会<strong>触发进程切换到处理此异常的内核相关程序中</strong>，也就转到了内核态，比如缺页异常。</p>
+<p><strong>c. 外围设备的中断</strong></p>
+<p><strong>当外围设备完成用户请求的操作后，会向CPU发出相应的中断信号</strong>，这时CPU转而去执行与中断信号对应的处理程序，如果先前执行的指令是用户态下的程序，那么这个转换的过程自然也就发生了由用户态到内核态的切换。</p>
+<blockquote>
+<p>这3种方式是系统在运行时由用户态转到内核态的最主要方式，其中系统调用可以认为是用户进程主动发起的，异常和外围设备中断则是被动的。</p>
+</blockquote>
+<h3 id="缺页中断是什么"><a href="#缺页中断是什么" class="headerlink" title="缺页中断是什么"></a>缺页中断是什么</h3><p>当一个程序访问一个<strong>映射到地址空间却实际并未加载到物理内存</strong>的页（page）时， 硬件向软件发出的一次中断（或异常）就是一个缺页中断或叫页错误（page fault）。</p>
+<p>缺页中断是一种特殊的中断，它与一般的中断的区别是：</p>
+<p>（1）在指令执行期间产生和处理中断信号，CPU通常在一条指令执行完后检查是否有中断请求，而缺页中断是在指令执行时间，发现所要访问的指令或数据不在内存时产生和处理的。</p>
+<p>（2）一条指令在执行期间可能产生多次缺页中断。如一条读取数据的多字节指令，指令本身跨越两个页面，若指令后一部分所在页面和数据所在页面均不在内存，则该指令的执行至少产生两次缺页中断。</p>
+<h3 id="Major-Minor-page-fault区别"><a href="#Major-Minor-page-fault区别" class="headerlink" title="Major/Minor page fault区别"></a>Major/Minor page fault区别</h3><p>如果访问一个地址时，与该地址空间vma绑定的数据还存在于Disk上，那么此时即会触发一次major fault；</p>
+<p>如果访问一个地址时，与之绑定的vma对应的地址空间已经被内核加载到了Page Cache中，那么此时只需要把该Page映射到vma中即可，这种异常即为一次minor fault。</p>
+<h2 id="内存"><a href="#内存" class="headerlink" title="内存"></a>内存</h2><h3 id="操作系统的内存管理主要是做什么"><a href="#操作系统的内存管理主要是做什么" class="headerlink" title="操作系统的内存管理主要是做什么"></a><strong>操作系统的内存管理主要是做什么</strong></h3><ul>
+<li>负责内存的分配与回收（malloc 函数：申请内存，free 函数：释放内存）</li>
+<li>地址转换，将逻辑地址转换成相应的物理地址</li>
+</ul>
+<h3 id="常见的几种内存管理机制"><a href="#常见的几种内存管理机制" class="headerlink" title="常见的几种内存管理机制"></a>常见的几种内存管理机制</h3><p>简单分为<strong>连续分配管理方式</strong>和<strong>非连续分配管理方式</strong>这两种。连续分配管理方式是指为一个用户程序分配一个连续的内存空间，常见的如 <strong>块式管理</strong> 。同样地，非连续分配管理方式允许一个程序使用的内存分布在离散或者说不相邻的内存中，常见的如<strong>页式管理</strong> 和 <strong>段式管理</strong>。</p>
+<ol>
+<li><strong>块式管理</strong> ： 远古时代的计算机操系统的内存管理方式。<strong>将内存分为几个固定大小的块，每个块中只包含一个进程。</strong>如果程序运行需要内存的话，操作系统就分配给它一块，如果程序运行只需要很小的空间的话，分配的这块<strong>内存很大一部分几乎被浪费</strong>了。这些在每个块中未被利用的空间，我们称之为碎片。</li>
+<li><strong>页式管理</strong> ：把<strong>主存分为大小相等且固定的一页一页的形式</strong>，页较小，相对相比于块式管理的划分力度更大，提高了内存利用率，减少了碎片。页式管理通过<strong>页表对应逻辑地址和物理地址。</strong></li>
+<li><strong>段式管理</strong> ： 页式管理虽然提高了内存利用率，但是<strong>页式管理其中的页实际并无任何实际意义</strong>。 <strong>段式管理把主存分为一段段的，每一段的空间又要比一页的空间小很多 。</strong>但是，<strong>最重要的是段是有实际意义的，每个段定义了一组逻辑信息</strong>，例如，有主程序段 MAIN、子程序段 X、数据段 D 及栈段 S 等。 段式管理<strong>通过段表对应逻辑地址和物理地址。</strong></li>
+<li>段页式管理机制结合了段式管理和页式管理的优点。简单来说段页式管理机制就是<strong>把主存先分成若干段，每个段又分成若干页</strong>，也就是说 <strong>段页式管理机制</strong> 中段与段之间以及段的内部的都是离散的。</li>
+</ol>
+<h3 id="内存分配方式一般有哪些"><a href="#内存分配方式一般有哪些" class="headerlink" title="内存分配方式一般有哪些"></a>内存分配方式一般有哪些</h3><p>一般来说，程序运行时有三种内存分配方式：静态的、栈式的、堆式的：</p>
+<p> （1）静态：是在程序编译时就已经分配好的，在整个运行期间都存在，如全局变量、常量。</p>
+<p> （2）栈式分配：由编译器自动分配释放 ，存放函数参数、局部变量等，函数执行结束后自动释放。</p>
+<p> （3）堆式分配：一般由程序员分配释放，若程序员不释放，程序结束时可由 OS 自动回收。如我们用 new，malloc 分配内存，用 delete，free来释放内存。</p>
+<h3 id="内存碎片如何产生的？"><a href="#内存碎片如何产生的？" class="headerlink" title="内存碎片如何产生的？"></a>内存碎片如何产生的？</h3><ol>
+<li><p>内部碎片是由于采用固定大小的内存分区，当一个进程不能完全使用分给它的固定内存区域时就产生了内部碎片，通常内部碎片难以完全避免；</p>
+</li>
+<li><p>外部碎片是由于某些未分配的连续内存区域太小，以至于不能满足任意进程的内存分配请求，从而不能被进程利用的内存区域。</p>
+</li>
+</ol>
+<p>现在普遍采用的段页式内存分配方式就是将进程的内存区域分为不同的段，然后将每一段由多个固定大小的页组成。通过页表机制，使段内的页可以不必连续处于同一内存区域，<strong>从而减少了外部碎片</strong>，然而同一页内仍然可能存在少量的内部碎片，只是一页的内存空间本就较小，从而使可能存在的内部碎片也较少。</p>
+<h3 id="虚拟内存"><a href="#虚拟内存" class="headerlink" title="虚拟内存"></a>虚拟内存</h3><h4 id="什么是虚拟内存"><a href="#什么是虚拟内存" class="headerlink" title="什么是虚拟内存"></a><strong>什么是虚拟内存</strong></h4><p>每个程序都拥有自己的地址空间，这个地址空间被分成大小相等的页，这些页通过页表被映射到物理内存；但不需要所有的页都在物理内存中，当程序引用到不在物理内存中的页时，由操作系统将缺失的部分装入物理内存。这样，对于程序来说，逻辑上似乎有很大的内存空间，只是实际上有一部分是存储在磁盘上，因此叫做虚拟内存。</p>
+<p>虚拟内存的优点是让程序可以获得更多的可用内存。</p>
+<h4 id="访问物理内存"><a href="#访问物理内存" class="headerlink" title="访问物理内存"></a>访问物理内存</h4><ul>
+<li>用户进程向操作系统发出内存申请请求</li>
+<li>系统会检查进程的虚拟地址空间是否被用完，如果有剩余，给<strong>进程分配虚拟地址</strong></li>
+<li>系统为这块虚拟地址<strong>创建的内存映射</strong>（Memory Mapping），并将它放进该进程的页表（Page Table）</li>
+<li>系统<strong>返回虚拟地址给用户进程，用户进程开始访问该虚拟地址</strong></li>
+<li>CPU 根据虚拟地址在此进程的页表（Page Table）中找到了相应的内存映射，但是这个内存映<strong>射没有和物理内存关联，于是产生缺页中断</strong></li>
+<li>操作系统收到缺页中断后，<strong>分配真正的物理内存并将它关联到页表相应的内存映射</strong>。中断处理完成后 CPU 就可以访问内存了</li>
+<li>当然缺页中断不是每次都会发生，<strong>只有系统觉得有必要延迟分配内存的时候才用的着</strong>，也即很多时候在上面的第 3 步系统会分配真正的物理内存并和内存映射进行关联</li>
+</ul>
+<h4 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h4><ul>
+<li>地址空间：<strong>提供更大的地址空间</strong>，并且地址空间是连续的，使得程序编写、链接更加简单</li>
+<li><strong>进程隔离</strong>：不同进程的虚拟地址之间没有关系，所以一个进程的操作不会对其它进程造成影响</li>
+<li><strong>数据保护</strong>：每块虚拟内存都有相应的读写属性，这样就能保护程序的代码段不被修改，数据块不能被执行等，增加了系统的安全性</li>
+<li><strong>内存映射</strong>：有了虚拟内存之后，可以直接映射磁盘上的文件（可执行文件或动态库）到虚拟地址空间。这样可以做到物理内存延时分配，只有在需要读相应的文件的时候，才将它真正的从磁盘上加载到内存中来，而在内存吃紧的时候又可以将这部分内存清空掉，提高物理内存利用效率，并且所有这些对应用程序是都透明的</li>
+<li><strong>共享内存</strong>：比如动态库只需要在内存中存储一份，然后将它映射到不同进程的虚拟地址空间中，让进程觉得自己独占了这个文件。</li>
+<li><strong>物理内存管理</strong>：<strong>物理地址空间全部由操作系统管理</strong>，进程无法直接分配和回收，从而系统可以更好的利用内存，平衡进程间对内存的需求</li>
+</ul>
+<h4 id="局部性原理"><a href="#局部性原理" class="headerlink" title="局部性原理"></a>局部性原理</h4><p>因为程序运行具有局部性原理，才可以只装入部分程序到内存就开始运行。</p>
+<p>局部性原理表现在以下两个方面：</p>
+<ol>
+<li><strong>时间局部性</strong> ：<strong>如果程序中的某条指令一旦执行，不久以后该指令可能再次执行；如果某数据被访问过，不久以后该数据可能再次被访问。</strong>产生时间局部性的典型原因，是由于在程序中存在着<strong>大量的循环操作</strong>。</li>
+<li><strong>空间局部性</strong> ：<strong>一旦程序访问了某个存储单元，在不久之后，其附近的存储单元也将被访问</strong>，即程序在一段时间内所访问的地址，可能集中在一定的范围之内，这是因为指令通常是顺序存放、顺序执行的，数据也一般是以向量、数组、表等形式簇聚存储的。</li>
+</ol>
+<p>时间局部性是通过将近来使用的指令和数据保存<strong>到高速缓存存储器</strong>中，并使用高速缓存的层次结构实现。</p>
+<p>空间局部性通常是<strong>使用较大的高速缓存</strong>，并将预取机制集成到高速缓存控制逻辑中实现。虚拟内存技术实际上就是建立了 “内存一外存”的两级存储器的结构，利用局部性原理实现髙速缓存。</p>
+<h4 id="虚拟存储器（虚拟内存技术）"><a href="#虚拟存储器（虚拟内存技术）" class="headerlink" title="虚拟存储器（虚拟内存技术）"></a><strong>虚拟存储器（虚拟内存技术）</strong></h4><blockquote>
+<p>基于局部性原理，在程序装入时，可以将程序的一部分装入内存，而将其他部分留在外存，就可以启动程序执行。由于外存往往比内存大很多，所以我们运行的软件的内存大小实际上是可以比计算机系统实际的内存大小大的。</p>
+</blockquote>
+<p>在程序执行过程中，当所访问的信息不在内存时，由操作系统将所需要的部分调入内存，然后继续执行程序。另一方面，操作系统将内存中暂时不使用的内容换到外存上，从而腾出空间存放将要调入内存的信息。这样，计算机好像为用户提供了一个比实际内存大的多的存储器——<strong>虚拟存储器</strong>。</p>
+<h4 id="MMU（内存管理单元）作用"><a href="#MMU（内存管理单元）作用" class="headerlink" title="MMU（内存管理单元）作用"></a>MMU（内存管理单元）作用</h4><p>负责<strong>虚拟地址映射为物理地址</strong>，以及提供硬件机制的内存访问授权。</p>
+<blockquote>
+<ol>
+<li>操作系统在初始化或分配、释放内存时会执行一些指令在物理内存中填写页表，然后用指令设置MMU，告诉MMU页表在物理内存中的什么位置。</li>
+<li>设置好之后，CPU每次执行访问内存的指令都会自动引发MMU做查表和地址转换操作，地址转换操作由硬件自动完成。</li>
+</ol>
+</blockquote>
+<h3 id="逻辑（虚拟）地址和物理地址"><a href="#逻辑（虚拟）地址和物理地址" class="headerlink" title="逻辑（虚拟）地址和物理地址"></a>逻辑（虚拟）地址和物理地址</h3><ul>
+<li>编程一般只有可能和逻辑地址打交道，比如在 C 语言中，指针里面存储的数值就可以理解成为内存里的一个地址，这个地址也就是我们说的逻辑地址，逻辑地址由操作系统决定。</li>
+<li>物理地址指的是真实物理内存中地址，更具体一点来说就是内存地址寄存器中的地址。物理地址是内存单元真正的地址。</li>
+</ul>
+<h3 id="如何进行地址空间到物理内存的映射？"><a href="#如何进行地址空间到物理内存的映射？" class="headerlink" title="如何进行地址空间到物理内存的映射？"></a>如何进行地址空间到物理内存的映射？</h3><p><strong>内存管理单元</strong>（MMU）管理着逻辑地址和物理地址的转换，其中的页表（Page table）存储着页（逻辑地址）和页框（物理内存空间）的映射表</p>
+<h4 id="虚拟内存技术的实现"><a href="#虚拟内存技术的实现" class="headerlink" title="虚拟内存技术的实现"></a><strong>虚拟内存技术的实现</strong></h4><p><strong>虚拟内存的实现需要建立在离散分配的内存管理方式的基础上。</strong> 虚拟内存的实现有以下三种方式：</p>
+<ol>
+<li><strong>请求分页存储管理</strong> ：建立在分页管理之上，为了支持虚拟存储器功能而增加了请求调页功能和页面置换功能。请求分页是目前最常用的一种实现虚拟存储器的方法。请求分页存储管理系统中，在作业开始运行之前，仅装入当前要执行的部分段即可运行。假如在作业运行的过程中发现要访问的页面不在内存，则由处理器通知操作系统按照对应的页面置换算法将相应的页面调入到主存，同时操作系统也可以将暂时不用的页面置换到外存中。</li>
+<li><strong>请求分段存储管理</strong> ：建立在分段存储管理之上，增加了请求调段功能、分段置换功能。请求分段储存管理方式就如同请求分页储存管理方式一样，在作业开始运行之前，仅装入当前要执行的部分段即可运行；在执行过程中，可使用请求调入中断动态装入要访问但又不在内存的程序段；当内存空间已满，而又需要装入新的段时，根据置换功能适当调出某个段，以便腾出空间而装入新的段。</li>
+<li><strong>请求段页式存储管理</strong></li>
+</ol>
+<blockquote>
+<p>请求分页存储管理建立在分页管理之上。他们的根本区别是是否将程序全部所需的全部地址空间都装入主存，这也是请求分页存储管理可以提供虚拟内存的原因，我们在上面已经分析过了。</p>
+<p>它们之间的根本区别在于是否将一作业的全部地址空间同时装入主存。请求分页存储管理不要求将作业全部地址空间同时装入主存。基于这一点，请求分页存储管理可以提供虚存，而分页存储管理却不能提供虚存。</p>
+</blockquote>
+<h4 id="页面置换算法的作用"><a href="#页面置换算法的作用" class="headerlink" title="页面置换算法的作用?"></a><strong>页面置换算法的作用?</strong></h4><p>地址映射过程中，若在页面中发现所要访问的页面不在内存中，则发生缺页中断 。</p>
+<p>缺页中断 就是要访问的页不在主存，需要操作系统将其调入主存后再进行访问。</p>
+<p>当发生缺页中断时，如果当前内存中并没有空闲的页面，操作系统就必须在内存选择一个页面将其移出内存，以便为即将调入的页面让出空间。</p>
+<h4 id="常见的页面置换算法有哪些"><a href="#常见的页面置换算法有哪些" class="headerlink" title="常见的页面置换算法有哪些?"></a>常见的页面置换算法有哪些?</h4><ul>
+<li><strong>FIFO （先进先出）</strong> : 置换在内存中驻留时间最长的页面。缺点：有可能将那些经常被访问的页面也被换出，从而使缺页率升高；</li>
+<li><strong>LRU （最近未使用）</strong> ：置换出未使用时间最长的一页；实现方式：维护时间戳，或者维护一个所有页面的链表。当一个页面被访问时，将这个页面移到链表表头。这样就能保证链表表尾的页面是最近最久未访问的。</li>
+<li><strong>最不经常使用算法</strong>NFU：置换出访问次数最少的页面</li>
+</ul>
+<h4 id="缺页中断"><a href="#缺页中断" class="headerlink" title="缺页中断"></a>缺页中断</h4><p>缺页中断 就是要访问的页不在主存，需要操作系统将其调入主存后再进行访问。</p>
+<h5 id="如何查看进程发生缺页中断的次数？"><a href="#如何查看进程发生缺页中断的次数？" class="headerlink" title="如何查看进程发生缺页中断的次数？"></a>如何查看进程发生缺页中断的次数？</h5><p>用ps -o majflt,minflt -C program命令查看。</p>
+<p>majflt代表major fault，中文名叫大错误，minflt代表minor fault，中文名叫小错误。</p>
+<p> 这两个数值表示一个进程自启动以来所发生的缺页中断的次数。</p>
+<h5 id="发成缺页中断后，执行了那些操作？"><a href="#发成缺页中断后，执行了那些操作？" class="headerlink" title="发成缺页中断后，执行了那些操作？"></a>发成缺页中断后，执行了那些操作？</h5><p>当一个进程发生缺页中断的时候，进程会陷入内核态，执行以下操作：<br>1、检查要访问的虚拟地址是否合法<br>2、查找/分配一个物理页<br>3、填充物理页内容（读取磁盘，或者直接置0，或者啥也不干）<br>4、建立映射关系（虚拟地址到物理地址）<br>重新执行发生缺页中断的那条指令<br>如果第3步，需要读取磁盘，那么这次缺页中断就是majflt，否则就是minflt。 </p>
+<h5 id="tcp服务器的系统发生大量缺页中断，可能的原因是什么"><a href="#tcp服务器的系统发生大量缺页中断，可能的原因是什么" class="headerlink" title="tcp服务器的系统发生大量缺页中断，可能的原因是什么"></a>tcp服务器的系统发生大量缺页中断，可能的原因是什么</h5><p>一般这种运行中大量缺页，可能是mmap了大文件导致的，或者内存不够用了被频繁换入换出。</p>
+<h4 id="分页、分段、段页式分配的异同？"><a href="#分页、分段、段页式分配的异同？" class="headerlink" title="分页、分段、段页式分配的异同？"></a>分页、分段、段页式分配的异同？</h4><ul>
+<li>分页，用户程序的地址空间被划分成若干固定大小的区域，称为“页”，相应地，内存空间分成若干个物理块，页和块的大小相等。可将用户程序的任一页放在内存的任一块中，实现了离散分配。分页方式的优点是页长固定，因而便于构造页表、易于管理，且不存在碎片。</li>
+<li>分段，段是按照程序的分界划分的，长度可以动态改变的区域。通常，程序员把子程序、操作数和常数等不同类型的数据划分到不同的段中，并且每个程序可以有多个相同类型的段。</li>
+<li>段页式，程序的地址空间按逻辑单位分成基本独立的段，而每一段有自己的段名，再把每段分成固定大小的若干页。程序对内存的调入或调出是按页进行的。但它又可按段实现共享和保护。</li>
+</ul>
+<h4 id="分页机制和分段机制有哪些共同点和区别呢？"><a href="#分页机制和分段机制有哪些共同点和区别呢？" class="headerlink" title="分页机制和分段机制有哪些共同点和区别呢？"></a><strong>分页机制和分段机制有哪些共同点和区别呢？</strong></h4><ol>
+<li>共同点：<ul>
+<li>分页机制和分段机制都是为<strong>了提高内存利用率，较少内存碎片</strong>。</li>
+<li>页和段都是离散存储的，所以两者都是离散分配内存的方式。但是，每个页和段中的内存是连续的。</li>
+</ul>
+</li>
+<li>区别：<ul>
+<li><strong>页的大小是固定的，由操作系统决定；而段的大小不固定，取决于我们当前运行的程序。</strong></li>
+<li>分页仅仅是为了满足操作系统内存管理的需求，而<strong>段是逻辑信息的单位，在程序中可以体现为代码段，数据段，能够更好满足用户的需要</strong>。</li>
+</ul>
+</li>
+</ol>
+<h4 id="地址转换过程中最多需要访问内存、最少访问内存次数？"><a href="#地址转换过程中最多需要访问内存、最少访问内存次数？" class="headerlink" title="地址转换过程中最多需要访问内存、最少访问内存次数？"></a>地址转换过程中最多需要访问内存、最少访问内存次数？</h4><p>页式存储，2次：</p>
+<p>第一次，访问内存中的页表，利用逻辑地址中的页号查找到页帧号，与逻辑地址中的页内偏移拼接形成物理地址；</p>
+<p>第二次：得到物理地址后，再一次访问内存，存取指令或者数据。</p>
+<p>段式存储，2次（同上）</p>
+<p>段页式存储，3次：</p>
+<p>第一次：访问内存中的段表查到页表的起始地址</p>
+<p>第二次：访问内存中的页表找到页帧号，形成物理地址</p>
+<p>第三次：得到物理地址后，再一次访问内存，存取指令或者数据</p>
+<p><strong>引入快表：</strong></p>
+<p>因为把页表放在内存中，至少需要访问两次内存才能存取一条指令或者数据（一次得到物理地址地址，一次存取），比较慢；</p>
+<p>为此在地址变换机构中增设了一个具有并行查找能力的高速缓冲寄存器-快表（全局只有一个，不在内存中！）用来存放当前访问的若干页表项（比较小，只能存放部分页表项）</p>
+<ul>
+<li>若快表命中，则可直接得到页帧号，与页内偏移拼接成物理地址后访问内存，进行指令或者数据的存取。（只需访问一次内存）</li>
+<li>若快表不命中，则需去内存中访问页表，形成物理地址后，再一次访问内存进行指令或者数据的存取。（需要访问两次内存）</li>
+</ul>
+<h4 id="快表和多级页表"><a href="#快表和多级页表" class="headerlink" title="快表和多级页表"></a>快表和多级页表</h4><p>在分页内存管理中，很重要的两点是：</p>
+<ol>
+<li>虚拟地址到物理地址的转换要快。</li>
+<li>解决虚拟地址空间大，页表也会很大的问题。</li>
+</ol>
+<h5 id="快表"><a href="#快表" class="headerlink" title="快表"></a>快表</h5><p>为了解决虚拟地址到物理地址的转换速度，操作系统在 <strong>页表方案</strong> 基础之上引入了 <strong>快表</strong> 来加速虚拟地址到物理地址的转换。我们可以把快表理解为一种特殊的高速缓冲存储器，其中的内容是页表的一部分或者全部内容。<strong>作为页表的 Cache</strong>，它的作用与页表相似，但是提高了访问速率。由于采用页表做地址转换，读写内存数据时 CPU 要访问两次主存。有了快表，有时只要访问一次高速缓冲存储器，一次主存，这样可加速查找并提高指令执行速度。</p>
+<p>使用快表之后的地址转换流程是这样的：</p>
+<ol>
+<li>根据<strong>虚拟地址中的页号查快表</strong>；</li>
+<li>如果该页在快表中，直接从快表中读取相应的物理地址；</li>
+<li>如果<strong>该页不在快表中，就访问内存中的页表，再从页表中得到物理地址</strong>，同时将页表中的该映射表项添加到快表中；</li>
+<li>当快表填满后，又要登记新页时，就按照一定的淘汰策略淘汰掉快表中的一个页。</li>
+</ol>
+<h5 id="多级页表"><a href="#多级页表" class="headerlink" title="多级页表"></a>多级页表</h5><p>引入多级页表的主要目的是为了避免把全部页表一直放在内存中占用过多空间，特别是那些根本就不需要的页表就不需要保留在内存中。多级页表属于时间换空间的典型场景</p>
+<h3 id="TLB（translation-lookaside-buffer）作用"><a href="#TLB（translation-lookaside-buffer）作用" class="headerlink" title="TLB（translation lookaside buffer）作用"></a>TLB（translation lookaside buffer）作用</h3><p>快表，直译为旁路快表缓冲，页表缓冲。</p>
+<p><img src="tlb.jpeg" alt></p>
+<ul>
+<li>当CPU执行机构收到应用程序发来的虚拟地址后，<strong>首先到TLB中查找相应的页表数据</strong></li>
+<li>如果TLB中正好存放着所需的页表，则称为<strong>TLB命中</strong>（TLB Hit）</li>
+<li>接下来CPU再依次看TLB中页表所对应的物理内存地址中的数据是不是已经在<strong>一级、二级缓存</strong>里了，若没有则到内存中取相应地址所存放的数据。如果TLB中没有所需的页表，则称为TLB失败（TLB Miss），接下来就必须<strong>访问物理内存中存放的页表，同时更新TLB的页表数据</strong>。</li>
+</ul>
+<blockquote>
+<p>TLB的容量越大，则它所能存放的页表条目数越多（类似于增大CPU一级、二级缓存容量的作用），这就意味着缓存命中率的增加，这样，就能大大减少CPU直接访问内存的次数，实现了性能提升。</p>
+</blockquote>
+<h3 id="32位操作系统里进程可以分配内存大小"><a href="#32位操作系统里进程可以分配内存大小" class="headerlink" title="32位操作系统里进程可以分配内存大小"></a>32位操作系统里进程可以分配内存大小</h3><p>创建一个进程时，操作系统会为该进程分配一个 4GB 大小的虚拟进程地址空间。 之所以是 4GB ，是因为在 32 位的操作系统中，一个指针长度是 4 字节 （32位）， 2的32次方个地址寻址能力是从 0x00000000~0xFFFFFFFF 即为 4GB 大小的容量。</p>
+<h2 id="虚拟内存，常驻内存，共享内存"><a href="#虚拟内存，常驻内存，共享内存" class="headerlink" title="虚拟内存，常驻内存，共享内存"></a>虚拟内存，常驻内存，共享内存</h2><p>虚拟内存（VIRT）：进程“需要的”虚拟内存大小，包括进程使用的库、代码、数据，文件映射区以及堆空间和栈等</p>
+<p>常驻内存（RES）：进程当前使用的内存大小，包括使用中的堆空间和分配的栈空间，包含其他进程的共享。 （除去内核使用的部分，所有的进程都需要分配物理内存页给它们的代码、数据和堆栈。）</p>
+<p>共享内存（SHARE）: 进程在运行过程中，会加载许多操作系统的动态库，比如 libc.so、libld.so等。这些库对于每个进程而言都是公用的，它们在内存中实际只会加载一份，这部分称为共享内存。</p>
+<h2 id="memcache-的内存管理机制"><a href="#memcache-的内存管理机制" class="headerlink" title="memcache 的内存管理机制"></a>memcache 的内存管理机制</h2><p>memcache使用<strong>slab allocator机制</strong>来内存管理。<br>slab allocator原理：先将内存划分为多个slab class仓库，每个仓库切分成不同尺寸的小块chunk。需要存储内容时候，判断内容大小，为其选择合理的仓库</p>
+<p>lru删除机制：当某个单元被请求时，维护一个计数器，通过计数器来判断最近谁最少被使用。</p>
+<p>懒惰检测对象过期机制：</p>
+<ul>
+<li>不主动检测item对象是否过期，而是在get时才会检查item对象是否过期应该删除；</li>
+<li>当删除item对象时，一般不释放内存空间，而是作标记删除，将指针放入slot回收插槽，下次分配的时候直接使用</li>
+<li>当内存空间满的时候，才会根据LRU算法把最近最少使用的item对象删除</li>
+</ul>
+<p><strong>优点</strong>：解决了内存碎片问题</p>
+<p><strong>缺点</strong>：Chunk的空间会浪费，只能通过调优因子以及大小接近的数据放入一个memcache实例。</p>
+<h2 id="操作系统中的中断是什么"><a href="#操作系统中的中断是什么" class="headerlink" title="操作系统中的中断是什么"></a>操作系统中的中断是什么</h2><p>中断是指程序执行过程中，遇到急需处理的事件时，暂时中止CPU上现行程序的运行，转去执行相应的事件处理程序，待处理完成后再返回原程序被中断处或调度其他程序执行的过程</p>
+<h3 id="堆和栈的区别"><a href="#堆和栈的区别" class="headerlink" title="堆和栈的区别"></a>堆和栈的区别</h3><p>（1）申请方式</p>
+<p> 栈：<strong>由系统自动分配；</strong></p>
+<p> 堆：需<strong>要程序员自己申请</strong>，并指明大小。</p>
+<p>（2）申请后系统的响应</p>
+<p>栈：只要剩余空间大于所申请空间，系统将为程序提供内存，否则将报异常提示栈溢出；</p>
+<p>堆：操作系统有一个记录空闲内存地址的链表，当系统收到程序的申请时，会遍历该链表，寻找第一个空间大于所申请空间的堆结点，然后将该结点从空闲结点链表中删除，并将该结点的空间分配给程序。</p>
+<p>（3）申请效率的比较</p>
+<p>栈：<strong>由系统自动分配，速度较快</strong>。但程序员是无法控制的。</p>
+<p>堆：是由 new 分配的内存，<strong>一般速度比较慢，而且容易产生内存碎片</strong>。</p>
+<p>（4）申请大小的限制</p>
+<p>栈：<strong>栈是向低地址扩展的数据结构，</strong>是一块连续的内存的区域。即栈顶的地址和栈的最大容量是系统预先规定好的，<strong>能从栈获得的空间较小。</strong></p>
+<p>堆：<strong>堆是向高地址扩展的数据结构，</strong>是不连续的内存区域。这是由于系统是用链表来存储的空闲内存地址的，自然是不连续的，而链表的遍历方向是由低地址向高地址。<strong>堆的大小受限于计算机系统中有效的虚拟内存。</strong>由此可见，堆获得的空间比较灵活，也比较大。</p>
+<p>（5）堆和栈中的存储内容</p>
+<p>栈：在函数调用时，第一个进栈的是主函数中函数调用后的下一条指令的地址，然后是函数的各个参数，然后是函数中的局部变量。 当本次函数调用结束后，局部变量先出栈，然后是参数，最后栈顶指针指向最开始存的地址，也就是主函数中的下一条指令，程序由该点继续运行。 </p>
+<p>堆：一般是在堆的头部用一个字节存放堆的大小，堆中的具体内容由程序员安排。</p>
+<h2 id="写时复制"><a href="#写时复制" class="headerlink" title="写时复制"></a>写时复制</h2><p>写时复制指的是当多个进程共享同一块数据时，如果其中一个进程需要对这份数据进行修改，那么就需要将其拷贝到自己的进程地址空间中。这样做并不影响其他进程对这块数据的操作，每个进程要修改的时候才会进行拷贝，所以叫写时拷贝。</p>
+<blockquote>
+<p>这种方法在某种程度上能够降低系统开销，如果某个进程永远不会对所访问的数据进行更改，那么也就永远不需要拷贝。</p>
+</blockquote>
+<h2 id="进程和线程"><a href="#进程和线程" class="headerlink" title="进程和线程"></a>进程和线程</h2><ul>
+<li>进程是<strong>操作系统分配（存储）资源的最小单元，线程是操作系统调度的最小单元</strong>。</li>
+<li>线程依赖于进程而存在，一个进程至少有一个线程，一个应用程序可以有多个进程，执行多个程序代码，多个线程只能执行一个程序代码，共享进程的代码段；</li>
+<li>不同进程有自己的独立地址空间，同一进程的线程共享所属进程的虚拟地址空间；</li>
+<li><strong>线程的上下文切换只需要保存线程的一些运行时的数据，比如线程的id、寄存器中的值、栈数据</strong>。而不需要像进程上下文切换那样要保存页<strong>表、文件描述符表、信号控制数据和进程信息</strong>等数据。</li>
+<li>线程之间的通信更方便，同一进程下的线程共享全局变量等数据，而进程之间的通信需要以进程间通信的方式进行</li>
+<li>多线程程序只要有一个线程崩溃，整个程序就崩溃了，但多进程程序中一个进程崩溃并不会对其它进程造成影响，因为进程有自己的独立地址空间，因此多进程更加健壮</li>
+</ul>
+<h3 id="进程上下文有哪些？"><a href="#进程上下文有哪些？" class="headerlink" title="进程上下文有哪些？"></a>进程上下文有哪些？</h3><p>进程的上下文可以分为三个部分:用户级上下文、寄存器上下文以及系统级上下文。</p>
+<p>（1）用户级上下文: 正文、数据、用户堆栈以及共享存储区；<br>（2）寄存器上下文: 通用寄存器、程序寄存器、处理器状态寄存器、栈指针；<br>（3）系统级上下文: 进程控制块、内存管理信息、内核栈。</p>
+<h3 id="为什么进程切换开销大"><a href="#为什么进程切换开销大" class="headerlink" title="为什么进程切换开销大"></a>为什么进程切换开销大</h3><p>进程上下文切换保存的内容有：</p>
+<p>1.<strong>页表</strong> – 对应虚拟内存资源<br>2.<strong>文件描述符表/打开文件表</strong> – 对应打开的文件资源<br>3.寄存器 – 对应运行时数据<br>4.信号控制信息/<strong>进程运行信息</strong></p>
+<p>5.数据段和堆</p>
+<p>线程的上下文切换只需要保存线程的一些运行时的数据，比如<strong>线程的id、寄存器、栈</strong>。而不需要像进程上下文切换那样要保存页表、文件描述符表、信号控制数据和进程信息等数据。</p>
+<hr>
+<p>线程上下文切换和进程上下问切换一个最主要的区别是线程的切换虚拟内存空间依然是相同的，但是进程切换是不同的。这两种上下文切换的处理都是通过操作系统内核来完成的。内核的这种切换过程伴随的最显著的性能损耗是将寄存器中的内容切换出。</p>
+<p>隐藏的损耗是上下文的切换会扰乱处理器的缓存机制。简单的说，一旦去切换上下文，处理器中所有已经缓存的内存地址一瞬间都作废了。还有一个显著的区别是当你改变虚拟内存空间的时候，处理的页表缓冲会被全部刷新，这将导致内存的访问在一段时间内相当的低效。但是在线程的切换中，不会出现这个问题。</p>
+<h3 id="进程间通信"><a href="#进程间通信" class="headerlink" title="进程间通信"></a><strong>进程间通信</strong></h3><p>并且由于进程拥有独立的内存地址空间，导致了进程之间无法利用直接的内存映射进行进程间通信。进程的通信机制主要有：管道、命名管道、消息队列、信号量、共享内存、信号、套接字。</p>
+<h4 id="1-信号"><a href="#1-信号" class="headerlink" title="1.信号"></a>1.信号</h4><p>信号是在软件层次上对中断机制的一种模拟。信号是异步的，一个进程不必通过任何操作来等待信号的到达。信号是进程间通信机制中唯一的异步通信机制。</p>
+<h4 id="2-信号量"><a href="#2-信号量" class="headerlink" title="2.信号量"></a>2.信号量</h4><p>信号量也可以说是一个计数器，常用来处理进程或线程同步的问题，特别是对临界资源的访问同步问题。临界资源：为某一时刻只能由一个进程或线程操作的资源，当信号量的值大于或等于0时，表示可以供并发进程访问的临界资源数，当小于0时，表示正在等待使用临界资源的进程数。</p>
+<h4 id="3-消息队列"><a href="#3-消息队列" class="headerlink" title="3.消息队列"></a>3.消息队列</h4><p>消息队列是存放在内核中的消息链表，每个消息队列由消息队列标识符标识，与管道不同的是，消息队列存放在内核中，只有在内核重启时才能删除一个消息队列，内核重启也就是系统重启，同样消息队列的大小也是受限制的。</p>
+<h4 id="4-共享内存"><a href="#4-共享内存" class="headerlink" title="4.共享内存"></a>4.共享内存</h4><p><strong>共享内存就是分配一块能被其他进程访问的内存。</strong>共享内存可以说是最有用的进程间通信方式，也是最快的IPC形式。两个不同进程A、B共享内存的意思是，同一块物理内存被映射到进程A、B各自的进程地址空间。进程A可以即时看到进程B对共享内存中数据的更新，反之亦然。由于多个进程共享同一块内存区域，必然需要某种同步机制，互斥锁和信号量都可以。</p>
+<p><strong>采用共享内存通信的一个显而易见的好处是效率高，因为进程可以直接读写内存，而不需要任何数据的拷贝。</strong>对于像管道和消息队列等通信方式，则需要在内核和用户空间进行四次的数据拷贝，而共享内存则只拷贝两次数据：一次从输入文件到共享内存区，另一次从共享内存区到输出文件。</p>
+<h4 id="5-管道"><a href="#5-管道" class="headerlink" title="5.管道"></a>5.管道</h4><p>管道传递数据是单向性的，只能从一方流向另一方，也就是一种半双工的通信方式；</p>
+<p>只用于有<strong>亲缘关系的进程间的通信</strong>，亲缘关系也就是父子进程或兄弟进程；</p>
+<p>没有名字并且大小受限，传输的是无格式的流，所以两进程通信时必须约定好数据通信的格式。</p>
+<p>管道它就像一个特殊的文件，但这个文件之存在于内存中，在创建管道时，系统为管道分配了一个页面作为数据缓冲区，进程对这个数据缓冲区进行读写，以此来完成通信。</p>
+<h4 id="6-命名管道"><a href="#6-命名管道" class="headerlink" title="6.命名管道"></a>6.命名管道</h4><p>命名管道是服务器进程和一个或多个客户进程之间通信的单向或双向管道。</p>
+<p>不同于匿名管道的是：</p>
+<ul>
+<li><p>命名管道可以在<strong>不相关的进程之间使用</strong>，服务器建立命名管道时给它指定一个名字，任何进程都可以通过该名字打开管道的另一端，根据给定的权限和服务器进程通信。命名管道只能在具有亲缘关系的进程间通信了。</p>
+</li>
+<li><p>命名管道是个<strong>设备文件，存储在文件系统中</strong>，没有亲缘关系的进程也可以访问，但是它要按照<strong>先进先出</strong>的原则读取数据。<strong>同样也是半双工的</strong>。</p>
+</li>
+</ul>
+<h4 id="7-套接字"><a href="#7-套接字" class="headerlink" title="7.套接字"></a>7.套接字</h4><p><strong>可用于不同主机间的进程通信。</strong></p>
+<h3 id="共享内存的底层实现原理？数据会拷贝几份"><a href="#共享内存的底层实现原理？数据会拷贝几份" class="headerlink" title="共享内存的底层实现原理？数据会拷贝几份"></a>共享内存的底层实现原理？数据会拷贝几份</h3><p>同一块物理内存被映射到进程A、B各自的进程地址空间。进程A可以即时看到进程B对共享内存中数据的更新，反之亦然。由于多个进程共享同一块内存区域，必然需要某种同步机制，互斥锁和信号量都可以。</p>
+<p>对于像管道和消息队列等通信方式，则需要在内核和用户空间进行四次的数据拷贝，而共享内存则只拷贝两次数据：一次从输入文件到共享内存区，另一次从共享内存区到输出文件。</p>
+<h4 id="管道需要进入内核态吗？"><a href="#管道需要进入内核态吗？" class="headerlink" title="管道需要进入内核态吗？"></a>管道需要进入内核态吗？</h4><p>每个进程各自有不同的用户地址空间，任何一个进程的全局变量在另一个进程中都看不到，<strong>所以进程之间要交换数据必须通过内核</strong>，在内核中开辟一块缓冲区，进程A把数据从用户空间拷到内核缓冲区，进程B再从内核缓冲区把数据读走，内核提供的这种机制称为进程间通信。</p>
+<h4 id="管道通信怎么实现"><a href="#管道通信怎么实现" class="headerlink" title="管道通信怎么实现"></a>管道通信怎么实现</h4><p>管道是由内核管理的一个缓冲区，相当于我们放入内存中的一个纸条。</p>
+<ul>
+<li>管道的一端连接一个进程的输出。这个进程会向管道中放入信息。</li>
+<li>管道的另一端连接一个进程的输入，这个进程取出被放入管道的信息。</li>
+<li>一个缓冲区不需要很大一般为4K大小，它被设计成为环形的数据结构，以便管道可以被循环利用。</li>
+<li>当管道中没有信息的话，从管道中读取的进程会等待，直到另一端的进程放入信息。</li>
+<li>当管道被放满信息的时候，尝试放入信息的进程会等待，直到另一端的进程取出信息。</li>
+<li>当两个进程都终结的时候，管道也自动消失。</li>
+</ul>
+<h3 id="线程间的通信"><a href="#线程间的通信" class="headerlink" title="线程间的通信"></a>线程间的通信</h3><h4 id="互斥量"><a href="#互斥量" class="headerlink" title="互斥量"></a>互斥量</h4><p>只有拥有互斥对象的线程才有访问互斥资源的权限。因为互斥对象只有一个，所以可以保证互斥资源不会被多个线程同时访问；当前拥有互斥对象的线程处理完任务后必须将互斥对象交出，以便其他线程访问该资源</p>
+<h4 id="信号量"><a href="#信号量" class="headerlink" title="信号量"></a>信号量</h4><p>它允许同一时刻多个线程访问同一资源，但是需要控制同一时刻访问此资源的最大线程数量。信号量对象保存了<strong>最大资源计数</strong>和<strong>当前可用资源计数</strong>，每增加一个线程对共享资源的访问，当前可用资源计数就减1，只要当前可用资源计数大于0，就可以发出信号量信号，如果为0，则将线程放入一个队列中等待。线程处理完共享资源后，应在离开的同时通过<code>ReleaseSemaphore</code>函数将当前可用资源数加1。如果信号量的取值只能为0或1，那么信号量就成为了互斥量</p>
+<h4 id="事件"><a href="#事件" class="headerlink" title="事件"></a>事件</h4><p>允许一个线程在处理完一个任务后，主动唤醒另外一个线程执行任务。事件分为手动重置事件和自动重置事件。手动重置事件被设置为激发状态后，会唤醒所有等待的线程，而且一直保持为激发状态，直到程序重新把它设置为未激发状态。自动重置事件被设置为激发状态后，会唤醒<strong>一个</strong>等待中的线程，然后自动恢复为未激发状态。</p>
+<h4 id="临界区"><a href="#临界区" class="headerlink" title="临界区"></a><strong>临界区</strong></h4><p>任意时刻只允许一个线程对临界资源进行访问。拥有临界区对象的线程可以访问该临界资源，其它试图访问该资源的线程将被挂起，直到临界区对象被释放。</p>
+<h5 id="互斥量和临界区有什么区别？"><a href="#互斥量和临界区有什么区别？" class="headerlink" title="互斥量和临界区有什么区别？"></a>互斥量和临界区有什么区别？</h5><p>互斥量是可以命名的，可以用于不同进程之间的同步；而临界区只能用于同一进程中线程的同步。创建互斥量需要的资源更多，因此临界区的优势是速度快，节省资源。</p>
+<h3 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h3><p><strong>根本区别：</strong>进程是操作系统资源分配的基本单位，而线程是处理器任务调度和执行的基本单位</p>
+<p><strong>资源开销：</strong>每个进程都有独立的代码和数据空间（程序上下文），程序之间的切换会有较大的开销；线程可以看做轻量级的进程，同一类线程共享代码和数据空间，每个线程都有自己独立的<strong>运行栈和程序计数器</strong>，线程之间切换的开销小。</p>
+<p><strong>包含关系：</strong>一个程序至少有一个进程，一个进程至少有一个线程.</p>
+<p><strong>内存分配：</strong>同一进程的线程共享本进程的地址空间和资源，而进程之间的地址空间和资源是相互独立的</p>
+<p><strong>执行过程：</strong>每个独立的进程有程序运行的入口、顺序执行序列和程序出口。但是线程不能独立执行，必须依存在应用程序中，由应用程序提供多个线程执行控制，两者均可并发执行</p>
+<h3 id="进程的内存空间分为哪几个部分"><a href="#进程的内存空间分为哪几个部分" class="headerlink" title="进程的内存空间分为哪几个部分"></a>进程的内存空间分为哪几个部分</h3><p>1.Text segment：程序段为程序代码在内存中的映射，存放可执行的指令操作。</p>
+<p>2.Data segment：存放程序运行初，已经初始化的全局变量和静态变量。</p>
+<p>3.Bss segment：存放程序运行初，未初始化的全局变量和静态变量。</p>
+<p>4.Heap：存放New/Malloc等动态申请的变量，用户必须手动进行Delete/Free操作。</p>
+<p>5.Stack：存放临时变量，函数参数等。</p>
+<h3 id="线程的共享资源和私有资源"><a href="#线程的共享资源和私有资源" class="headerlink" title="线程的共享资源和私有资源"></a>线程的共享资源和私有资源</h3><p>线程共享包括：<strong>进程代码段、进程的公有数据（全局堆、全局变量，静态变量）、进程打开的文件描述符、号处理器/信号处理函数、进程ID与进程组ID</strong>。</p>
+<p> 私有资源：线程上下文（<strong>所属线程的栈区、局部堆、程序计数器、栈指针以及函数运行使用的寄存器</strong>）</p>
+<p>1.线程ID</p>
+<p>2.寄存器组的值</p>
+<p> 3.线程的栈</p>
+<p>  4.错误返回码<br>线程可能会产生不同的错误返回码，一个线程的错误返回码不应该被其它线程修改</p>
+<p>5.线程的信号屏蔽码<br>表示是否屏蔽/阻塞相应的信号（SIGKILL,SIGSTOP除外）</p>
+<blockquote>
+<p>为了保证对象的内存分配过程中的线程安全性，HotSpot虚拟机提供了一种叫做TLAB(Thread Local Allocation Buffer)的技术。</p>
+<p>在线程初始化时，虚拟机会为每个线程分配一块TLAB空间，只给当前线程使用，当需要分配内存时，就在自己的空间上分配，这样就不存在竞争的情况，可以大大提升分配效率。</p>
+<p>所以，“堆是线程共享的内存区域”这句话并不完全正确，因为TLAB是堆内存的一部分，他在读取上确实是线程共享的，但是在内存分配上，是线程独享的。</p>
+</blockquote>
+<h3 id="进程状态转换"><a href="#进程状态转换" class="headerlink" title="进程状态转换"></a>进程状态转换</h3><p><img src="process.png" alt></p>
+<h3 id="线程有哪些状态"><a href="#线程有哪些状态" class="headerlink" title="线程有哪些状态"></a>线程有哪些状态</h3><p>新建：新建线程对象，未调用 start 方法<br>可运行：调用 start 方法。此状态的线程位于可运行线程池中，等待获取 CPU 的使用权<br>运行中：线程获取了 CPU 的使用权，执行程序代码<br>阻塞：线程因为某种原因放弃了 CPU 的使用权，暂时停止运行</p>
+<ul>
+<li>等待阻塞：当你调用了wait/join方法后，就会进入这个状态。一旦进入到这个状态，CPU就不会管你了，直到有别的线程通过notify方法将它唤起，否则的话，就会一直在等待中。</li>
+<li>计时等待：使用Thread.sleep方法触发，触发后，线程就进入了Timed_waiting状态，随后会由计时器触发，再进入Runnable状态。</li>
+<li>同步阻塞：当线程要进入临界区的时候，会发生</li>
+</ul>
+<p>死亡：线程已经执行完毕。主线程 main 方法结束或因异常退出；子线程 run 方法结束或因异常退出</p>
+<h3 id="wait和block的区别？"><a href="#wait和block的区别？" class="headerlink" title="wait和block的区别？"></a>wait和block的区别？</h3><p> wait的线程被唤醒后其实会进入block的状态去抢锁。因为wait是在同步代码块中运行的，所以被唤醒后会要去抢锁，抢到锁才会进入就绪状态。</p>
+<h3 id="fork之后的父子进程同时读取一个文件，有什么结果？"><a href="#fork之后的父子进程同时读取一个文件，有什么结果？" class="headerlink" title="fork之后的父子进程同时读取一个文件，有什么结果？"></a>fork之后的父子进程同时读取一个文件，有什么结果？</h3><p>（<strong>fork之前open</strong>）由于父子进程是以共享的方式控制已经打开文件的，因此对文件的操作也是相互影响的，因此读写文件的位置也会发生相应的改变。父（子）进程的文件读写位置会随着子（父）进程的文件读写位置改变而改变，因为此时改变的是文件表的文件位置项，而文件表是所有进程共享的，任何一个进程的修改都会影响到别的进程。</p>
+<p>如果是非父子进程或者fork之后open，则会存在相互覆盖的情况出现！！</p>
+<p> 如果用O_APPEND标志打开一个文件，则相应标志也被设置到文件表项（file对象）的文件状态标志中。<strong>每次对这种具有填写标志的文件执行写操作时，每次写的数据都添加到文件的当前尾端处。</strong></p>
+<h3 id="不同进程间是如何实现共享内存的"><a href="#不同进程间是如何实现共享内存的" class="headerlink" title="不同进程间是如何实现共享内存的"></a>不同进程间是如何实现共享内存的</h3><p>在Linux中，每个进程都有属于自己的进程控制块（PCB）和地址空间（Addr Space），并且都有一个与之对应的页表，负责将进程的虚拟地址与物理地址进行映射，<strong>通过内存管理单元（MMU）进行管理</strong>。<strong>两个不同的虚拟地址通过页表映射到物理空间的同一区域，它们所指向的这块区域即共享内存。</strong></p>
+<p>当两个进程通过页表将虚拟地址映射到物理地址时，在物理地址中有一块共同的内存区，即共享内存，这块内存可以被两个进程同时看到。<strong>这样当一个进程进行写操作，另一个进程读操作就可以实现进程间通信。但是，我们要确保一个进程在写的时候不能被读，因此我们使用信号量来实现同步与互斥。</strong></p>
+<h3 id="进程的调度算法"><a href="#进程的调度算法" class="headerlink" title="进程的调度算法"></a><strong>进程的调度算法</strong></h3><p><strong>批处理系统</strong></p>
+<ul>
+<li>先到先服务（FCFS） : 按照请求的顺序进行调度。非抢占式，开销小，无饥饿问题，响应时间不确定（可能很慢）；对短进程不利，对IO密集型进程不利。</li>
+<li>短作业优先（SJF） : 按估计运行时间最短的顺序进行调度。非抢占式，吞吐量高，开销可能较大，可能导致饥饿问题；对短进程提供好的响应时间，对长进程不利。</li>
+<li>最短剩余时间优先 （SRTN）：按剩余运行时间的顺序进行调度。最短作业优先的<strong>抢占式版本</strong>。吞吐量高，开销可能较大，提供好的响应时间；可能导致饥饿问题，对长进程不利。</li>
+<li>最高响应比优先：响应比 = 1+ 等待时间/处理时间。同时考虑了等待时间的长短和估计需要的执行时间长短，很好的平衡了长短进程。非抢占，吞吐量高，开销可能较大，提供好的响应时间，无饥饿问题。</li>
+</ul>
+<p><strong>交互式系统</strong></p>
+<p>交互式系统有大量的用户交互操作，在该系统中调度算法的目标是快速地进行响应。</p>
+<ul>
+<li><p><strong>时间片轮转调度算法</strong> ：将所有就绪进程按 FCFS 的原则排成一个队列，用完时间片的进程排到队列最后。抢占式（时间片用完时），开销小，无饥饿问题，为短进程提供好的响应时间；</p>
+<p>若时间片小，进程切换频繁，吞吐量低；若时间片太长，实时性得不到保证。</p>
+</li>
+<li><p><strong>优先级调度</strong> ： 为每个进程分配一个优先级，按优先级进行调度。为了防止低优先级的进程永远等不到调度，可以随着时间的推移增加等待进程的优先级。</p>
+</li>
+<li><p><strong>多级反馈队列调度算法</strong> ：设置多个就绪队列1、2、3…，优先级递减，时间片递增。只有等到优先级更高的队列为空时才会调度当前队列中的进程。如果进程用完了当前队列的时间片但还未执行完，则会被移到下一队列。抢占式（时间片用完时），开销可能较大，对IO型进程有利，可能会出现饥饿问题</p>
+</li>
+</ul>
+<h3 id="抢占式非抢占式的区别"><a href="#抢占式非抢占式的区别" class="headerlink" title="抢占式非抢占式的区别"></a>抢占式非抢占式的区别</h3><ul>
+<li>抢占式：即当进程位于内核空间时，有一个更高优先级的任务出现时，如果当前内核允许抢占，则可以将当前任务挂起，执行优先级更高的进程。</li>
+<li>非抢占式：高优先级的进程不能中止正在内核中运行的低优先级的进程而抢占CPU运行。进程一旦处于核心态（例如用户进程执行系统调用），则除非进程自愿放弃CPU，否则该进程将一直运行下去，直至完成或退出内核</li>
+<li>低优先级的进程必须等待很长时间，并且可能会在抢占式调度中饿死。 而在非抢占式调度中，如果将CPU分配给具有较大突发时间的进程，则突发时间最小的进程可能不得不挨饿。</li>
+<li>抢占式有进程调度的开销，非抢占式没有</li>
+</ul>
+<h3 id="程序计数器的作用"><a href="#程序计数器的作用" class="headerlink" title="程序计数器的作用"></a><strong>程序计数器的作用</strong></h3><p>为了保证程序（在操作系统中理解为进程）能够连续地执行下去，处理器必须具有某些手段来确定下一条指令的地址。</p>
+<ul>
+<li>在程序开始执行前，必须将它的起始地址，即程序的第一条指令所在的内存单元地址 送入程序计数器，因此程序计数器的内容即是从内存提取的一条指令的地址。</li>
+<li>当执行指令时， 处理器 将自动修改PC的内容，即每执行一条指令PC增加一个量，这个量等于指令所含的字节数，以便使其保持的总是将要执行的下一条指令的地址</li>
+</ul>
+<h3 id="临界区是什么？"><a href="#临界区是什么？" class="headerlink" title="临界区是什么？"></a>临界区是什么？</h3><p><strong>临界资源</strong><br>临界资源是一次仅允许一个进程使用的共享资源。各进程采取互斥的方式，实现共享的资源称作临界资源。</p>
+<p><strong>临界区</strong><br>每个进程中访问临界资源的那段代码称为临界区，每次只允许一个进程进入临界区，进入后，不允许其他进程进入。</p>
+<h5 id="并发、并行、异步的区别？"><a href="#并发、并行、异步的区别？" class="headerlink" title="并发、并行、异步的区别？"></a>并发、并行、异步的区别？</h5><p>并发：在一个时间段中同时有多个程序在运行，但其实任一时刻，只有一个程序在CPU上运行，宏观上的并发是通过不断的切换实现的；</p>
+<p>并行：在多CPU系统中，多个程序无论宏观还是微观上都是同时执行的</p>
+<p>异步：同步是顺序执行，异步是在等待某个资源的时候继续做自己的事</p>
+<h3 id="可以用kill-9-关闭进程吗"><a href="#可以用kill-9-关闭进程吗" class="headerlink" title="可以用kill -9 关闭进程吗"></a>可以用kill -9 关闭进程吗</h3><p>kill可将指定的信息送至程序。预设的信息为<code>SIGTERM(15)</code>，可将指定程序终止。若仍无法终止该程序，可使用<code>SIGKILL(9)</code>信息尝试强制删除程序。</p>
+<p>由于kill -9 属于暴力删除，所以会给程序带来比较严重的后果，相当于突然断电的效果。迫使进程在运行时突然终止，进程在结束后不能自我清理。危害是导致系统资源无法正常释放，一般不推荐使用，除非其他办法都无效。 </p>
+<h3 id="kill是靠什么来通信的"><a href="#kill是靠什么来通信的" class="headerlink" title="kill是靠什么来通信的"></a>kill是靠什么来通信的</h3><p>信号。</p>
+<ul>
+<li>ctrl + c，会发送<code>SIGINT</code>的信号，等同于<code>kill -2(interrupt)</code></li>
+<li>ctrl + z，会发送<code>SIGTSTP</code>的信号</li>
+</ul>
+<h3 id="fork函数的底层实现原理"><a href="#fork函数的底层实现原理" class="headerlink" title="fork函数的底层实现原理"></a>fork函数的底层实现原理</h3><p>1、分配新的内存块和内核数据结构给子进程</p>
+<p>2、将父进程部分数据结构内容拷贝至子进程：进程pcb、 程序体，即代码段数据段等、用户栈、内核栈虚拟内存池、页表。当父子进程有一个想要修改数据或者堆栈时，两个进程真正分裂（cow）。</p>
+<p>3、添加子进程到系统进程列表当中</p>
+<p>4、fork返回，开始调度器调度</p>
+<h3 id="什么是僵尸进程？大量的僵尸进程如何处理"><a href="#什么是僵尸进程？大量的僵尸进程如何处理" class="headerlink" title="什么是僵尸进程？大量的僵尸进程如何处理"></a>什么是僵尸进程？大量的僵尸进程如何处理</h3><p><strong>定义</strong></p>
+<p>一个进程使用 fork 创建子进程，如果子进程退出，而父进程并没有调用 wait 或 waitpid 获取子进程的状态信息，那么子进程的进程描述符仍然保存在系统中。这种进程称之为僵尸进程。</p>
+<p><strong>危害</strong></p>
+<p>如果进程不调用 wait/waitpid 的话，那么保留的那段信息就不会释放，其<strong>进程号就会一直被占用</strong>，但是系统所能使用的进程号是有限的，如果大量的产生僵死进程，将因为没有可用的进程号而导致系统不能产生新的进程。此即为僵尸进程的危害，应当避免。</p>
+<p><strong>处理</strong></p>
+<p>把产生大量僵尸的父进程kill。僵尸进程变成孤儿进程，进而被 init 进程接管，init 进程会 <code>wait()</code>这些孤儿进程，释放它们占用的系统进程表中的资源。</p>
+<h3 id="死锁"><a href="#死锁" class="headerlink" title="死锁"></a>死锁</h3><p>在两个或者多个并发进程中，每个进程持有某种资源而又等待其它进程释放它们现在保持着的资源，在未改变这种状态之前都不能向前推进，称这一组进程产生了死锁</p>
+<h4 id="必要条件"><a href="#必要条件" class="headerlink" title="必要条件"></a>必要条件</h4><ul>
+<li><strong>互斥</strong>：一个资源一次只能被一个进程使用；</li>
+<li><strong>占有并等待</strong>：一个进程至少占有一个资源，并在等待另一个被其它进程占用的资源；</li>
+<li><strong>非抢占</strong>：已经分配给一个进程的资源不能被强制性抢占，只能由进程完成任务之后自愿释放；</li>
+<li><strong>循环等待</strong>：若干进程之间形成一种头尾相接的环形等待资源关系，该环路中的每个进程都在等待下一个进程所占有的资源。</li>
+</ul>
+<h4 id="避免死锁"><a href="#避免死锁" class="headerlink" title="避免死锁"></a>避免死锁</h4><p><strong>引入了银行家算法</strong></p>
+<p>当进程提出资源分配请求时，OS先判断满足本次请求会不会导致系统不安全状态。如果是，拒绝分配资源并阻塞进程；否则分配资源。<br>安全状态：如果OS能够找到某种进程顺序(如Pi、Pj、Pk、…Pn)，使得给每个进程分配所有需要的资源后，能够依次顺利执行结束并释放资源，那么称为系统处在安全状态；否则称为系统处在不安全状态。</p>
+<h4 id="死锁解除"><a href="#死锁解除" class="headerlink" title="死锁解除"></a>死锁解除</h4><ul>
+<li>利用回滚：让某些进程回退到足以解除死锁的地步，进程回退时自愿释放资源。要求系统保持进程的历史信息，设置还原点；</li>
+<li>利用杀死进程：强制杀死某些进程直到死锁解除为止，可以按照优先级进行。</li>
+</ul>
+<h2 id="中断"><a href="#中断" class="headerlink" title="中断"></a>中断</h2><h3 id="中断发生了什么"><a href="#中断发生了什么" class="headerlink" title="中断发生了什么"></a>中断发生了什么</h3><ul>
+<li>执行完每个指令后，CPU都要检查当前是否有外部中断信号。</li>
+<li>如果检测到外部中断信号，则需要保护被中断进程的CPU环境（如<strong>程序状态字PSW、程序计数器、各种通用寄存器</strong>）。</li>
+<li>根据中断信号类型转入相应的中断处理程序。</li>
+<li>恢复进程的CPU环境并退出中断，返回原进程继续往下执行。</li>
+</ul>
+<blockquote>
+<p> (1) 中断是为了实现多道程序并发执行而引入的一种技术。<br>  (2) 中断的本质就是发生中断时需要操作系统介入开展管理工作。<br>  (3) 发生CPU会立即进入核心态，针对不同的中断信号，采取不同的处理方式。<br>  (4) 中断是CPU从用户态进入核心态的唯一途径。</p>
+</blockquote>
+<h3 id="硬中断和软中断区别"><a href="#硬中断和软中断区别" class="headerlink" title="硬中断和软中断区别"></a>硬中断和软中断区别</h3><p>①硬中断是由外部事件引起的因此具有随机性和突发性；<br>软中断是执行中断指令产生的，中断的发生是由程序安排好的。<br>②硬中断的中断响应周期，CPU需要发中断回合信号（NMI不需要）；<br>软中断的中断响应周期，CPU不需发中断回合信号。<br>③硬中断的中断号是由中断控制器提供的（NMI硬中断中断号系统指定为02H）；<br>软中断的中断号由指令直接给出，无需使用中断控制器。<br>④硬中断是可屏蔽的（NMI硬中断不可屏蔽）；</p>
+<p>软中断不可屏蔽。</p>
+<h3 id="进程的异常控制流：陷阱、中断、异常和信号"><a href="#进程的异常控制流：陷阱、中断、异常和信号" class="headerlink" title="进程的异常控制流：陷阱、中断、异常和信号"></a>进程的异常控制流：陷阱、中断、异常和信号</h3><p>陷阱是<strong>有意</strong>造成的“异常”，是执行一条指令的结果。陷阱是同步的。陷阱的主要作用是实现<strong>系统调用</strong>。比如，进程可以执行 <code>syscall n</code> 指令向内核请求服务。当进程执行这条指令后，会中断当前的控制流，<strong>陷入</strong>到内核态，执行相应的系统调用。内核的处理程序在执行结束后，会将结果返回给进程，同时退回到用户态。进程此时继续执行<strong>下一条指令</strong>。</p>
+<p>中断由处理器<strong>外部</strong>的<strong>硬件</strong>产生，不是执行某条指令的结果，也无法预测发生时机。由于中断独立于当前执行的程序，因此中断是异步事件。中断包括 I/O 设备发出的 I/O 中断、各种定时器引起的时钟中断、调试程序中设置的断点等引起的调试中断等。</p>
+<p>异常是一种错误情况，是执行当前指令的结果，可能被错误处理程序修正，也可能直接终止应用程序。异常是同步的。这里特指因为执行当前指令而产生的<strong>错误情况</strong>，比如除法异常、缺页异常等。有些书上为了区分，也将这类“异常”称为<strong>“故障”</strong>。</p>
+<p>信号是一种<strong>更高层的</strong>软件形式的异常，同样会中断进程的控制流，可以由进程进行处理。一个信号代表了一个消息。信号的作用是用来<strong>通知进程</strong>发生了某种系统事件。</p>
+<h2 id="文件系统"><a href="#文件系统" class="headerlink" title="文件系统"></a>文件系统</h2><h3 id="文件描述符？"><a href="#文件描述符？" class="headerlink" title="文件描述符？"></a>文件描述符？</h3><p>文件描述符是内核为了高效管理已被打开的文件所创建的索引，用于指代被打开的文件，对文件所有 I/O 操作相关的系统调用都需要通过文件描述符。</p>
+<p>通过文件描述符，可以找到文件指针，从而进入打开文件表。要想真正读写文件，还得通过打开文件表的 i-node 指针进入 i-node 表</p>
+<h3 id="软链接和硬链接？"><a href="#软链接和硬链接？" class="headerlink" title="软链接和硬链接？"></a>软链接和硬链接？</h3><p><strong>硬链接：</strong><br>本质上和源文件没什么不同，和源文件共享同一个inode节点，通过这个inode节点来访问文件数据。文件系统会维护一个引用计数，只要有文件指向这个区块，它就不会从硬盘上消失。只有当最后一个连接被删除后，文件的数据块及目录的连接才会被释放。</p>
+<p><strong>创建方法</strong>：<code>ln [源文件] [链接文件.hard]</code></p>
+<p><strong>软链接（符号链接）：</strong><br>类似windows的快捷方式，给文件创建一个快速的访问路径，它依赖于原文件，与普通文件没什么不同，inode 都指向同一个文件在硬盘中的区块。当原文件出现问题后，该链接不可用。</p>
+<p><strong>创建方法</strong>：<code>ln -s [源文件] [链接文件.soft]</code></p>
+<h4 id="区别-1"><a href="#区别-1" class="headerlink" title="区别"></a>区别</h4><p>删除源文件后硬链接还可以访问源文件数据，软链接失效。</p>
+<p>原因：硬链接与源文件共用同一个inode，删除源文件后只是减少了inode的一个链接数，硬链接文件还可以继续访问源文件数据。而软链接是通过源文件路径来访问数据，但是源文件已经删除，所以路径访问不到，无法获取源文件数据。</p>
+<blockquote>
+<p>删除一个文件，文件并不会立即删除，而是先删除了目录项中的文件名信息，并使inode的链接数减一，只有链接数为0时文件才会删除</p>
+</blockquote>
+<h3 id="Inode内容"><a href="#Inode内容" class="headerlink" title="Inode内容"></a>Inode内容</h3><p>inode包含文件的元信息：</p>
+<ul>
+<li>文件的字节数</li>
+<li>文件拥有者的User ID</li>
+<li>文件的Group ID</li>
+<li>文件的读、写、执行权限</li>
+<li>文件的时间戳，共有三个：ctime指inode上一次变动的时间，mtime指文件内容上一次变动的时间，atime指文件上一次打开的时间。</li>
+<li>链接数，即有多少文件名指向这个inode</li>
+<li>文件数据block的位置</li>
+</ul>
+<h2 id="多路复用"><a href="#多路复用" class="headerlink" title="多路复用"></a>多路复用</h2><p>IO多路复用（IO Multiplexing）是指单个进程/线程就可以同时处理多个IO请求。</p>
+<p>实现原理：用户将想要监视的文件描述符添加到select/poll/epoll函数中，由内核监视，函数阻塞。一旦有文件描述符就绪（读就绪或写就绪），或者超时（设置timeout），函数就会返回，然后该进程可以进行相应的读/写操作。</p>
+<h3 id="select"><a href="#select" class="headerlink" title="select"></a><strong>select</strong></h3><ul>
+<li>由于 Socket 是文件描述符，因而某个线程盯的所有的 Socket，都放在一个文件描述符集合 fd_set 中，这就是项目进度墙，然后调用 select 函数来监听文件描述符集合是否有变化。</li>
+<li>一旦有变化，就会依次查看每个文件描述符。那些发生变化的文件描述符在 fd_set 对应的位都设为 1，表示 Socket 可读或者可写，从而可以进行读写操作，然后再调用 select，接着盯着下一轮的变化。</li>
+<li>因为每次 Socket 所在的文件描述符集合中有 Socket 发生变化的时候，都需要通过轮询的方式，也就是需要将全部项目都过一遍的方式来查看进度，这大大影响了一个项目组能够支撑的最大的项目数量。因而使用 select，能够同时盯的项目数量由 FD_SETSIZE 限制  </li>
+</ul>
+<h3 id="epoll"><a href="#epoll" class="headerlink" title="epoll"></a><strong>epoll</strong></h3><p><strong>epoll的使用过程</strong>:</p>
+<ul>
+<li>调用<code>epoll_create()</code>函数创建一个epoll句柄.</li>
+<li>调用<code>epoll_ctl()</code>函数将监控的文件描述符进行处理.</li>
+<li>调用<code>epoll_wait()</code>函数,等待就绪的文件描述</li>
+</ul>
+<p>它在内核中的实现不是通过轮询的方式，而是通过注册 callback 函数的方式，当某个文件描述符发送变化的时候，就会主动通知。  </p>
+<ul>
+<li>epoll_create 创建一个 epoll 对象，也是一个文件，也对应一个文件描述符，同样也对应着打开文件列表中的一项。在这项里面有一个红黑树，在红黑树里，要保存这个 epoll要监听的所有 Socket  </li>
+<li>当 epoll_ctl 添加一个 Socket 的时候，其实是加入这个红黑树，同时红黑树里面的节点指向一个结构，将这个结构挂在被监听的 Socket 的事件列表中。当一个 Socket 来了一个事件的时候，可以从这个列表中得到 epoll 对象，并调用 call back 通知它。  </li>
+</ul>
+<p><strong>使用场景</strong></p>
+<p>高并发</p>
+<p><strong>优点</strong></p>
+<ul>
+<li>文件描述符的个数无上限.（只要内存足够大）将新的文件描述符通过epoll_ctl添加到红黑树中,由红黑树这个数据结构来管理所有需要监视的文件描述符.</li>
+<li>通知文件描述符已经就绪的方式：每一个文件描述符都会与硬件设备(网卡)绑定,当文件描述符就绪时,就会触发网卡去将对应的就绪的文件描述符回调，然后将其添加到队列（双向列表）之中</li>
+<li>维护就绪队列:当文件描述符就绪时,就会放入内核中的就绪队列之中.当调用函数<code>epoll_wait()</code>函数时,若该队列之中有元素就会被取走，这样的操作时间复杂度是<code>O(1)</code>;</li>
+</ul>
+<h3 id="select-poll-epoll三者的区别？"><a href="#select-poll-epoll三者的区别？" class="headerlink" title="select/poll/epoll三者的区别？"></a>select/poll/epoll三者的区别？</h3><ul>
+<li><code>select</code>：将文件描述符放入一个集合中，调用select时，将这个集合从用户空间拷贝到内核空间（缺点1：每次都要复制，<strong>开销大</strong>），由内核根据就绪状态修改该集合的内容。（缺点2）<strong>集合大小有限制</strong>，32位机默认是1024（64位：2048）；采用水平触发机制。select函数返回后，需要通过遍历这个集合，找到就绪的文件描述符（缺点3：<strong>轮询的方式效率较低</strong>），当文件描述符的数量增加时，效率会线性下降；</li>
+<li><code>poll</code>：和select几乎没有区别，区别在于文件描述符的存储方式不同，poll采用链表的方式存储，没有最大存储数量的限制；</li>
+<li><code>epoll</code>：通过内核和用户空间共享内存，避免了不断复制的问题；支持的同时连接数上限很高（1G左右的内存支持10W左右的连接数）；文件描述符就绪时，采用回调机制，避免了轮询（回调函数将就绪的描述符添加到一个链表中，执行epoll_wait时，返回这个链表）；支持水平触发和边缘触发，采用边缘触发机制时，只有活跃的描述符才会触发回调函数。</li>
+</ul>
+<p>总结，区别主要在于：</p>
+<ul>
+<li>一个线程/进程所能打开的最大连接数</li>
+<li>文件描述符传递方式（是否复制）</li>
+<li>水平触发 or 边缘触发</li>
+<li>查询就绪的描述符时的效率（是否轮询）</li>
+</ul>
+<h3 id="什么时候使用select-poll，什么时候使用epoll？"><a href="#什么时候使用select-poll，什么时候使用epoll？" class="headerlink" title="什么时候使用select/poll，什么时候使用epoll？"></a>什么时候使用select/poll，什么时候使用epoll？</h3><p>当连接数较多并且有很多的不活跃连接时，epoll的效率比其它两者高很多；</p>
+<p>但是当连接数较少并且都十分活跃的情况下，由于epoll需要很多回调，因此性能可能低于其它两者。</p>
+<h3 id="水平、边缘触发"><a href="#水平、边缘触发" class="headerlink" title="水平、边缘触发"></a>水平、边缘触发</h3><p> <strong>水平触发（lt）</strong></p>
+<p>只要一个文件描述符就绪，就会触发通知，如果用户程序没有一次性把数据读写完，下次还会通知。</p>
+<p>select，poll就属于水平触发。</p>
+<p><strong>边缘触发（et）</strong></p>
+<p>当描述符从未就绪变为就绪时通知一次，之后不会再通知，直到再次从未就绪变为就绪（缓冲区从不可读/写变为可读/写）</p>
+<p>epoll支持水平触发和边缘触发。</p>
+<p><strong>区别</strong></p>
+<p>边缘触发效率更高，减少了被重复触发的次数，函数不会返回大量用户程序可能不需要的文件描述符。</p>
+<h3 id="常见IO模型"><a href="#常见IO模型" class="headerlink" title="常见IO模型"></a>常见IO模型</h3><ul>
+<li>同步阻塞IO（Blocking IO）：用户线程发起IO读/写操作之后，线程阻塞，直到可以开始处理数据；对CPU资源的利用率不够；</li>
+<li>同步非阻塞IO（Non-blocking IO）：发起IO请求之后可以立即返回，如果没有就绪的数据，需要不断地发起IO请求直到数据就绪；不断重复请求消耗了大量的CPU资源；</li>
+<li>IO多路复用：是指单个进程/线程就可以同时处理多个IO请求。</li>
+<li>异步IO（Asynchronous IO）：用户线程发出IO请求之后，继续执行，由内核进行数据的读取并放在用户指定的缓冲区内，在IO完成之后通知用户线程直接使用。</li>
+</ul>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://zhuanlan.zhihu.com/p/83398714" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/83398714</a></p>
+<p><a href="https://www.cnblogs.com/javaguide/p/operating-system.html" target="_blank" rel="noopener">https://www.cnblogs.com/javaguide/p/operating-system.html</a></p>
+
+            </div>
+            <hr />
+
+            
+            <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.88rem;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-large waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fa fa-close"></i></a>
+            <h4 class="reward-title">写作不易，客官能否打赏一杯奶茶？</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+            
+
+            <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    <div class="social-share" data-disabled="qzone" data-wechat-qrcode-helper="<p>微信里点“发现”->“扫一扫”二维码便可查看分享。</p>"></div>
+    
+</div>
+
+<script src="/libs/share/js/social-share.min.js"></script>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        <p class="reprint-tip">
+            <i class="fa fa-exclamation-triangle"></i>&nbsp;&nbsp;
+            <span>转载规则</span>
+        </p>
+        
+            <div class="center-align">
+                <a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
+                    <img alt=""
+                         style="border-width:0"
+                         src="https://i.creativecommons.org/l/by/4.0/88x31.png"/>
+                </a>
+            </div>
+            <br/>
+            <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
+                  property="dct:title" rel="dct:type">
+                    《操作系统》
+                </span> 由
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2021/06/30/interview-os/" property="cc:attributionName"
+               rel="cc:attributionURL">
+                wangyixin-tom
+            </a> 采用
+            <a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
+                知识共享署名 4.0 国际许可协议
+            </a>进行许可。
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+        </div>
+    </div>
+
+    
+    <link rel="stylesheet" href="/libs/gitalk/gitalk.css">
+<link rel="stylesheet" href="/css/my-gitalk.css">
+
+<div class="card gitalk-card" data-aos="fade-up">
+    <div id="gitalk-container" class="card-content"></div>
+</div>
+
+<script src="/libs/gitalk/gitalk.min.js"></script>
+<script>
+    let gitalk = new Gitalk({
+        clientID: 'ea3985c0f8fdba464dea',
+        clientSecret: '2856369f95a20dce67cacde330ad344d409acb09',
+        repo: 'wangyixin-tom.github.io',
+        owner: 'WangYixin-Tom',
+        admin: "WangYixin-Tom",
+        id: '2021/06/30/interview-os/',
+        distractionFreeMode: false  // Facebook-like distraction free mode
+    });
+
+    gitalk.render('gitalk-container');
+</script>
+    
+
+    
+
+    
+
+    
+
+    
+    <style>
+    .valine-card {
+        margin: 1.5rem auto;
+    }
+
+    .valine-card .card-content {
+        padding: 20px 20px 5px 20px;
+    }
+
+    #vcomments input[type=text],
+    #vcomments input[type=email],
+    #vcomments input[type=url],
+    #vcomments textarea {
+        box-sizing: border-box;
+    }
+
+    #vcomments p {
+        margin: 2px 2px 10px;
+        font-size: 1.05rem;
+        line-height: 1.78rem;
+    }
+
+    #vcomments blockquote p {
+        text-indent: 0.2rem;
+    }
+
+    #vcomments a {
+        padding: 0 2px;
+        color: #42b983;
+        font-weight: 500;
+        text-decoration: underline;
+    }
+
+    #vcomments img {
+        max-width: 100%;
+        height: auto;
+        cursor: pointer;
+    }
+
+    #vcomments ol li {
+        list-style-type: decimal;
+    }
+
+    #vcomments ol,
+    ul {
+        display: block;
+        padding-left: 2em;
+        word-spacing: 0.05rem;
+    }
+
+    #vcomments ul li,
+    ol li {
+        display: list-item;
+        line-height: 1.8rem;
+        font-size: 1rem;
+    }
+
+    #vcomments ul li {
+        list-style-type: disc;
+    }
+
+    #vcomments ul ul li {
+        list-style-type: circle;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    #vcomments table, th, td {
+        border: 0;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments h1 {
+        font-size: 1.85rem;
+        font-weight: bold;
+        line-height: 2.2rem;
+    }
+
+    #vcomments h2 {
+        font-size: 1.65rem;
+        font-weight: bold;
+        line-height: 1.9rem;
+    }
+
+    #vcomments h3 {
+        font-size: 1.45rem;
+        font-weight: bold;
+        line-height: 1.7rem;
+    }
+
+    #vcomments h4 {
+        font-size: 1.25rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    #vcomments h5 {
+        font-size: 1.1rem;
+        font-weight: bold;
+        line-height: 1.4rem;
+    }
+
+    #vcomments h6 {
+        font-size: 1rem;
+        line-height: 1.3rem;
+    }
+
+    #vcomments p {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+
+    #vcomments hr {
+        margin: 12px 0;
+        border: 0;
+        border-top: 1px solid #ccc;
+    }
+
+    #vcomments blockquote {
+        margin: 15px 0;
+        border-left: 5px solid #42b983;
+        padding: 1rem 0.8rem 0.3rem 0.8rem;
+        color: #666;
+        background-color: rgba(66, 185, 131, .1);
+    }
+
+    #vcomments pre {
+        font-family: monospace, monospace;
+        padding: 1.2em;
+        margin: .5em 0;
+        background: #272822;
+        overflow: auto;
+        border-radius: 0.3em;
+        tab-size: 4;
+    }
+
+    #vcomments code {
+        font-family: monospace, monospace;
+        padding: 1px 3px;
+        font-size: 0.92rem;
+        color: #e96900;
+        background-color: #f8f8f8;
+        border-radius: 2px;
+    }
+
+    #vcomments pre code {
+        font-family: monospace, monospace;
+        padding: 0;
+        color: #e8eaf6;
+        background-color: #272822;
+    }
+
+    #vcomments pre[class*="language-"] {
+        padding: 1.2em;
+        margin: .5em 0;
+    }
+
+    #vcomments code[class*="language-"],
+    pre[class*="language-"] {
+        color: #e8eaf6;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+
+    #vcomments b,
+    strong {
+        font-weight: bold;
+    }
+
+    #vcomments dfn {
+        font-style: italic;
+    }
+
+    #vcomments small {
+        font-size: 85%;
+    }
+
+    #vcomments cite {
+        font-style: normal;
+    }
+
+    #vcomments mark {
+        background-color: #fcf8e3;
+        padding: .2em;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+</style>
+
+<div class="card valine-card" data-aos="fade-up">
+    <div id="vcomments" class="card-content"></div>
+</div>
+
+<script src="/libs/valine/av-min.js"></script>
+<script src="/libs/valine/Valine.min.js"></script>
+<!-- <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script> -->
+
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: '',
+        appKey: '',
+        notify: 'false' === 'true',
+        verify: 'false' === 'true',
+        visitor: 'false' === 'true',
+        avatar: 'wavatar',
+        pageSize: '10',
+        lang: 'zh-cn',
+        placeholder: '如果你没有GitHub账号，还可以在这里评论啦！'
+    });
+</script>
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/2021/06/30/interview-os/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="操作系统">
+                        
+                        <span class="card-title">操作系统</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            操作系统
+操作系统（Operating System，简称 OS）是管理计算机硬件与软件资源的程序，是计算机系统的内核与基石；
+操作系统本质上是运行在计算机上的软件程序 ；
+操作系统为用户提供一个与系统交互的操作界面 ；
+操作系统分内核与外
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-06-30
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/interview/" class="post-category" target="_blank">
+                                    interview
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/interview/" target="_blank">
+                        <span class="chip bg-color">interview</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fa fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2021/06/29/question-2/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="">
+                        
+                        <span class="card-title"></span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            datastructrue跳表怎么实现虚拟内存是什么，逻辑地址是怎么映射到物理地址的
+changjing超买超卖问题
+路由器和交换机具体都实现了什么功能？路由选择是如何实现的？
+用过抖音，微信吧，当你的手机打开抖音和微信时，你觉得后台在做一
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-06-29
+                            </span>
+                        <span class="publish-author">
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: 好好学习<br />'
+            + '作者: wangyixin-tom<br />'
+            + '链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () { bodyElement.removeChild(newdiv); }, 200);
+    });
+</script>
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="fa fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fa fa-list"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h1, h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h1, h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).slideUp(500);
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).slideDown(500);
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+    
+
+</main>
+
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
+
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+<!-- 代码语言 -->
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+<!-- 代码块复制 -->
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+<script type="text/javascript" src="/libs/codeBlock/clipboard.min.js"></script>
+<!-- 代码块收缩 -->
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script> 
+<!-- 代码块折行 -->
+<style type="text/css">code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }</style>
+
+
+    <footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            &copy; 2010-2021 yixin. 版权所有
+
+            
+            &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
+            <span class="white-color">179.9k</span>
+            
+
+            <br>
+            <span id="sitetime"></span>
+
+            
+            
+        </div>
+        <div class="col s12 m4 l4 social-link ">
+    <a href="https://github.com/WangYixin-Tom" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fa fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:tomwangyx@gmail.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fa fa-envelope-open"></i>
+    </a>
+
+
+
+    <a href="https://zhihu.com/people/WangYixin-Tom" class="tooltipped" target="_blank" data-tooltip="访问我的知乎" data-position="top" data-delay="50">
+        <i class="fa fa-inverse">知</i>
+    </a>
+
+
+
+    <a href="http://wpa.qq.com/msgrd?v=3&uin=2276505170&site=qq&menu=yes" class="tooltipped" target="_blank" data-tooltip="访问我的知乎" data-position="top" data-delay="50">
+        <i class="fa fa-qq"></i>
+    </a>
+
+
+
+    <a href="https://weibo.com/WangYixin-Tom" class="tooltipped" target="_blank" data-tooltip="关注我的微博" data-position="top" data-delay="50">
+        <i class="fa fa-weibo"></i>
+    </a>
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fa fa-rss"></i>
+    </a>
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+<!-- 不蒜子计数初始值纠正 -->
+<script>
+    $(document).ready(function () {
+
+        var int = setInterval(fixCount, 50);
+        var pvcountOffset = 80000;
+        var uvcountOffset = 20000;
+
+        function fixCount() {
+            if (document.getElementById("busuanzi_container_site_pv").style.display != "none") {
+                $("#busuanzi_value_site_pv").html(parseInt($("#busuanzi_value_site_pv").html()) + pvcountOffset);
+                clearInterval(int);
+            }
+            if ($("#busuanzi_container_site_pv").css("display") != "none") {
+                $("#busuanzi_value_site_uv").html(parseInt($("#busuanzi_value_site_uv").html()) + uvcountOffset); // 加上初始数据 
+                clearInterval(int);
+            }
+        }
+    });
+</script>
+
+<script language=javascript>
+    function siteTime() {
+        window.setTimeout("siteTime()", 1000);
+        var seconds = 1000;
+        var minutes = seconds * 60;
+        var hours = minutes * 60;
+        var days = hours * 24;
+        var years = days * 365;
+        var today = new Date();
+        var todayYear = today.getFullYear();
+        var todayMonth = today.getMonth() + 1;
+        var todayDate = today.getDate();
+        var todayHour = today.getHours();
+        var todayMinute = today.getMinutes();
+        var todaySecond = today.getSeconds();
+        /* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+        year - 作为date对象的年份，为4位年份值
+        month - 0-11之间的整数，做为date对象的月份
+        day - 1-31之间的整数，做为date对象的天数
+        hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+        minutes - 0-59之间的整数，做为date对象的分钟数
+        seconds - 0-59之间的整数，做为date对象的秒数
+        microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+        var t1 = Date.UTC(2020, 10, 25, 00, 00, 00); //北京时间2018-2-13 00:00:00
+        var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+        var diff = t2 - t1;
+        var diffYears = Math.floor(diff / years);
+        var diffDays = Math.floor((diff / days) - diffYears * 365);
+        var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+        var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) / minutes);
+        var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours - diffMinutes * minutes) / seconds);
+        document.getElementById("sitetime").innerHTML = "本站已运行 " + diffYears + " 年 " + diffDays + " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+    }/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
+    siteTime();
+</script>
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fa fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fa fa-angle-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <script type="text/javascript"> var OriginTitile = document.title, st; document.addEventListener("visibilitychange", function () { document.hidden ? (document.title = "Σ(っ °Д °;)っ喔哟，崩溃啦！", clearTimeout(st)) : (document.title = "φ(゜▽゜*)♪咦，又好了！", st = setTimeout(function () { document.title = OriginTitile }, 3e3)) })
+    </script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+
+    
+    <script src="/libs/others/clicklove.js"></script>
+    
+
+    
+
+    <!-- 雪花特效 -->
+    
+
+</body>
+
+</html>

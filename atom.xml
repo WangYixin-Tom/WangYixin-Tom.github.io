@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://wangyixin-tom.github.io/"/>
-  <updated>2021-06-21T10:59:55.210Z</updated>
+  <updated>2021-06-29T10:44:14.957Z</updated>
   <id>https://wangyixin-tom.github.io/</id>
   
   <author>
@@ -18,10 +18,10 @@
   
   <entry>
     <title>操作系统</title>
-    <link href="https://wangyixin-tom.github.io/2021/06/30/cao-zuo-xi-tong/"/>
-    <id>https://wangyixin-tom.github.io/2021/06/30/cao-zuo-xi-tong/</id>
+    <link href="https://wangyixin-tom.github.io/2021/06/30/interview-os/"/>
+    <id>https://wangyixin-tom.github.io/2021/06/30/interview-os/</id>
     <published>2021-06-30T03:20:37.000Z</published>
-    <updated>2021-06-21T10:59:55.210Z</updated>
+    <updated>2021-06-29T10:44:14.957Z</updated>
     
     <summary type="html">
     
@@ -44,6 +44,28 @@
   </entry>
   
   <entry>
+    <title></title>
+    <link href="https://wangyixin-tom.github.io/2021/06/29/question-2/"/>
+    <id>https://wangyixin-tom.github.io/2021/06/29/question-2/</id>
+    <published>2021-06-29T10:44:15.066Z</published>
+    <updated>2021-06-29T10:44:15.072Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;datastructrue&quot;&gt;&lt;a href=&quot;#datastructrue&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
     <title>python多线程同步</title>
     <link href="https://wangyixin-tom.github.io/2021/06/26/python-thread/"/>
     <id>https://wangyixin-tom.github.io/2021/06/26/python-thread/</id>
@@ -57,29 +79,6 @@
         
         
           &lt;h2 id=&quot;Condition相关函数&quot;&gt;&lt;a href=&quot;#Condition相关函数&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title></title>
-    <link href="https://wangyixin-tom.github.io/2021/06/25/question-2/"/>
-    <id>https://wangyixin-tom.github.io/2021/06/25/question-2/</id>
-    <published>2021-06-25T12:52:53.007Z</published>
-    <updated>2021-06-27T13:43:19.961Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h1 id=&quot;数据结构&quot;&gt;&lt;a href=&quot;#数据结构&quot; class=&quot;headerlink&quot; title=&quot;数据结构&quot;&gt;&lt;/a&gt;数据结构&lt;/h1&gt;&lt;p&gt;跳表怎么实现&lt;br&gt;虚拟内存是什么，逻辑地址是怎么映射到物理地址的&lt;/p&gt;
-&lt;h1 id=&quot;kafka&quot;&gt;&lt;a
         
       
     
@@ -461,7 +460,7 @@
     <link href="https://wangyixin-tom.github.io/2021/04/13/interview-python/"/>
     <id>https://wangyixin-tom.github.io/2021/04/13/interview-python/</id>
     <published>2021-04-13T11:58:48.000Z</published>
-    <updated>2021-06-27T13:43:08.756Z</updated>
+    <updated>2021-06-29T10:44:15.035Z</updated>
     
     <summary type="html">
     

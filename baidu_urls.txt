@@ -1,6 +1,6 @@
-https://wangyixin-tom.github.io/2021/06/30/cao-zuo-xi-tong/
+https://wangyixin-tom.github.io/2021/06/30/interview-os/
+https://wangyixin-tom.github.io/2021/06/29/question-2/
 https://wangyixin-tom.github.io/2021/06/26/python-thread/
-https://wangyixin-tom.github.io/2021/06/25/question-2/
 https://wangyixin-tom.github.io/2021/06/25/paxos-yu-raft/
 https://wangyixin-tom.github.io/2021/06/23/2pc-yu-3pc/
 https://wangyixin-tom.github.io/2021/06/23/cap-he-base-li-lun/
@@ -20,8 +20,8 @@ https://wangyixin-tom.github.io/2021/04/12/interview-redis/
 https://wangyixin-tom.github.io/2021/04/11/mysql-shu-ju-lei-xing/
 https://wangyixin-tom.github.io/2021/04/11/mysql-cun-chu-yin-qing/
 https://wangyixin-tom.github.io/2021/04/11/mysql-ri-zhi-xi-tong/
-https://wangyixin-tom.github.io/2021/04/10/mysql-mian-shi/
-https://wangyixin-tom.github.io/2021/04/08/kafka-mian-shi/
+https://wangyixin-tom.github.io/2021/04/10/interview-mysql/
+https://wangyixin-tom.github.io/2021/04/08/interview-kafka/
 https://wangyixin-tom.github.io/2021/04/05/interview-rabbitmq/
 https://wangyixin-tom.github.io/2021/04/04/rabbitmq-si-wei-dao-tu/
 https://wangyixin-tom.github.io/2021/04/03/rabbitmq-jin-jie/
@@ -51,7 +51,7 @@ https://wangyixin-tom.github.io/2021/03/15/fen-ku-fen-biao/
 https://wangyixin-tom.github.io/2021/03/15/du-xie-fen-chi/
 https://wangyixin-tom.github.io/2021/03/14/mvcc/
 https://wangyixin-tom.github.io/2021/03/14/shi-wu/
-https://wangyixin-tom.github.io/2021/03/14/suo/
+https://wangyixin-tom.github.io/2021/03/14/mysql-lock/
 https://wangyixin-tom.github.io/2021/03/13/suo-yin/
 https://wangyixin-tom.github.io/2021/03/13/count-you-hua/
 https://wangyixin-tom.github.io/2021/03/13/join-you-hua/

@@ -270,7 +270,7 @@ Python2 的默认编码是 ascii，Python 3 默认编码">
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/20.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/22.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -425,14 +425,14 @@ Python2 的默认编码是 ascii，Python 3 默认编码">
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    14.5k
+                    14.9k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    54 分
+                    56 分
                 </div>
                 
                 
@@ -575,6 +575,7 @@ a <span class="token punctuation">[</span><span class="token number">1</span><sp
 <p>Python的内置工具（如for循环，sum，min，max函数等）使用迭代器协议访问对象</p>
 <h4 id="生成器"><a href="#生成器" class="headerlink" title="生成器"></a>生成器</h4><p><strong>使用了 yield 的函数被称为生成器</strong>。<strong>只要把一个列表生成式的<code>[]</code>改成<code>()</code>，就创建了一个生成器</strong></p>
 <p>生成器是一种特殊的迭代器，生成器自动实现了“迭代器协议”。</p>
+<p>好处：不用占用很多内存，只需要在用的时候计算元素的值就行了。</p>
 <p>生成器在迭代的过程中可以改变当前迭代值，而修改普通迭代器的当前迭代值往往会发生异常，影响程序的执行。</p>
 <h4 id="可迭代对象"><a href="#可迭代对象" class="headerlink" title="可迭代对象"></a>可迭代对象</h4><p>实现<code>__iter__</code>方法的对象。可迭代对象包含文件对象、序列（字符串、列表、元组、集合）、字典。</p>
 <h4 id="判断方法"><a href="#判断方法" class="headerlink" title="判断方法"></a>判断方法</h4><pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">from</span> collections <span class="token keyword">import</span> Iterable<span class="token punctuation">,</span> Iterator
@@ -1095,6 +1096,12 @@ d<span class="token punctuation">.</span>foo1<span class="token punctuation">(</
 <p><strong>注意</strong></p>
 <p>（1） dict的key 或者 set的值都必须是可hash的不可变对象，都是可hash的</p>
 <p>（2）当发现内存空间中的“空”只有1/3时，便会触发扩容操作。</p>
+<h3 id="OrderedDict实现"><a href="#OrderedDict实现" class="headerlink" title="OrderedDict实现"></a>OrderedDict实现</h3><p>使用了双向循环链表+哈希的方法</p>
+<ol>
+<li>哈希用来快速获取LinkNode，从而获取value，也支持快速定位</li>
+<li>双向链表可以快速删除一个元素，使用哈希可以实现基于key快速查找</li>
+<li>循环链表可以使得处理变得更加简单，不需要保存dummy的head和tail，以快速获取收尾节点。只需要保存实际的head，通过head.prev来快速定位尾结点。</li>
+</ol>
 <h2 id="整数"><a href="#整数" class="headerlink" title="整数"></a>整数</h2><p>Python使用<strong>小整数对象池</strong>small_ints缓存了[-5，257）之间的整数，该范围内的整数在Python系统中是共享的，值相同就属于同一个对象。</p>
 <p>对于同一个代码块中值不在<code>small_ints</code>缓存范围内的整数，如果同一个代码块中已经存在一个值与其相同的整数对象，那么就直接引用该对象，否则创建新的<code>int</code>对象。</p>
 <h2 id="字符串-1"><a href="#字符串-1" class="headerlink" title="字符串"></a>字符串</h2><p>Python解释器中使用了 intern（字符串驻留）的技术来提高字符串效率，值同样的字符串对象仅仅会保存一份，放在一个字符串储蓄池中，是共用的。</p>
@@ -1228,6 +1235,16 @@ d<span class="token punctuation">.</span>foo1<span class="token punctuation">(</
 <p> Python 3.x 基于固定时间的调度方式，就是每执行固定时间的字节码，或遇到系统 IO 时，强制释放 GIL，触发系统的线程调度。</p>
 <h3 id="为什么会有GIL"><a href="#为什么会有GIL" class="headerlink" title="为什么会有GIL"></a>为什么会有GIL</h3><p>Python 设计者在设计解释器时，可能没有想到 CPU 的性能提升会这么快转为多核心方向发展，所以在当时的场景下，设计一个全局锁是<strong>那个时代保护多线程资源一致性最简单经济的设计方案</strong>。</p>
 <p>多核心时代来临，当大家试图去拆分和去除 GIL 的时候，发现大量库的代码和开发者已经重度依赖 GIL（默认认为 Python内部对象是线程安全的，无需在开发时额外加锁），所以这个去除 GIL 的任务变得复杂且难以实现。</p>
+<h3 id="GIL的实现是线程不安全-为什么"><a href="#GIL的实现是线程不安全-为什么" class="headerlink" title="GIL的实现是线程不安全?为什么?"></a>GIL的实现是线程不安全?为什么?</h3><p>单核情况下:</p>
+<p><img src="gil.png" alt></p>
+<blockquote>
+<ol>
+<li>到第5步的时候，可能这个时候python正好切换了一次GIL(据说python2.7中，每100条指令会切换一次GIL),执行的时间到了，被要求释放GIL,这个时候thead 1的count=0并没有得到执行，而是挂起状态，count=0这个上下文关系被存到寄存器中.</li>
+<li>然后到第6步，这个时候thead 2开始执行，然后就变成了count = 1,返回给count，这个时候count=1.</li>
+<li>然后再回到thead 1，这个时候由于上下文关系，thead 1拿到的寄存器中的count = 0，经过计算，得到count = 1，经过第13步的操作就覆盖了原来的count = 1的值，所以这个时候count依然是count = 1，所以这个数据并没有保护起来。</li>
+</ol>
+</blockquote>
+<p>python2.x和3.x都是在执行IO操作的时候，强制释放GIL，使其他线程有机会执行程序。</p>
 <h2 id="性能优化"><a href="#性能优化" class="headerlink" title="性能优化"></a>性能优化</h2><h3 id="性能分析"><a href="#性能分析" class="headerlink" title="性能分析"></a>性能分析</h3><p>Python 标准库提供了同一分析接口的两种不同实现：</p>
 <ol>
 <li>建议使用 <a href="https://docs.python.org/zh-cn/3/library/profile.html#module-cProfile" target="_blank" rel="noopener"><code>cProfile</code></a> ；这是一个 C 扩展插件，因为其合理的运行开销，所以适合于分析长时间运行的程序。</li>
@@ -1874,7 +1891,7 @@ foo2 <span class="token operator">=</span> Foo<span class="token punctuation">(<
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="flask">
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="flask">
                         
                         <span class="card-title">flask</span>
                     </div>
@@ -1927,7 +1944,7 @@ run 方法调用werkzeug 的 run_simple
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/25.jpg" class="responsive-img" alt="redis面试">
+                        <img src="/medias/featureimages/27.jpg" class="responsive-img" alt="redis面试">
                         
                         <span class="card-title">redis面试</span>
                     </div>
@@ -2132,7 +2149,7 @@ run 方法调用werkzeug 的 run_simple
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">177.8k</span>
+            <span class="white-color">179.9k</span>
             
 
             <br>
