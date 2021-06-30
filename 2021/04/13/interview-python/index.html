@@ -9,10 +9,10 @@
     <meta name="google-site-verification" content="yCy2azpds5XSuGZvis6OuA-XIGF5GuGpYRAaGfD6o48">
     <meta name="360-site-verification" content="b7c11a830ef90fd1464ad6206bb7b6e7">
     <meta name="description" content="语言特性解释型语言。Python不需要在运行之前进行编译。
-动态语言，不需要声明变量的类型。
+动态语言，不需要声明变量的类型，动态增加类方法。
 适合面向对象的编程，允许类的定义和继承。
 python2和python3区别
-Python2 的默认编码是 ascii，Python 3 默认编码">
+Python2 的默认编码是 ascii，Pytho">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -270,7 +270,7 @@ Python2 的默认编码是 ascii，Python 3 默认编码">
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/22.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/23.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -425,14 +425,14 @@ Python2 的默认编码是 ascii，Python 3 默认编码">
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    14.9k
+                    15.3k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    56 分
+                    57 分
                 </div>
                 
                 
@@ -444,19 +444,49 @@ Python2 的默认编码是 ascii，Python 3 默认编码">
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h2 id="语言特性"><a href="#语言特性" class="headerlink" title="语言特性"></a>语言特性</h2><p>解释型语言。Python不需要在运行之前进行编译。</p>
-<p>动态语言，不需要声明变量的类型。</p>
+<p>动态语言，不需要声明变量的类型，动态增加类方法。</p>
 <p>适合面向对象的编程，允许类的定义和继承。</p>
 <h2 id="python2和python3区别"><a href="#python2和python3区别" class="headerlink" title="python2和python3区别"></a>python2和python3区别</h2><ul>
 <li>Python2 的默认编码是 ascii，Python 3 默认编码 UTF-8，不需要在文件顶部写 <code># coding=utf-8</code>。</li>
-<li>在Python2 中，字符串有两个类型， unicode和 str，前者表示文本字符串，后者表示字节序列，不过两者并没有明显的界限； Python3  str 表示字符串，byte 表示字节序列。</li>
+<li>python2默认是按照相对路径导入模块和包，python3默认则是按照绝对路径导入</li>
+<li>Python3里只有新式类；Python2里面继承object的是新式类，没有写父类的是经典类，多重继承的属性搜索顺序不一样，新式类是采用广度优先搜索，旧式类采用深度优先搜索。</li>
+</ul>
+<ul>
+<li>在Python3，新增了关键字 nonlcoal，支持嵌套函数中，变量声明为非局部变量。</li>
+<li>python3提供注解，但是解释器<strong>并不会</strong>因为这些注解而提供额外的校验，没有任何的类型检查工作。也就是说，这些类型注解加不加，对你的代码来说<strong>没有任何影响</strong>，好处是易懂。</li>
+</ul>
+<ul>
+<li>在Python2 中，字符串有两个类型， unicode和 str，前者表示文本字符串，后者表示字节序列，不过两者并没有明显的界限；Python3  str 表示字符串，byte 表示字节序列。</li>
 <li>True 和 False 在 Python2 中是全局变量，分别对应 1 和 0，可以指向其它对象。 Python3  True 和 False 变为关键字，不允许再被重新赋值。</li>
-<li>Python 2中print是特殊语句，Python 3中print是函数，需要加上括号。</li>
-<li>在Python 2中，3/2是整数，在Python 3中，浮点数。</li>
+<li>在Python2中，3/2是整数，在Python 3中，浮点数。</li>
+</ul>
+<ul>
+<li>Python 2中print/exec是特殊语句，Python 3中print/exec是函数，需要加上括号。</li>
 <li>python2 range返回列表，python3 range中返回可迭代对象，节约内存。</li>
 <li>Python 2 map函数返回list，Python 3 map函数返回迭代器。</li>
 <li>python2中的raw_input函数，python3中改名为input函数</li>
-<li>在Pyhon3，新增了关键字 nonlcoal，支持嵌套函数中，变量声明为非局部变量。</li>
-<li>python3提供注解，但是解释器<strong>并不会</strong>因为这些注解而提供额外的校验，没有任何的类型检查工作。也就是说，这些类型注解加不加，对你的代码来说<strong>没有任何影响</strong>，好处是易懂。</li>
+</ul>
+<h2 id="python2和3代码如何兼容"><a href="#python2和3代码如何兼容" class="headerlink" title="python2和3代码如何兼容"></a>python2和3代码如何兼容</h2><ul>
+<li><p>使用 2to3 工具（python自带的转换工具）对代码检查</p>
+<p>查看输出信息，并修正相关问题。</p>
+</li>
+<li><p>使用python -3执行python程序</p>
+<p>程序在运行时会在控制台上将python2和python3不一致，同时2to3无法处理的问题提示出来</p>
+</li>
+<li><p><code>from __future__ import</code>在python2使用python的未来特性了</p>
+</li>
+<li><p>import问题</p>
+<p>python3中“少”了很多python2的包，在大多情况下这些包之是改了个名字而已。我们可以在import的时候捕获ImportError，重新import。</p>
+</li>
+<li><p>使用python3的方式写程序</p>
+<p>python2中print是关键字，到了python3中print变成了函数。</p>
+</li>
+<li><p>检查当前运行的python版本</p>
+<p>有时候你或许必须为python2和python3写不同的代码，可以先获取版本。</p>
+</li>
+<li><p>使用six</p>
+<p>six 提供了一些简单的工具用来封装 Python 2 和 Python 3 之间的差异性。支持3向2的兼容。</p>
+</li>
 </ul>
 <h2 id="Python基础"><a href="#Python基础" class="headerlink" title="Python基础"></a>Python基础</h2><h3 id="可变数据类型和不可变数据类型"><a href="#可变数据类型和不可变数据类型" class="headerlink" title="可变数据类型和不可变数据类型"></a>可变数据类型和不可变数据类型</h3><p>可变数据类型（引用类型）：当该数据类型对应的变量值发生了变化时，对应的内存地址不发生改变。</p>
 <p>不可变数据类型（值类型）：当该数据类型对应的变量值发生了变化时，对应的内存地址发生了改变。</p>
@@ -1113,6 +1143,7 @@ d<span class="token punctuation">.</span>foo1<span class="token punctuation">(</
 <p>在shell中，并非全部的字符串都会采用intern机制。仅仅包括下划线、数字、字母的字符串才会被intern。不能超过20个字符。因为如果超过xx个字符的话，解释器认为这个字符串不常用，不用放入字符串池中。</p>
 <p>字符串拼接时，运行时拼接，不会intern；例如”hell” + “o”在编译时完成拼接的才会intern</p>
 </blockquote>
+<h3 id="字符串print一样，但是不相等"><a href="#字符串print一样，但是不相等" class="headerlink" title="字符串print一样，但是不相等"></a>字符串print一样，但是不相等</h3><p>==判断是 True ，is 判断却是 False。字符串来自不同的内存块，内存地址不一样</p>
 <h2 id="堆-栈"><a href="#堆-栈" class="headerlink" title="堆 栈"></a>堆 栈</h2><p>在Python中，变量也称为：对象的引用。变量存储的就是对象的地址。</p>
 <p><strong>变量位于：栈内存。</strong></p>
 <p><strong>对象位于：堆内存。</strong></p>
@@ -1227,13 +1258,13 @@ d<span class="token punctuation">.</span>foo1<span class="token punctuation">(</
 <p>1.用<code>wait()</code>函数使父进程阻塞，这个<code>wait()</code>操作就负责回收子进程，这样也不会产生僵尸进程。但这样做有个致命的问题，wait是阻塞的，如果进行wait，主进程就什么都做不了。</p>
 <p>2.使用信号量，子进程退出时向父进程发送SIGCHILD信号，在signal handler 中调用waitpid，这样父进程不用阻塞</p>
 <p>3.fork 两次用孙子进程去完成子进程的任务，孙子进程刚产生，它的父亲就退出了，成了孤儿进程，由init收养</p>
-<h2 id="Global-Interpreter-Lock-全局解释器锁"><a href="#Global-Interpreter-Lock-全局解释器锁" class="headerlink" title="Global Interpreter Lock(全局解释器锁)"></a>Global Interpreter Lock(全局解释器锁)</h2><p>Python 默认的解释器是 CPython，<strong>GIL 是存在于 CPython 解释器中的</strong>。</p>
+<h2 id="Global-Interpreter-Lock"><a href="#Global-Interpreter-Lock" class="headerlink" title="Global Interpreter Lock"></a>Global Interpreter Lock</h2><p>Python 默认的解释器是 CPython，<strong>GIL 是存在于 CPython 解释器中的</strong>。</p>
 <p>执行 Python 字节码时，为了保护访问 Python 对象而阻止多个线程执行的一把互斥锁。主要是因为 CPython 解释器的内存管理不是线程安全的。</p>
 <p>常见的 Python 解释器：IPython（基于Cython）、IPython、Jython（可以把 Python 代码编译成 Java 字节码，依赖 Java 平台，不存在 GIL）、IronPython（运行在微软的 .Net 平台下的 Python 解释器，可以把 Python 代码编译成 .Net 字节码，不存在 GIL）</p>
 <h3 id="GIL原理"><a href="#GIL原理" class="headerlink" title="GIL原理"></a>GIL原理</h3><p>python 的线程就是 C 语言的 pthread，它是通过操作系统调度算法调度执行的。</p>
 <p>Python 2.x 的代码执行是基于 opcode 数量的调度方式，简单来说就是每执行一定数量的字节码，或遇到系统 IO 时，会强制释放 GIL，然后触发一次操作系统的线程调度。</p>
 <p> Python 3.x 基于固定时间的调度方式，就是每执行固定时间的字节码，或遇到系统 IO 时，强制释放 GIL，触发系统的线程调度。</p>
-<h3 id="为什么会有GIL"><a href="#为什么会有GIL" class="headerlink" title="为什么会有GIL"></a>为什么会有GIL</h3><p>Python 设计者在设计解释器时，可能没有想到 CPU 的性能提升会这么快转为多核心方向发展，所以在当时的场景下，设计一个全局锁是<strong>那个时代保护多线程资源一致性最简单经济的设计方案</strong>。</p>
+<h3 id="为什么会有GIL"><a href="#为什么会有GIL" class="headerlink" title="为什么会有GIL"></a>为什么会有GIL</h3><p>90年代单核 CPU 还是主流，多线程的应用场景也不多，大部分时候还是以单线程的方式运行，单线程不要涉及线程的上下文切换，效率反而比多线程更高（在多核环境下，不适用此规则），设计一个全局锁是<strong>那个时代保护多线程资源一致性最简单经济的设计方案</strong>。</p>
 <p>多核心时代来临，当大家试图去拆分和去除 GIL 的时候，发现大量库的代码和开发者已经重度依赖 GIL（默认认为 Python内部对象是线程安全的，无需在开发时额外加锁），所以这个去除 GIL 的任务变得复杂且难以实现。</p>
 <h3 id="GIL的实现是线程不安全-为什么"><a href="#GIL的实现是线程不安全-为什么" class="headerlink" title="GIL的实现是线程不安全?为什么?"></a>GIL的实现是线程不安全?为什么?</h3><p>单核情况下:</p>
 <p><img src="gil.png" alt></p>
@@ -1891,7 +1922,7 @@ foo2 <span class="token operator">=</span> Foo<span class="token punctuation">(<
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="flask">
+                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="flask">
                         
                         <span class="card-title">flask</span>
                     </div>
@@ -1944,7 +1975,7 @@ run 方法调用werkzeug 的 run_simple
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/27.jpg" class="responsive-img" alt="redis面试">
+                        <img src="/medias/featureimages/28.jpg" class="responsive-img" alt="redis面试">
                         
                         <span class="card-title">redis面试</span>
                     </div>
@@ -2149,7 +2180,7 @@ run 方法调用werkzeug 的 run_simple
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">179.9k</span>
+            <span class="white-color">180.3k</span>
             
 
             <br>
