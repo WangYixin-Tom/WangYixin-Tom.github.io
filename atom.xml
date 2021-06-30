@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://wangyixin-tom.github.io/"/>
-  <updated>2021-06-29T11:30:32.848Z</updated>
+  <updated>2021-06-30T11:25:28.126Z</updated>
   <id>https://wangyixin-tom.github.io/</id>
   
   <author>
@@ -17,11 +17,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>操作系统</title>
-    <link href="https://wangyixin-tom.github.io/2021/06/30/interview-os/"/>
-    <id>https://wangyixin-tom.github.io/2021/06/30/interview-os/</id>
-    <published>2021-06-30T03:20:37.000Z</published>
-    <updated>2021-06-29T11:30:32.848Z</updated>
+    <title>攻击技术</title>
+    <link href="https://wangyixin-tom.github.io/2021/06/30/attack/"/>
+    <id>https://wangyixin-tom.github.io/2021/06/30/attack/</id>
+    <published>2021-06-30T12:23:24.000Z</published>
+    <updated>2021-06-30T11:25:28.126Z</updated>
     
     <summary type="html">
     
@@ -29,8 +29,59 @@
       
         
         
-          &lt;h2 id=&quot;操作系统&quot;&gt;&lt;a href=&quot;#操作系统&quot; class=&quot;headerlink&quot; title=&quot;操作系统&quot;&gt;&lt;/a&gt;操作系统&lt;/h2&gt;&lt;ol&gt;
-&lt;li&gt;操作系统（Operating System，简称
+          &lt;h2 id=&quot;XSS-跨站脚本攻击&quot;&gt;&lt;a href=&quot;#XSS-跨站脚本攻击&quot; class=&quot;headerlink&quot; title=&quot;XSS 跨站脚本攻击&quot;&gt;&lt;/a&gt;XSS
+        
+      
+    
+    </summary>
+    
+      <category term="interview" scheme="https://wangyixin-tom.github.io/categories/interview/"/>
+    
+    
+      <category term="interview" scheme="https://wangyixin-tom.github.io/tags/interview/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>操作系统</title>
+    <link href="https://wangyixin-tom.github.io/2021/06/30/interview-os/"/>
+    <id>https://wangyixin-tom.github.io/2021/06/30/interview-os/</id>
+    <published>2021-06-30T03:20:37.000Z</published>
+    <updated>2021-06-30T23:12:43.139Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;操作系统&quot;&gt;&lt;a href=&quot;#操作系统&quot; class=&quot;headerlink&quot; title=&quot;操作系统&quot;&gt;&lt;/a&gt;操作系统&lt;/h2&gt;&lt;p&gt;操作系统是管理计算机硬件与软件资源的程序，本质上是运行在计算机上的软件程序 ，为用户提供一个与系统交互的操作界面
+        
+      
+    
+    </summary>
+    
+      <category term="interview" scheme="https://wangyixin-tom.github.io/categories/interview/"/>
+    
+    
+      <category term="interview" scheme="https://wangyixin-tom.github.io/tags/interview/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>HTTP和HTTPS</title>
+    <link href="https://wangyixin-tom.github.io/2021/06/30/interview-http/"/>
+    <id>https://wangyixin-tom.github.io/2021/06/30/interview-http/</id>
+    <published>2021-06-29T22:20:37.000Z</published>
+    <updated>2021-06-30T23:13:47.500Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;报文&quot;&gt;&lt;a href=&quot;#报文&quot; class=&quot;headerlink&quot; title=&quot;报文&quot;&gt;&lt;/a&gt;报文&lt;/h2&gt;&lt;h3 id=&quot;请求报文&quot;&gt;&lt;a href=&quot;#请求报文&quot; class=&quot;headerlink&quot;
         
       
     
@@ -408,7 +459,7 @@
     <link href="https://wangyixin-tom.github.io/2021/05/20/interview-network/"/>
     <id>https://wangyixin-tom.github.io/2021/05/20/interview-network/</id>
     <published>2021-05-19T22:20:37.000Z</published>
-    <updated>2021-06-27T04:24:17.092Z</updated>
+    <updated>2021-06-30T11:25:28.147Z</updated>
     
     <summary type="html">
     
@@ -478,58 +529,6 @@
     
     
       <category term="interview" scheme="https://wangyixin-tom.github.io/tags/interview/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>redis面试</title>
-    <link href="https://wangyixin-tom.github.io/2021/04/12/interview-redis/"/>
-    <id>https://wangyixin-tom.github.io/2021/04/12/interview-redis/</id>
-    <published>2021-04-12T11:16:53.000Z</published>
-    <updated>2021-06-26T01:43:50.429Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h2 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot; title=&quot;概述&quot;&gt;&lt;/a&gt;概述&lt;/h2&gt;&lt;h3 id=&quot;什么是Redis&quot;&gt;&lt;a href=&quot;#什么是Redis&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-      <category term="interview" scheme="https://wangyixin-tom.github.io/categories/interview/"/>
-    
-    
-      <category term="interview" scheme="https://wangyixin-tom.github.io/tags/interview/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>mysql数据类型</title>
-    <link href="https://wangyixin-tom.github.io/2021/04/11/mysql-shu-ju-lei-xing/"/>
-    <id>https://wangyixin-tom.github.io/2021/04/11/mysql-shu-ju-lei-xing/</id>
-    <published>2021-04-11T02:17:16.000Z</published>
-    <updated>2021-05-11T13:09:54.160Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h2 id=&quot;数据类型&quot;&gt;&lt;a href=&quot;#数据类型&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-      <category term="mysql" scheme="https://wangyixin-tom.github.io/categories/mysql/"/>
-    
-    
-      <category term="mysql" scheme="https://wangyixin-tom.github.io/tags/mysql/"/>
     
   </entry>
   

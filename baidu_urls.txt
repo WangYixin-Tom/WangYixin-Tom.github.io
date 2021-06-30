@@ -1,4 +1,6 @@
+https://wangyixin-tom.github.io/2021/06/30/attack/
 https://wangyixin-tom.github.io/2021/06/30/interview-os/
+https://wangyixin-tom.github.io/2021/06/30/interview-http/
 https://wangyixin-tom.github.io/2021/06/29/question-2/
 https://wangyixin-tom.github.io/2021/06/26/python-thread/
 https://wangyixin-tom.github.io/2021/06/25/paxos-yu-raft/
