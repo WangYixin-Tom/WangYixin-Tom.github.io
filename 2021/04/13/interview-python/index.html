@@ -270,7 +270,7 @@ Python2 的默认编码是 ascii，Pytho">
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/25.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/21.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -425,14 +425,14 @@ Python2 的默认编码是 ascii，Pytho">
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    15.3k
+                    15.7k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    57 分
+                    58 分
                 </div>
                 
                 
@@ -452,19 +452,21 @@ Python2 的默认编码是 ascii，Pytho">
 <li>Python3里只有新式类；Python2里面继承object的是新式类，没有写父类的是经典类，多重继承的属性搜索顺序不一样，新式类是采用广度优先搜索，旧式类采用深度优先搜索。</li>
 </ul>
 <ul>
-<li>在Python3，新增了关键字 nonlcoal，支持嵌套函数中，变量声明为非局部变量。</li>
+<li>Python3，新增了关键字 nonlcoal，支持嵌套函数中，变量声明为非局部变量。</li>
 <li>python3提供注解，但是解释器<strong>并不会</strong>因为这些注解而提供额外的校验，没有任何的类型检查工作。也就是说，这些类型注解加不加，对你的代码来说<strong>没有任何影响</strong>，好处是易懂。</li>
 </ul>
 <ul>
-<li>在Python2 中，字符串有两个类型， unicode和 str，前者表示文本字符串，后者表示字节序列，不过两者并没有明显的界限；Python3  str 表示字符串，byte 表示字节序列。</li>
+<li>在Python2 中，字符串有两个类型， unicode和 str，前者表示文本字符串，后者表示字节序列，python2 会自动将字符串转换为合适编码的字节字符串（utf-8/gbk…），<code>decode(&#39;utf-8&#39;)</code>之后转换为unicode，可以显示指定字符串类型为unicode类型；Python3  str 表示字符串，byte 表示字节序列，字符串默认是Unicode，不能显示指定u”xx”，转换字节序列需要<code>encode(&#39;utf-8&#39;)</code>。</li>
 <li>True 和 False 在 Python2 中是全局变量，分别对应 1 和 0，可以指向其它对象。 Python3  True 和 False 变为关键字，不允许再被重新赋值。</li>
-<li>在Python2中，3/2是整数，在Python 3中，浮点数。</li>
+<li>在Python2中，3/2是整数，在Python 3中浮点数，如果相除还想得到整数，就需要改成//相除。</li>
+<li>原来在py2里，4字节以内的整数类型为int，超过就是long，而py3里没有long类型，只有int，而带来的问题是，大量整数计算时，py3要比py2占用更多内存，计算也明显更慢。</li>
+<li>py3里dict没有<code>has_key()</code>方法，统一使用in表达式</li>
 </ul>
 <ul>
 <li>Python 2中print/exec是特殊语句，Python 3中print/exec是函数，需要加上括号。</li>
 <li>python2 range返回列表，python3 range中返回可迭代对象，节约内存。</li>
-<li>Python 2 map函数返回list，Python 3 map函数返回迭代器。</li>
-<li>python2中的raw_input函数，python3中改名为input函数</li>
+<li>Python 2 map、zip、filter函数返回list，Python3返回迭代器。</li>
+<li>python2中的raw_input/input函数，python3中改名为input函数，危险的input被删掉了</li>
 </ul>
 <h2 id="python2和3代码如何兼容"><a href="#python2和3代码如何兼容" class="headerlink" title="python2和3代码如何兼容"></a>python2和3代码如何兼容</h2><ul>
 <li><p>使用 2to3 工具（python自带的转换工具）对代码检查</p>
@@ -491,7 +493,11 @@ Python2 的默认编码是 ascii，Pytho">
 <h2 id="Python基础"><a href="#Python基础" class="headerlink" title="Python基础"></a>Python基础</h2><h3 id="可变数据类型和不可变数据类型"><a href="#可变数据类型和不可变数据类型" class="headerlink" title="可变数据类型和不可变数据类型"></a>可变数据类型和不可变数据类型</h3><p>可变数据类型（引用类型）：当该数据类型对应的变量值发生了变化时，对应的内存地址不发生改变。</p>
 <p>不可变数据类型（值类型）：当该数据类型对应的变量值发生了变化时，对应的内存地址发生了改变。</p>
 <p>可变数据类型：list和dict；</p>
-<p>不可变数据类型：int、型float、string和tuple。</p>
+<p>不可变数据类型：int、float、string和tuple、bytes。</p>
+<h3 id="array-与内置list-有什么区别"><a href="#array-与内置list-有什么区别" class="headerlink" title="array 与内置list 有什么区别"></a>array 与内置list 有什么区别</h3><p>array 是数组, 数组是只能够保存一种类型, 初始化的时候就决定了数据类型.</p>
+<p>而list 里面 几乎可以放任意类型</p>
+<h3 id="扁平序列"><a href="#扁平序列" class="headerlink" title="扁平序列"></a>扁平序列</h3><p>存放的都是原子级元素，此时存放的是值而不会是引用。</p>
+<p>常见的扁平序列包括：str，bytes，bytearray, memoryview, array.array等。</p>
 <h3 id="python2中xrange和range的区别"><a href="#python2中xrange和range的区别" class="headerlink" title="python2中xrange和range的区别"></a>python2中xrange和range的区别</h3><p><code>range()</code>返回的是一个list对象，而xrange返回的是一个可迭代对象。</p>
 <p><code>xrange()</code>则不会直接生成一个list，而是每次调用返回其中的一个值，内存空间使用极少。因而性能非常好。</p>
 <h3 id="变量的作用域-查找顺序"><a href="#变量的作用域-查找顺序" class="headerlink" title="变量的作用域/查找顺序"></a>变量的作用域/查找顺序</h3><p>函数作用域的LEGB顺序</p>
@@ -557,13 +563,14 @@ print(vars(Runoob))
 <h3 id="魔法方法"><a href="#魔法方法" class="headerlink" title="魔法方法"></a>魔法方法</h3><p>在特殊的情况下被Python所调用的方法。</p>
 <p><code>__init__</code>构造器，当一个实例被创建的时候用于初始化的方法。</p>
 <p><code>__new__</code>实例化对象调用的第一个方法，用来创造一个类的实例的，取下cls参数，把其他参数传给<code>__init__</code>.</p>
+<p><code>__slot__</code>:让解释器在元组中存储实例属性，而不用字典，告诉解释器：“这个类中的所有<br>实例属性都在这儿了！”</p>
 <p><code>__call__</code>让一个类的实例像函数一样被调用</p>
 <p><code>__getitem__</code>定义获取容器中指定元素的行为，相当于<code>self[key]</code></p>
 <p><code>__getattr__</code>定义当用户试图访问一个不存在属性的时候的行为</p>
 <p><code>__setattr__</code>定义当一个属性被设置的时候的行为</p>
 <p><code>__getattribute___</code>定义当一个属性被访问的时候的行为</p>
 <p><code>__del__</code>删除对象执行的方法</p>
-<p><code>__str__</code>强调可读性，面向用户；而<code>__repr__</code>强调标准性，面向机器</p>
+<p><code>__str__</code>强调可读性，面向用户，在<code>print()</code>或者<code>str()</code>函数调用的时候才会被调用；而<code>__repr__</code>强调标准性，面向开发者。</p>
 <p>%s调用<code>__str__</code>方法，而%r调用<code>__repr__</code>方法</p>
 <p><code>__repr__</code>在表示类时，是一级的，如果只定义它，那么<code>__str__</code> = <code>__repr__</code>。</p>
 <pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">Callable</span><span class="token punctuation">:</span>
@@ -574,6 +581,14 @@ print(vars(Runoob))
 func <span class="token operator">=</span> Callable<span class="token punctuation">(</span><span class="token punctuation">)</span> 
 result <span class="token operator">=</span> func<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true"># 像函数一样调用</span>
 <span class="token keyword">print</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="读取obj-field时-发生了什么"><a href="#读取obj-field时-发生了什么" class="headerlink" title="读取obj.field时, 发生了什么?"></a>读取obj.field时, 发生了什么?</h3><ol>
+<li>如果定义了<code>__getattribute__</code>，访问该方法获取属性值。逐级查找父类的<code>__getattribute__</code></li>
+<li>对应描述符<code>__get__()</code>方法</li>
+<li>如果obj 实例有这个属性, 返回. </li>
+<li>非数据描述符<code>__get__()</code></li>
+<li>如果obj 的class 有这个属性, 返回. 逐级查找父类的属性</li>
+<li>执行<code>obj.__getattr__</code>方法.逐级查找父类的<code>__getattr__</code>方法</li>
+</ol>
 <h3 id="new-amp-init区别"><a href="#new-amp-init区别" class="headerlink" title="new &amp; init区别"></a>new &amp; init区别</h3><p>1、<code>__new__</code>有参数cls，代表当前类，从而产生一个实例；<code>__new__</code>必须要有返回值，返回实例化出来的实例，可以return父类（<code>super(当前类名, cls)</code>）<code>__new__</code>出来的实例，或object的<code>__new__</code>出来的实例</p>
 <p>2、<code>__init__</code>有参数self，完成一些初始化的动作，<code>__init__</code>不需要返回值</p>
 <p>3、如果<code>__new__</code>创建的是当前类的实例，会自动调用<code>__init__</code>（return语句里面调用的<code>__new__</code>函数的第一个参数是cls，保证是当前类实例）；如果<code>__new__</code>返回一个已经存在的实例，<code>__init__</code>不会被调用。</p>
@@ -669,27 +684,8 @@ add<span class="token punctuation">(</span><span class="token number">2</span><s
   <span class="token keyword">print</span> <span class="token punctuation">(</span><span class="token string">'bar'</span><span class="token punctuation">)</span>
 
 bar<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="property"><a href="#property" class="headerlink" title="property"></a>property</h3><p>让方法像属性一样使用</p>
-<pre class="line-numbers language-python"><code class="language-python">property<span class="token punctuation">(</span><span class="token punctuation">[</span>fget<span class="token punctuation">[</span><span class="token punctuation">,</span> fset<span class="token punctuation">[</span><span class="token punctuation">,</span> fdel<span class="token punctuation">[</span><span class="token punctuation">,</span> doc<span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-fdel <span class="token operator">=</span> property<span class="token punctuation">(</span><span class="token keyword">lambda</span> self<span class="token punctuation">:</span> object<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token keyword">lambda</span> self<span class="token punctuation">,</span> v<span class="token punctuation">:</span> None<span class="token punctuation">,</span> <span class="token keyword">lambda</span> self<span class="token punctuation">:</span> None<span class="token punctuation">)</span> <span class="token comment" spellcheck="true"># default</span>
-fget <span class="token operator">=</span> property<span class="token punctuation">(</span><span class="token keyword">lambda</span> self<span class="token punctuation">:</span> object<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token keyword">lambda</span> self<span class="token punctuation">,</span> v<span class="token punctuation">:</span> None<span class="token punctuation">,</span> <span class="token keyword">lambda</span> self<span class="token punctuation">:</span> None<span class="token punctuation">)</span> <span class="token comment" spellcheck="true"># default</span>
-fset <span class="token operator">=</span> property<span class="token punctuation">(</span><span class="token keyword">lambda</span> self<span class="token punctuation">:</span> object<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token keyword">lambda</span> self<span class="token punctuation">,</span> v<span class="token punctuation">:</span> None<span class="token punctuation">,</span> <span class="token keyword">lambda</span> self<span class="token punctuation">:</span> None<span class="token punctuation">)</span> <span class="token comment" spellcheck="true"># default</span>
-
-<span class="token keyword">class</span> <span class="token class-name">C</span><span class="token punctuation">(</span>object<span class="token punctuation">)</span><span class="token punctuation">:</span>
-  <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
-     self<span class="token punctuation">.</span>_x <span class="token operator">=</span> None
-
-  <span class="token keyword">def</span> <span class="token function">getx</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token keyword">return</span> self<span class="token punctuation">.</span>_x
-
-  <span class="token keyword">def</span> <span class="token function">setx</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> value<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    self<span class="token punctuation">.</span>_x <span class="token operator">=</span> value
-
-  <span class="token keyword">def</span> <span class="token function">delx</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token keyword">del</span> self<span class="token punctuation">.</span>_x
-
-  x <span class="token operator">=</span> property<span class="token punctuation">(</span>getx<span class="token punctuation">,</span> setx<span class="token punctuation">,</span> delx<span class="token punctuation">,</span> <span class="token string">"I'm the 'x' property."</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>property 的 getter,setter 和 deleter 方法同样可以用作装饰器：</p>
+<h3 id="动态属性property"><a href="#动态属性property" class="headerlink" title="动态属性property"></a>动态属性property</h3><p>让方法像属性一样使用.</p>
+<p>大量的@property修饰的方法在同一个类，这是不符合设计原则的，代码的分离性和可读性大大降低。建议使用属性描述符。</p>
 <pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">C</span><span class="token punctuation">(</span>object<span class="token punctuation">)</span><span class="token punctuation">:</span>
 
   <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
@@ -702,11 +698,12 @@ fset <span class="token operator">=</span> property<span class="token punctuatio
 
   @x<span class="token punctuation">.</span>setter
   <span class="token keyword">def</span> <span class="token function">x</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> value<span class="token punctuation">)</span><span class="token punctuation">:</span>
-     self<span class="token punctuation">.</span>_x <span class="token operator">=</span> value
+     <span class="token keyword">if</span> isinstance<span class="token punctuation">(</span>value<span class="token punctuation">,</span>numbers<span class="token punctuation">.</span>Integral<span class="token punctuation">)</span><span class="token punctuation">:</span>
+         self<span class="token punctuation">.</span>_x <span class="token operator">=</span> value
 
   @x<span class="token punctuation">.</span>deleter
   <span class="token keyword">def</span> <span class="token function">x</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
-     <span class="token keyword">del</span> self<span class="token punctuation">.</span>_x<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+     <span class="token keyword">del</span> self<span class="token punctuation">.</span>_x<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>使用property装饰后，x不再是一个函数，而是property类的一个实例。所以第二个函数可以使用 x.setter 来装饰，本质是调用property.setter 来产生一个新的 property实例赋值给第二个x。</p>
 <p>第一个 x和第二个 x 是两个不同 property实例。但他们都属于同一个描述符类（property），当赋值时，就会进入 <code>property.__set__</code>，取值时，就会进入 <code>property.__get__</code>。</p>
 <h3 id="参数类型"><a href="#参数类型" class="headerlink" title="参数类型"></a>参数类型</h3><p><strong>位置参数：</strong>传参数时，按照顺序，依次传值。</p>
@@ -971,8 +968,11 @@ d<span class="token punctuation">.</span>foo1<span class="token punctuation">(</
 <p>若是类中所有的方法都没有实现，则认为这是一个接口，</p>
 <p>若是有部分方法实现，则认为这是一个抽象类。</p>
 <p>抽象类和接口类都仅用于被继承，不能被实例化.</p>
-<h3 id="描述符"><a href="#描述符" class="headerlink" title="描述符"></a>描述符</h3><p><strong>一个实现了描述符协议的类就是一个描述符。</strong></p>
-<p><strong>描述符协议：实现了<code>__get__()</code>、<code>__set__()</code>、<code>__delete__()</code>其中至少一个方法的类，就是一个描述符。</strong></p>
+<h3 id="描述符"><a href="#描述符" class="headerlink" title="描述符"></a>描述符</h3><ul>
+<li>一个实现了<code>__get__()</code>、<code>__set__()</code>、<code>__delete__()</code>其中至少一个方法的类就是一个描述符。</li>
+<li>只实现了<code>__get__()</code>的称作非数据描述符</li>
+<li>实现了<code>__get__()</code>和<code>__set__()</code>方法的称作数据描述符。</li>
+</ul>
 <p><code>__get__</code>： 用于访问属性。它返回属性的值，若属性不存在、不合法等都可以抛出对应的异常。</p>
 <p><code>__set__</code>：将在属性分配操作中调用。</p>
 <p><code>__delete__</code>：控制删除操作。</p>
@@ -1276,7 +1276,8 @@ d<span class="token punctuation">.</span>foo1<span class="token punctuation">(</
 </ol>
 </blockquote>
 <p>python2.x和3.x都是在执行IO操作的时候，强制释放GIL，使其他线程有机会执行程序。</p>
-<h2 id="性能优化"><a href="#性能优化" class="headerlink" title="性能优化"></a>性能优化</h2><h3 id="性能分析"><a href="#性能分析" class="headerlink" title="性能分析"></a>性能分析</h3><p>Python 标准库提供了同一分析接口的两种不同实现：</p>
+<h2 id="性能优化"><a href="#性能优化" class="headerlink" title="性能优化"></a>性能优化</h2><h3 id="lru-cache装饰器"><a href="#lru-cache装饰器" class="headerlink" title="lru_cache装饰器"></a>lru_cache装饰器</h3><p>为函数提供缓存功能。在下次以相同参数调用时直接返回上一次的结果，要求参数可hash。</p>
+<h3 id="性能分析"><a href="#性能分析" class="headerlink" title="性能分析"></a>性能分析</h3><p>Python 标准库提供了同一分析接口的两种不同实现：</p>
 <ol>
 <li>建议使用 <a href="https://docs.python.org/zh-cn/3/library/profile.html#module-cProfile" target="_blank" rel="noopener"><code>cProfile</code></a> ；这是一个 C 扩展插件，因为其合理的运行开销，所以适合于分析长时间运行的程序。</li>
 <li><a href="https://docs.python.org/zh-cn/3/library/profile.html#module-profile" target="_blank" rel="noopener"><code>profile</code></a> 是一个纯 Python 模块（<a href="https://docs.python.org/zh-cn/3/library/profile.html#module-cProfile" target="_blank" rel="noopener"><code>cProfile</code></a> 就是模拟其接口的 C 语言实现），但它会显著增加配置程序的开销。如果你正在尝试以某种方式扩展分析器，则使用此模块可能会更容易完成任务</li>
@@ -1922,7 +1923,7 @@ foo2 <span class="token operator">=</span> Foo<span class="token punctuation">(<
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="flask">
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="flask">
                         
                         <span class="card-title">flask</span>
                     </div>
@@ -1975,7 +1976,7 @@ run 方法调用werkzeug 的 run_simple
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="redis面试">
+                        <img src="/medias/featureimages/26.jpg" class="responsive-img" alt="redis面试">
                         
                         <span class="card-title">redis面试</span>
                     </div>
@@ -2180,7 +2181,7 @@ run 方法调用werkzeug 的 run_simple
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">173.6k</span>
+            <span class="white-color">174k</span>
             
 
             <br>

@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://wangyixin-tom.github.io/2021/04/13/interview-python/</loc>
+    
+    <lastmod>2021-07-04T23:39:05.507Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://wangyixin-tom.github.io/2021/06/30/interview-http/</loc>
     
     <lastmod>2021-06-30T23:13:47.500Z</lastmod>
@@ -33,13 +40,6 @@
     <loc>https://wangyixin-tom.github.io/2021/06/30/attack/</loc>
     
     <lastmod>2021-06-30T11:25:28.126Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://wangyixin-tom.github.io/2021/04/13/interview-python/</loc>
-    
-    <lastmod>2021-06-30T00:03:50.120Z</lastmod>
     
   </url>
   
@@ -576,14 +576,14 @@
   </url>
   
   <url>
-    <loc>https://wangyixin-tom.github.io/friends/index.html</loc>
+    <loc>https://wangyixin-tom.github.io/contact/index.html</loc>
     
     <lastmod>2021-04-01T23:01:50.207Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://wangyixin-tom.github.io/contact/index.html</loc>
+    <loc>https://wangyixin-tom.github.io/friends/index.html</loc>
     
     <lastmod>2021-04-01T23:01:50.207Z</lastmod>
     
@@ -611,14 +611,14 @@
   </url>
   
   <url>
-    <loc>https://wangyixin-tom.github.io/2020/10/26/rabbitmq-ji-qun/</loc>
+    <loc>https://wangyixin-tom.github.io/2020/10/26/rabbitmq-xiao-xi-chong-fu/</loc>
     
     <lastmod>2021-04-01T23:01:49.986Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://wangyixin-tom.github.io/2020/10/26/rabbitmq-xiao-xi-chong-fu/</loc>
+    <loc>https://wangyixin-tom.github.io/2020/10/26/rabbitmq-ji-qun/</loc>
     
     <lastmod>2021-04-01T23:01:49.986Z</lastmod>
     

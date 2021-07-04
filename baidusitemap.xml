@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://wangyixin-tom.github.io/2021/04/13/interview-python/</loc>
+    <lastmod>2021-07-04</lastmod>
+  </url>  <url>
     <loc>https://wangyixin-tom.github.io/2021/06/30/interview-http/</loc>
     <lastmod>2021-06-30</lastmod>
   </url>  <url>
@@ -14,9 +17,6 @@
     <lastmod>2021-06-30</lastmod>
   </url>  <url>
     <loc>https://wangyixin-tom.github.io/2021/06/30/attack/</loc>
-    <lastmod>2021-06-30</lastmod>
-  </url>  <url>
-    <loc>https://wangyixin-tom.github.io/2021/04/13/interview-python/</loc>
     <lastmod>2021-06-30</lastmod>
   </url>  <url>
     <loc>https://wangyixin-tom.github.io/2021/06/29/question-2/</loc>
@@ -253,10 +253,10 @@
     <loc>https://wangyixin-tom.github.io/2020/11/01/redis-shi-wu/</loc>
     <lastmod>2021-04-01</lastmod>
   </url>  <url>
-    <loc>https://wangyixin-tom.github.io/2020/10/26/rabbitmq-ji-qun/</loc>
+    <loc>https://wangyixin-tom.github.io/2020/10/26/rabbitmq-xiao-xi-chong-fu/</loc>
     <lastmod>2021-04-01</lastmod>
   </url>  <url>
-    <loc>https://wangyixin-tom.github.io/2020/10/26/rabbitmq-xiao-xi-chong-fu/</loc>
+    <loc>https://wangyixin-tom.github.io/2020/10/26/rabbitmq-ji-qun/</loc>
     <lastmod>2021-04-01</lastmod>
   </url>  <url>
     <loc>https://wangyixin-tom.github.io/2021/03/29/kafka-shou-quan/</loc>
