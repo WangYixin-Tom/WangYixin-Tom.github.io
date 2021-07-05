@@ -270,7 +270,7 @@ Python2 的默认编码是 ascii，Pytho">
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/21.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/22.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -425,14 +425,14 @@ Python2 的默认编码是 ascii，Pytho">
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    15.7k
+                    16.5k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    58 分
+                    61 分
                 </div>
                 
                 
@@ -563,14 +563,15 @@ print(vars(Runoob))
 <h3 id="魔法方法"><a href="#魔法方法" class="headerlink" title="魔法方法"></a>魔法方法</h3><p>在特殊的情况下被Python所调用的方法。</p>
 <p><code>__init__</code>构造器，当一个实例被创建的时候用于初始化的方法。</p>
 <p><code>__new__</code>实例化对象调用的第一个方法，用来创造一个类的实例的，取下cls参数，把其他参数传给<code>__init__</code>.</p>
-<p><code>__slot__</code>:让解释器在元组中存储实例属性，而不用字典，告诉解释器：“这个类中的所有<br>实例属性都在这儿了！”</p>
+<p><code>__slot__</code>:让解释器在元组中存储实例属性，而不用字典，告诉解释器：“这个类中的所有实例属性都在这儿了！”</p>
 <p><code>__call__</code>让一个类的实例像函数一样被调用</p>
 <p><code>__getitem__</code>定义获取容器中指定元素的行为，相当于<code>self[key]</code></p>
 <p><code>__getattr__</code>定义当用户试图访问一个不存在属性的时候的行为</p>
 <p><code>__setattr__</code>定义当一个属性被设置的时候的行为</p>
 <p><code>__getattribute___</code>定义当一个属性被访问的时候的行为</p>
 <p><code>__del__</code>删除对象执行的方法</p>
-<p><code>__str__</code>强调可读性，面向用户，在<code>print()</code>或者<code>str()</code>函数调用的时候才会被调用；而<code>__repr__</code>强调标准性，面向开发者。</p>
+<p><code>__str__</code>强调可读性，面向用户，在<code>print()</code>或者<code>str()</code>函数调用的时候才会被调用；</p>
+<p><code>__repr__</code>强调标准性，面向开发者。</p>
 <p>%s调用<code>__str__</code>方法，而%r调用<code>__repr__</code>方法</p>
 <p><code>__repr__</code>在表示类时，是一级的，如果只定义它，那么<code>__str__</code> = <code>__repr__</code>。</p>
 <pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">Callable</span><span class="token punctuation">:</span>
@@ -630,7 +631,7 @@ isinstance<span class="token punctuation">(</span>a<span class="token punctuatio
 isinstance<span class="token punctuation">(</span>a<span class="token punctuation">,</span> Iterator<span class="token punctuation">)</span>
 isgenerator<span class="token punctuation">(</span>a<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h3 id="yield"><a href="#yield" class="headerlink" title="yield"></a>yield</h3><p>yield 的作用就是把一个函数变成一个 generator，带有 yield 的函数不再是一个普通函数，Python 解释器会将其视为一个 generator。</p>
-<p>它和普通函数不同，生成一个 generator 看起来像函数调用，但不会执行任何函数代码，直到对其调用 <code>next()</code>（在 for 循环中会自动调用 <code>next()</code>）才开始执行。虽然执行流程仍按函数的流程执行，但每执行到一个 yield 语句就会中断，并返回一个迭代值，下次执行时从 yield 的下一个语句继续执行。看起来就好像一个函数在正常执行的过程中被 yield 中断了数次，每次中断都会通过 yield 返回当前的迭代值。</p>
+<p>它和普通函数不同，生成一个 generator 看起来像函数调用，<strong>但不会执行任何函数代码，直到对其调用</strong> <code>next()</code>（在 for 循环中会自动调用 <code>next()</code>）才开始执行。虽然执行流程仍按函数的流程执行，<strong>但每执行到一个 yield 语句就会中断，并返回一个迭代值，下次执行时从 yield 的下一个语句继续执行</strong>。看起来就好像一个函数在正常执行的过程中被 yield 中断了数次，每次中断都会通过 yield 返回当前的迭代值。</p>
 <h3 id="装饰器"><a href="#装饰器" class="headerlink" title="装饰器"></a>装饰器</h3><p>装饰器本质上是一个<strong>Python函数或者类</strong>，让其他函数在不做任何代码变动，从而增加额外功能，装饰器的返回值也是一个函数对象。</p>
 <p>场景：<strong>插入日志</strong>、性能测试、<strong>事务处理</strong>、缓存、<strong>权限校验、异常处理</strong>。</p>
 <pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">import</span> functools
@@ -1143,7 +1144,18 @@ d<span class="token punctuation">.</span>foo1<span class="token punctuation">(</
 <p>在shell中，并非全部的字符串都会采用intern机制。仅仅包括下划线、数字、字母的字符串才会被intern。不能超过20个字符。因为如果超过xx个字符的话，解释器认为这个字符串不常用，不用放入字符串池中。</p>
 <p>字符串拼接时，运行时拼接，不会intern；例如”hell” + “o”在编译时完成拼接的才会intern</p>
 </blockquote>
-<h3 id="字符串print一样，但是不相等"><a href="#字符串print一样，但是不相等" class="headerlink" title="字符串print一样，但是不相等"></a>字符串print一样，但是不相等</h3><p>==判断是 True ，is 判断却是 False。字符串来自不同的内存块，内存地址不一样</p>
+<h3 id="字符串不等"><a href="#字符串不等" class="headerlink" title="字符串不等"></a>字符串不等</h3><p><strong>字符串打印出来看着一样，但是判断却是False</strong>？</p>
+<p>如果两个字符串末尾有其他符号，比如回车‘\n’，print的时候无法发现的</p>
+<p><strong>==判断是 True ，is 判断却是 False?<em>**</em></strong></p>
+<p>字符串来自不同的内存块，内存地址不一样</p>
+<p><strong>is判断是False，用id判断却是True</strong></p>
+<pre class="line-numbers language-python"><code class="language-python">In <span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">:</span> foo<span class="token punctuation">.</span>bar <span class="token keyword">is</span> Foo<span class="token punctuation">.</span>bar
+Out<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">:</span> <span class="token boolean">False</span>
+
+In <span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">:</span> id<span class="token punctuation">(</span>foo<span class="token punctuation">.</span>bar<span class="token punctuation">)</span> <span class="token operator">==</span> id<span class="token punctuation">(</span>Foo<span class="token punctuation">.</span>bar<span class="token punctuation">)</span>
+Out<span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">:</span> <span class="token boolean">True</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>foo.bar本身并不是简单的名字，而是表达式的计算结果，是一个 method object，method object只是一个临时的中间变量而已，对临时的中间变量做id是没有意义的。</p>
+<p>只有你能保证对象不会被销毁的前提下，你才能用 id 来比较两个对象。</p>
 <h2 id="堆-栈"><a href="#堆-栈" class="headerlink" title="堆 栈"></a>堆 栈</h2><p>在Python中，变量也称为：对象的引用。变量存储的就是对象的地址。</p>
 <p><strong>变量位于：栈内存。</strong></p>
 <p><strong>对象位于：堆内存。</strong></p>
@@ -1224,10 +1236,15 @@ d<span class="token punctuation">.</span>foo1<span class="token punctuation">(</
 <li>任务接口：将线程执行的任务抽象出来，形成任务接口，确保线程池与具体的任务无关。</li>
 <li>任务队列：线程池中保存等待被执行的任务的容器。</li>
 </ol>
-<h3 id="协程"><a href="#协程" class="headerlink" title="协程"></a>协程</h3><p>协程是一种用户态的轻量级线程，调度完全由用户控制。</p>
-<p>协程拥有自己的寄存器上下文和栈。协程的切换都在用户空间内进行，不需要进行系统调用。</p>
+<h3 id="协程"><a href="#协程" class="headerlink" title="协程"></a>协程</h3><p>协程是一种用户态的轻量级线程，用户自己来编写调度逻辑的。</p>
+<p>协程拥有自己的寄存器上下文和栈。协程的切换都在用户空间内进行，不需要进行系统调用。对CPU来说，协程其实是单线程，所以CPU不用去考虑怎么调度、切换上下文，这就省去了CPU的切换开销，所以协程在一定程度上又好于多线程</p>
 <p>协程调度时，将寄存器上下文和栈保存到其他地方，在切回来的时候，恢复先前保存的寄存器上下文和栈，基本没有内核切换的开销，可以不加锁的访问全局变量，上下文的切换非常快。</p>
-<p><strong>如何利用多核CPU呢？最简单的方法是多进程+协程，既充分利用多核，又充分发挥协程的高效率，可获得极高的性能</strong>。</p>
+<blockquote>
+<p>不管是进程还是线程，每次阻塞、切换都需要陷入系统调用，先让CPU跑操作系统的调度程序，然后再由调度程序决定该跑哪一个进程/线程。</p>
+</blockquote>
+<p><strong>如何利用多核CPU呢？</strong></p>
+<p>最简单的方法是多进程+协程，既充分利用多核，又充分发挥协程的高效率，可获得极高的性能。</p>
+<p>每个进程有各自独立的GIL，互不干扰，这样就可以真正意义上的并行执行，所以在python中，多进程的执行效率优于多线程</p>
 <p><strong>常用模块</strong></p>
 <p>greenlet：提供了切换任务的快捷方式，但是遇到io无法自动切换任务，需要手动切换</p>
 <p>gevent：开启协程任务并切换的模块，遇到io自动切换任务。</p>
@@ -1259,13 +1276,17 @@ d<span class="token punctuation">.</span>foo1<span class="token punctuation">(</
 <p>2.使用信号量，子进程退出时向父进程发送SIGCHILD信号，在signal handler 中调用waitpid，这样父进程不用阻塞</p>
 <p>3.fork 两次用孙子进程去完成子进程的任务，孙子进程刚产生，它的父亲就退出了，成了孤儿进程，由init收养</p>
 <h2 id="Global-Interpreter-Lock"><a href="#Global-Interpreter-Lock" class="headerlink" title="Global Interpreter Lock"></a>Global Interpreter Lock</h2><p>Python 默认的解释器是 CPython，<strong>GIL 是存在于 CPython 解释器中的</strong>。</p>
-<p>执行 Python 字节码时，为了保护访问 Python 对象而阻止多个线程执行的一把互斥锁。主要是因为 CPython 解释器的内存管理不是线程安全的。</p>
-<p>常见的 Python 解释器：IPython（基于Cython）、IPython、Jython（可以把 Python 代码编译成 Java 字节码，依赖 Java 平台，不存在 GIL）、IronPython（运行在微软的 .Net 平台下的 Python 解释器，可以把 Python 代码编译成 .Net 字节码，不存在 GIL）</p>
+<p>执行 Python 字节码时，为了保护访问 Python 对象而阻止多个线程执行的一把互斥锁。主要是因为 <strong>CPython 解释器的内存管理</strong>不是线程安全的。某个线程想要执行，必须先拿到GIL，我们可以把GIL看作是“通行证”，并且在一个python进程中，GIL只有一个。拿不到通行证的线程，就不允许进入CPU执行。</p>
+<p><strong>同一时刻，只有一个线程在运行，其它线程只能等待，即使是多核CPU</strong>，<strong>也没办法让多个线程「并行」地同时执行代码，只能是交替执行</strong>，因为多线程涉及到上线文切换、锁机制处理（获取锁，释放锁等），所以，多线程执行不快反慢。</p>
+<p>常见的 Python 解释器：IPython（基于Cython）、Jython（Python 代码编译成 Java 字节码，依赖 Java 平台，不存在 GIL）、IronPython（ .Net 平台下的 Python 解释器，Python 代码编译成 .Net 字节码，不存在 GIL）</p>
 <h3 id="GIL原理"><a href="#GIL原理" class="headerlink" title="GIL原理"></a>GIL原理</h3><p>python 的线程就是 C 语言的 pthread，它是通过操作系统调度算法调度执行的。</p>
 <p>Python 2.x 的代码执行是基于 opcode 数量的调度方式，简单来说就是每执行一定数量的字节码，或遇到系统 IO 时，会强制释放 GIL，然后触发一次操作系统的线程调度。</p>
 <p> Python 3.x 基于固定时间的调度方式，就是每执行固定时间的字节码，或遇到系统 IO 时，强制释放 GIL，触发系统的线程调度。</p>
 <h3 id="为什么会有GIL"><a href="#为什么会有GIL" class="headerlink" title="为什么会有GIL"></a>为什么会有GIL</h3><p>90年代单核 CPU 还是主流，多线程的应用场景也不多，大部分时候还是以单线程的方式运行，单线程不要涉及线程的上下文切换，效率反而比多线程更高（在多核环境下，不适用此规则），设计一个全局锁是<strong>那个时代保护多线程资源一致性最简单经济的设计方案</strong>。</p>
 <p>多核心时代来临，当大家试图去拆分和去除 GIL 的时候，发现大量库的代码和开发者已经重度依赖 GIL（默认认为 Python内部对象是线程安全的，无需在开发时额外加锁），所以这个去除 GIL 的任务变得复杂且难以实现。</p>
+<blockquote>
+<p>CPython 解释器在创建变量时，首先会分配内存，然后对该变量的引用进行计数，这称为 引用计数。如果变量的引用数变为 0，这个变量就会从内存中释放掉。而当多个线程内共享一个变量时，CPython 锁定引用计数的关键就在于使用了 GIL，它会谨慎地控制线程的执行情况，无论同时存在多少个线程，解释器每次只允许一个线程进行操作。</p>
+</blockquote>
 <h3 id="GIL的实现是线程不安全-为什么"><a href="#GIL的实现是线程不安全-为什么" class="headerlink" title="GIL的实现是线程不安全?为什么?"></a>GIL的实现是线程不安全?为什么?</h3><p>单核情况下:</p>
 <p><img src="gil.png" alt></p>
 <blockquote>
@@ -1276,7 +1297,18 @@ d<span class="token punctuation">.</span>foo1<span class="token punctuation">(</
 </ol>
 </blockquote>
 <p>python2.x和3.x都是在执行IO操作的时候，强制释放GIL，使其他线程有机会执行程序。</p>
-<h2 id="性能优化"><a href="#性能优化" class="headerlink" title="性能优化"></a>性能优化</h2><h3 id="lru-cache装饰器"><a href="#lru-cache装饰器" class="headerlink" title="lru_cache装饰器"></a>lru_cache装饰器</h3><p>为函数提供缓存功能。在下次以相同参数调用时直接返回上一次的结果，要求参数可hash。</p>
+<h2 id="性能优化"><a href="#性能优化" class="headerlink" title="性能优化"></a>性能优化</h2><h3 id="python为什么慢"><a href="#python为什么慢" class="headerlink" title="python为什么慢"></a>python为什么慢</h3><ul>
+<li><p>GIL</p>
+<p>无论同时存在多少个线程，解释器每次只允许一个线程进行操作。</p>
+</li>
+<li><p>解释型语言而不是编译型语言</p>
+<p>Python 都会解释字节码并本地执行。.NET 和 Java 都是 JIT 编译的，JIT 会允许在运行时进行优化，缺点是启动慢。</p>
+</li>
+<li><p>动态类型的语言</p>
+<p>类型比较和类型转换消耗的资源是比较多的，每次读取、写入或引用变量时都会检查变量的类型</p>
+</li>
+</ul>
+<h3 id="lru-cache装饰器"><a href="#lru-cache装饰器" class="headerlink" title="lru_cache装饰器"></a>lru_cache装饰器</h3><p>为函数提供缓存功能。在下次以相同参数调用时直接返回上一次的结果，要求参数可hash。</p>
 <h3 id="性能分析"><a href="#性能分析" class="headerlink" title="性能分析"></a>性能分析</h3><p>Python 标准库提供了同一分析接口的两种不同实现：</p>
 <ol>
 <li>建议使用 <a href="https://docs.python.org/zh-cn/3/library/profile.html#module-cProfile" target="_blank" rel="noopener"><code>cProfile</code></a> ；这是一个 C 扩展插件，因为其合理的运行开销，所以适合于分析长时间运行的程序。</li>
@@ -1923,7 +1955,7 @@ foo2 <span class="token operator">=</span> Foo<span class="token punctuation">(<
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="flask">
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="flask">
                         
                         <span class="card-title">flask</span>
                     </div>
@@ -1976,7 +2008,7 @@ run 方法调用werkzeug 的 run_simple
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/26.jpg" class="responsive-img" alt="redis面试">
+                        <img src="/medias/featureimages/27.jpg" class="responsive-img" alt="redis面试">
                         
                         <span class="card-title">redis面试</span>
                     </div>
@@ -2181,7 +2213,7 @@ run 方法调用werkzeug 的 run_simple
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">174k</span>
+            <span class="white-color">174.1k</span>
             
 
             <br>

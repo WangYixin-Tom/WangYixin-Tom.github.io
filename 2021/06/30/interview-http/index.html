@@ -10,8 +10,7 @@
     <meta name="360-site-verification" content="b7c11a830ef90fd1464ad6206bb7b6e7">
     <meta name="description" content="报文请求报文
 请求行：请求方法、请求地址和协议及版本，以CRLF结束。
-
-请求Header：拥有若干个报文关属性，它们是为协助客户端及服务端交易的一些附属信息。 常见的有Accept 、Cookie 、Referer 、Cache-Cont">
+请求Header：拥有若干个报文关属性，它们是为协助客户端及服务端交易的一些附属信息。 常见的有Accept 、Cookie 、Referer 、Cache-Contr">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -269,7 +268,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/11.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -424,14 +423,14 @@
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    7.2k
+                    5.8k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    25 分
+                    20 分
                 </div>
                 
                 
@@ -443,15 +442,43 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h2 id="报文"><a href="#报文" class="headerlink" title="报文"></a>报文</h2><h3 id="请求报文"><a href="#请求报文" class="headerlink" title="请求报文"></a>请求报文</h3><ul>
-<li><p>请求行：请求方法、请求地址和协议及版本，以CRLF结束。</p>
-</li>
-<li><p>请求Header：拥有若干个报文关属性，它们是为协助客户端及服务端交易的一些附属信息。 常见的有Accept 、Cookie 、Referer 、Cache-Control</p>
-</li>
-<li><p>空行分隔首部和内容主体 Body</p>
-</li>
-<li><p>请求体。</p>
-</li>
+<li>请求行：请求方法、请求地址和协议及版本，以CRLF结束。</li>
+<li>请求Header：拥有若干个报文关属性，它们是为协助客户端及服务端交易的一些附属信息。 常见的有Accept 、Cookie 、Referer 、Cache-Control</li>
+<li>空行分隔首部和内容主体 Body</li>
+<li>请求体。</li>
 </ul>
+<h3 id="GET与POST的区别？"><a href="#GET与POST的区别？" class="headerlink" title="GET与POST的区别？"></a>GET与POST的区别？</h3><ol>
+<li>GET是幂等的，即读取同一个资源，总是得到相同的数据，POST不是幂等的；</li>
+<li>GET一般用于从服务器获取资源，而POST有可能改变服务器上的资源；</li>
+<li>请求形式上：GET请求的数据附在URL之后，在HTTP请求头中，参数有长度限制；POST请求的数据在请求体中，参数无长度限制；</li>
+<li>安全性：GET请求可被缓存、收藏、保留到历史记录，参数暴露在URL中。POST不会被保存，安全性相对较高，参数在body中；</li>
+<li>参数数据类型：GET只允许ASCII字符，POST对数据类型没有要求，也允许二进制数据；</li>
+<li>GET的长度有限制（操作系统或者浏览器的限制），而POST数据大小无限制</li>
+<li><strong>GET产生一个TCP数据包；POST一般产生两个TCP数据包。</strong>：对于GET方式的请求，浏览器会把http header和data一并发送出去，服务器响应200（返回数据）；而对于POST，浏览器先发送header，服务器响应100 continue，浏览器再发送data，服务器响应200 ok（返回数据）</li>
+</ol>
+<p>GET/POST 都是 TCP 链接。GET 和 POST 能做的事情是一样一样的。你要给 GET 加上 request body，给 POST 带上 url 参数，技术上是完全行的通的。不同服务器的处理方式也是不同的，有些服务器会帮你卸货，读出数据，有些服务器直接忽略，所以，虽然 GET 可以带 request body，也<strong>不能保证一定能被接收到哦</strong>。</p>
+<blockquote>
+<p>并不是所有浏览器都会在POST中发送两次包，Firefox就只发送一次。</p>
+</blockquote>
+<h3 id="post里面传的都是表单吗？"><a href="#post里面传的都是表单吗？" class="headerlink" title="post里面传的都是表单吗？"></a>post里面传的都是表单吗？</h3><p><strong>contentType用于表明发送数据流的类型，服务器根据编码类型使用特定的解析方式，获取数据流中的数据。</strong></p>
+<p>在网络请求中，常用的Content-Type有如下：text/html,  image/png,application/x-www-form-urlencoded, multipart/form-data, application/json等。</p>
+<h3 id="断点续传的原理是什么"><a href="#断点续传的原理是什么" class="headerlink" title="断点续传的原理是什么"></a>断点续传的原理是什么</h3><p>范围请求，首部字段<code>Range</code>来指定资源的byte范围。</p>
+<h3 id="一个-url-分为哪几部分，各个部分的含义是什么"><a href="#一个-url-分为哪几部分，各个部分的含义是什么" class="headerlink" title="一个 url 分为哪几部分，各个部分的含义是什么"></a>一个 url 分为哪几部分，各个部分的含义是什么</h3><p>统一资源定位符（URL）是用于完整地描述Internet上网页和其他资源的地址的一种标识方法。</p>
+<p>URL的一般格式为（带方括号[]的为可选项）：<code>protocol://hostname[:port]/path/[;parameters][?query]#fragment</code> </p>
+<p>URL由三部分组成： 协议类型 ，主机名 和 路径及文件名 。</p>
+<p>1、protocol（协议）：指定使用的传输协议， 最常用的是HTTP协议。 </p>
+<p>2、hostname（主机名）：是指存放资源的服务器的域名系统主机名或 IP 地址。</p>
+<p>3、port（端口号）：省略时使用协议的默认端口，如http的默认端口为80。</p>
+<p>4、path（路径）：由零或多个“/”符号隔开的字符串，一般用来表示主机上的一个目录或文件地址。</p>
+<p>5、;parameters（参数）：这是用于指定特殊参数的可选项。<br>6、?<strong>query</strong>（查询）：可选，可有多个参数，用“&amp;”符号隔开，每个参数的名和值用“=”符号隔开。<br>7、fragment，信息片断，字符串，用于指定网络资源中的片断。例如一个网页中有多个名词解释，可使用fragment直接定位到某一名词解释</p>
+<h3 id="百分号（URL）编码"><a href="#百分号（URL）编码" class="headerlink" title="百分号（URL）编码"></a>百分号（URL）编码</h3><p>因为早在 URL 被发明出来作为万维网地址时，就已规定只能使用英文字母、阿拉伯数字和某些标点符号，不能使用其他文字和符号。<strong>如果 URL 中有汉字或者其他标准之外的字符，就必须编码后使用</strong>。</p>
+<p><strong>百分号编码与 Base64 异同</strong></p>
+<p><strong>相同点</strong>：它们都是用给定的 US-ASCII 码可打印字符去表示更广范围数据的方法。</p>
+<p><strong>区别</strong>：百分号编码是针对超出 URI 合法字符范围外的字符做编码，而 Base64 是针对二进制数据做编码；一个是对文本的编码，一个是对二进制数据的编码。</p>
+<blockquote>
+<p>标准的Base64编码后可能出现字符<code>+</code>和<code>/</code>，在URL中就不能直接作为参数。</p>
+</blockquote>
+<h3 id="HTTP怎么实现分包？"><a href="#HTTP怎么实现分包？" class="headerlink" title="HTTP怎么实现分包？"></a>HTTP怎么实现分包？</h3><p>HTTP协议是一种文本协议（非二进制协议），用\r\n\r\n来分割消息头和消息体，<strong>HTTP请求的消息头中有Content-Length来告知消息体有多大，如果没有该字段就表示无消息体</strong></p>
 <h3 id="报文头和报文体怎么分离"><a href="#报文头和报文体怎么分离" class="headerlink" title="报文头和报文体怎么分离"></a>报文头和报文体怎么分离</h3><p>最后一个请求头之后是一个空行，发送回车符和换行符，通知服务器以下不再有请求头。</p>
 <h3 id="响应报文"><a href="#响应报文" class="headerlink" title="响应报文"></a>响应报文</h3><ul>
 <li>第一行包含协议版本、状态码以及描述，最常见的是 200 OK 表示请求成功了</li>
@@ -459,45 +486,61 @@
 <li>一个空行分隔首部和内容主体</li>
 <li>最后是响应的内容主体</li>
 </ul>
-<h3 id="什么是HTTP"><a href="#什么是HTTP" class="headerlink" title="什么是HTTP"></a>什么是HTTP</h3><p>Hyper Text Transfer Protocol（超文本传输协议），是用于从万维网 服务器传输超文本到本地浏览器的传送协议。</p>
+<h2 id="HTTP"><a href="#HTTP" class="headerlink" title="HTTP"></a>HTTP</h2><h3 id="什么是HTTP"><a href="#什么是HTTP" class="headerlink" title="什么是HTTP"></a>什么是HTTP</h3><p>Hyper Text Transfer Protocol（超文本传输协议），是用于从万维网 服务器传输超文本到本地浏览器的传送协议。</p>
 <p>HTTP是一个基于TCP/IP通信协议来传递数据（HTML 文件, 图片文件, 查询结果等）。属于TCP上层的协议，但是本身并无会话的特点，它是一个基于请求/响应模式的、无状态的协议，以一问一答的方式实现服务。</p>
-<h3 id="什么是-https"><a href="#什么是-https" class="headerlink" title="什么是 https"></a>什么是 https</h3><p>简单来说， https 是 http + ssl，对 http 通信内容进行加密，是HTTP的安全版，是使用TLS/SSL加密的HTTP协议</p>
+<h3 id="HTTP为什么基于TCP？"><a href="#HTTP为什么基于TCP？" class="headerlink" title="HTTP为什么基于TCP？"></a>HTTP为什么基于TCP？</h3><p>http协议只定义了应用层的东西，下层的可靠性要传输层来保证，只要是可以保证可靠性传输层协议都可以承载http，比如有基于sctp的http实现。 http也不是不能通过udp承载，在手机上就有人自己开发基于reliable udp的http协议，不过都是非标准的</p>
+<h3 id="http1-0-1-1-2-0-的区别"><a href="#http1-0-1-1-2-0-的区别" class="headerlink" title="http1.0/1.1/2.0 的区别"></a>http1.0/1.1/2.0 的区别</h3><h4 id="HTTP-1-1"><a href="#HTTP-1-1" class="headerlink" title="HTTP 1.1"></a>HTTP 1.1</h4><ul>
+<li><p><strong>长连接</strong>，HTTP 1.1支持长连接和请求的流水线处理，在一个TCP连接上可以传送多个HTTP请求和响应，在HTTP1.1中默认开启Connection： keep-alive，一定程度上弥补了HTTP1.0每次请求都要创建连接的缺点</p>
+</li>
+<li><p><strong>Host头处理</strong>，HTTP1.1的请求消息和响应消息都应支持Host头域，且请求消息中如果没有Host域会报告一个错误（400 Bad Request）。在HTTP1.0中认为每台服务器都绑定一个唯一的IP地址，因此，请求消息中的URL并没有传递主机名。但随着虚拟主机技术的发展，在一台物理服务器上可以存在多个虚拟主机，并且它们共享一个IP地址</p>
+</li>
+<li><p><strong>缓存处理</strong>，HTTP1.1则引入了更多的缓存控制策略，例如If-Match, If-None-Match等更多可供选择的缓存头来控制缓存策略。</p>
+</li>
+<li><p><strong>带宽优化及网络连接的使用</strong>，HTTP1.0中不支持断点续传功能，HTTP1.1则在请求头引入了range头域，它允许只请求资源的某个部分，便于充分利用带宽和连接。</p>
+</li>
+<li><p><strong>错误通知的管理</strong>，在HTTP1.1中新增了24个错误状态响应码。</p>
+</li>
+</ul>
+<h4 id="HTTP-2-0"><a href="#HTTP-2-0" class="headerlink" title="HTTP 2.0"></a>HTTP 2.0</h4><p><strong>HTTP2.0的多路复用</strong></p>
+<p>浏览器对同一域名下的并发连接数量有限制，一般为6个。HTTP1中的keep-alive必须等本次请求彻底完成后才能发送下一个请求，而HTTP2的请求与响应以二进制帧的形式交错进行，只需建立一次连接，即一轮三次握手，实现多路复用</p>
+<p><strong>HTTP2.0压缩消息头</strong></p>
+<p>HTTP 2.0 会对 HTTP 的头进行一定的压缩：将原来每次都要携带的大量 key value在两端建立一个索引表，对相同的头只发送索引表中的索引。</p>
+<p><strong>HTTP2.0服务端推送</strong></p>
+<p>HTTP2.0中服务器会主动将资源推送给客户端，例如把js文件主动推送给客户端而不用客户端解析HTML后请求再响应。</p>
+<h3 id="HTTP2-0的多路复用和HTTP1-X中的长连接复用有什么区别？"><a href="#HTTP2-0的多路复用和HTTP1-X中的长连接复用有什么区别？" class="headerlink" title="HTTP2.0的多路复用和HTTP1.X中的长连接复用有什么区别？"></a><strong>HTTP2.0的多路复用和HTTP1.X中的长连接复用有什么区别？</strong></h3><ul>
+<li>HTTP/1.0 每一个请求都要建立一个连接；</li>
+<li>HTTP/1.1 默认是 <strong>keep-alive</strong> 的，即tcp连接可以<strong>复用</strong>，不用每次都要重新建立和断开 TCP 连接，后面的请求等待前面请求的返回才能获得执行机会，一旦有某请求超时等，后续请求只能被阻塞。</li>
+<li>HTTP/2多个请求可同时在一个连接上并行执行。某个请求任务耗时严重，不会影响到其它连接的正常执行；</li>
+</ul>
+<h3 id="浏览器对同一-Host-建立-TCP-连接到数量有没有限制？"><a href="#浏览器对同一-Host-建立-TCP-连接到数量有没有限制？" class="headerlink" title="浏览器对同一 Host 建立 TCP 连接到数量有没有限制？"></a>浏览器对同一 Host 建立 TCP 连接到数量有没有限制？</h3><p>Chrome 最多允许对同一个 Host 建立六个 TCP 连接，不同的浏览器有一些区别。</p>
+<h3 id="http层的keep-alive"><a href="#http层的keep-alive" class="headerlink" title="http层的keep-alive"></a>http层的keep-alive</h3><p>用于客户端告诉服务端，这个连接我还会继续使用，在使用完之后不要关闭。</p>
+<p>减少了TCP的三次握手和四次挥手，第二次传递数据就可以通过前一个连接直接进行数据交互了。</p>
+<blockquote>
+<p>在HTTP1.0和HTTP1.1协议中都有对KeepAlive的支持。<strong>其中HTTP1.0需要在request中增加”Connection： keep-alive” header才能够支持，而HTTP1.1默认支持</strong>。</p>
+</blockquote>
+<h3 id="HTTP如何保持长连接？"><a href="#HTTP如何保持长连接？" class="headerlink" title="HTTP如何保持长连接？"></a>HTTP如何保持长连接？</h3><ul>
+<li>Client发出request，其中该request的HTTP版本号为1.1。</li>
+<li>Web Server收到request中的HTTP协议为1.1就认为是一个长连接请求，其将在response的header中也增加”Connection： keep-alive”。同时不会关闭已建立的tcp连接。</li>
+<li>Client收到Web Server的response中包含”Connection： keep-alive”，就认为是一个长连接，不close tcp连接。并用该tcp连接再发送request。</li>
+</ul>
+<h3 id="一个TCP支持多少个HTTP请求？"><a href="#一个TCP支持多少个HTTP请求？" class="headerlink" title="一个TCP支持多少个HTTP请求？"></a>一个TCP支持多少个HTTP请求？</h3><p>在 HTTP/1.0 中，一个服务器在发送完一个 HTTP 响应后，会断开 TCP 链接。</p>
+<p>HTTP/1.1 默认开启持久连接，一个TCP连接是支持多个http请求的。</p>
+<h2 id="HTTPS"><a href="#HTTPS" class="headerlink" title="HTTPS"></a>HTTPS</h2><h3 id="什么是-https"><a href="#什么是-https" class="headerlink" title="什么是 https"></a>什么是 https</h3><p>简单来说， https 是 http + ssl，对 http 通信内容进行加密，是HTTP的安全版，是使用TLS/SSL加密的HTTP协议</p>
 <p>Https的作用：</p>
 <ul>
 <li>内容加密 建立一个信息安全通道，来保证数据传输的安全；</li>
 <li>身份认证 确认网站的真实性</li>
 <li>数据完整性 防止内容被第三方冒充或者篡改</li>
 </ul>
-<h3 id="什么是SSL"><a href="#什么是SSL" class="headerlink" title="什么是SSL"></a>什么是SSL</h3><p>通过Web创建安全的Internet通信。它是一种标准协议，用于加密浏览器和服务器之间的通信。它允许通过Internet安全轻松地传输账号密码、银行卡、手机号等私密信息。</p>
-<p>SSL证书就是遵守SSL协议，由受信任的CA机构颁发的数字证书。</p>
+<h3 id="什么是SSL"><a href="#什么是SSL" class="headerlink" title="什么是SSL"></a>什么是SSL</h3><p>Secure Socket Layer，通过Web创建安全的Internet通信。</p>
+<p>一种标准协议，用于加密浏览器和服务器之间的通信。</p>
 <h3 id="HTTP和HTTPS区别？"><a href="#HTTP和HTTPS区别？" class="headerlink" title="HTTP和HTTPS区别？"></a>HTTP和HTTPS区别？</h3><ol>
 <li>端口不同：HTTP使用的是80端口，HTTPS使用443端口；</li>
-<li>HTTP信息是明文传输，HTTPS运行在SSL（Secure Socket Layer）之上，添加了加密和认证机制，更加安全；</li>
+<li>HTTP信息是明文传输，HTTPS运行在SSL之上，添加了加密和认证机制，更加安全；</li>
 <li>HTTPS由于加密解密会带来更大的CPU和内存开销；</li>
 <li>HTTPS通信需要证书，一般需要向CA购买</li>
 <li>HTTP 页面响应速度比 HTTPS 快，主要是因为 HTTP 使用 TCP 三次握手建立连接，客户端和服务器需要交换 3 个包，而 HTTPS除了 TCP 的三个包，还要加上 ssl 握手需要的 9 个包，所以一共是 12 个包。</li>
 </ol>
-<h3 id="HTTP为什么基于TCP？"><a href="#HTTP为什么基于TCP？" class="headerlink" title="HTTP为什么基于TCP？"></a>HTTP为什么基于TCP？</h3><p>http协议只定义了应用层的东西，下层的可靠性要传输层来保证，只要是可以保证可靠性传输层协议都可以承载http，比如有基于sctp的http实现。 http也不是不能通过udp承载，在手机上就有人自己开发基于reliable udp的http协议，不过都是非标准的</p>
-<h3 id="http1-0-1-1-2-0-的区别"><a href="#http1-0-1-1-2-0-的区别" class="headerlink" title="http1.0 1.1 2.0 的区别"></a>http1.0 1.1 2.0 的区别</h3><h4 id="HTTP-1-1"><a href="#HTTP-1-1" class="headerlink" title="HTTP 1.1"></a>HTTP 1.1</h4><ul>
-<li><p><strong>缓存处理</strong>，在HTTP1.0中主要使用header里的If-Modified-Since,Expires来做为缓存判断的标准，HTTP1.1则引入了更多的缓存控制策略例如Entity tag，If-Unmodified-Since, If-Match, If-None-Match等更多可供选择的缓存头来控制缓存策略。</p>
-</li>
-<li><p><strong>带宽优化及网络连接的使用</strong>，HTTP1.0中，存在一些浪费带宽的现象，例如客户端只是需要某个对象的一部分，而服务器却将整个对象送过来了，并且不支持断点续传功能，HTTP1.1则在请求头引入了range头域，它允许只请求资源的某个部分，即返回码是206（Partial Content），这样就方便了开发者自由的选择以便于充分利用带宽和连接。</p>
-</li>
-<li><p><strong>错误通知的管理</strong>，在HTTP1.1中新增了24个错误状态响应码，如409（Conflict）表示请求的资源与资源的当前状态发生冲突；410（Gone）表示服务器上的某个资源被永久性的删除。</p>
-</li>
-<li><p><strong>Host头处理</strong>，在HTTP1.0中认为每台服务器都绑定一个唯一的IP地址，因此，请求消息中的URL并没有传递主机名（hostname）。但随着虚拟主机技术的发展，在一台物理服务器上可以存在多个虚拟主机（Multi-homed Web Servers），并且它们共享一个IP地址。HTTP1.1的请求消息和响应消息都应支持Host头域，且请求消息中如果没有Host头域会报告一个错误（400 Bad Request）。</p>
-</li>
-<li><p><strong>长连接</strong>，HTTP 1.1支持长连接（PersistentConnection）和请求的流水线（Pipelining）处理，在一个TCP连接上可以传送多个HTTP请求和响应，减少了建立和关闭连接的消耗和延迟，在HTTP1.1中默认开启Connection： keep-alive，一定程度上弥补了HTTP1.0每次请求都要创建连接的缺点。</p>
-</li>
-</ul>
-<h4 id="HTTP-2-0"><a href="#HTTP-2-0" class="headerlink" title="HTTP 2.0"></a>HTTP 2.0</h4><p><strong>HTTP2.0的多路复用</strong><br>浏览器对同一域名下的并发连接数量有限制，一般为6个，HTTP1中的Keep-Alive用于长连接而不必重新建立连接，然而keep-alive必须等本次请求彻底完成后才能发送下一个请求，而HTTP2的请求与响应以二进制帧的形式交错进行，只需建立一次连接，即一轮三次握手，实现多路复用<br><strong>HTTP2.0压缩消息头</strong><br>HTTP 2.0 会对 HTTP 的头进行一定的压缩，将原来每次都要携带的大量 key value在两端建立一个索引表，对相同的头只发送索引表中的索引。</p>
-<p><strong>HTTP2.0服务端推送</strong><br>HTTP2.0中服务器会主动将资源推送给客户端，例如把js和css文件主动推送给客户端而不用客户端解析HTML后请求再响应。</p>
-<h3 id="HTTP2-0的多路复用和HTTP1-X中的长连接复用有什么区别？"><a href="#HTTP2-0的多路复用和HTTP1-X中的长连接复用有什么区别？" class="headerlink" title="HTTP2.0的多路复用和HTTP1.X中的长连接复用有什么区别？"></a><strong>HTTP2.0的多路复用和HTTP1.X中的长连接复用有什么区别？</strong></h3><ul>
-<li>HTTP/1.* 一次请求-响应，建立一个连接，用完关闭；每一个请求都要建立一个连接；</li>
-<li>HTTP/1.1 Pipeling解决方式为，若干个请求排队串行化单线程处理，后面的请求等待前面请求的返回才能获得执行机会，一旦有某请求超时等，后续请求只能被阻塞，毫无办法，也就是人们常说的线头阻塞；默认是 <strong>keep-alive</strong> 的，即tcp连接可以<strong>复用</strong>，不用每次都要重新建立和断开 TCP 连接。</li>
-<li>HTTP/2多个请求可同时在一个连接上并行执行。某个请求任务耗时严重，不会影响到其它连接的正常执行；</li>
-</ul>
-<h3 id="浏览器对同一-Host-建立-TCP-连接到数量有没有限制？"><a href="#浏览器对同一-Host-建立-TCP-连接到数量有没有限制？" class="headerlink" title="浏览器对同一 Host 建立 TCP 连接到数量有没有限制？"></a>浏览器对同一 Host 建立 TCP 连接到数量有没有限制？</h3><p>有。Chrome 最多允许对同一个 Host 建立六个 TCP 连接，不同的浏览器有一些区别。</p>
 <h3 id="Https的连接过程？"><a href="#Https的连接过程？" class="headerlink" title="Https的连接过程？"></a>Https的连接过程？</h3><p><img src="https.png" alt></p>
 <h4 id="证书验证阶段"><a href="#证书验证阶段" class="headerlink" title="证书验证阶段"></a>证书验证阶段</h4><ul>
 <li>浏览器发起请求，请求携带了浏览器支持的加密算法和哈希算法</li>
@@ -514,12 +557,12 @@
 <p>之后双方通信就使用第一步生成的随机数进行加密通信。</p>
 <h3 id="https为什么要采用对称和非对称加密结合的方式"><a href="#https为什么要采用对称和非对称加密结合的方式" class="headerlink" title="https为什么要采用对称和非对称加密结合的方式"></a>https为什么要采用对称和非对称加密结合的方式</h3><p>非对称加密在性能上不如对称加密，  对称加密安全性比较低。</p>
 <p>所以公钥私钥主要用于传输对称加密的秘钥，而真正的双方大数据量的通信都是通过对称加密进行的。  </p>
-<h3 id="什么是中间人攻击"><a href="#什么是中间人攻击" class="headerlink" title="什么是中间人攻击"></a>什么是中间人攻击</h3><p>中间人攻击是指攻击者与通讯的两端分别创建独立的联系，并交换其所收到的数据，使通讯的两端认为他们正在通过一个私密的连接与对方直接对话，但事实上整个会话都被攻击者完全控制。</p>
+<h3 id="什么是中间人攻击"><a href="#什么是中间人攻击" class="headerlink" title="什么是中间人攻击"></a>什么是中间人攻击</h3><p> 如果有个中间人拦截客户端请求，然后向客户端提供自己的公钥，再向服务端请求公钥。</p>
+<p>与通讯的两端分别创建独立的联系，并交换其所收到的数据，使通讯的两端认为他们正在通过一个私密的连接与对方直接对话。</p>
 <blockquote>
 <p>HTTPS 使用了 SSL 加密协议，是一种非常安全的机制，目前并没有方法直接对这个协议进行攻击，一般都是在建立 SSL 连接时，拦截客户端的请求，利用中间人获取到 CA证书、非对称加密的公钥、对称加密的密钥；有了这些条件，就可以对请求和响应进行拦截和篡改。</p>
 </blockquote>
-<h3 id="https-是如何防止中间人攻击的"><a href="#https-是如何防止中间人攻击的" class="headerlink" title="https 是如何防止中间人攻击的"></a>https 是如何防止中间人攻击的</h3><p>在https中需要证书，证书的作用是为了防止”中间人攻击”的。 如果有个中间人M拦截客户端请求,然后M向客户端提供自己的公钥，M再向服务端请求公钥,作为”中介者” 这样客户端和服务端都不知道,信息已经被拦截获取了。</p>
-<p>这时候就需要证明服务端的公钥是正确的.证明就需要权威第三方机构CA来公正了。</p>
+<h3 id="https-是如何防止中间人攻击的"><a href="#https-是如何防止中间人攻击的" class="headerlink" title="https 是如何防止中间人攻击的"></a>https 是如何防止中间人攻击的</h3><p>https证书，需要证明服务端的公钥是正确的，证明就需要权威第三方机构CA来公正了。</p>
 <h3 id="浏览器是如何确保CA证书的合法性？"><a href="#浏览器是如何确保CA证书的合法性？" class="headerlink" title="浏览器是如何确保CA证书的合法性？"></a>浏览器是如何确保CA证书的合法性？</h3><p><strong>证书包含什么信息？</strong></p>
 <p>颁发机构信息、公钥、公司信息、域名、有效期、指纹…</p>
 <p><strong>浏览器如何验证证书的合法性？</strong></p>
@@ -527,12 +570,16 @@
 <li>验证域名、有效期等信息是否正确。证书上都有包含这些信息，比较容易完成验证；</li>
 <li>判断证书来源是否合法。每份签发证书都可以根据验证链查找到对应的根证书，操作系统、浏览器会在本地存储权威机构的根证书，利用本地根证书可以对对应机构签发证书完成来源验证；</li>
 <li>判断证书是否被篡改。需要与CA服务器进行校验；</li>
-<li>判断证书是否已吊销。通过CRL（Certificate Revocation List 证书注销列表）和 OCSP（Online Certificate Status Protocol 在线证书状态协议）实现，其中 OCSP 可用于第3步中以减少与CA服务器的交互，提高验证效率。</li>
+<li>判断证书是否已吊销。</li>
 </ul>
-<h3 id="https-可以抓包吗"><a href="#https-可以抓包吗" class="headerlink" title="https 可以抓包吗"></a>https 可以抓包吗</h3><p>常规下抓包工具代理请求后抓到的包内容是加密状态，无法直接查看。</p>
-<p>但是，我们可以通过抓包工具来抓包。它的原理其实是模拟一个中间人。</p>
-<p>通常 HTTPS 抓包工具的使用方法是会生成一个证书，用户需要手动把证书安装到客户端中，然后终端发起的所有请求通过该证书完成与抓包工具的交互，然后抓包工具再转发请求到服务器，最后把服务器返回的结果在控制台输出后再返回给终端，从而完成整个请求的闭环。</p>
-<h3 id="输入-xxx-com，怎么变成-https-www-xxx-com-的？"><a href="#输入-xxx-com，怎么变成-https-www-xxx-com-的？" class="headerlink" title="输入 xxx.com，怎么变成 https://www.xxx.com 的？"></a>输入 xxx.com，怎么变成 <a href="https://www.xxx.com" target="_blank" rel="noopener">https://www.xxx.com</a> 的？</h3><p>一种是原始的302跳转，服务器把所有的HTTP流量跳转到HTTPS。但这样有一个漏洞，就是中间人可能在第一次访问站点的时候就劫持。<br>解决方法是引入HSTS机制，用户浏览器在访问站点的时候强制使用HTTPS。</p>
+<h3 id="https-可以抓包吗"><a href="#https-可以抓包吗" class="headerlink" title="https 可以抓包吗"></a>https 可以抓包吗</h3><p>常规下抓到的包是加密状态，无法直接查看。</p>
+<p><strong>模拟中间人抓包</strong></p>
+<ul>
+<li>通常 HTTPS 抓包工具的使用方法是会生成一个证书，用户需要手动把证书安装到客户端中。</li>
+<li>然后终端发起的所有请求通过该证书完成与抓包工具的交互，然后抓包工具再转发请求到服务器</li>
+<li>最后把服务器返回的结果在控制台输出后再返回给终端，从而完成整个请求的闭环。</li>
+</ul>
+<h3 id="输入-xxx-com，怎么变成-https-www-xxx-com-的？"><a href="#输入-xxx-com，怎么变成-https-www-xxx-com-的？" class="headerlink" title="输入 xxx.com，怎么变成 https://www.xxx.com 的？"></a>输入 xxx.com，怎么变成 <a href="https://www.xxx.com" target="_blank" rel="noopener">https://www.xxx.com</a> 的？</h3><p>302跳转，服务器把所有的HTTP流量跳转到HTTPS。</p>
 <h3 id="什么是对称加密、非对称加密？区别是什么？"><a href="#什么是对称加密、非对称加密？区别是什么？" class="headerlink" title="什么是对称加密、非对称加密？区别是什么？"></a>什么是对称加密、非对称加密？区别是什么？</h3><ul>
 <li>对称加密：加密和解密采用相同的密钥。如：DES、RC2、RC4</li>
 <li>非对称加密：需要两个密钥：公钥和私钥。如果用公钥加密，需要用私钥才能解密。私钥加密的信息，只有公钥才能解密  如：RSA</li>
@@ -548,86 +595,39 @@
 <p>鉴别别人给你的公钥是对的。  包括公钥、证书的所有者 、CA签名、颁发者、签名算法。</p>
 <h3 id="数字签名、报文摘要的原理"><a href="#数字签名、报文摘要的原理" class="headerlink" title="数字签名、报文摘要的原理"></a>数字签名、报文摘要的原理</h3><ul>
 <li>发送者A用私钥进行签名，接收者B用公钥验证签名。因为除A外没有人有私钥，所以B相信签名是来自A。A不可抵赖，B也不能伪造报文。</li>
-<li>摘要算法:MD5、SHA</li>
+<li>摘要算法：MD5、SHA</li>
 </ul>
 <p><strong>签名算法</strong></p>
 <p>一般是对信息做一个 Hash 计算，得到一个 Hash 值，这个过程是不可逆的，也就是说无法通过 Hash 值得出原来的信息内容。在把信息发送出去时，把这个 Hash 值加密后，作为一个签名和信息一起发出去。 </p>
-<p> CA 用自己的私钥给外卖网站的公钥签名，就相当于给外卖网站背书，形成了外卖网站的证书。  </p>
-<h3 id="http层的keep-alive"><a href="#http层的keep-alive" class="headerlink" title="http层的keep-alive"></a>http层的keep-alive</h3><p>用于客户端告诉服务端，这个连接我还会继续使用，在使用完之后不要关闭。</p>
-<p>在性能上对客户端和服务器端性能上有一定的提升。很少了TCP的三次握手和四次挥手，第二次传递数据就可以通过前一个连接直接进行数据交互了。</p>
-<blockquote>
-<p>先发起连接断开的一方会在连接断开之后进入到TIME_WAIT的状态达到2MSL之久。如果没有开启HTTP的keep-alive，那么这个TIME_WAIT就会留在服务端，由于服务端资源是非常有限的，我们当然倾向于服务端不会同一时间hold住过多的连接，这种TIME_WAIT的状态应该尽量在客户端保持。</p>
-<p>在HTTP1.0和HTTP1.1协议中都有对KeepAlive的支持。<strong>其中HTTP1.0需要在request中增加”Connection： keep-alive” header才能够支持，而HTTP1.1默认支持</strong>。</p>
-</blockquote>
-<h3 id="HTTP如何保持长连接？"><a href="#HTTP如何保持长连接？" class="headerlink" title="HTTP如何保持长连接？"></a>HTTP如何保持长连接？</h3><p>a)Client发出request，其中该request的HTTP版本号为1.1。</p>
-<p>b)Web Server收到request中的HTTP协议为1.1就认为是一个长连接请求，其将在response的header中也增加”Connection： keep-alive”。同时不会关闭已建立的tcp连接。</p>
-<p>c)Client收到Web Server的response中包含”Connection： keep-alive”，就认为是一个长连接，不close tcp连接。并用该tcp连接再发送request。</p>
-<h3 id="一个TCP支持多少个HTTP请求？"><a href="#一个TCP支持多少个HTTP请求？" class="headerlink" title="一个TCP支持多少个HTTP请求？"></a>一个TCP支持多少个HTTP请求？</h3><p>在 HTTP/1.0 中，一个服务器在发送完一个 HTTP 响应后，会断开 TCP 链接。HTTP/1.1 就把 Connection 头写进标准，并且默认开启持久连接，除非请求中写明 Connection: close，那么浏览器和服务器之间是会维持一段时间的 TCP 连接，不会一个请求结束就断掉。所以，一个TCP连接是支持多个http请求的。</p>
-<h3 id="GET与POST的区别？"><a href="#GET与POST的区别？" class="headerlink" title="GET与POST的区别？"></a>GET与POST的区别？</h3><ol>
-<li>GET是幂等的，即读取同一个资源，总是得到相同的数据，POST不是幂等的；</li>
-<li>GET一般用于从服务器获取资源，而POST有可能改变服务器上的资源；</li>
-<li>请求形式上：GET请求的数据附在URL之后，在HTTP请求头中，参数有长度限制；POST请求的数据在请求体中，参数无长度限制；</li>
-<li>安全性：GET请求可被缓存、收藏、保留到历史记录，参数暴露在URL中。POST不会被保存，安全性相对较高，参数在body中；</li>
-<li>参数数据类型：GET只允许ASCII字符，POST对数据类型没有要求，也允许二进制数据；</li>
-<li>GET的长度有限制（操作系统或者浏览器的限制），而POST数据大小无限制</li>
-<li><strong>GET产生一个TCP数据包；POST产生两个TCP数据包。</strong>：对于GET方式的请求，浏览器会把http header和data一并发送出去，服务器响应200（返回数据）；而对于POST，浏览器先发送header，服务器响应100 continue，浏览器再发送data，服务器响应200 ok（返回数据）</li>
-</ol>
-<p>所以 GET 和 POST 的底层也是 TCP/IP，也就是说，GET/POST 都是 TCP 链接。GET 和 POST 能做的事情是一样一样的。你要给 GET 加上 request body，给 POST 带上 url 参数，技术上是完全行的通的。不同服务器的处理方式也是不同的，有些服务器会帮你卸货，读出数据，有些服务器直接忽略，所以，虽然 GET 可以带 request body，也不能保证一定能被接收到哦。</p>
-<blockquote>
-<p>并不是所有浏览器都会在POST中发送两次包，Firefox就只发送一次。</p>
-</blockquote>
-<h3 id="post里面传的都是表单吗？"><a href="#post里面传的都是表单吗？" class="headerlink" title="post里面传的都是表单吗？"></a>post里面传的都是表单吗？</h3><p><strong>contentType用于表明发送数据流的类型，服务器根据编码类型使用特定的解析方式，获取数据流中的数据。</strong></p>
-<p>在网络请求中，常用的Content-Type有如下：text/html, text/plain, text/css, text/javascript, image/jpeg, image/png, image/gif, application/x-www-form-urlencoded, multipart/form-data, application/json, application/xml 等。</p>
-<p><strong>application/x-www-form-urlencoded 主要用于如下:</strong></p>
-<ul>
-<li>最常见的POST提交数据方式。原生form默认的提交方式</li>
-</ul>
-<p>如果设置Header的ContentType为 application/json，它会发两次请求，第一次先发Method为OPTIONS的请求到服务器，</p>
-<ul>
-<li><strong>application/json</strong></li>
-</ul>
-<p>这个请求会询问服务器支持那些请求方法(比如GET,POST)等。如果这个请求支持跨域的话，就会发送第二个请求，否则的话在控制台会报错，第二个请求不会请求。</p>
-<h3 id="Session与Cookie的区别？"><a href="#Session与Cookie的区别？" class="headerlink" title="Session与Cookie的区别？"></a>Session与Cookie的区别？</h3><p>Session是服务器端保持状态的方案，Cookie是客户端保持状态的方案</p>
-<p>Cookie保存在客户端本地，客户端请求服务器时会将Cookie一起提交；Session保存在服务端，通过检索Sessionid查看状态。保存Sessionid的方式可以采用Cookie，如果禁用了Cookie，可以使用URL重写机制（把会话ID保存在URL中）。</p>
+<p> CA 用自己的私钥给外卖网站的公钥签名，就相当于给外卖网站背书，形成了外卖网站的证书。</p>
+<h2 id="Session和Cookie"><a href="#Session和Cookie" class="headerlink" title="Session和Cookie"></a>Session和Cookie</h2><h3 id="Session与Cookie的区别？"><a href="#Session与Cookie的区别？" class="headerlink" title="Session与Cookie的区别？"></a>Session与Cookie的区别？</h3><p>Session是服务器端保持状态的方案，Cookie是客户端保持状态的方案</p>
+<p>Cookie保存在客户端本地，客户端请求服务器时会将Cookie一起提交；</p>
+<p>Session保存在服务端，通过检索Sessionid查看状态。保存Sessionid的方式可以采用Cookie</p>
 <p><strong>cookie用途</strong></p>
-<p>Cookie 为 Web 应用程序保存用户相关信息提供了一种有用的方法。例如，当用户访问您的站点时，您可以利用 Cookie 保存用户首选项或其他信息，这样，当用户下次再访问您的站点时，应用程序就可以检索以前保存的信息。</p>
-<h3 id="服务端怎么设置cookie"><a href="#服务端怎么设置cookie" class="headerlink" title="服务端怎么设置cookie"></a><strong>服务端怎么设置cookie</strong></h3><p>服务器端向客户端发送Cookie是通过HTTP响应报文实现的，在Set-Cookie中设置需要像客户端发送的cookie</p>
-<h3 id="cookie关闭浏览器重新打开就没了吗？"><a href="#cookie关闭浏览器重新打开就没了吗？" class="headerlink" title="cookie关闭浏览器重新打开就没了吗？"></a>cookie关闭浏览器重新打开就没了吗？</h3><p>cookie生命周期默认为浏览器会话期间，驻留内存，关闭浏览器cookie就没了<br>设置cookie的过期时间为永不过期，将cookie保存在硬盘上</p>
+<p>保存用户相关信息，下次再访问您的站点时，应用程序就可以检索以前保存的信息。</p>
+<h3 id="服务端怎么设置cookie"><a href="#服务端怎么设置cookie" class="headerlink" title="服务端怎么设置cookie"></a><strong>服务端怎么设置cookie</strong></h3><p>服务器端向客户端发送Cookie是通过HTTP响应报文实现的，在Set-Cookie中设置cookie</p>
+<h3 id="cookie关闭浏览器重新打开就没了吗？"><a href="#cookie关闭浏览器重新打开就没了吗？" class="headerlink" title="cookie关闭浏览器重新打开就没了吗？"></a>cookie关闭浏览器重新打开就没了吗？</h3><p>cookie生命周期默认为浏览器会话期间，驻留内存，关闭浏览器cookie就没了</p>
+<blockquote>
+<p>可以设置cookie的过期时间为永不过期，将cookie保存在硬盘上</p>
+</blockquote>
 <h3 id="浏览器禁用cookie怎么办"><a href="#浏览器禁用cookie怎么办" class="headerlink" title="浏览器禁用cookie怎么办"></a>浏览器禁用cookie怎么办</h3><p><strong>URL重写</strong></p>
-<p>通过request判断前端是否禁用了cookie，如果禁用了cookie，会自动将<code>;jsessionid=xxx</code>添加到要返回前端的url后，前端进行请求时就会再url后带上jsessioonid。</p>
+<p>通过request判断前端是否禁用了cookie，如果禁用了cookie，在url后带上jsessioonid。</p>
 <h3 id="cookie包含哪几项内容"><a href="#cookie包含哪几项内容" class="headerlink" title="cookie包含哪几项内容"></a>cookie包含哪几项内容</h3><ul>
-<li>Expires、Max Age：Expires其实是cookie失效日期。在http/1.1协议中Expires已经由 Max age 选项代替。</li>
+<li>Expire：cookie失效日期。</li>
 <li>Domain和Path：限制 cookie 能被哪些 URL 访问。即请求的URL是Domain或其子域、且URL的路径是Path或子路径，则都可以访问该cookie</li>
 <li>Size：Cookie的大小</li>
 <li>Secure：Secure选项用来设置cookie只在确保安全的请求中（HTTPS）才会发送。</li>
-<li>httpOnly：这个选项用来设置cookie是否能通过 js 去访问。<strong>带httpOnly选项时，客户端则无法通过js代码去访问（包括读取、修改、删除等）这个cookie。</strong></li>
+<li>httpOnly：这个选项用来设置cookie是否能通过 js 去访问。<strong>带httpOnly选项时，客户端则无法通过js代码去访问cookie。</strong></li>
 </ul>
-<h3 id="Cookie防劫持预防"><a href="#Cookie防劫持预防" class="headerlink" title="Cookie防劫持预防?"></a>Cookie防劫持预防?</h3><p>基于XSS攻击, 窃取Cookie信息, 并冒充他人身份。<br>1） 方法一：<br>给Cookie添加HttpOnly属性, 这种属性设置后, 只能在http请求中传递, 在脚本中, document.cookie无法获取到该Cookie值. 对XSS的攻击, 有一定的防御. 但是对网络拦截，还是泄露了.<br>2）方法二：<br>在cookie中添加校验信息, 这个校验信息和当前用户外置环境有些关系,比如ip,user agent等有关. 这样当cookie被人劫持了, 并冒用, 但是在服务器端校验的时候, 发现校验值发生了变化, 因此要求重新登录, 这样也是种很好的思路, 去规避cookie劫持.<br>3）方法三：<br>cookie中session id的定时更换, 让session id按一定频率变换, 同时对用户而言, 该操作是透明的, 这样保证了服务体验的一致性.</p>
-<h3 id="从输入网址到获得页面的过程？"><a href="#从输入网址到获得页面的过程？" class="headerlink" title="从输入网址到获得页面的过程？"></a>从输入网址到获得页面的过程？</h3><ol>
-<li>浏览器查询 DNS，获取域名对应的IP地址:具体过程包括浏览器搜索自身的DNS缓存、搜索操作系统的DNS缓存、读取本地的Host文件和向本地DNS服务器进行查询等。对于向本地DNS服务器进行查询，如果要查询的域名包含在本地配置区域资源中，则返回解析结果给客户机，完成域名解析(此解析具有权威性)；如果要查询的域名不由本地DNS服务器区域解析，但该服务器已缓存了此网址映射关系，则调用这个IP地址映射，完成域名解析（此解析不具有权威性）。如果本地域名服务器并未缓存该网址映射关系，那么将根据其设置发起递归查询或者迭代查询；</li>
-<li>浏览器获得域名对应的IP地址以后，浏览器向服务器请求建立链接，发起三次握手；</li>
-<li>TCP/IP链接建立起来后，浏览器向服务器发送HTTP请求；</li>
-<li>服务器接收到这个请求，并根据路径参数映射到特定的请求处理器进行处理，并将处理结果及相应的视图返回给浏览器；</li>
-<li>浏览器解析并渲染视图，若遇到对js文件、css文件及图片等静态资源的引用，则重复上述步骤并向服务器请求这些资源；</li>
-<li>浏览器根据其请求到的资源、数据渲染页面，最终向用户呈现一个完整的页面。</li>
-</ol>
-<h3 id="一个-url-分为哪几部分，各个部分的含义是什么"><a href="#一个-url-分为哪几部分，各个部分的含义是什么" class="headerlink" title="一个 url 分为哪几部分，各个部分的含义是什么"></a>一个 url 分为哪几部分，各个部分的含义是什么</h3><p>统一资源定位符（URL）是用于完整地描述Internet上网页和其他资源的地址的一种标识方法。</p>
-<p>URL的一般格式为（带方括号[]的为可选项）：<code>protocol://hostname[:port]/path/[;parameters][?query]#fragment</code> </p>
-<p>URL由三部分组成： 协议类型 ，主机名 和 路径及文件名 。</p>
-<p>1、protocol（协议）：指定使用的传输协议， 最常用的是HTTP协议。 </p>
-<p>2、hostname（主机名）：是指存放资源的服务器的域名系统主机名或 IP 地址。</p>
-<p>3、port（端口号）：省略时使用协议的默认端口，各种传输协议都有默认的端口号，如http的默认端口为80。</p>
-<p>4、path（路径）：由零或多个“/”符号隔开的字符串，一般用来表示主机上的一个目录或文件地址。</p>
-<p>5、;parameters（参数）：这是用于指定特殊参数的可选项。<br>6、?query（查询）：可选，可有多个参数，用“&amp;”符号隔开，每个参数的名和值用“=”符号隔开。<br>7、fragment，信息片断，字符串，用于指定网络资源中的片断。例如一个网页中有多个名词解释，可使用fragment直接定位到某一名词解释</p>
-<h3 id="百分号（URL）编码"><a href="#百分号（URL）编码" class="headerlink" title="百分号（URL）编码"></a>百分号（URL）编码</h3><p>因为早在 URL 被发明出来作为万维网地址时，就已规定只能使用英文字母、阿拉伯数字和某些标点符号，不能使用其他文字和符号。<strong>如果 URL 中有汉字或者其他标准之外的字符，就必须编码后使用</strong>。</p>
-<p><strong>百分号编码与 Base64 异同</strong></p>
-<p><strong>相同点</strong>：它们都是用给定的 US-ASCII 码可打印字符去表示更广范围数据的方法。</p>
-<p><strong>区别</strong>：百分号编码是针对超出 URI 合法字符范围外的字符做编码，而 Base64 是针对二进制数据做编码；一个是对文本的编码，一个是对二进制数据的编码。</p>
 <blockquote>
-<p>标准的Base64编码后可能出现字符<code>+</code>和<code>/</code>，在URL中就不能直接作为参数。</p>
+<p>http/1.1协议中Expires已经由 Max age 选项代替。</p>
 </blockquote>
-<h3 id="断点续传的原理是什么"><a href="#断点续传的原理是什么" class="headerlink" title="断点续传的原理是什么"></a>断点续传的原理是什么</h3><p>范围请求，首部字段<code>Range</code>来指定资源的byte范围。</p>
-<h3 id="HTTP怎么实现分包？"><a href="#HTTP怎么实现分包？" class="headerlink" title="HTTP怎么实现分包？"></a>HTTP怎么实现分包？</h3><p>HTTP协议是一种文本协议（非二进制协议），用\r\n\r\n来分割消息头和消息体，<strong>HTTP请求的消息头中有Content-Length来告知消息体有多大，如果没有该字段就表示无消息体</strong></p>
+<h3 id="Cookie防劫持预防"><a href="#Cookie防劫持预防" class="headerlink" title="Cookie防劫持预防?"></a>Cookie防劫持预防?</h3><p>基于XSS攻击, 窃取Cookie信息, 并冒充他人身份。</p>
+<ul>
+<li>给Cookie添加HttpOnly属性, document.cookie无法获取到该Cookie值.</li>
+<li>在cookie中添加校验信息, 这个校验信息和当前用户外置环境有些关系,比如ip、agent有关,当cookie被人劫持了,在服务器端校验的时候, 发现校验值发生了变化, 因此要求重新登录</li>
+<li>cookie中session id的定时更换</li>
+</ul>
 <h2 id="状态码"><a href="#状态码" class="headerlink" title="状态码"></a>状态码</h2><h3 id="常见状态码"><a href="#常见状态码" class="headerlink" title="常见状态码"></a>常见状态码</h3><ol>
 <li>2xx状态码：操作成功。200 OK，201状态码英文名称是Created，该状态码表示已创建。</li>
 <li>3xx状态码：重定向。301 永久重定向；302暂时重定向</li>
@@ -642,11 +642,17 @@
 <p>2、查看程序执行时间是否超过Nginx等待时间，应用日志。可能是数据库死锁导致的。</p>
 <p>3、查看Nginx日志</p>
 <h3 id="发生500应该先查看什么"><a href="#发生500应该先查看什么" class="headerlink" title="发生500应该先查看什么"></a>发生500应该先查看什么</h3><p>先看看服务的进程还在不在，然后查看日志，从日志里面找原因。</p>
-<h3 id="HTTP请求中的query是什么？"><a href="#HTTP请求中的query是什么？" class="headerlink" title="HTTP请求中的query是什么？"></a>HTTP请求中的query是什么？</h3><p>query是指请求的参数，一般是指URL中？后面的参数。</p>
-<h3 id="为什么重定向？"><a href="#为什么重定向？" class="headerlink" title="为什么重定向？"></a>为什么重定向？</h3><p><strong>域名别称</strong><br>理想情况下，一项资源只有一个访问位置，也就是只有一个 URL 。但是由于种种原因，需要为资源设定不同的名称（即不同的域名，例如带有和不带有 www 前缀的URL，以及简短易记的 URL 等）。在这种情况下，实用的方法是将其重定向到那个实际的（标准的）URL，而不是复制资源</p>
-<p><strong>保持链接有效</strong><br>当你重构 Web 站点的时候，资源的 URL 会发生改变。即便是你可以更新站点内部的链接来适应新的命名体系，但无法控制被外部资源使用的 URL 。</p>
-<p>你并不想因此而使旧链接失效，因为它们会为你带来宝贵的用户（并且帮助优化你的SEO），所以需要建立从旧链接到新链接的重定向映射。</p>
-<p><strong>对于耗时请求的临时响应</strong><br>一些请求的处理会需要比较长的时间，比如有时候 DELETE 请求会被安排为稍后处理。在这种情况下，会返回一个 303 (See Other)  重定向响应，该响应链接到一个页面，表示请求的操作已经被列入计划，并且最终会通知用户操作的进展情况，或者允许用户将其取消。</p>
+<h3 id="为什么重定向？"><a href="#为什么重定向？" class="headerlink" title="为什么重定向？"></a>为什么重定向？</h3><p><strong>域名别称</strong><br>需要为资源设定不同的名称。其重定向到那个实际的URL</p>
+<p><strong>保持链接有效</strong><br>重构 Web 站点，不想旧链接失效。</p>
+<p><strong>对于耗时请求的临时响应</strong><br>一些请求的处理会需要比较长的时间，链接到一个页面，表示请求的操作已经被列入计划，并且最终会通知用户操作的进展情况。</p>
+<h3 id="从输入网址到获得页面的过程？"><a href="#从输入网址到获得页面的过程？" class="headerlink" title="从输入网址到获得页面的过程？"></a>从输入网址到获得页面的过程？</h3><ol>
+<li>浏览器查询 DNS，获取域名对应的IP地址:具体过程包括浏览器搜索自身的DNS缓存、搜索操作系统的DNS缓存、读取本地的Host文件和向本地DNS服务器进行查询等。对于向本地DNS服务器进行查询，如果要查询的域名包含在本地配置区域资源中，则返回解析结果给客户机，完成域名解析(此解析具有权威性)；如果要查询的域名不由本地DNS服务器区域解析，但该服务器已缓存了此网址映射关系，则调用这个IP地址映射，完成域名解析（此解析不具有权威性）。如果本地域名服务器并未缓存该网址映射关系，那么将根据其设置发起递归查询或者迭代查询；</li>
+<li>浏览器获得域名对应的IP地址以后，浏览器向服务器请求建立链接，发起三次握手；</li>
+<li>TCP/IP链接建立起来后，浏览器向服务器发送HTTP请求；</li>
+<li>服务器接收到这个请求，并根据路径参数映射到特定的请求处理器进行处理，并将处理结果及相应的视图返回给浏览器；</li>
+<li>浏览器解析并渲染视图，若遇到对js文件、css文件及图片等静态资源的引用，则重复上述步骤并向服务器请求这些资源；</li>
+<li>浏览器根据其请求到的资源、数据渲染页面，最终向用户呈现一个完整的页面。</li>
+</ol>
 
             </div>
             <hr />
@@ -1139,7 +1145,7 @@
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="操作系统">
+                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="操作系统">
                         
                         <span class="card-title">操作系统</span>
                     </div>
@@ -1190,7 +1196,7 @@
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="">
+                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="">
                         
                         <span class="card-title"></span>
                     </div>
@@ -1383,7 +1389,7 @@ changjing超买超卖问题
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">174k</span>
+            <span class="white-color">174.1k</span>
             
 
             <br>
