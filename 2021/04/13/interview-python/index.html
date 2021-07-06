@@ -425,14 +425,14 @@ Python2 的默认编码是 ascii，Pytho">
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    16.8k
+                    17.1k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    62 分
+                    64 分
                 </div>
                 
                 
@@ -1139,8 +1139,15 @@ d<span class="token punctuation">.</span>foo1<span class="token punctuation">(</
 <li>双向链表可以快速删除一个元素，使用哈希可以实现基于key快速查找</li>
 <li>循环链表可以使得处理变得更加简单，不需要保存dummy的head和tail，以快速获取收尾节点。只需要保存实际的head，通过head.prev来快速定位尾结点。</li>
 </ol>
-<h2 id="整数"><a href="#整数" class="headerlink" title="整数"></a>整数</h2><p>Python使用<strong>小整数对象池</strong>small_ints缓存了[-5，257）之间的整数，该范围内的整数在Python系统中是共享的，值相同就属于同一个对象。</p>
+<h2 id="整数"><a href="#整数" class="headerlink" title="整数"></a>整数</h2><h3 id="小整数对象池"><a href="#小整数对象池" class="headerlink" title="小整数对象池"></a>小整数对象池</h3><p>Python使用<strong>小整数对象池</strong>small_ints缓存了[-5，257）之间的整数，该范围内的整数在Python系统中是共享的，值相同就属于同一个对象。</p>
 <p>对于同一个代码块中值不在<code>small_ints</code>缓存范围内的整数，如果同一个代码块中已经存在一个值与其相同的整数对象，那么就直接引用该对象，否则创建新的<code>int</code>对象。</p>
+<h3 id="整型不会溢出原理"><a href="#整型不会溢出原理" class="headerlink" title="整型不会溢出原理"></a>整型不会溢出原理</h3><p>1、用动态的可变长的结构，显然，数组的形式能够胜任</p>
+<pre class="line-numbers language-c"><code class="language-c"><span class="token punctuation">[</span>longintrepr<span class="token punctuation">.</span>h<span class="token punctuation">]</span>
+<span class="token keyword">struct</span> _longobject <span class="token punctuation">{</span>
+    PyObject_VAR_HEAD
+    <span class="token keyword">int</span> <span class="token operator">*</span>ob_digit<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>2、保存形式：数组中每个int存放它的上限（2^31 - 1），这样表示大数时，数组长度更短，更省空间。但是，空间确实是更省了，但操作会代码麻烦，比方大数做乘积操作，由于元素之间存在乘法溢出问题，所以只保存 <code>15</code>位，这样元素之间的乘积就可以只用 <code>int</code> 类型保存即可, 对乘积结果做位移操作就能得到尾部和进位 <code>carry</code>了</p>
 <h2 id="字符串-1"><a href="#字符串-1" class="headerlink" title="字符串"></a>字符串</h2><p>Python解释器中使用了 intern（字符串驻留）的技术来提高字符串效率，值同样的字符串对象仅仅会保存一份，放在一个字符串储蓄池中，是共用的。</p>
 <p><strong>简单原理</strong></p>
 <p>维护一个字符串存储池，这个池子是一个字典结构</p>
@@ -1162,211 +1169,361 @@ In <span class="token punctuation">[</span><span class="token number">5</span><s
 Out<span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">:</span> <span class="token boolean">True</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>foo.bar本身并不是简单的名字，而是表达式的计算结果，是一个 method object，method object只是一个临时的中间变量而已，对临时的中间变量做id是没有意义的。</p>
 <p>只有你能保证对象不会被销毁的前提下，你才能用 id 来比较两个对象。</p>
-<h2 id="堆-栈"><a href="#堆-栈" class="headerlink" title="堆 栈"></a>堆 栈</h2><p>在Python中，变量也称为：对象的引用。变量存储的就是对象的地址。</p>
-<p><strong>变量位于：栈内存。</strong></p>
-<p><strong>对象位于：堆内存。</strong></p>
-<p>内存空间在逻辑上分为三部分：代码区、静态数据区和动态数据区，动态数据区又分为栈区和堆区。</p>
-<p><strong>代码区：</strong>程序中的代码数据、二进制数据、方法数据等等程序运行需要的预加载数据。</p>
-<p><strong>静态数据区：</strong>存储<strong>全局变量、静态变量</strong>。</p>
-<p><strong>栈区：</strong>存储变量。存储运行方法的形参、局部变量、返回值。由系统自动分配和回收。</p>
-<p><strong>堆区</strong>：对象真实数据。</p>
-<h2 id="内存回收机制"><a href="#内存回收机制" class="headerlink" title="内存回收机制"></a>内存回收机制</h2><p>python采用的是引用计数机制为主，标记-清除和分代收集两种机制为辅的策略。</p>
-<h3 id="引用计数法"><a href="#引用计数法" class="headerlink" title="引用计数法"></a><strong>引用计数法</strong></h3><p><strong>原理：</strong>每个对象维护一个ob_ref字段，用来记录该对象当前被引用的次数，每当新的引用指向该对象时，它的引用计数加1，每当该对象的引用失效时，计数减1，一旦对象的引用计数为0，该对象立即被回收，占用的内存空间将被释放。</p>
-<p><strong>缺点：</strong>不能解决对象的循环引用</p>
-<h3 id="标记清除"><a href="#标记清除" class="headerlink" title="标记清除"></a>标记清除</h3><p>解决容器对象可能产生的循环引用问题。（只有容器对象才会产生循环引用的情况，比如列表、字典、用户自定义类的对象、元组等）</p>
-<p><strong>A）标记阶段，遍历所有的对象，如果是可达的（reachable），也就是还有对象引用它，那么就标记该对象为可达</strong>；</p>
-<p>B）清除阶段，再次遍历对象，如果发现某个对象没有标记为可达，则就将其回收。</p>
-<h3 id="分代回收"><a href="#分代回收" class="headerlink" title="分代回收"></a>分代回收</h3><p>标记清除时，应用程序会被暂停，为了减少应用程序暂停的时间。</p>
-<p><strong>对象存在时间越长，越可能不是垃圾，应该越少去收集</strong>。</p>
-<p>给对象定义了三种世代，每一个新生对象在0代中，如果它在一轮gc扫描中活了下来，那么它将被移至1代，在那里他将较少的被扫描，如果它又活过了一轮gc，它又将被移至2代，在那里它被扫描的次数将会更少。</p>
-<h3 id="gc的扫描在什么时候会被触发呢"><a href="#gc的扫描在什么时候会被触发呢" class="headerlink" title="gc的扫描在什么时候会被触发呢?"></a><strong>gc的扫描在什么时候会被触发呢</strong>?</h3><p>年轻代链表的总数达到上限时。</p>
-<p>当某一世代的扫描被触发的时候，比该世代年轻的世代也会被扫描。</p>
-<h3 id="调优手段"><a href="#调优手段" class="headerlink" title="调优手段"></a><strong>调优手段</strong></h3><p>1.手动垃圾回收</p>
-<p>2.调高垃圾回收阈值</p>
-<p>3.避免循环引用</p>
-<h2 id="退出Python时，是否释放全部内存？"><a href="#退出Python时，是否释放全部内存？" class="headerlink" title="退出Python时，是否释放全部内存？"></a>退出Python时，是否释放全部内存？</h2><p>进程退出的时候，资源最终都会释放掉，这是操作系统负责的。</p>
-<p>如果是一段程序运行结束之后：</p>
-<ol>
-<li>CPython会通过引用计数立即释放引用数量为0的对象（其它版本解释器并不保证）；循环引用的对象会在下一次GC时释放，除非有两个对象都带有<code>__del__</code>析构函数，且直接或间接循环引用。这种情况下，所有循环引用的对象都无法被释放。原因在于无法确定<code>__del__</code>的执行顺序。</li>
-<li>全局引用的对象无法被回收，但也不只是模块中直接或间接保存的对象，还包括未退出的线程使用的对象，解释器缓存的小整数和字符串，还有C模块里间接引用的对象等等。</li>
-<li>C扩展直接通过malloc分配的内存自然无法通过gc来回收，但一般如果存在没有被回收的内存说明是有内存泄漏的，这属于实现的bug</li>
-</ol>
-<h2 id="协程，线程和进程"><a href="#协程，线程和进程" class="headerlink" title="协程，线程和进程"></a>协程，线程和进程</h2><h3 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h3><p>进程是系统资源分配的最小单位，进程拥有自己独立的内存空间，所有进程间数据不共享，开销大。在Python中，进程适合计算密集型任务。</p>
-<h4 id="进程间的通信（IPC）"><a href="#进程间的通信（IPC）" class="headerlink" title="进程间的通信（IPC）"></a>进程间的通信（IPC）</h4><p><strong>1）管道（Pipe</strong>）：通过<code>send()</code>和<code>recv()</code>来发送和接受信息，适合父子进程关系或者两个子进程之间。 </p>
-<p>2）<strong>有名管道（FIFO）</strong>：有名管道也是半双工的通信方式。 将自己注册到文件系统里一个文件，通过读写这个文件进行通信。允许在没有亲缘关系的进程之间使用。要求读写双方必须同时打开才可以继续进行读写操作，否则打开操作会堵塞直到对方也打开。</p>
-<p>3）<strong>信号量（Semaphore）</strong>：信号量是一个计数器，可以用来控制多个进程对共享资源的访问。它常作为一种锁机制，防止某进程正在访问共享资源时，其他进程也访问该资源。因此，主要作为进程间以及同一进程内不同线程之间的同步手段。 创建子进程时将信号量my_semaphore作为参数传入子进程任务函数，子进程中使用semaphore.acquire() 尝试获取信号量，semaphore.release()尝试 释放信号量。</p>
-<p><strong>4）队列（Queue）</strong>。 使用get/put在父子进程关系或者两个子进程之间通信。</p>
-<p>5）<strong>信号 （signal）</strong>：用于通知接收进程某个事件已经发生，可以设置信号处理函数。 </p>
-<p>6）共享内存（shared memory）：操作系统负责将同一份物理地址的内存映射到多个进程的不同的虚拟地址空间中。进而每个进程都可以操作这份内存。需要在进程访问时做好并发控制，比如使用信号量。 python标准库mmap，apache开源的pyarrow都是。</p>
-<p>7）套接字（socket）：套接字也是一种进程间通信机制，与其他通信机制不同的是，它可用于不同机器间的进程通信。 </p>
-<p><strong>8）文件</strong> </p>
-<p>（1）仅进程同步不涉及数据传输，可以使用信号、信号量；<br>（2）若进程间需要传递少量数据，可以使用管道、有名管道、队列；<br>（3）若进程间需要传递大量数据，最佳方式是使用共享内存，推荐使用pyarrow，这样减少数据拷贝、传输的时间内存代价；<br>（4）跨主机的进程间通信（RPC）可以使用socket通信。</p>
-<p><strong>共享变量</strong></p>
-<p>使用 Process 定义的多进程之间（父子或者兄弟）共享变量可以直接使用 multiprocessing 下的 Value，Array，Queue 等，如果要共享 list，dict，可以使用强大的 Manager 模块。</p>
-<h3 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h3><p>线程是cpu调度执行的最小单位，依赖进程存在，一个进程至少有一个线程。在python中，线程适合IO密集型任务。</p>
-<p>同一个进程下的线程共享程序的内存空间<strong>（如代码段，全局变量，堆等）</strong></p>
-<h4 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h4><p>继承Thread，重写run方法，通过start方法开线程</p>
-<p>将要执行的方法作为参数传给Thread的构造方法</p>
-<h4 id="状态"><a href="#状态" class="headerlink" title="状态"></a>状态</h4><p>线程有五种状态:创建、就绪、运行、阻塞、死亡。 </p>
-<ul>
-<li><p>调用start方法时，线程就会进入就绪状态。 </p>
-</li>
-<li><p>在线程得到cpu时间片时进入运行状态。 </p>
-</li>
-<li><p><strong>线程调用yield方法可以让出cpu时间回到就绪状态</strong>。 </p>
-</li>
-<li><p>线程运行时可能<strong>由于IO、调用sleep、wait、join方法或者无法获得同步锁等原因进入阻塞</strong>状态。 </p>
-</li>
-<li><p>当线程获得到等待的资源资源或者引起阻塞的条件得到满足时，会从阻塞状态进入就绪状态。 </p>
-</li>
-<li><p>当线程的run方法执行结束时，线程就进入死亡状态。</p>
-</li>
-</ul>
-<h4 id="锁"><a href="#锁" class="headerlink" title="锁"></a>锁</h4><p>多个线程同时对一个公共资源（如全局变量）进行操作的情况，为了避免发生混乱。<code>threading.lock</code>，<code>acquire()</code>方法上锁，<code>release()</code>方法解锁</p>
-<p>可重入锁：为了支持在同一线程中多次请求同一资源，python提供了threading.RLock。重入锁必须由获取它的同一个线程释放，同时要求解锁次数应与加锁次数相同，才能用于另一个线程。</p>
-<h4 id="同步"><a href="#同步" class="headerlink" title="同步"></a>同步</h4><p>阻塞线程直到子线程全部结束。</p>
-<h4 id="守护线程"><a href="#守护线程" class="headerlink" title="守护线程"></a>守护线程</h4><p>不重要线程。主线程会等所有‘重要’线程结束后才结束。</p>
-<h4 id="线程池的工作原理"><a href="#线程池的工作原理" class="headerlink" title="线程池的工作原理"></a>线程池的工作原理</h4><p>减少线程本身创建和销毁造成的开销，属于典型的空间换时间操作。</p>
-<p>创建和释放线程涉及到大量的系统底层操作，开销较大，如果变成预创建和借还操作，将大大减少底层开销。</p>
-<ul>
-<li>在应用程序启动后，线程池创建一定数量的线程，放入空闲队列中。这些线程最开始都处于阻塞状态，不会消耗CPU，占用少量的内存。</li>
-<li>当任务到来后，从队列中取出一个空闲线程，把任务派发到这个线程中运行，并将标记为已占用。</li>
-<li>当线程池中所有的线程都被占用后，可以选择自动创建一定数量的新线程，用于处理更多的任务，也可以选择让任务排队等待直到有空闲的线程可用。</li>
-<li>在任务执行完毕后，线程并不退出结束，而是继续保持在池中等待下一次的任务。</li>
-<li>当系统比较空闲时，大部分线程长时间处于闲置状态时，线程池可以自动销毁一部分线程，回收系统资源。</li>
-</ul>
-<p>线程池组成部分：</p>
-<ol>
-<li>线程池管理器：用于创建并管理线程池。</li>
-<li>工作线程和线程队列：线程池中实际执行的线程以及保存这些线程的容器。</li>
-<li>任务接口：将线程执行的任务抽象出来，形成任务接口，确保线程池与具体的任务无关。</li>
-<li>任务队列：线程池中保存等待被执行的任务的容器。</li>
-</ol>
-<h3 id="协程"><a href="#协程" class="headerlink" title="协程"></a>协程</h3><p>协程是一种用户态的轻量级线程，用户自己来编写调度逻辑的。</p>
-<p>协程拥有自己的寄存器上下文和栈。协程的切换都在用户空间内进行，不需要进行系统调用。对CPU来说，协程其实是单线程，所以CPU不用去考虑怎么调度、切换上下文，这就省去了CPU的切换开销，所以协程在一定程度上又好于多线程</p>
-<p>协程调度时，将寄存器上下文和栈保存到其他地方，在切回来的时候，恢复先前保存的寄存器上下文和栈，基本没有内核切换的开销，可以不加锁的访问全局变量，上下文的切换非常快。</p>
-<blockquote>
-<p>不管是进程还是线程，每次阻塞、切换都需要陷入系统调用，先让CPU跑操作系统的调度程序，然后再由调度程序决定该跑哪一个进程/线程。</p>
-<hr>
-<p>协程（Coroutine）又称微线程，属于用户级线程。 gevent 就是一种协程实现方式，除了 gevent 还有 asyncio。用户级线程就是在一个内核调度实体上映射出来的多个用户线程，用户线程的创建、调度和销毁完全由用户程序控制, 对内核调度透明：内核一旦将 cpu 分配给了线程，该 cpu 的使用权就归该线程所有，线程可以再次按照比如时间片轮转等常规调度算法分配给每个微线程，从而实现更大的并发自由度，但所有的微线程只能在该 cpu 上运行，无法做到并行。</p>
-<p>把协程看作这些映射出来的“微线程”。用户程序控制的协程需要解决线程的挂起和唤醒、现场保护等问题，然而区别于线程的是协程不需要处理锁和同步问题，因为多个协程是在一个用户级线程内进行的，但需要处理因为单个协程阻塞导致整个线程（进程）阻塞的问题。</p>
-</blockquote>
-<p><strong>如何利用多核CPU呢？</strong></p>
-<p>最简单的方法是多进程+协程，既充分利用多核，又充分发挥协程的高效率，可获得极高的性能。</p>
-<p>每个进程有各自独立的GIL，互不干扰，这样就可以真正意义上的并行执行，所以在python中，多进程的执行效率优于多线程</p>
-<p><strong>常用模块</strong></p>
-<p>greenlet：提供了切换任务的快捷方式，但是遇到io无法自动切换任务，需要手动切换</p>
-<p>gevent：开启协程任务并切换的模块，遇到io自动切换任务。</p>
-<p>asyncio：<code>@asyncio.coroutine</code>装饰器的函数称为协程函数。</p>
-<p><code>yield from</code>语法用于将一个生成器部分操作委托给另一个生成器。</p>
-<p><code>async</code>/<code>await</code>：<code>@asyncio.coroutine</code>和<code>yield from</code>的语法糖</p>
-<p><strong>缺点</strong></p>
-<ul>
-<li><p>无法利用多核资源：协程的本质是个单线程</p>
-</li>
-<li><p>进行阻塞（Blocking）操作（如IO时）会阻塞掉整个程序</p>
-</li>
-</ul>
-<p><strong>协程主要使用场景</strong></p>
-<p>网络请求，比如爬虫，大量使用 aiohttp</p>
-<p>文件读取， aiofile</p>
-<p>web 框架， aiohttp， fastapi</p>
-<p>数据库查询， asyncpg, databases</p>
-<p><strong>协程优于线程</strong></p>
-<ul>
-<li>python 线程调度方式是，每执行 100 个字节码或者遇到阻塞就停止当前线程，然后进行一个系统调用，让 os 内核选出下一个线程。但是协程只会在阻塞的时候，切换到下一个协程。因此线程的切换存在很多是无效的切换，当线程数量越大，这种因为调度策略的先天不足带来的性能损耗就越大。</li>
-<li>线程需要进行系统调用，协程不需要。系统调用需要进入内核态，无效的调度会让这部分开销显得更大</li>
-<li>协程可以自主调度，而线程只能决定合适退出，但是下一个线程是谁则依赖于操作系统。</li>
-</ul>
-<h3 id="僵尸进程和孤儿进程"><a href="#僵尸进程和孤儿进程" class="headerlink" title="僵尸进程和孤儿进程"></a>僵尸进程和孤儿进程</h3><p>孤儿进程： <strong>父进程退出，子进程还在运行的这些子进程都是孤儿进程，</strong>孤儿进程将被init 进程（进程号为1）所收养，并由init 进程对他们完成状态收集工作。</p>
-<p>僵尸进程： 进程使用fork 创建子进程<strong>，如果子进程退出，而父进程并没有调用wait 获取子进程的状态信息</strong>，那么子进程的进程描述符仍然保存在系统中，这些进程是僵尸进程。</p>
-<p>避免僵尸进程的方法：</p>
-<p>1.用<code>wait()</code>函数使父进程阻塞，这个<code>wait()</code>操作就负责回收子进程，这样也不会产生僵尸进程。但这样做有个致命的问题，wait是阻塞的，如果进行wait，主进程就什么都做不了。</p>
-<p>2.使用信号量，子进程退出时向父进程发送SIGCHILD信号，在signal handler 中调用waitpid，这样父进程不用阻塞</p>
-<p>3.fork 两次用孙子进程去完成子进程的任务，孙子进程刚产生，它的父亲就退出了，成了孤儿进程，由init收养</p>
-<h2 id="Global-Interpreter-Lock"><a href="#Global-Interpreter-Lock" class="headerlink" title="Global Interpreter Lock"></a>Global Interpreter Lock</h2><p>Python 默认的解释器是 CPython，<strong>GIL 是存在于 CPython 解释器中的</strong>。</p>
-<p> <strong>CPython 解释器的内存管理</strong>不是线程安全的。执行 Python 字节码时，引入了为了保护访问 Python 对象而阻止多个线程执行的一把互斥锁GIL。某个线程想要执行，必须先拿到GIL锁，并且在一个python进程中，GIL只有一个。拿不到通行证的线程，就不允许进入CPU执行。</p>
-<p><strong>因此，同一时刻，只有一个线程在运行，其它线程只能等待，即使是多核CPU</strong>，<strong>也没办法让多个线程「并行」地同时执行代码，只能是交替执行</strong>，因为多线程涉及到上线文切换、锁机制处理（获取锁，释放锁等），所以，多线程执行不快反慢。</p>
-<p>尽管存在 GIL，但 python 多线程仍然不是线程安全的，对于共享状态的场合仍然需要借助锁同步。</p>
-<p>常见的 Python 解释器：IPython（基于Cython）、Jython（Python 代码编译成 Java 字节码，依赖 Java 平台，不存在 GIL）、IronPython（ .Net 平台下的 Python 解释器，Python 代码编译成 .Net 字节码，不存在 GIL）</p>
-<h3 id="GIL原理"><a href="#GIL原理" class="headerlink" title="GIL原理"></a>GIL原理</h3><p>python 的线程就是 C 语言的 pthread，它是通过操作系统调度算法调度执行的。</p>
-<p>Python 2.x 的代码执行是基于 opcode 数量的调度方式，简单来说就是每执行一定数量的字节码，或遇到系统 IO 时，会强制释放 GIL，然后触发一次操作系统的线程调度。</p>
-<p> Python 3.x 基于固定时间的调度方式，就是每执行固定时间的字节码，或遇到系统 IO 时，强制释放 GIL，触发系统的线程调度。</p>
-<h3 id="为什么会有GIL"><a href="#为什么会有GIL" class="headerlink" title="为什么会有GIL"></a>为什么会有GIL</h3><p>90年代单核 CPU 还是主流，多线程的应用场景也不多，大部分时候还是以单线程的方式运行，单线程不要涉及线程的上下文切换，效率反而比多线程更高（在多核环境下，不适用此规则），设计一个全局锁是<strong>那个时代保护多线程资源一致性最简单经济的设计方案</strong>。</p>
-<p>多核心时代来临，当大家试图去拆分和去除 GIL 的时候，发现大量库的代码和开发者已经重度依赖 GIL（默认认为 Python内部对象是线程安全的，无需在开发时额外加锁），所以这个去除 GIL 的任务变得复杂且难以实现。</p>
-<blockquote>
-<p>CPython 解释器在创建变量时，首先会分配内存，然后对该变量的引用进行计数，这称为 引用计数。如果变量的引用数变为 0，这个变量就会从内存中释放掉。而当多个线程内共享一个变量时，CPython 锁定引用计数的关键就在于使用了 GIL，它会谨慎地控制线程的执行情况，无论同时存在多少个线程，解释器每次只允许一个线程进行操作。</p>
-</blockquote>
-<h3 id="GIL的实现是线程不安全-为什么"><a href="#GIL的实现是线程不安全-为什么" class="headerlink" title="GIL的实现是线程不安全?为什么?"></a>GIL的实现是线程不安全?为什么?</h3><p>单核情况下:</p>
-<p><img src="gil.png" alt></p>
-<blockquote>
-<ol>
-<li>到第5步的时候，可能这个时候python正好切换了一次GIL(据说python2.7中，每100条指令会切换一次GIL),执行的时间到了，被要求释放GIL,这个时候thead 1的count=0并没有得到执行，而是挂起状态，count=0这个上下文关系被存到寄存器中.</li>
-<li>然后到第6步，这个时候thead 2开始执行，然后就变成了count = 1,返回给count，这个时候count=1.</li>
-<li>然后再回到thead 1，这个时候由于上下文关系，thead 1拿到的寄存器中的count = 0，经过计算，得到count = 1，经过第13步的操作就覆盖了原来的count = 1的值，所以这个时候count依然是count = 1，所以这个数据并没有保护起来。</li>
-</ol>
-</blockquote>
-<p>python2.x和3.x都是在执行IO操作的时候，强制释放GIL，使其他线程有机会执行程序。</p>
-<h2 id="性能优化"><a href="#性能优化" class="headerlink" title="性能优化"></a>性能优化</h2><h3 id="python为什么慢"><a href="#python为什么慢" class="headerlink" title="python为什么慢"></a>python为什么慢</h3><ul>
-<li><p>GIL</p>
-<p>无论同时存在多少个线程，解释器每次只允许一个线程进行操作。</p>
-</li>
-<li><p>解释型语言而不是编译型语言</p>
-<p>Python 都会解释字节码并本地执行。.NET 和 Java 都是 JIT 编译的，JIT 会允许在运行时进行优化，缺点是启动慢。</p>
-</li>
-<li><p>动态类型的语言</p>
-<p>类型比较和类型转换消耗的资源是比较多的，每次读取、写入或引用变量时都会检查变量的类型</p>
-</li>
-</ul>
-<h3 id="lru-cache装饰器"><a href="#lru-cache装饰器" class="headerlink" title="lru_cache装饰器"></a>lru_cache装饰器</h3><p>为函数提供缓存功能。在下次以相同参数调用时直接返回上一次的结果，要求参数可hash。</p>
-<h3 id="性能分析"><a href="#性能分析" class="headerlink" title="性能分析"></a>性能分析</h3><p>Python 标准库提供了同一分析接口的两种不同实现：</p>
-<ol>
-<li>建议使用 <a href="https://docs.python.org/zh-cn/3/library/profile.html#module-cProfile" target="_blank" rel="noopener"><code>cProfile</code></a> ；这是一个 C 扩展插件，因为其合理的运行开销，所以适合于分析长时间运行的程序。</li>
-<li><a href="https://docs.python.org/zh-cn/3/library/profile.html#module-profile" target="_blank" rel="noopener"><code>profile</code></a> 是一个纯 Python 模块（<a href="https://docs.python.org/zh-cn/3/library/profile.html#module-cProfile" target="_blank" rel="noopener"><code>cProfile</code></a> 就是模拟其接口的 C 语言实现），但它会显著增加配置程序的开销。如果你正在尝试以某种方式扩展分析器，则使用此模块可能会更容易完成任务</li>
-</ol>
-<p>支持输出：调用次数、在指定函数中消耗的总时间（不包括调用子函数的时间）、指定的函数及其所有子函数（从调用到退出）消耗的累积时间、函数运行一次的平均时间</p>
-<h3 id="加速python运行"><a href="#加速python运行" class="headerlink" title="加速python运行"></a>加速python运行</h3><ol>
-<li><p>优化代码和算法</p>
-<ul>
-<li>避免全局变量</li>
-<li>避免模块和函数属性访问：对于频繁访问的变量<code>sqrt</code>，通过将其改为局部变量可以加速运行。</li>
-<li>避免类内属性访问：通过将需要频繁访问的类内属性赋值给一个局部变量，可以提升代码运行速度。</li>
-<li>避免数据复制：交换值时不使用中间变量、避免无意义的数据复制、字符串拼接用join而不是+</li>
-<li>利用if条件的短路特性</li>
-<li>使用numba.jit</li>
-<li>循环优化： 用for循环代替while循环、使用隐式for循环代替显式for循环</li>
-<li>选择合适的数据结构：如果有频繁的新增、删除操作，新增、删除的元素数量又很多时，list的效率不高。此时，应该考虑使用collections.deque。</li>
-</ul>
-</li>
-<li><p>使用 PyPy</p>
-<p>PyPy通过使用一种 Just-in-time（JIT，即时编译）技术来实现的。CPython 使用解释来执行代码，虽然这一做法提供了很大的灵活性，但速度也变得慢了下来。使用 JIT，你的代码是在运行程序时即时编译的。它结合了 Ahead-of-time（AOT，提前编译）技术的速度优势（由 C 和 C++ 等语言使用）和解释的灵活性。另一个优点是 JIT 编译器可以在运行时不断优化代码。代码运行的时间越长，它就会变得越优化。</p>
-</li>
-<li><p>使用线程</p>
-</li>
-<li><p>使用 Asyncio</p>
-</li>
-<li><p>同时使用多个处理器</p>
-</li>
-</ol>
-<p>使用多个进程，使用分布式方案等。</p>
-<h2 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h2><h3 id="使用装饰器"><a href="#使用装饰器" class="headerlink" title="使用装饰器"></a><strong>使用装饰器</strong></h3><pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">singleton</span><span class="token punctuation">(</span>cls<span class="token punctuation">)</span><span class="token punctuation">:</span>
-  instances <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
-  <span class="token keyword">def</span> <span class="token function">wrapper</span><span class="token punctuation">(</span><span class="token operator">*</span>args<span class="token punctuation">,</span> <span class="token operator">**</span>kwargs<span class="token punctuation">)</span><span class="token punctuation">:</span>
-     <span class="token keyword">if</span> cls <span class="token operator">not</span> <span class="token keyword">in</span> instances<span class="token punctuation">:</span>
-       instances<span class="token punctuation">[</span>cls<span class="token punctuation">]</span> <span class="token operator">=</span> cls<span class="token punctuation">(</span><span class="token operator">*</span>args<span class="token punctuation">,</span> <span class="token operator">**</span>kwargs<span class="token punctuation">)</span>
-     <span class="token keyword">return</span> instances<span class="token punctuation">[</span>cls<span class="token punctuation">]</span>
+<h2 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h2><h3 id="不同列表表达式的区别"><a href="#不同列表表达式的区别" class="headerlink" title="不同列表表达式的区别"></a>不同列表表达式的区别</h3><pre><code>a = a * 10  
+b *= 10
 
-  <span class="token keyword">return</span> wrapper
+不同的操作，乘法操作会调用 `list_repeat()` ；`*=` 会调用 `list_inplace_repeat()`
+
+`list_repeat` 需要多少空间就申请多少空间，`list_inplace_repeat()`会申请比所需的空间还要大点的内存
+
+## 堆 栈
+
+在Python中，变量也称为：对象的引用。变量存储的就是对象的地址。
+
+**变量位于：栈内存。**
+
+**对象位于：堆内存。**
+
+内存空间在逻辑上分为三部分：代码区、静态数据区和动态数据区，动态数据区又分为栈区和堆区。
+
+**代码区：**程序中的代码数据、二进制数据、方法数据等等程序运行需要的预加载数据。
+
+**静态数据区：**存储**全局变量、静态变量**。
+
+**栈区：**存储变量。存储运行方法的形参、局部变量、返回值。由系统自动分配和回收。
+
+**堆区**：对象真实数据。
+
+## 内存回收机制
+
+python采用的是引用计数机制为主，标记-清除和分代收集两种机制为辅的策略。
+
+###  **引用计数法**
+
+**原理：**每个对象维护一个ob_ref字段，用来记录该对象当前被引用的次数，每当新的引用指向该对象时，它的引用计数加1，每当该对象的引用失效时，计数减1，一旦对象的引用计数为0，该对象立即被回收，占用的内存空间将被释放。
+
+**缺点：**不能解决对象的循环引用
+
+### 标记清除
+
+解决容器对象可能产生的循环引用问题。（只有容器对象才会产生循环引用的情况，比如列表、字典、用户自定义类的对象、元组等）
+
+**A）标记阶段，遍历所有的对象，如果是可达的（reachable），也就是还有对象引用它，那么就标记该对象为可达**；
+
+B）清除阶段，再次遍历对象，如果发现某个对象没有标记为可达，则就将其回收。
+
+### 分代回收
+
+标记清除时，应用程序会被暂停，为了减少应用程序暂停的时间。
+
+**对象存在时间越长，越可能不是垃圾，应该越少去收集**。
+
+给对象定义了三种世代，每一个新生对象在0代中，如果它在一轮gc扫描中活了下来，那么它将被移至1代，在那里他将较少的被扫描，如果它又活过了一轮gc，它又将被移至2代，在那里它被扫描的次数将会更少。
+
+### **gc的扫描在什么时候会被触发呢**?
+
+年轻代链表的总数达到上限时。
+
+当某一世代的扫描被触发的时候，比该世代年轻的世代也会被扫描。
+
+### **调优手段**
+
+1.手动垃圾回收
+
+2.调高垃圾回收阈值
+
+3.避免循环引用
+
+## 退出Python时，是否释放全部内存？
+
+进程退出的时候，资源最终都会释放掉，这是操作系统负责的。
+
+如果是一段程序运行结束之后：
+
+1. CPython会通过引用计数立即释放引用数量为0的对象（其它版本解释器并不保证）；循环引用的对象会在下一次GC时释放，除非有两个对象都带有`__del__`析构函数，且直接或间接循环引用。这种情况下，所有循环引用的对象都无法被释放。原因在于无法确定`__del__`的执行顺序。
+2. 全局引用的对象无法被回收，但也不只是模块中直接或间接保存的对象，还包括未退出的线程使用的对象，解释器缓存的小整数和字符串，还有C模块里间接引用的对象等等。
+3. C扩展直接通过malloc分配的内存自然无法通过gc来回收，但一般如果存在没有被回收的内存说明是有内存泄漏的，这属于实现的bug
+
+## 协程，线程和进程
+
+### 进程
+
+进程是系统资源分配的最小单位，进程拥有自己独立的内存空间，所有进程间数据不共享，开销大。在Python中，进程适合计算密集型任务。
+
+#### 进程间的通信（IPC）
+
+**1）管道（Pipe**）：通过`send()`和`recv()`来发送和接受信息，适合父子进程关系或者两个子进程之间。 
+
+2）**有名管道（FIFO）**：有名管道也是半双工的通信方式。 将自己注册到文件系统里一个文件，通过读写这个文件进行通信。允许在没有亲缘关系的进程之间使用。要求读写双方必须同时打开才可以继续进行读写操作，否则打开操作会堵塞直到对方也打开。
+
+3）**信号量（Semaphore）**：信号量是一个计数器，可以用来控制多个进程对共享资源的访问。它常作为一种锁机制，防止某进程正在访问共享资源时，其他进程也访问该资源。因此，主要作为进程间以及同一进程内不同线程之间的同步手段。 创建子进程时将信号量my_semaphore作为参数传入子进程任务函数，子进程中使用semaphore.acquire() 尝试获取信号量，semaphore.release()尝试 释放信号量。
+
+**4）队列（Queue）**。 使用get/put在父子进程关系或者两个子进程之间通信。
+
+5）**信号 （signal）**：用于通知接收进程某个事件已经发生，可以设置信号处理函数。 
+
+6）共享内存（shared memory）：操作系统负责将同一份物理地址的内存映射到多个进程的不同的虚拟地址空间中。进而每个进程都可以操作这份内存。需要在进程访问时做好并发控制，比如使用信号量。 python标准库mmap，apache开源的pyarrow都是。
+
+7）套接字（socket）：套接字也是一种进程间通信机制，与其他通信机制不同的是，它可用于不同机器间的进程通信。 
+
+**8）文件** 
+
+（1）仅进程同步不涉及数据传输，可以使用信号、信号量；
+（2）若进程间需要传递少量数据，可以使用管道、有名管道、队列；
+（3）若进程间需要传递大量数据，最佳方式是使用共享内存，推荐使用pyarrow，这样减少数据拷贝、传输的时间内存代价；
+（4）跨主机的进程间通信（RPC）可以使用socket通信。
+
+**共享变量**
+
+使用 Process 定义的多进程之间（父子或者兄弟）共享变量可以直接使用 multiprocessing 下的 Value，Array，Queue 等，如果要共享 list，dict，可以使用强大的 Manager 模块。
+
+###  线程
+
+线程是cpu调度执行的最小单位，依赖进程存在，一个进程至少有一个线程。在python中，线程适合IO密集型任务。
+
+同一个进程下的线程共享程序的内存空间**（如代码段，全局变量，堆等）**
+
+#### 使用
+
+继承Thread，重写run方法，通过start方法开线程
+
+将要执行的方法作为参数传给Thread的构造方法
+
+#### 状态
+
+线程有五种状态:创建、就绪、运行、阻塞、死亡。 
+
+- 调用start方法时，线程就会进入就绪状态。 
+
+- 在线程得到cpu时间片时进入运行状态。 
+
+- **线程调用yield方法可以让出cpu时间回到就绪状态**。 
+
+- 线程运行时可能**由于IO、调用sleep、wait、join方法或者无法获得同步锁等原因进入阻塞**状态。 
+
+- 当线程获得到等待的资源资源或者引起阻塞的条件得到满足时，会从阻塞状态进入就绪状态。 
+
+- 当线程的run方法执行结束时，线程就进入死亡状态。
+
+#### 锁
+
+多个线程同时对一个公共资源（如全局变量）进行操作的情况，为了避免发生混乱。`threading.lock`，`acquire()`方法上锁，`release()`方法解锁
+
+可重入锁：为了支持在同一线程中多次请求同一资源，python提供了threading.RLock。重入锁必须由获取它的同一个线程释放，同时要求解锁次数应与加锁次数相同，才能用于另一个线程。
+
+#### 同步
+
+阻塞线程直到子线程全部结束。
+
+#### 守护线程
+
+不重要线程。主线程会等所有‘重要’线程结束后才结束。
+
+#### 线程池的工作原理
+
+减少线程本身创建和销毁造成的开销，属于典型的空间换时间操作。
+
+创建和释放线程涉及到大量的系统底层操作，开销较大，如果变成预创建和借还操作，将大大减少底层开销。
+
+- 在应用程序启动后，线程池创建一定数量的线程，放入空闲队列中。这些线程最开始都处于阻塞状态，不会消耗CPU，占用少量的内存。
+- 当任务到来后，从队列中取出一个空闲线程，把任务派发到这个线程中运行，并将标记为已占用。
+- 当线程池中所有的线程都被占用后，可以选择自动创建一定数量的新线程，用于处理更多的任务，也可以选择让任务排队等待直到有空闲的线程可用。
+- 在任务执行完毕后，线程并不退出结束，而是继续保持在池中等待下一次的任务。
+- 当系统比较空闲时，大部分线程长时间处于闲置状态时，线程池可以自动销毁一部分线程，回收系统资源。
+
+线程池组成部分：
+
+1. 线程池管理器：用于创建并管理线程池。
+2. 工作线程和线程队列：线程池中实际执行的线程以及保存这些线程的容器。
+3. 任务接口：将线程执行的任务抽象出来，形成任务接口，确保线程池与具体的任务无关。
+4. 任务队列：线程池中保存等待被执行的任务的容器。
+
+###  协程
+
+协程是一种用户态的轻量级线程，用户自己来编写调度逻辑的。
+
+协程拥有自己的寄存器上下文和栈。协程的切换都在用户空间内进行，不需要进行系统调用。对CPU来说，协程其实是单线程，所以CPU不用去考虑怎么调度、切换上下文，这就省去了CPU的切换开销，所以协程在一定程度上又好于多线程
+
+协程调度时，将寄存器上下文和栈保存到其他地方，在切回来的时候，恢复先前保存的寄存器上下文和栈，基本没有内核切换的开销，可以不加锁的访问全局变量，上下文的切换非常快。
+
+&gt; 不管是进程还是线程，每次阻塞、切换都需要陷入系统调用，先让CPU跑操作系统的调度程序，然后再由调度程序决定该跑哪一个进程/线程。
+&gt;
+&gt; ----
+&gt;
+&gt; 协程（Coroutine）又称微线程，属于用户级线程。 gevent 就是一种协程实现方式，除了 gevent 还有 asyncio。用户级线程就是在一个内核调度实体上映射出来的多个用户线程，用户线程的创建、调度和销毁完全由用户程序控制, 对内核调度透明：内核一旦将 cpu 分配给了线程，该 cpu 的使用权就归该线程所有，线程可以再次按照比如时间片轮转等常规调度算法分配给每个微线程，从而实现更大的并发自由度，但所有的微线程只能在该 cpu 上运行，无法做到并行。
+&gt;
+&gt; 把协程看作这些映射出来的“微线程”。用户程序控制的协程需要解决线程的挂起和唤醒、现场保护等问题，然而区别于线程的是协程不需要处理锁和同步问题，因为多个协程是在一个用户级线程内进行的，但需要处理因为单个协程阻塞导致整个线程（进程）阻塞的问题。
+
+
+
+**如何利用多核CPU呢？**
+
+最简单的方法是多进程+协程，既充分利用多核，又充分发挥协程的高效率，可获得极高的性能。
+
+每个进程有各自独立的GIL，互不干扰，这样就可以真正意义上的并行执行，所以在python中，多进程的执行效率优于多线程
+
+**常用模块**
+
+greenlet：提供了切换任务的快捷方式，但是遇到io无法自动切换任务，需要手动切换
+
+gevent：开启协程任务并切换的模块，遇到io自动切换任务。
+
+asyncio：`@asyncio.coroutine`装饰器的函数称为协程函数。
+
+`yield from`语法用于将一个生成器部分操作委托给另一个生成器。
+
+`async`/`await`：`@asyncio.coroutine`和`yield from`的语法糖
+
+**缺点**
+
+- 无法利用多核资源：协程的本质是个单线程
+
+- 进行阻塞（Blocking）操作（如IO时）会阻塞掉整个程序
+
+**协程主要使用场景**
+
+网络请求，比如爬虫，大量使用 aiohttp
+
+文件读取， aiofile
+
+web 框架， aiohttp， fastapi
+
+数据库查询， asyncpg, databases
+
+**协程优于线程**
+
+- python 线程调度方式是，每执行 100 个字节码或者遇到阻塞就停止当前线程，然后进行一个系统调用，让 os 内核选出下一个线程。但是协程只会在阻塞的时候，切换到下一个协程。因此线程的切换存在很多是无效的切换，当线程数量越大，这种因为调度策略的先天不足带来的性能损耗就越大。
+- 线程需要进行系统调用，协程不需要。系统调用需要进入内核态，无效的调度会让这部分开销显得更大
+- 协程可以自主调度，而线程只能决定合适退出，但是下一个线程是谁则依赖于操作系统。
+
+### 僵尸进程和孤儿进程 
+
+孤儿进程： **父进程退出，子进程还在运行的这些子进程都是孤儿进程，**孤儿进程将被init 进程（进程号为1）所收养，并由init 进程对他们完成状态收集工作。
+
+僵尸进程： 进程使用fork 创建子进程**，如果子进程退出，而父进程并没有调用wait 获取子进程的状态信息**，那么子进程的进程描述符仍然保存在系统中，这些进程是僵尸进程。
+
+避免僵尸进程的方法：
+
+1.用`wait()`函数使父进程阻塞，这个`wait()`操作就负责回收子进程，这样也不会产生僵尸进程。但这样做有个致命的问题，wait是阻塞的，如果进行wait，主进程就什么都做不了。
+
+2.使用信号量，子进程退出时向父进程发送SIGCHILD信号，在signal handler 中调用waitpid，这样父进程不用阻塞
+
+3.fork 两次用孙子进程去完成子进程的任务，孙子进程刚产生，它的父亲就退出了，成了孤儿进程，由init收养
+
+##  Global Interpreter Lock
+
+Python 默认的解释器是 CPython，**GIL 是存在于 CPython 解释器中的**。
+
+ **CPython 解释器的内存管理**不是线程安全的。执行 Python 字节码时，引入了为了保护访问 Python 对象而阻止多个线程执行的一把互斥锁GIL。某个线程想要执行，必须先拿到GIL锁，并且在一个python进程中，GIL只有一个。拿不到通行证的线程，就不允许进入CPU执行。
+
+**因此，同一时刻，只有一个线程在运行，其它线程只能等待，即使是多核CPU**，**也没办法让多个线程「并行」地同时执行代码，只能是交替执行**，因为多线程涉及到上线文切换、锁机制处理（获取锁，释放锁等），所以，多线程执行不快反慢。
+
+尽管存在 GIL，但 python 多线程仍然不是线程安全的，对于共享状态的场合仍然需要借助锁同步。
+
+常见的 Python 解释器：IPython（基于Cython）、Jython（Python 代码编译成 Java 字节码，依赖 Java 平台，不存在 GIL）、IronPython（ .Net 平台下的 Python 解释器，Python 代码编译成 .Net 字节码，不存在 GIL）
+
+### GIL原理
+
+python 的线程就是 C 语言的 pthread，它是通过操作系统调度算法调度执行的。
+
+Python 2.x 的代码执行是基于 opcode 数量的调度方式，简单来说就是每执行一定数量的字节码，或遇到系统 IO 时，会强制释放 GIL，然后触发一次操作系统的线程调度。
+
+ Python 3.x 基于固定时间的调度方式，就是每执行固定时间的字节码，或遇到系统 IO 时，强制释放 GIL，触发系统的线程调度。
+
+### 为什么会有GIL
+
+90年代单核 CPU 还是主流，多线程的应用场景也不多，大部分时候还是以单线程的方式运行，单线程不要涉及线程的上下文切换，效率反而比多线程更高（在多核环境下，不适用此规则），设计一个全局锁是**那个时代保护多线程资源一致性最简单经济的设计方案**。
+
+多核心时代来临，当大家试图去拆分和去除 GIL 的时候，发现大量库的代码和开发者已经重度依赖 GIL（默认认为 Python内部对象是线程安全的，无需在开发时额外加锁），所以这个去除 GIL 的任务变得复杂且难以实现。
+
+&gt; CPython 解释器在创建变量时，首先会分配内存，然后对该变量的引用进行计数，这称为 引用计数。如果变量的引用数变为 0，这个变量就会从内存中释放掉。而当多个线程内共享一个变量时，CPython 锁定引用计数的关键就在于使用了 GIL，它会谨慎地控制线程的执行情况，无论同时存在多少个线程，解释器每次只允许一个线程进行操作。
+
+### GIL的实现是线程不安全?为什么?
+
+单核情况下:
+
+![](gil.png)
+
+&gt; 1. 到第5步的时候，可能这个时候python正好切换了一次GIL(据说python2.7中，每100条指令会切换一次GIL),执行的时间到了，被要求释放GIL,这个时候thead 1的count=0并没有得到执行，而是挂起状态，count=0这个上下文关系被存到寄存器中.
+&gt; 2. 然后到第6步，这个时候thead 2开始执行，然后就变成了count = 1,返回给count，这个时候count=1.
+&gt; 3. 然后再回到thead 1，这个时候由于上下文关系，thead 1拿到的寄存器中的count = 0，经过计算，得到count = 1，经过第13步的操作就覆盖了原来的count = 1的值，所以这个时候count依然是count = 1，所以这个数据并没有保护起来。
+
+python2.x和3.x都是在执行IO操作的时候，强制释放GIL，使其他线程有机会执行程序。
+
+## 性能优化
+
+### python为什么慢
+
+- GIL
+
+  无论同时存在多少个线程，解释器每次只允许一个线程进行操作。
+
+- 解释型语言而不是编译型语言
+
+  Python 都会解释字节码并本地执行。.NET 和 Java 都是 JIT 编译的，JIT 会允许在运行时进行优化，缺点是启动慢。
+
+- 动态类型的语言
+
+  类型比较和类型转换消耗的资源是比较多的，每次读取、写入或引用变量时都会检查变量的类型
+
+### lru_cache装饰器
+
+为函数提供缓存功能。在下次以相同参数调用时直接返回上一次的结果，要求参数可hash。
+
+### 性能分析
+
+Python 标准库提供了同一分析接口的两种不同实现：
+
+1. 建议使用 [`cProfile`](https://docs.python.org/zh-cn/3/library/profile.html#module-cProfile) ；这是一个 C 扩展插件，因为其合理的运行开销，所以适合于分析长时间运行的程序。
+2. [`profile`](https://docs.python.org/zh-cn/3/library/profile.html#module-profile) 是一个纯 Python 模块（[`cProfile`](https://docs.python.org/zh-cn/3/library/profile.html#module-cProfile) 就是模拟其接口的 C 语言实现），但它会显著增加配置程序的开销。如果你正在尝试以某种方式扩展分析器，则使用此模块可能会更容易完成任务
+
+支持输出：调用次数、在指定函数中消耗的总时间（不包括调用子函数的时间）、指定的函数及其所有子函数（从调用到退出）消耗的累积时间、函数运行一次的平均时间
+
+### 加速python运行
+
+1. 优化代码和算法
+   -  避免全局变量
+   - 避免模块和函数属性访问：对于频繁访问的变量`sqrt`，通过将其改为局部变量可以加速运行。
+   - 避免类内属性访问：通过将需要频繁访问的类内属性赋值给一个局部变量，可以提升代码运行速度。
+   - 避免数据复制：交换值时不使用中间变量、避免无意义的数据复制、字符串拼接用join而不是+
+   - 利用if条件的短路特性
+   - 使用numba.jit
+   - 循环优化： 用for循环代替while循环、使用隐式for循环代替显式for循环
+   - 选择合适的数据结构：如果有频繁的新增、删除操作，新增、删除的元素数量又很多时，list的效率不高。此时，应该考虑使用collections.deque。
+
+2. 使用 PyPy
+
+   PyPy通过使用一种 Just-in-time（JIT，即时编译）技术来实现的。CPython 使用解释来执行代码，虽然这一做法提供了很大的灵活性，但速度也变得慢了下来。使用 JIT，你的代码是在运行程序时即时编译的。它结合了 Ahead-of-time（AOT，提前编译）技术的速度优势（由 C 和 C++ 等语言使用）和解释的灵活性。另一个优点是 JIT 编译器可以在运行时不断优化代码。代码运行的时间越长，它就会变得越优化。
+
+3. 使用线程
+
+4. 使用 Asyncio
+5. 同时使用多个处理器
+
+使用多个进程，使用分布式方案等。
+
+## 单例模式
+
+### **使用装饰器**
+
+```python
+def singleton(cls):
+  instances = {}
+  def wrapper(*args, **kwargs):
+     if cls not in instances:
+       instances[cls] = cls(*args, **kwargs)
+     return instances[cls]
+
+  return wrapper
 
 @singleton
-<span class="token keyword">class</span> <span class="token class-name">Foo</span><span class="token punctuation">(</span>object<span class="token punctuation">)</span><span class="token punctuation">:</span>
-  <span class="token keyword">pass</span>
+class Foo(object):
+  pass
 
-foo1 <span class="token operator">=</span> Foo<span class="token punctuation">(</span><span class="token punctuation">)</span>
-foo2 <span class="token operator">=</span> Foo<span class="token punctuation">(</span><span class="token punctuation">)</span>
+foo1 = Foo()
+foo2 = Foo()
 
-<span class="token keyword">print</span><span class="token punctuation">(</span>foo1 <span class="token keyword">is</span> foo2<span class="token punctuation">)</span> <span class="token comment" spellcheck="true"># True</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="使用new"><a href="#使用new" class="headerlink" title="使用new"></a>使用new</h3><p>New 是真正创建实例对象的方法，所以重写基类的new 方法，以此保证创建对象的时候只生成一个实例。</p>
+print(foo1 is foo2) # True</code></pre><h3 id="使用new"><a href="#使用new" class="headerlink" title="使用new"></a>使用new</h3><p>New 是真正创建实例对象的方法，所以重写基类的new 方法，以此保证创建对象的时候只生成一个实例。</p>
 <p>但是以上的方法在多线程中会有线程安全问题，当有多个线程同时去初始化对象时，就很可能同时判断__instance is None，从而进入初始化instance的代码中。所以需要用<strong>互斥锁</strong>来解决这个问题。</p>
 <pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">Singleton</span><span class="token punctuation">(</span>object<span class="token punctuation">)</span><span class="token punctuation">:</span>
   <span class="token keyword">def</span> <span class="token function">__new__</span><span class="token punctuation">(</span>cls<span class="token punctuation">,</span> <span class="token operator">*</span>args<span class="token punctuation">,</span> <span class="token operator">**</span>kwargs<span class="token punctuation">)</span><span class="token punctuation">:</span>
@@ -2223,7 +2380,7 @@ run 方法调用werkzeug 的 run_simple
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">174.5k</span>
+            <span class="white-color">174.8k</span>
             
 
             <br>
