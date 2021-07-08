@@ -1,3 +1,5 @@
+https://wangyixin-tom.github.io/2021/07/08/linux-youhua/
+https://wangyixin-tom.github.io/2021/07/07/interview-docker/
 https://wangyixin-tom.github.io/2021/06/30/attack/
 https://wangyixin-tom.github.io/2021/06/30/interview-os/
 https://wangyixin-tom.github.io/2021/06/30/interview-http/
@@ -7,7 +9,7 @@ https://wangyixin-tom.github.io/2021/06/25/paxos-yu-raft/
 https://wangyixin-tom.github.io/2021/06/23/2pc-yu-3pc/
 https://wangyixin-tom.github.io/2021/06/23/cap-he-base-li-lun/
 https://wangyixin-tom.github.io/2021/06/09/structure/
-https://wangyixin-tom.github.io/2021/06/07/duo-jie-duan-gou-jian/
+https://wangyixin-tom.github.io/2021/06/07/docker-multistage/
 https://wangyixin-tom.github.io/2021/06/05/3-wu-chong-fu-zi-fu-de-zui-chang-zi-chuan/
 https://wangyixin-tom.github.io/2021/06/05/53-zui-da-zi-xu-he/
 https://wangyixin-tom.github.io/2021/06/05/215-shu-zu-zhong-de-di-k-ge-zui-da-yuan-su/

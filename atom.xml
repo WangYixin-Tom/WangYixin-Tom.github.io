@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://wangyixin-tom.github.io/"/>
-  <updated>2021-06-30T11:25:28.126Z</updated>
+  <updated>2021-07-07T23:54:59.928Z</updated>
   <id>https://wangyixin-tom.github.io/</id>
   
   <author>
@@ -15,6 +15,58 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>linux优化方法</title>
+    <link href="https://wangyixin-tom.github.io/2021/07/08/linux-youhua/"/>
+    <id>https://wangyixin-tom.github.io/2021/07/08/linux-youhua/</id>
+    <published>2021-07-07T23:44:42.000Z</published>
+    <updated>2021-07-07T23:54:59.928Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;CPU&quot;&gt;&lt;a href=&quot;#CPU&quot; class=&quot;headerlink&quot; title=&quot;CPU&quot;&gt;&lt;/a&gt;CPU&lt;/h2&gt;&lt;h3 id=&quot;高cpu占用率的进程和线程&quot;&gt;&lt;a href=&quot;#高cpu占用率的进程和线程&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="linux" scheme="https://wangyixin-tom.github.io/categories/linux/"/>
+    
+    
+      <category term="linux" scheme="https://wangyixin-tom.github.io/tags/linux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>docker必知必会</title>
+    <link href="https://wangyixin-tom.github.io/2021/07/07/interview-docker/"/>
+    <id>https://wangyixin-tom.github.io/2021/07/07/interview-docker/</id>
+    <published>2021-07-07T07:19:32.000Z</published>
+    <updated>2021-07-07T23:41:27.663Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;基本概念&quot;&gt;&lt;a href=&quot;#基本概念&quot; class=&quot;headerlink&quot; title=&quot;基本概念&quot;&gt;&lt;/a&gt;基本概念&lt;/h2&gt;&lt;h3 id=&quot;什么是容器&quot;&gt;&lt;a href=&quot;#什么是容器&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="interview" scheme="https://wangyixin-tom.github.io/categories/interview/"/>
+    
+    
+      <category term="interview" scheme="https://wangyixin-tom.github.io/tags/interview/"/>
+    
+  </entry>
   
   <entry>
     <title>攻击技术</title>
@@ -47,7 +99,7 @@
     <link href="https://wangyixin-tom.github.io/2021/06/30/interview-os/"/>
     <id>https://wangyixin-tom.github.io/2021/06/30/interview-os/</id>
     <published>2021-06-30T03:20:37.000Z</published>
-    <updated>2021-07-05T11:46:11.653Z</updated>
+    <updated>2021-07-07T23:56:00.353Z</updated>
     
     <summary type="html">
     
@@ -99,7 +151,7 @@
     <link href="https://wangyixin-tom.github.io/2021/06/29/question-2/"/>
     <id>https://wangyixin-tom.github.io/2021/06/29/question-2/</id>
     <published>2021-06-29T10:44:15.066Z</published>
-    <updated>2021-06-29T10:44:15.072Z</updated>
+    <updated>2021-07-07T23:59:02.354Z</updated>
     
     <summary type="html">
     
@@ -247,10 +299,10 @@
   
   <entry>
     <title>多阶段构建</title>
-    <link href="https://wangyixin-tom.github.io/2021/06/07/duo-jie-duan-gou-jian/"/>
-    <id>https://wangyixin-tom.github.io/2021/06/07/duo-jie-duan-gou-jian/</id>
+    <link href="https://wangyixin-tom.github.io/2021/06/07/docker-multistage/"/>
+    <id>https://wangyixin-tom.github.io/2021/06/07/docker-multistage/</id>
     <published>2021-06-07T14:03:15.000Z</published>
-    <updated>2021-06-07T14:07:57.645Z</updated>
+    <updated>2021-07-07T23:41:27.663Z</updated>
     
     <summary type="html">
     
@@ -459,7 +511,7 @@
     <link href="https://wangyixin-tom.github.io/2021/05/20/interview-network/"/>
     <id>https://wangyixin-tom.github.io/2021/05/20/interview-network/</id>
     <published>2021-05-19T22:20:37.000Z</published>
-    <updated>2021-06-30T11:25:28.147Z</updated>
+    <updated>2021-07-07T23:41:27.703Z</updated>
     
     <summary type="html">
     
@@ -467,59 +519,8 @@
       
         
         
-          &lt;h2 id=&quot;报文头部&quot;&gt;&lt;a href=&quot;#报文头部&quot; class=&quot;headerlink&quot; title=&quot;报文头部&quot;&gt;&lt;/a&gt;报文头部&lt;/h2&gt;&lt;h3 id=&quot;网络包的格式&quot;&gt;&lt;a href=&quot;#网络包的格式&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-      <category term="interview" scheme="https://wangyixin-tom.github.io/categories/interview/"/>
-    
-    
-      <category term="interview" scheme="https://wangyixin-tom.github.io/tags/interview/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>flask</title>
-    <link href="https://wangyixin-tom.github.io/2021/04/22/flask-mian-shi/"/>
-    <id>https://wangyixin-tom.github.io/2021/04/22/flask-mian-shi/</id>
-    <published>2021-04-22T12:23:24.000Z</published>
-    <updated>2021-05-20T14:48:03.302Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h1 id=&quot;Flask框架&quot;&gt;&lt;a href=&quot;#Flask框架&quot; class=&quot;headerlink&quot; title=&quot;Flask框架&quot;&gt;&lt;/a&gt;Flask框架&lt;/h1&gt;&lt;h2 id=&quot;WEB框架&quot;&gt;&lt;a href=&quot;#WEB框架&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-      <category term="interview" scheme="https://wangyixin-tom.github.io/categories/interview/"/>
-    
-    
-      <category term="interview" scheme="https://wangyixin-tom.github.io/tags/interview/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>python面试</title>
-    <link href="https://wangyixin-tom.github.io/2021/04/13/interview-python/"/>
-    <id>https://wangyixin-tom.github.io/2021/04/13/interview-python/</id>
-    <published>2021-04-13T11:58:48.000Z</published>
-    <updated>2021-07-06T22:58:43.394Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h2 id=&quot;语言特性&quot;&gt;&lt;a href=&quot;#语言特性&quot; class=&quot;headerlink&quot;
+          &lt;h2 id=&quot;计算机网络体系结构&quot;&gt;&lt;a href=&quot;#计算机网络体系结构&quot; class=&quot;headerlink&quot; title=&quot;计算机网络体系结构&quot;&gt;&lt;/a&gt;计算机网络体系结构&lt;/h2&gt;&lt;p&gt;&lt;img src=&quot;stru.png&quot; alt&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img
         
       
     

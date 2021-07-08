@@ -268,7 +268,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/13.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/14.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -423,7 +423,7 @@
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    12.7k
+                    12.9k
                 </div>
                 
 
@@ -496,6 +496,14 @@
 <blockquote>
 <p>内核态-&gt;用户态：执行一条特权指令，修改PSW的标志位为用户态</p>
 </blockquote>
+<h3 id="为什么用户态切换到内核态代价大"><a href="#为什么用户态切换到内核态代价大" class="headerlink" title="为什么用户态切换到内核态代价大"></a>为什么用户态切换到内核态代价大</h3><p>当发生用户态到内核态的切换时，会发生如下过程（本质上是从“用户程序”切换到“内核程序”）</p>
+<ul>
+<li>设置处理器至内核态。</li>
+<li>保存当前寄存器（栈指针、程序计数器、通用寄存器）。</li>
+<li>将栈指针设置指向内核栈地址。</li>
+<li>将程序计数器设置为一个事先约定的地址上，该地址上存放的是系统调用处理程序的起始地址。</li>
+</ul>
+<p>而之后从内核态返回用户态时，又会进行类似的工作。</p>
 <h3 id="内核空间和用户空间"><a href="#内核空间和用户空间" class="headerlink" title="内核空间和用户空间"></a>内核空间和用户空间</h3><p>内核空间总是驻留在内存中，它是<strong>为操作系统的内核保留的</strong>。按访问权限可以分为</p>
 <ul>
 <li>进程私有：每个进程都有单独的<strong>内核栈</strong>、<strong>页表</strong>、<strong>task 结构以及 mem_map 结构</strong>等。</li>
@@ -1412,7 +1420,7 @@
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="攻击技术">
+                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="攻击技术">
                         
                         <span class="card-title">攻击技术</span>
                     </div>
@@ -1466,7 +1474,7 @@ JavaS
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="HTTP和HTTPS">
+                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="HTTP和HTTPS">
                         
                         <span class="card-title">HTTP和HTTPS</span>
                     </div>
@@ -1673,7 +1681,7 @@ JavaS
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">174.9k</span>
+            <span class="white-color">180.1k</span>
             
 
             <br>
