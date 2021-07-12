@@ -269,7 +269,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/8.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/11.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -424,14 +424,14 @@
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    4.4k
+                    4.6k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    15 分
+                    16 分
                 </div>
                 
                 
@@ -487,6 +487,12 @@
 <p><strong>Binding：绑定</strong>，RabbitMQ通过绑定将交换器与队列关联起来，绑定时会指定BindingKey</p>
 <p><strong>Connection：连接</strong>，生产者或消费者和Broker之间的一条TCP连接</p>
 <p><strong>Channel：信道</strong>，建立在Connection上的虚拟连接，每条AMQP指令都通过信道完成交换器类型</p>
+<p><strong>channel、exchange 和 queue 这些是逻辑概念，还是对应着进程实体？</strong></p>
+<ul>
+<li>queue有自己的erlang进程;</li>
+<li>exchange保存binding关系的查找表;</li>
+<li>channel是实际进行路由工作的实体，根据routing_key将消息投递给queue。channel是在tcp连接上的虚拟链接，amqp命令通过channel发送，<br>一个线程允许使用多个channel，多线程共享同一个socket。</li>
+</ul>
 <h2 id="RabbitMQ的工作模式"><a href="#RabbitMQ的工作模式" class="headerlink" title="RabbitMQ的工作模式"></a>RabbitMQ的工作模式</h2><p><strong>简单模式</strong>：它包含一个生产者、一个消费者和一个队列。生产者向队列里发送消息，消费者从队列中获取消息并消费。</p>
 <p><strong>工作模式</strong>：向多个互相竞争的消费者发送消息的模式，它包含一个生产者、两个消费者和一个队列。两个消费者同时绑定到一个队列上去，当消费者获取消息处理耗时任务时，空闲的消费者从队列中获取并消费消息。</p>
 <p><strong>发布/订阅模式</strong>：同时向多个消费者发送消息的模式（类似广播的形式），它包含一个生产者、两个消费者、两个队列和一个交换机。两个消费者监听各自队列，两个队列绑定到交换机上去，生产者通过发送消息到交换机，所有消费者接收并消费消息。</p>
@@ -557,22 +563,24 @@
 <p>解决方案：处理消息成功后，<strong>手动回复确认消息</strong>。</p>
 <h2 id="为什么不应该对所有的-message-都使用持久化机制？"><a href="#为什么不应该对所有的-message-都使用持久化机制？" class="headerlink" title="为什么不应该对所有的 message 都使用持久化机制？"></a>为什么不应该对所有的 message 都使用持久化机制？</h2><p>一般仅对关键消息作持久化处理，且应该保证关键消息的量不会导致性能瓶颈。否则会导致性能的下降，因为写磁盘比写 RAM 慢的多。</p>
 <p>其次，message 的持久化机制用在 RabbitMQ 的内置 cluster 方案时会出现“坑爹”问题。</p>
-<h2 id="如何保证高可用的？RabbitMQ-的集群"><a href="#如何保证高可用的？RabbitMQ-的集群" class="headerlink" title="如何保证高可用的？RabbitMQ 的集群"></a>如何保证高可用的？RabbitMQ 的集群</h2><p>普通集群模式，在多台机器上启动多个 RabbitMQ 实例。 <strong>queue，只会放在一个 RabbitMQ 实例上，但是每个实例都同步 queue 的元数据。</strong>消费的时候，实际上如果连接到了另外一个实例，那么那个实例会从 queue 所在实例上拉取数据过来。这方案主要是提高吞吐量的，就是说让集群中多个节点来服务某个 queue 的读写操作。</p>
+<h2 id="集群"><a href="#集群" class="headerlink" title="集群"></a>集群</h2><h3 id="如何保证高可用的？RabbitMQ-的集群"><a href="#如何保证高可用的？RabbitMQ-的集群" class="headerlink" title="如何保证高可用的？RabbitMQ 的集群"></a>如何保证高可用的？RabbitMQ 的集群</h3><p>普通集群模式，在多台机器上启动多个 RabbitMQ 实例。 <strong>queue，只会放在一个 RabbitMQ 实例上，但是每个实例都同步 queue 的元数据。</strong>消费的时候，实际上如果连接到了另外一个实例，那么那个实例会从 queue 所在实例上拉取数据过来。这方案主要是提高吞吐量的，就是说让集群中多个节点来服务某个 queue 的读写操作。</p>
 <p><strong>镜像集群模式</strong>： RabbitMQ 的高可用模式。在镜像集群模式下，你创建的 queue，<strong>无论元数据还是 queue 里的消息都会存在于多个实例上</strong>，就是说，每个 RabbitMQ 节点都有这个 queue 的一个完整镜像，包含 queue 的全部数据的。然后每次你写消息到 queue 的时候，都会自动把消息同步到多个实例的 queue 上。</p>
 <p>好处在于，任何一个机器宕机了，其它机器还包含了这个 queue 的完整数据，别的 consumer 都可以到其它节点上去消费数据。</p>
 <p>坏处在于，这个性能开销大，消息需要同步到所有机器上，导致网络带宽压力和消耗很重。</p>
-<h2 id="rabbitmq-对集群节点停止顺序有要求吗"><a href="#rabbitmq-对集群节点停止顺序有要求吗" class="headerlink" title="rabbitmq 对集群节点停止顺序有要求吗?"></a>rabbitmq 对集群节点停止顺序有要求吗?</h2><p>RabbitMQ 对集群的停止的顺序是有要求的，应该先关闭内存节点，最后再关闭磁盘节点.如果顺序恰好相反的话，可能会造成消息的丢失</p>
-<h2 id="rabbitmq-集群有什么用"><a href="#rabbitmq-集群有什么用" class="headerlink" title="rabbitmq 集群有什么用?"></a>rabbitmq 集群有什么用?</h2><ul>
+<h3 id="rabbitmq-对集群节点停止顺序有要求吗"><a href="#rabbitmq-对集群节点停止顺序有要求吗" class="headerlink" title="rabbitmq 对集群节点停止顺序有要求吗?"></a>rabbitmq 对集群节点停止顺序有要求吗?</h3><p>RabbitMQ 对集群的停止的顺序是有要求的，应该先关闭内存节点，最后再关闭磁盘节点.如果顺序恰好相反的话，可能会造成消息的丢失</p>
+<h3 id="rabbitmq-集群有什么用"><a href="#rabbitmq-集群有什么用" class="headerlink" title="rabbitmq 集群有什么用?"></a>rabbitmq 集群有什么用?</h3><ul>
 <li>高可用: 某个服务器出现问题，整个 RabbitMQ 还可以继续使用</li>
 <li>高容量: 集群可以承载更多的消息量</li>
 </ul>
-<h2 id="RAM-node-和-disk-node-的区别？"><a href="#RAM-node-和-disk-node-的区别？" class="headerlink" title="RAM node 和 disk node 的区别？"></a>RAM node 和 disk node 的区别？</h2><p>RAM node 仅将相关元数据保存到内存中，但disk node会在内存和磁盘中均进行存储。要求在RabbitMQ cluster中至少存在一个disk node。</p>
-<h2 id="rabbitmq-每个节点是其他节点的完整拷贝吗？为什么？"><a href="#rabbitmq-每个节点是其他节点的完整拷贝吗？为什么？" class="headerlink" title="rabbitmq 每个节点是其他节点的完整拷贝吗？为什么？"></a><strong>rabbitmq 每个节点是其他节点的完整拷贝吗？为什么？</strong></h2><p>不是，原因有以下两个：</p>
+<h3 id="RAM-node-和-disk-node-的区别？"><a href="#RAM-node-和-disk-node-的区别？" class="headerlink" title="RAM node 和 disk node 的区别？"></a>RAM node 和 disk node 的区别？</h3><p>RAM node 仅将相关元数据保存到内存中，</p>
+<p>disk node会在内存和磁盘中均进行存储。</p>
+<p>要求在RabbitMQ cluster中至少存在一个disk node。</p>
+<h3 id="rabbitmq-每个节点是其他节点的完整拷贝吗？为什么？"><a href="#rabbitmq-每个节点是其他节点的完整拷贝吗？为什么？" class="headerlink" title="rabbitmq 每个节点是其他节点的完整拷贝吗？为什么？"></a><strong>rabbitmq 每个节点是其他节点的完整拷贝吗？为什么？</strong></h3><p>不是，原因有以下两个：</p>
 <ol>
 <li>存储空间的考虑：如果每个节点都拥有所有队列的完全拷贝，这样新增节点不但没有新增存储空间，反而增加了更多的冗余数据；</li>
 <li>性能的考虑：如果每条消息都需要完整拷贝到每一个集群节点，那新增节点并没有提升处理消息的能力，反而可能更糟。</li>
 </ol>
-<h2 id="rabbitmq-集群中唯一一个磁盘节点崩溃了会发生什么情况？"><a href="#rabbitmq-集群中唯一一个磁盘节点崩溃了会发生什么情况？" class="headerlink" title="rabbitmq 集群中唯一一个磁盘节点崩溃了会发生什么情况？"></a><strong>rabbitmq 集群中唯一一个磁盘节点崩溃了会发生什么情况？</strong></h2><p>如果唯一磁盘的磁盘节点崩溃了，不能进行以下操作：</p>
+<h3 id="rabbitmq-集群中唯一一个磁盘节点崩溃了会发生什么情况？"><a href="#rabbitmq-集群中唯一一个磁盘节点崩溃了会发生什么情况？" class="headerlink" title="rabbitmq 集群中唯一一个磁盘节点崩溃了会发生什么情况？"></a><strong>rabbitmq 集群中唯一一个磁盘节点崩溃了会发生什么情况？</strong></h3><p>如果唯一磁盘的磁盘节点崩溃了，不能进行以下操作：</p>
 <p>不能创建队列</p>
 <p>不能创建交换器</p>
 <p>不能创建绑定</p>
@@ -580,6 +588,10 @@
 <p>不能更改权限</p>
 <p>不能添加和删除集群节点</p>
 <p>唯一磁盘节点崩溃了，集群是可以保持运行的，但你不能更改任何东西。</p>
+<h3 id="元数据"><a href="#元数据" class="headerlink" title="元数据"></a>元数据</h3><ul>
+<li>非 cluster 模式下，元数据主要分为 Queue 元数据（queue 名字和属性等）、Exchange 元数据（exchange 名字、类型和属性等）、Binding 元数据（存放路由关系的查找表）、Vhost 元数据（vhost 范围内针对前三者的名字空间约束和安全属性设置）。</li>
+<li>cluster 模式下，还包括 cluster 中 node 位置信息和 node 关系信息。元数据按照 erlang node 的类型确定是仅保存于 RAM 中，还是同时保存在 RAM 和 disk 上。元数据在cluster 中是全 node 分布的。</li>
+</ul>
 
             </div>
             <hr />
@@ -1072,7 +1084,7 @@
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="kafka面试">
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="kafka面试">
                         
                         <span class="card-title">kafka面试</span>
                     </div>
@@ -1125,7 +1137,7 @@ Kafka 主要有两大应用场景：
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/27.jpg" class="responsive-img" alt="rabbitmq思维导图">
+                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="rabbitmq思维导图">
                         
                         <span class="card-title">rabbitmq思维导图</span>
                     </div>
@@ -1330,7 +1342,7 @@ Kafka 主要有两大应用场景：
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">180.1k</span>
+            <span class="white-color">182.3k</span>
             
 
             <br>

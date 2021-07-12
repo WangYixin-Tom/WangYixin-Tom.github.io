@@ -269,7 +269,7 @@ changjing超买超卖问题
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/4.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/1.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -411,14 +411,14 @@ changjing超买超卖问题
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1k
+                    1.7k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    3 分
+                    6 分
                 </div>
                 
                 
@@ -438,26 +438,54 @@ changjing超买超卖问题
 <p>用cookie和session实现用户登录的过程是咋样的，</p>
 <p>陷入内核态的时候要保存一些啥<br>说一下AMQP协议是怎么定义一个MQ的</p>
 <p>怎么设计分库分表，如果两年之后又不满足需求了呢？又如何处理。<br>ThreadLocal有了解吗？说一下注意事项？<br>RedLock红锁的底层原理介绍一下？<br>说说微服务中的降级，熔断与限流</p>
-<p>数据库字段是如何存储的，语言组织不好（行—&gt;页—&gt;树—&gt;表空间）<br>mysql中的索引是如何存储的</p>
-<p>CPU占用资源低但是系统响应速度很慢可能是什么问题</p>
 <p>mysql insert的执行过程<br>问MySQL的缓存淘汰策略<br>问 AOF的压缩方式，你有想过怎么进行更加高效吗</p>
 <p>python中import a 或者  from a import  b是如何实现的<br> http报文，重定向和转发区别<br>tcp的流式传输</p>
 <p>403状态码  302  304<br>8 如何保持200万条数据的实时排名前10名（缓存）<br>进程切换的过程</p>
 <p>token怎么获取的，怎么生成的，怎么防止被盗用（这里几乎每一家面试都会问，使用httponly解决）</p>
-<p>RabbitMQ相关问题：</p>
-<p>1、使用RabbitMQ有什么好处？</p>
-<p>2、RabbitMQ 中的 broker 是指什么？cluster 又是指什么？</p>
-<p>3、RabbitMQ 概念里的 channel、exchange 和 queue 是逻辑概念，还是对应着进程实体？分别起什么作用？</p>
-<p>4、vhost 是什么？起什么作用？</p>
-<p>5、消息基于什么传输？</p>
-<p>6、消息如何分发？</p>
-<p>7、消息怎么路由？</p>
-<p>8、什么是元数据？元数据分为哪些类型？包括哪些内容？与 cluster 相关的元数据有哪些？元数据是如何保存的？元数据在 cluster 中是如何分布的？</p>
-<p>•Snowflake生成的ID是全局递增唯一么？<br>•怎么实现全局递增的唯一ID？</p>
 <p>jWT的原理，为什么可以被用于验证，和session方式的区别<br>描述一下session的产生，和与前台的交互方式，sessionid。从整体的角度描述一下session或者jwt方式的登陆<br>分布式session，各种解决方案的优点和缺点<br>如果使用JWT的方式，如何存储大量的数据（如购物车）<br>JWT的结构，JWT存储信息的长度收什么限制（HTTP头的长</p>
 <p>paxos：多个proposer发请提议（每个提议有id+value），acceptor接受最新id的提议并把之前保留的提议返回。当超过半数的accetor返回某个提议时，此时要求value修改为propeser历史上最大值，propeser认为可以接受该提议，于是广播给每个acceptor，acceptor发现该提议和自己保存的一致，于是接受该提议并且learner同步该提议。</p>
 <p>raft：raft要求每个节点有一个选主的时间间隔，每过一个时间间隔向master发送心跳包，当心跳失败，该节点重新发起选主，当过半节点响应时则该节点当选主机，广播状态，然后以后继续下一轮选主。</p>
 <p>讲解Raft算法 有三个角色，follower，candidate，leader。Raft最多能容忍(n-1)/2 的错误，假设系统有三个节点，A B C 一开始都是follower的状态，每一个节点都会倒计时，当倒计时完，就给各个节点发送 信号，争取当 leader。假设A节点最快完成，成为了leader，剩余两个节点就会变成Follower状态，从leader节点读取log文件。</p>
+<p>一致性哈希，和普通的分布式相比有什么优势</p>
+<p>token的设计应该考虑哪些因素？</p>
+<p>信号量通信中，<strong>进程是如何获取到信号量的</strong></p>
+<p>5.mycat分库分表了解吗？ 原理说一下。</p>
+<p>CAS和ABA问题</p>
+<p>mysql一条数据的插入过程</p>
+<p>paxos和zab的区别<br>zoo<a href="https://www.nowcoder.com/jump/super-jump/word?word=keep" target="_blank" rel="noopener">keep</a>er的za[算法</p>
+<p>paxos的理解</p>
+<p>NIO 的核心理念是什么？<br>NIO 多路复用select() epoll() 演进流程 同步到异步</p>
+<p>信号量的实现机制</p>
+<p>Python中static_method 、 class_mathod 、和普通method有什么区别</p>
+<p>设计题：url长链接短链接，包括怎么生成短链接，怎么通过短链接查询长连接，这个设计还有什么不足或欠考虑的地方</p>
+<ol start="9">
+<li>设计一个高并发的RPC？</li>
+</ol>
+<p>大概思路就是异步化，缓存之类的</p>
+<p>红黑树规定，插入删除如何操作？</p>
+<p>线程切换需要寄存器吗</p>
+<p>子进程从父进程继承了什么</p>
+<p>为什么 红黑树 能保持较好的平衡性<br>发送100k的数据发送一次还是多次<br>内核空间里有什么了解嘛，进程内核空间不够是否会占用用户空间<br>linux系统中，后台运行一个程序，关闭终端后依旧能够运行，如何实现<br>ip分片与重组，什么时候分片？在哪里重组？依据什么重组？怎么判断重组全部完成？<br>如果网络层不分片怎么办？<br>MSS的大小是控制什么的？<br>上下文切换的全过程讲了十分钟<br>、在TCP连接中，如果突然有多个连接，服务端会发生什么（我说的SYN Flood，应该会缓冲池慢了而暂时阻塞，但是面试官否认了，我当时有点懵）<br>Linux的cfs 算法<br>红黑树 和 哈希表 比较<br>跳表查第K大数流程<br>PUT和POST的区别？</p>
+<p>交换机的工作原理（问我查得那个表叫啥）<br>路由器的工作原理<br>有没有分表/分区的经验</p>
+<p>1.5selec需要把文件描述符写入内存吗？<br>进程切换为什么要切换内核栈，内核栈里都是什么东西，两个进程的内核栈都在内存中了，为什么还要切换，到底是要切换什么</p>
+<p>如何获得Mac地址（回答使用ARP），面试官补问两个主机在不同网段怎么解决（不会<br>nagle 算法</p>
+<p>3.网卡收到一条数据到进程处理数据,这之间经历了什么(中断的上半部下半部,网络层协议拆包)</p>
+<ol>
+<li>给一个json对象，可能是list也可能是dict，dict的所有key值都是string，写一个函数，将原本驼峰命名的key值处理为全部小写以下划线分隔的新的string，list成员和value成员都不作处理，输出新的对象：<br>用python写的，忘了type.<strong>name</strong>()方法，用try except实现的，递归调用就可以，不过代码兼容性应该很差。。<br>对DDoS了解吗？讲讲你所知道的DDoS攻击方式以及防护措施。<br>mysql分库分表原则</li>
+</ol>
+<ul>
+<li>为什么要分这么多库这么多表</li>
+<li>基于什么考虑？</li>
+<li>如何实现数据库动态扩容？</li>
+</ul>
+<p>换页 算法 里面，FIFO有什么缺点？怎么改进？</p>
+<p>NginX如何做负载均衡</p>
+<p>Kafka中的消费者如何获取到offset,offset是在哪进行管理的？</p>
+<p>生产者发送的partition是如何得到的？有哪几个方式？能不能指定一个partition发送？</p>
+<p>同一个partition中数据是有序还是无序的</p>
+<p>如果你自己设计一个rpc框架，怎么设计？</p>
+<p>集线器是几层的？</p>
+<p>Reactor与proactor的区别？</p>
 
             </div>
             <hr />
@@ -950,7 +978,7 @@ changjing超买超卖问题
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="HTTP和HTTPS">
+                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="HTTP和HTTPS">
                         
                         <span class="card-title">HTTP和HTTPS</span>
                     </div>
@@ -1001,7 +1029,7 @@ changjing超买超卖问题
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="python多线程同步">
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="python多线程同步">
                         
                         <span class="card-title">python多线程同步</span>
                     </div>
@@ -1174,7 +1202,7 @@ wait(timeout) — 线
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">180.1k</span>
+            <span class="white-color">182.3k</span>
             
 
             <br>
