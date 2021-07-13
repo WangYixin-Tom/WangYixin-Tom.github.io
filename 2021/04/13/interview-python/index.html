@@ -270,7 +270,7 @@ Python2 的默认编码是 ascii，Pytho">
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/21.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/22.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -425,14 +425,14 @@ Python2 的默认编码是 ascii，Pytho">
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    17.2k
+                    17.5k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    64 分
+                    65 分
                 </div>
                 
                 
@@ -490,7 +490,20 @@ Python2 的默认编码是 ascii，Pytho">
 <p>six 提供了一些简单的工具用来封装 Python 2 和 Python 3 之间的差异性。支持3向2的兼容。</p>
 </li>
 </ul>
-<h2 id="Python基础"><a href="#Python基础" class="headerlink" title="Python基础"></a>Python基础</h2><h3 id="可变数据类型和不可变数据类型"><a href="#可变数据类型和不可变数据类型" class="headerlink" title="可变数据类型和不可变数据类型"></a>可变数据类型和不可变数据类型</h3><p>可变数据类型（引用类型）：当该数据类型对应的变量值发生了变化时，对应的内存地址不发生改变。</p>
+<h2 id="Python基础"><a href="#Python基础" class="headerlink" title="Python基础"></a>Python基础</h2><h3 id="import机制"><a href="#import机制" class="headerlink" title="import机制"></a>import机制</h3><ul>
+<li>当 import 一个模块时首先会在sys.modules列表中查找是否已经加载了此模块，如果加载了则只是将模块的名字加入到正在调用 import 的模块的 Local 名字空间中。如果没有加载则从 sys.path 目录中按照模块名称查找模块文件，模块可以是py、pyc、pyd，找到后将模块载入内存，并加到 sys.modules 中，并将名称导入到当前的 Local 名字空间。</li>
+<li>包导入的过程和模块的基本一致，只是导入包的时候会执行此包目录下的<code>__init__.py</code> 而不是模块里面的语句了。另外，如果只是单纯的导入包，而包的<code>__init__.py</code>中又没有明确的其他初始化操作，那么此包下面的模块是不会自动导入的。</li>
+</ul>
+<blockquote>
+<p>搜索路径查找模块：</p>
+<ol>
+<li>py 所在文件的目录</li>
+<li>PYTHONPATH 中的目录</li>
+<li>python安装目录，UNIX下，默认路径一般为/usr/local/lib/python/</li>
+<li>3.x 中.pth 文件内容</li>
+</ol>
+</blockquote>
+<h3 id="可变数据类型和不可变数据类型"><a href="#可变数据类型和不可变数据类型" class="headerlink" title="可变数据类型和不可变数据类型"></a>可变数据类型和不可变数据类型</h3><p>可变数据类型（引用类型）：当该数据类型对应的变量值发生了变化时，对应的内存地址不发生改变。</p>
 <p>不可变数据类型（值类型）：当该数据类型对应的变量值发生了变化时，对应的内存地址发生了改变。</p>
 <p>可变数据类型：list和dict；</p>
 <p>不可变数据类型：int、float、string和tuple、bytes。</p>
@@ -1980,7 +1993,7 @@ foo2 <span class="token operator">=</span> Foo<span class="token punctuation">(<
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="flask">
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="flask">
                         
                         <span class="card-title">flask</span>
                     </div>
@@ -2033,7 +2046,7 @@ run 方法调用werkzeug 的 run_simple
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/26.jpg" class="responsive-img" alt="redis面试">
+                        <img src="/medias/featureimages/27.jpg" class="responsive-img" alt="redis面试">
                         
                         <span class="card-title">redis面试</span>
                     </div>
@@ -2238,7 +2251,7 @@ run 方法调用werkzeug 的 run_simple
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">182.3k</span>
+            <span class="white-color">187.4k</span>
             
 
             <br>

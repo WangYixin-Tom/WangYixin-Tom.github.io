@@ -268,7 +268,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/11.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -423,14 +423,14 @@
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    12.9k
+                    13.8k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    43 分
+                    47 分
                 </div>
                 
                 
@@ -504,6 +504,16 @@
 <li>将程序计数器设置为一个事先约定的地址上，该地址上存放的是系统调用处理程序的起始地址。</li>
 </ul>
 <p>而之后从内核态返回用户态时，又会进行类似的工作。</p>
+<h3 id="怎么切换"><a href="#怎么切换" class="headerlink" title="怎么切换"></a>怎么切换</h3><ul>
+<li>从当前进程的描述符中提取其内核栈的ss0及esp0信息。</li>
+<li>使用ss0和esp0指向的内核栈将当前进程的cs,eip,eflags,ss,esp信息保存起来，这个过程也完成了由用户栈到内核栈的切换过程，同时保存了被暂停执行的程序的下一条指令。</li>
+<li>将先前由中断向量检索得到的中断处理程序的cs,eip信息装入相应的寄存器，开始执行中断处理程序，这时就转到了内核态的程序执行了。</li>
+</ul>
+<p>如果要从内核态返回用户态，可以通过执行指令iret来完成，指令iret会将先前压栈的进入内核态前的cs,eip,eflags,ss,esp信息从栈里弹出，加载到各个对应的寄存器中，重新开始执行用户态的程序</p>
+<blockquote>
+<p>EIP寄存器里存储的是CPU下次要执行的指令的地址。</p>
+<p>ESP寄存器里存储的是在调用函数fun()之后，栈的栈顶。</p>
+</blockquote>
 <h3 id="内核空间和用户空间"><a href="#内核空间和用户空间" class="headerlink" title="内核空间和用户空间"></a>内核空间和用户空间</h3><p>内核空间总是驻留在内存中，它是<strong>为操作系统的内核保留的</strong>。按访问权限可以分为</p>
 <ul>
 <li>进程私有：每个进程都有单独的<strong>内核栈</strong>、<strong>页表</strong>、<strong>task 结构以及 mem_map 结构</strong>等。</li>
@@ -701,6 +711,14 @@
 <h4 id="1-信号"><a href="#1-信号" class="headerlink" title="1.信号"></a>1.信号</h4><p>在软件层次上对中断机制的一种模拟。信号是异步的，一个进程不必通过任何操作来等待信号的到达。<strong>唯一的异步通信机制</strong>。</p>
 <h4 id="2-信号量"><a href="#2-信号量" class="headerlink" title="2.信号量"></a>2.信号量</h4><p>信号量也可以说是一个计数器，常用来处理进程或线程同步的问题，特别是对临界资源的访问同步问题。</p>
 <p>临界资源：为某一时刻只能由一个进程或线程操作的资源，当信号量的值大于或等于0时，表示可以供并发进程访问的临界资源数，当小于0时，表示正在等待使用临界资源的进程数。</p>
+<blockquote>
+<p>由于信号量只能进行两种操作等待和发送信号，即P(sv)和V(sv),他们的行为是这样的：</p>
+<ul>
+<li>P(sv)：如果sv的值大于零，就给它减1；如果它的值为零，就挂起该进程的执行</li>
+<li>V(sv)：如果有其他进程因等待sv而被挂起，就让它恢复运行，如果没有进程因等待sv而挂起，就给它加1.</li>
+</ul>
+<p>在信号量进行PV操作时都为原子操作（因为它需要保护临界资源）在临界区之前执行P（mutex），在临界区之后执行V（mutex）；P、V操作必须成对出现。</p>
+</blockquote>
 <h4 id="3-消息队列"><a href="#3-消息队列" class="headerlink" title="3.消息队列"></a>3.消息队列</h4><p>消息队列是存放在内核中的消息链表，每个消息队列由消息队列标识符标识，与管道不同的是，消息队列存放在内核中，只有在内核重启时才能删除一个消息队列，内核重启也就是系统重启，同样消息队列的大小也是受限制的。</p>
 <h4 id="4-共享内存"><a href="#4-共享内存" class="headerlink" title="4.共享内存"></a>4.共享内存</h4><p><strong>共享内存就是分配一块能被其他进程访问的内存。</strong>共享内存是最快的IPC形式。</p>
 <p><strong>采用共享内存通信的一个显而易见的好处是效率高，因为进程可以直接读写内存，而不需要任何数据的拷贝。</strong>对于像管道和消息队列等通信方式，则需要在内核和用户空间进行四次的数据拷贝，而<strong>共享内存则只拷贝两次数据</strong>：一次从输入文件到共享内存区，另一次从共享内存区到输出文件。</p>
@@ -768,14 +786,21 @@
 <p>死亡：线程已经执行完毕。主线程 main 方法结束或因异常退出；子线程 run 方法结束或因异常退出</p>
 <h3 id="wait和block的区别？"><a href="#wait和block的区别？" class="headerlink" title="wait和block的区别？"></a>wait和block的区别？</h3><p>wait的线程被唤醒后其实会进入block的状态去抢锁。</p>
 <p>因为wait是在同步代码块中运行的，所以被唤醒后会要去抢锁，抢到锁才会进入就绪状态。</p>
+<h3 id="fork函数的底层实现原理"><a href="#fork函数的底层实现原理" class="headerlink" title="fork函数的底层实现原理"></a>fork函数的底层实现原理</h3><p>1、分配新的内存块和内核数据结构给子进程</p>
+<p>2、将父进程部分数据结构内容拷贝至子进程：进程pcb、 程序体，即代码段数据段等、用户栈、内核栈、虚拟内存池、页表。当父子进程有一个想要修改数据或者堆栈时，两个进程真正分裂。</p>
+<p>3、添加子进程到系统进程列表当中</p>
+<p>4、fork返回，开始调度器调度</p>
 <h3 id="fork之后的父子进程同时读取一个文件？"><a href="#fork之后的父子进程同时读取一个文件？" class="headerlink" title="fork之后的父子进程同时读取一个文件？"></a>fork之后的父子进程同时读取一个文件？</h3><ul>
-<li><p><strong>fork之前open</strong>：由于父子进程是以共享的方式控制已经打开文件的，因此对文件的操作也是相互影响的，因此读写文件的位置也会发生相应的改变。</p>
-</li>
-<li><p>如果是非父子进程或者fork之后open，则会存在相互覆盖的情况</p>
-</li>
-<li><p>如果用O_APPEND标志打开一个文件，则相应标志也被设置到文件表项（file对象）的文件状态标志中。<strong>每次对这种具有填写标志的文件执行写操作时，每次写的数据都添加到文件的当前尾端处。</strong></p>
-</li>
+<li><strong>fork之前open</strong>：由于父子进程是以共享的方式控制已经打开文件的，因此对文件的操作也是相互影响的，因此读写文件的位置也会发生相应的改变。</li>
+<li>如果是非父子进程或者fork之后open，则会存在相互覆盖的情况</li>
+<li>如果用O_APPEND标志打开一个文件，则相应标志也被设置到文件表项（file对象）的文件状态标志中。<strong>每次对这种具有填写标志的文件执行写操作时，每次写的数据都添加到文件的当前尾端处。</strong></li>
 </ul>
+<h3 id="进程切换"><a href="#进程切换" class="headerlink" title="进程切换"></a>进程切换</h3><p>1.切换新的页表，然后使用新的虚拟地址空间<br>2.切换内核栈，加入新的内容(PCB控制块，资源相关)，硬件上下文切换</p>
+<h3 id="线程切换"><a href="#线程切换" class="headerlink" title="线程切换"></a>线程切换</h3><p>线程在切换的过程中需要保存当前线程Id、线程状态、堆栈、寄存器状态等信息。 </p>
+<p>其中寄存器主要包括SP PC EAX等寄存器，其主要功能如下： </p>
+<p>SP:堆栈指针，指向当前栈的栈顶地址</p>
+<p>PC:程序计数器，存储下一条将要执行的指令</p>
+<p>EAX:累加寄存器，用于加法乘法的缺省寄存器</p>
 <h3 id="进程的调度算法"><a href="#进程的调度算法" class="headerlink" title="进程的调度算法"></a><strong>进程的调度算法</strong></h3><p><strong>批处理系统</strong></p>
 <ul>
 <li>先到先服务（FCFS） : 按照请求的顺序进行调度。非抢占式，开销小，无饥饿问题，响应时间不确定；对短进程不利，对IO密集型进程不利。</li>
@@ -800,6 +825,20 @@
 <li>低优先级的进程必须等待很长时间，并且可能会在抢占式调度中饿死。 </li>
 <li>抢占式有进程调度的开销，非抢占式没有</li>
 </ul>
+<h3 id="CFS-完全公平调度算法"><a href="#CFS-完全公平调度算法" class="headerlink" title="CFS 完全公平调度算法"></a>CFS 完全公平调度算法</h3><ul>
+<li>给每一个进程安排一个虚拟时钟，vruntime。</li>
+<li>如果一个进程得以执行，随着时间的增长（也就是一个个tick的到来），其vruntime将不断增大。没有得到执行的进程vruntime不变。</li>
+<li>而调度器总是选择vruntime跑得最慢的那个进程来执行。这就是所谓的“完全公平”</li>
+<li>CFS的思想就是让每个调度实体（没有组调度的情形下就是进程）的vruntime互相追赶，而每个调度实体的vruntime增加速度不同，权重越大的增加的越慢，这样就能获得更多的cpu执行时间。</li>
+<li>nice值越小, 进程的权重越大，实际运行时间越长。</li>
+</ul>
+<p><strong>几个过程</strong></p>
+<ul>
+<li>创建新进程: 创建新进程时, 需要设置新进程的vruntime值以及将新进程加入红黑树中. 并判断是否需要抢占当前进程</li>
+<li>进程唤醒: 唤醒进程时, 需要调整睡眠进程的vruntime值, 并且将睡眠进程加入红黑树中. 并判断是否需要抢占当前进程</li>
+<li>进程的调度: 进程调度时, 需要把当前进程加入红黑树中, 还要从红黑树中挑选出下一个要运行的进程.</li>
+<li>钟周期中断: 在时钟中断周期函数中, 需要更新当前运行进程的vruntime值, 并判断是否需要抢占当前进程</li>
+</ul>
 <h3 id="程序计数器的作用"><a href="#程序计数器的作用" class="headerlink" title="程序计数器的作用"></a><strong>程序计数器的作用</strong></h3><p>为了保证进程能执行下去，需要确定下一条指令的地址。</p>
 <ul>
 <li>在程序开始执行前，必须将它的起始地址，即程序的第一条指令所在的内存单元地址送入程序计数器。</li>
@@ -818,10 +857,6 @@
 <li>ctrl + c，会发送<code>SIGINT</code>的信号，等同于<code>kill -2(interrupt)</code></li>
 <li>ctrl + z，会发送<code>SIGTSTP</code>的信号</li>
 </ul>
-<h3 id="fork函数的底层实现原理"><a href="#fork函数的底层实现原理" class="headerlink" title="fork函数的底层实现原理"></a>fork函数的底层实现原理</h3><p>1、分配新的内存块和内核数据结构给子进程</p>
-<p>2、将父进程部分数据结构内容拷贝至子进程：进程pcb、 程序体，即代码段数据段等、用户栈、内核栈虚拟内存池、页表。当父子进程有一个想要修改数据或者堆栈时，两个进程真正分裂。</p>
-<p>3、添加子进程到系统进程列表当中</p>
-<p>4、fork返回，开始调度器调度</p>
 <h3 id="什么是僵尸进程？大量的僵尸进程如何处理"><a href="#什么是僵尸进程？大量的僵尸进程如何处理" class="headerlink" title="什么是僵尸进程？大量的僵尸进程如何处理"></a>什么是僵尸进程？大量的僵尸进程如何处理</h3><p><strong>定义</strong></p>
 <p>父进程使用 fork 创建子进程，如果子进程退出，而父进程并没有调用 wait 或 waitpid 获取子进程的状态信息，那么子进程的进程描述符仍然保存在系统中。这种进程称之为僵尸进程。</p>
 <p><strong>危害</strong></p>
@@ -1420,7 +1455,7 @@
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="攻击技术">
+                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="攻击技术">
                         
                         <span class="card-title">攻击技术</span>
                     </div>
@@ -1474,7 +1509,7 @@ JavaS
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="HTTP和HTTPS">
+                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="HTTP和HTTPS">
                         
                         <span class="card-title">HTTP和HTTPS</span>
                     </div>
@@ -1681,7 +1716,7 @@ JavaS
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">182.3k</span>
+            <span class="white-color">187.4k</span>
             
 
             <br>

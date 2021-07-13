@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://wangyixin-tom.github.io/"/>
-  <updated>2021-07-11T12:36:42.575Z</updated>
+  <updated>2021-07-12T13:34:17.434Z</updated>
   <id>https://wangyixin-tom.github.io/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>一致性哈希</title>
+    <link href="https://wangyixin-tom.github.io/2021/07/12/c-hash/"/>
+    <id>https://wangyixin-tom.github.io/2021/07/12/c-hash/</id>
+    <published>2021-07-12T13:18:06.000Z</published>
+    <updated>2021-07-12T13:34:17.434Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;Hash取模&quot;&gt;&lt;a href=&quot;#Hash取模&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="分布式" scheme="https://wangyixin-tom.github.io/categories/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
+    
+    
+      <category term="分布式" scheme="https://wangyixin-tom.github.io/tags/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
+    
+  </entry>
   
   <entry>
     <title>linux优化方法</title>
@@ -73,7 +99,7 @@
     <link href="https://wangyixin-tom.github.io/2021/06/30/attack/"/>
     <id>https://wangyixin-tom.github.io/2021/06/30/attack/</id>
     <published>2021-06-30T12:23:24.000Z</published>
-    <updated>2021-06-30T11:25:28.126Z</updated>
+    <updated>2021-07-13T12:10:31.859Z</updated>
     
     <summary type="html">
     
@@ -99,7 +125,7 @@
     <link href="https://wangyixin-tom.github.io/2021/06/30/interview-os/"/>
     <id>https://wangyixin-tom.github.io/2021/06/30/interview-os/</id>
     <published>2021-06-30T03:20:37.000Z</published>
-    <updated>2021-07-07T23:56:00.353Z</updated>
+    <updated>2021-07-13T12:10:31.879Z</updated>
     
     <summary type="html">
     
@@ -125,7 +151,7 @@
     <link href="https://wangyixin-tom.github.io/2021/06/30/interview-http/"/>
     <id>https://wangyixin-tom.github.io/2021/06/30/interview-http/</id>
     <published>2021-06-29T22:20:37.000Z</published>
-    <updated>2021-07-11T22:03:13.099Z</updated>
+    <updated>2021-07-12T11:20:48.756Z</updated>
     
     <summary type="html">
     
@@ -143,28 +169,6 @@
     
     
       <category term="interview" scheme="https://wangyixin-tom.github.io/tags/interview/"/>
-    
-  </entry>
-  
-  <entry>
-    <title></title>
-    <link href="https://wangyixin-tom.github.io/2021/06/29/question-2/"/>
-    <id>https://wangyixin-tom.github.io/2021/06/29/question-2/</id>
-    <published>2021-06-29T10:44:15.066Z</published>
-    <updated>2021-07-11T23:47:10.406Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h1 id=&quot;datastructrue&quot;&gt;&lt;a href=&quot;#datastructrue&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
     
   </entry>
   
@@ -195,7 +199,7 @@
     <link href="https://wangyixin-tom.github.io/2021/06/25/paxos-yu-raft/"/>
     <id>https://wangyixin-tom.github.io/2021/06/25/paxos-yu-raft/</id>
     <published>2021-06-24T21:45:09.000Z</published>
-    <updated>2021-06-24T22:13:07.041Z</updated>
+    <updated>2021-07-13T13:51:07.961Z</updated>
     
     <summary type="html">
     
@@ -205,7 +209,7 @@
         
           &lt;h2 id=&quot;Paxos&quot;&gt;&lt;a href=&quot;#Paxos&quot; class=&quot;headerlink&quot; title=&quot;Paxos&quot;&gt;&lt;/a&gt;Paxos&lt;/h2&gt;&lt;p&gt;解决了一致性问题。&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;在一个分布式系统中，有一组的 process，每个
+&lt;p&gt;在一个分布式系统中，每个
         
       
     
@@ -272,11 +276,11 @@
   </entry>
   
   <entry>
-    <title>基础数据结构</title>
-    <link href="https://wangyixin-tom.github.io/2021/06/09/structure/"/>
-    <id>https://wangyixin-tom.github.io/2021/06/09/structure/</id>
+    <title>数据结构基础</title>
+    <link href="https://wangyixin-tom.github.io/2021/06/09/interview-structure/"/>
+    <id>https://wangyixin-tom.github.io/2021/06/09/interview-structure/</id>
     <published>2021-06-09T09:35:27.000Z</published>
-    <updated>2021-06-25T12:52:53.009Z</updated>
+    <updated>2021-07-13T12:10:31.884Z</updated>
     
     <summary type="html">
     
@@ -284,7 +288,7 @@
       
         
         
-          &lt;h2 id=&quot;树&quot;&gt;&lt;a href=&quot;#树&quot; class=&quot;headerlink&quot; title=&quot;树&quot;&gt;&lt;/a&gt;树&lt;/h2&gt;&lt;h3 id=&quot;二叉查找树（BST）&quot;&gt;&lt;a href=&quot;#二叉查找树（BST）&quot; class=&quot;headerlink&quot;
+          &lt;h2 id=&quot;哈希表&quot;&gt;&lt;a href=&quot;#哈希表&quot; class=&quot;headerlink&quot;
         
       
     
@@ -485,7 +489,7 @@
     <link href="https://wangyixin-tom.github.io/2021/05/24/interview-changjin/"/>
     <id>https://wangyixin-tom.github.io/2021/05/24/interview-changjin/</id>
     <published>2021-05-24T14:24:00.000Z</published>
-    <updated>2021-07-11T11:53:23.007Z</updated>
+    <updated>2021-07-13T12:10:31.865Z</updated>
     
     <summary type="html">
     
@@ -511,7 +515,7 @@
     <link href="https://wangyixin-tom.github.io/2021/05/20/interview-network/"/>
     <id>https://wangyixin-tom.github.io/2021/05/20/interview-network/</id>
     <published>2021-05-19T22:20:37.000Z</published>
-    <updated>2021-07-12T00:03:32.196Z</updated>
+    <updated>2021-07-13T14:01:36.030Z</updated>
     
     <summary type="html">
     

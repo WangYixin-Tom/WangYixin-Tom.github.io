@@ -268,7 +268,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/19.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/20.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -423,14 +423,14 @@
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    9k
+                    10.1k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    32 分
+                    36 分
                 </div>
                 
                 
@@ -617,6 +617,33 @@
 <ul>
 <li><code>突刺现象</code>：如果我在单位时间1s内的前10ms，已经通过了100个请求，那后面的990ms，只能眼巴巴的把请求拒绝</li>
 </ul>
+<h3 id="短连接生成转换设计"><a href="#短连接生成转换设计" class="headerlink" title="短连接生成转换设计"></a>短连接生成转换设计</h3><p>正确的原理就是通过发号策略，给每一个过来的长地址，发一个号即可，小型系统直接用mysql的自增索引就搞定了。如果是大型应用，可以考虑各种分布式key-value系统做发号器。不停的自增就行了。</p>
+<p>第一个使用这个服务的人得到的短地址是 <a href="http://xx.xx/0" target="_blank" rel="noopener">http://xx.xx/0</a> ，第二个是 <a href="http://xx.xx/1" target="_blank" rel="noopener">http://xx.xx/1</a> ，第11个是 <a href="http://xx.xx/a" target="_blank" rel="noopener">http://xx.xx/a</a> ，依次往后，相当于实现了一个62进制的自增字段即可。<br><strong>如何保证同一个长地址，每次转出来都是一样的短地址</strong></p>
+<p>用key-value存储，保存“最近”生成的长对短的一个对应关系。注意不保存全量的长对短的关系，而只保存最近的。比如采用一小时过期的机制来实现LRU淘汰。</p>
+<blockquote>
+<ul>
+<li>在这个“最近”表中查看一下，看长地址有没有对应的短地址，有就直接返回，并且将这个key-value对的过期时间再延长成一小时</li>
+<li>如果没有，就通过发号器生成一个短地址，并且将这个“最近”表中，过期时间为1小时<br>所以当一个地址被频繁使用，那么它会一直在这个key-value表中，总能返回当初生成那个短地址，不会出现重复的问题。如果它使用并不频繁，那么长对短的key会过期，LRU机制自动就会淘汰掉它。<br>当然，这不能保证100%的同一个长地址一定能转出同一个短地址，比如你拿一个生僻的url，每间隔1小时来转一次，你会得到不同的短地址。</li>
+</ul>
+</blockquote>
+<p><strong>保证发号器的大并发高可用</strong></p>
+<p>我们可以实现1000个逻辑发号器，分别发尾号为0到999的号。每发一个号，每个发号器加1000，而不是加1。这些发号器独立工作，互不干扰即可。</p>
+<h3 id="RPC框架设计"><a href="#RPC框架设计" class="headerlink" title="RPC框架设计"></a>RPC框架设计</h3><h4 id="网络IO模型"><a href="#网络IO模型" class="headerlink" title="网络IO模型"></a>网络IO模型</h4><p>最被广泛使用的是多路 I/O 复用，Linux 系统中的 select、epoll 等系统调用都是支持多路 I/O 复用模型的</p>
+<h4 id="序列化方式"><a href="#序列化方式" class="headerlink" title="序列化方式"></a>序列化方式</h4><ul>
+<li>如果对于性能要求不高，在传输数据占用带宽不大的场景下可以使用 JSON 作为序列化协议；</li>
+<li>如果对于性能要求比较高，那么使用 Thrift 或者 Protobuf 都可以。而 Thrift 提供了配套的 RPC 框架，所以想要一体化的解决方案，你可以优先考虑 Thrift；</li>
+<li>在一些存储的场景下，比如说你的缓存中存储的数据占用空间较大，那么你可以考虑使用 Protobuf 替换 JSON 作为存储数据的序列化方式。</li>
+</ul>
+<h4 id="TCP相关"><a href="#TCP相关" class="headerlink" title="TCP相关"></a>TCP相关</h4><p>开启 tcp_nodelay，这个参数关闭了 Nagle算法</p>
+<h4 id="服务寻址"><a href="#服务寻址" class="headerlink" title="服务寻址"></a><strong>服务寻址</strong></h4><ul>
+<li>服务提供者启动后主动向服务（注册）中心注册机器ip、端口以及提供的服务列表。</li>
+<li>服务消费者启动时向服务（注册）中心获取服务提供方地址列表，可实现软负载均衡和Failover。</li>
+<li>提供者需要定时向注册中心发送心跳，一段时间未收到来自提供者的心跳后，认为提供者已经停止服务，从注册中心上摘取掉对应的服务等等。</li>
+</ul>
+<p><strong>1）服务注册</strong></p>
+<p>首先需要把服务注册到服务中心。其实就是在注册中心进行一个登记，注册中心存储了该服务的IP、端口、调用方式(协议、序列化方式)等。在zookeeper中，进行服务注册，实际上就是在zookeeper中创建了一个znode节点，该节点存储了上面所说的服务信息。</p>
+<p><strong>2）服务发现</strong></p>
+<p>服务消费者在第一次调用服务时，会通过注册中心找到相应的服务的IP地址列表，并缓存到本地，以供后续使用。当消费者调用服务时，不会再去请求注册中心，而是直接通过负载均衡算法从IP列表中取一个服务提供者的服务器调用服务。</p>
 <h2 id="逻辑题"><a href="#逻辑题" class="headerlink" title="逻辑题"></a>逻辑题</h2><p>1、很多根绳子，每一根都不一样且粗细不均匀，每根绳子从头烧到尾都是60分钟烧完，怎么用绳子去测量15分钟的时间</p>
 <pre><code>取出三条绳子。1、同时点燃“第一根的两头”和“第二根的一头”，第一根烧完时间过了“30分钟”；2、第一根烧完后马上点燃第二根的另一头，到第二根烧完时间又过了“15分钟”；</code></pre><p>2、1000杯水，其中一杯有毒，用老鼠试毒，老鼠24h才会死，需要多少只才能找出这杯有毒的水（可以稀释）</p>
 <pre><code>将1000杯水编号(1-1000),将其转化为2进制码，取10只小白鼠（为什么是10只，因为其1000的2进制码长度是10位），给10只小白鼠编号1-10，第一只小白鼠喝第一位2进制码为1的（1000杯中2进制码第一位为1的都要喝），第二只小白鼠喝第二位2进制为1的（1000杯中2进制码第二位的都要喝）以此类推一直到第10只小白鼠喝完，然后1小时后看那几只小白鼠会死，死掉的小白鼠用1表示，未死的用0表示整理出10位2进制码</code></pre><p>3、10个箱子，每个箱子100跟金条，每个1两，一个贪官，在其中一个箱子里面，每根都磨去了一钱，只能称一次，哪个箱子被磨去了一钱。</p>
@@ -1232,7 +1259,7 @@
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="最长公共子串">
+                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="最长公共子串">
                         
                         <span class="card-title">最长公共子串</span>
                     </div>
@@ -1287,7 +1314,7 @@ cl
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="网络">
+                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="网络">
                         
                         <span class="card-title">网络</span>
                     </div>
@@ -1496,7 +1523,7 @@ OSI 7层物理层：通过网线、光缆等这种物理方式将电脑连接起
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">182.3k</span>
+            <span class="white-color">187.4k</span>
             
 
             <br>

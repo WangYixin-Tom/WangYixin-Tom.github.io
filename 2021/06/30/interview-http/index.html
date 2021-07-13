@@ -268,7 +268,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/11.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -423,14 +423,14 @@
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    5.9k
+                    6.3k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    21 分
+                    22 分
                 </div>
                 
                 
@@ -447,6 +447,7 @@
 <li>空行分隔首部和内容主体 Body</li>
 <li>请求体。</li>
 </ul>
+<h3 id="POST和PUT的区别"><a href="#POST和PUT的区别" class="headerlink" title="POST和PUT的区别"></a>POST和PUT的区别</h3><p>在HTTP规范中POST是非等幂的,多次调用会产生不同的结果,比如:创建一个用户,由于网络原因或是其他原因多创建了几次,那么将会有多个用户被创建.而PUT id/456则会创建一个id为456的用户,多次调用还是会创建的结果是一样的,所以PUT是等幂的</p>
 <h3 id="GET与POST的区别？"><a href="#GET与POST的区别？" class="headerlink" title="GET与POST的区别？"></a>GET与POST的区别？</h3><ol>
 <li>GET是幂等的，即读取同一个资源，总是得到相同的数据，POST不是幂等的；</li>
 <li>GET一般用于从服务器获取资源，而POST有可能改变服务器上的资源；</li>
@@ -529,6 +530,10 @@
 <li>HTTP缓存主要分强制缓存和对比缓存</li>
 <li>强制缓存的HTTP相关头部Cache-Control，Exipres（HTTP1.0）,浏览器直接读本地缓存，不会再跟服务器端交互，状态码200。</li>
 <li>对比缓存的HTTP相关头部Last-Modified / If-Modified-Since， Etag / If-None-Match (优先级比Last-Modified / If-Modified-Since高)，每次请求需要让服务器判断一下资源是否更新过，从而决定浏览器是否使用缓存，如果是，则返回304，否则重新完整响应。</li>
+</ul>
+<h3 id="重定向和转发"><a href="#重定向和转发" class="headerlink" title="重定向和转发"></a>重定向和转发</h3><ul>
+<li>重定向：返回3xx状态码+location响应头；浏览器跳转到location所在的URL。重定向是在客户端进行跳转。URL会改变。</li>
+<li>转发：直接获取要转发的URL地址并返回。转发是在服务端进行跳转。URL不会改变。</li>
 </ul>
 <h2 id="HTTPS"><a href="#HTTPS" class="headerlink" title="HTTPS"></a>HTTPS</h2><h3 id="什么是-https"><a href="#什么是-https" class="headerlink" title="什么是 https"></a>什么是 https</h3><p>简单来说， https 是 http + ssl，对 http 通信内容进行加密，是HTTP的安全版，是使用TLS/SSL加密的HTTP协议</p>
 <p>Https的作用：</p>
@@ -635,13 +640,18 @@
 </ul>
 <h2 id="状态码"><a href="#状态码" class="headerlink" title="状态码"></a>状态码</h2><h3 id="常见状态码"><a href="#常见状态码" class="headerlink" title="常见状态码"></a>常见状态码</h3><ol>
 <li>2xx状态码：操作成功。200 OK，201状态码英文名称是Created，该状态码表示已创建。</li>
-<li>3xx状态码：重定向。301 永久重定向；302暂时重定向</li>
+<li>3xx状态码：重定向。</li>
 <li>4xx状态码：客户端错误。400 Bad Request；401 Unauthorized；403 Forbidden；404 Not Found；405 (方法禁用) 禁用请求中指定的方法。</li>
 <li>5xx状态码：服务端错误。500服务器内部错误；501服务不可用； 502 Bad Gateway：请求未完成，服务器从上游服务器收到一个无效的响应。 </li>
 </ol>
 <p><code>502</code>并不是指网关（例如nginx）本身出了问题，而是从上游接收响应出了问题，比如由于上游服务自身超时导致不能产生响应数据，或者上游不按照协议约定来返回数据导致网关不能正常解析。</p>
 <p><code>504</code>，<code>Gateway Timeout</code>，网关超时。它表示网关没有从上游及时获取响应数据。原因在于超过了<code>nginx</code>自身的超时时间</p>
 <p>304 Not Modified：客户端有缓冲的文件并发出了一个条件性的请求（一般是提供If-Modified-Since头表示客户只想比指定日期更新的文档）。服务器告诉客户，原来缓冲的文档还可以继续使用。</p>
+<h3 id="301和302区别"><a href="#301和302区别" class="headerlink" title="301和302区别"></a>301和302区别</h3><ul>
+<li>301 永久重定向；302暂时重定向</li>
+<li>301和302状态码都表示重定向，就是说浏览器在拿到服务器返回的这个状态码后会自动跳转到一个新的URL地址，这个地址可以从响应的Location首部中获取（用户看到的效果就是他输入的地址A瞬间变成了另一个地址B）</li>
+<li>301表示旧地址A的资源已经被永久地移除了（这个资源不可访问了），<strong>搜索引擎在抓取新内容的同时也将旧的网址交换为重定向之后的网址</strong>；302表示旧地址A的资源还在（仍然可以访问），这个重定向只是临时地从旧地址A跳转到地址B，<strong>搜索引擎会抓取新的内容而保存旧的网址。</strong></li>
+</ul>
 <h3 id="发生502，应该先查看什么"><a href="#发生502，应该先查看什么" class="headerlink" title="发生502，应该先查看什么"></a>发生502，应该先查看什么</h3><p>502错误最通常的出现情况就是后端主机宕机。</p>
 <p>1、查看后台进程数是否够用，确定是否是因为高并发导致的</p>
 <p>2、查看程序执行时间是否超过Nginx等待时间，应用日志。可能是数据库死锁导致的。</p>
@@ -1150,7 +1160,7 @@
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="操作系统">
+                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="操作系统">
                         
                         <span class="card-title">操作系统</span>
                     </div>
@@ -1197,27 +1207,26 @@
                 下一篇&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/06/29/question-2/">
+                <a href="/2021/06/26/python-thread/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="">
+                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="python多线程同步">
                         
-                        <span class="card-title"></span>
+                        <span class="card-title">python多线程同步</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            datastructrue跳表怎么实现虚拟内存是什么，逻辑地址是怎么映射到物理地址的
-changjing超买超卖问题
-路由器和交换机具体都实现了什么功能？路由选择是如何实现的？
-用过抖音，微信吧，当你的手机打开抖音和微信时，你觉得后台在做一
+                            Condition相关函数acquire() — 线程锁，注意线程条件变量Condition中的所有相关函数使用必须在acquire() /release() 内部操作；
+release() — 释放锁；
+wait(timeout) — 线
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-06-29
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-06-26
                             </span>
                         <span class="publish-author">
                             
@@ -1394,7 +1403,7 @@ changjing超买超卖问题
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">182.3k</span>
+            <span class="white-color">187.4k</span>
             
 
             <br>

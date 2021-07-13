@@ -270,7 +270,7 @@ Kafka 主要有两大应用场景：
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/6.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -425,14 +425,14 @@ Kafka 主要有两大应用场景：
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    6.1k
+                    6.5k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    21 分
+                    23 分
                 </div>
                 
                 
@@ -575,6 +575,16 @@ Kafka 主要有两大应用场景：
 <li>SequenceNumber：对于每个ProducerID，Producer发送数据的每个Topic和Partition都对应一个从0开始单调递增的SequenceNumber值。</li>
 </ul>
 <p><strong>作用范围：</strong>它只能保证单分区上的幂等性，即一个幂等性 Producer 能够保证某个主题的一个分区上不出现重复消息，它无法实现多个分区的幂等性。其次，它只能实现单会话上的幂等性，不能实现跨会话的幂等性。</p>
+<h3 id="生产者发送的partition是如何得到的？"><a href="#生产者发送的partition是如何得到的？" class="headerlink" title="生产者发送的partition是如何得到的？"></a>生产者发送的partition是如何得到的？</h3><p>获取集群的分区数据之后，生产端指定分区策略。</p>
+<p><strong>自定义分区策略</strong></p>
+<p>编写一个具体的类实现<code>org.apache.kafka.clients.producer.Partitioner</code>接口。其中包含<code>partition()</code>和<code>close()</code>，一般只需要实现 <code>partition</code>方法。</p>
+<p><strong>轮询策略</strong></p>
+<p><code>Round-robin</code> 策略，即顺序分配。</p>
+<p>轮询策略有非常优秀的负载均衡表现，它总是能保证消息最大限度地被平均分配到所有分区上，最合理也最常用的分区策略，。</p>
+<p><strong>随机策略</strong></p>
+<p><code>Randomness</code>策略。将消息放置到任意一个分区上。</p>
+<p><strong>按消息键保序策略</strong></p>
+<p>Kafka 允许为每条消息定义消息键，简称为 Key。可以保证同一个 Key 的所有消息都进入到相同的分区里面，每个分区下的消息处理都是有顺序的。</p>
 <h2 id="消费者"><a href="#消费者" class="headerlink" title="消费者"></a>消费者</h2><h3 id="什么是消费者组？"><a href="#什么是消费者组？" class="headerlink" title="什么是消费者组？"></a>什么是消费者组？</h3><p>可扩展且具有容错性的消费者机制。</p>
 <ul>
 <li>Kafka允许你将同一份消息广播到多个消费者组里。</li>
@@ -588,6 +598,26 @@ Kafka 主要有两大应用场景：
 <li>1 个 Topic 只对应一个 Partition。</li>
 <li>（推荐）发送消息的时候指定 key/Partition。</li>
 </ol>
+<h3 id="consumer-offsets-作用？"><a href="#consumer-offsets-作用？" class="headerlink" title="__consumer_offsets 作用？"></a>__consumer_offsets 作用？</h3><ul>
+<li>位移主题，存储消费者的位移数据，位移主题消息的 Key 中格式：&lt;Group ID，主题名，分区号 &gt;，消息体保存了<strong>位移值</strong>和位移提交的元数据，诸如时间戳和用户自定义的数据等。</li>
+<li>保存消费者组相关的消息</li>
+<li>用于删除消费者组过期位移、删除消费者组的消息。tombstone 消息，即墓碑消息</li>
+</ul>
+<h3 id="消费者如何获取到offset"><a href="#消费者如何获取到offset" class="headerlink" title="消费者如何获取到offset"></a>消费者如何获取到offset</h3><ol>
+<li><p>确定由位移主题的哪个分区来保存该 Group 数据：<code>partitionId=Math.abs(groupId.hashCode() % offsetsTopicPartitionCount)</code>。</p>
+</li>
+<li><p>找出该分区 Leader 副本所在的 Broker，该 Broker 即为对应的 Coordinator。</p>
+</li>
+<li><p>重平衡后，协调者统一以 SyncGroup 响应的方式分发给所有成员，这样组内所有成员就都知道自己该消费哪些分区了。</p>
+</li>
+<li><p>位移主题消息的 Key 中格式：&lt;Group ID，主题名，分区号 &gt;，消息体保存了<strong>位移值</strong>和位移提交的元数据，诸如时间戳和用户自定义的数据等</p>
+</li>
+</ol>
+<h3 id="Java-Consumer-为什么采用单线程来获取消息？"><a href="#Java-Consumer-为什么采用单线程来获取消息？" class="headerlink" title="Java Consumer 为什么采用单线程来获取消息？"></a>Java Consumer 为什么采用单线程来获取消息？</h3><p>Java Consumer是双线程的设计。用户主线程，负责获取消息；心跳线程，负责向Kafka汇报消费者存活情况。将心跳单独放入专属的线程，能够有效地规避因消息处理速度慢而被视为下线的“假死”情况。</p>
+<ul>
+<li>单线程获取消息的设计能够避免阻塞式的消息获取方式。单线程轮询方式容易实现<strong>异步非阻塞式</strong>，这样便于将消费者扩展成支持实时流处理的操作算子。因为很多实时流处理操作算子都不能是阻塞式的。</li>
+<li>可以简化代码的开发。多线程交互的代码是非常容易出错的。</li>
+</ul>
 <h2 id="LEO、LSO、AR、ISR、HW？"><a href="#LEO、LSO、AR、ISR、HW？" class="headerlink" title="LEO、LSO、AR、ISR、HW？"></a>LEO、LSO、AR、ISR、HW？</h2><ul>
 <li>LEO（Log End Offset）：日志末端位移值或末端偏移量，表示日志下一条待插入消息的位移值。</li>
 <li>LSO（Log Stable Offset）：该值控制了事务型消费者能够看到的消息范围。</li>
@@ -618,11 +648,6 @@ Kafka 主要有两大应用场景：
 <li>平均消息大小</li>
 <li>备份数</li>
 <li>是否启用压缩</li>
-</ul>
-<h2 id="consumer-offsets-作用？"><a href="#consumer-offsets-作用？" class="headerlink" title="__consumer_offsets 作用？"></a>__consumer_offsets 作用？</h2><ul>
-<li>内部主题，存储消费者的位移数据</li>
-<li>保存消费者组相关的消息</li>
-<li>用于删除消费者组过期位移、删除消费者组的消息。tombstone 消息，即墓碑消息</li>
 </ul>
 <h2 id="多副本机制？好处？"><a href="#多副本机制？好处？" class="headerlink" title="多副本机制？好处？"></a>多副本机制？好处？</h2><ul>
 <li>Kafka副本当前分为领导者副本和追随者副本。每个分区在创建时都要选举一个副本，作为领导者副本，其余的副本自动为追随者副本。</li>
@@ -686,11 +711,6 @@ Kafka 主要有两大应用场景：
 <h2 id="Controller发生网络分区时，Kafka会怎么样？"><a href="#Controller发生网络分区时，Kafka会怎么样？" class="headerlink" title="Controller发生网络分区时，Kafka会怎么样？"></a>Controller发生网络分区时，Kafka会怎么样？</h2><p>判断：Broker端的ActiveControllerCount。</p>
 <p>由于Controller会给Broker发送3类请求，LeaderAndIsrRequest，StopReplicaRequest，UpdateMetadataRequest，因此，一旦出现网络分区，这些请求将不能顺利到达Broker端。</p>
 <p>将影响主题的创建、修改、删除操作的信息同步。</p>
-<h2 id="Java-Consumer-为什么采用单线程来获取消息？"><a href="#Java-Consumer-为什么采用单线程来获取消息？" class="headerlink" title="Java Consumer 为什么采用单线程来获取消息？"></a>Java Consumer 为什么采用单线程来获取消息？</h2><p>Java Consumer是双线程的设计。用户主线程，负责获取消息；心跳线程，负责向Kafka汇报消费者存活情况。将心跳单独放入专属的线程，能够有效地规避因消息处理速度慢而被视为下线的“假死”情况。</p>
-<ul>
-<li>单线程获取消息的设计能够避免阻塞式的消息获取方式。单线程轮询方式容易实现<strong>异步非阻塞式</strong>，这样便于将消费者扩展成支持实时流处理的操作算子。因为很多实时流处理操作算子都不能是阻塞式的。</li>
-<li>可以简化代码的开发。多线程交互的代码是非常容易出错的。</li>
-</ul>
 <h2 id="Follower副本消息同步的流程？"><a href="#Follower副本消息同步的流程？" class="headerlink" title="Follower副本消息同步的流程？"></a>Follower副本消息同步的流程？</h2><ul>
 <li>Follower发送FETCH请求给Leader。</li>
 <li>Leader会读取底层日志文件中的消息数据，使用FETCH请求中的fetchOffset，更新Follower远程副本的LEO值。leader副本尝试更新分区高水位值。</li>
@@ -1244,7 +1264,7 @@ Kafka 主要有两大应用场景：
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="mysql面试">
+                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="mysql面试">
                         
                         <span class="card-title">mysql面试</span>
                     </div>
@@ -1308,7 +1328,7 @@ Kafka 主要有两大应用场景：
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="rabbitmq面试">
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="rabbitmq面试">
                         
                         <span class="card-title">rabbitmq面试</span>
                     </div>
@@ -1516,7 +1536,7 @@ Kafka 主要有两大应用场景：
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">182.3k</span>
+            <span class="white-color">187.4k</span>
             
 
             <br>
