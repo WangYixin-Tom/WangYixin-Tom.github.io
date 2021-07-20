@@ -270,7 +270,7 @@ Kafka 主要有两大应用场景：
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/6.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/5.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -432,7 +432,7 @@ Kafka 主要有两大应用场景：
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    22 分
+                    21 分
                 </div>
                 
                 
@@ -456,7 +456,7 @@ Kafka 主要有两大应用场景：
 <h3 id="Kafka和rabbitmq比较"><a href="#Kafka和rabbitmq比较" class="headerlink" title="Kafka和rabbitmq比较"></a>Kafka和rabbitmq比较</h3><p><strong>rabbitmq</strong></p>
 <ul>
 <li>Erlang 语言编写的，轻量级、迅捷。</li>
-<li>支持非常灵活的路由配置，和其他消息队列不同的是，它在生产者（Producer）和队列（Queue）之间增加了一个 Exchange 模块。</li>
+<li>Exchange 模块支持非常灵活的路由配置。</li>
 <li>队列模型：生产者将消息发送到交换器，通过匹配交换器类型、Binding Key、Routing Key后，路由到一个或者多个队列中。队列用于存储消息，消费者直接绑定队列以消费消息。</li>
 </ul>
 <p><strong>问题：</strong></p>
@@ -468,7 +468,7 @@ Kafka 主要有两大应用场景：
 <ul>
 <li>使用 Scala 和 Java 语言开发。</li>
 <li>性能比较好，大约每秒钟可以处理几十万条消息，极限处理能力可以超过每秒 2000 万条消息。</li>
-<li>发布订阅模型：生产者直接发消息到主题，每个主题可以包含多个分区。多个分区会平均分配给同一个消费者组里的不同消费者进行消费。不在同一个消费者组的消费者能消费同一条消息（订阅），相同消费者组的消费者存在消费竞争（负载均衡）</li>
+<li>发布订阅模型：生产者直接发消息到主题，每个主题可以包含多个分区。消息消费支持消费者组，多个分区会平均分配给同一个消费者组里的不同消费者。不在同一个消费者组的消费者能订阅消费同一条消息，相同消费者组的消费者存在消费竞争（负载均衡）</li>
 <li>Kafka具有消息存储的功能，消息被消费后不会被立即删除，需要被不同的消费者组消费</li>
 </ul>
 <p><strong>问题：</strong></p>
@@ -1255,7 +1255,7 @@ Kafka 主要有两大应用场景：
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="mysql面试">
+                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="mysql面试">
                         
                         <span class="card-title">mysql面试</span>
                     </div>
@@ -1319,7 +1319,7 @@ Kafka 主要有两大应用场景：
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="rabbitmq面试">
+                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="rabbitmq面试">
                         
                         <span class="card-title">rabbitmq面试</span>
                     </div>
@@ -1527,7 +1527,7 @@ Kafka 主要有两大应用场景：
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">172.1k</span>
+            <span class="white-color">171.6k</span>
             
 
             <br>
