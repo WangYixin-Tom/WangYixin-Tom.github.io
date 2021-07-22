@@ -268,7 +268,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/13.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/14.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -423,14 +423,14 @@
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    13.3k
+                    12.1k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    45 分
+                    41 分
                 </div>
                 
                 
@@ -504,16 +504,6 @@
 <li>将程序计数器设置为一个事先约定的地址上，该地址上存放的是系统调用处理程序的起始地址。</li>
 </ul>
 <p>而之后从内核态返回用户态时，又会进行类似的工作。</p>
-<h3 id="怎么切换"><a href="#怎么切换" class="headerlink" title="怎么切换"></a>怎么切换</h3><ul>
-<li>从当前进程的描述符中提取其内核栈的ss0及esp0信息。</li>
-<li>使用ss0和esp0指向的内核栈将当前进程的cs,eip,eflags,ss,esp信息保存起来，这个过程也完成了由用户栈到内核栈的切换过程，同时保存了被暂停执行的程序的下一条指令。</li>
-<li>将先前由中断向量检索得到的中断处理程序的cs,eip信息装入相应的寄存器，开始执行中断处理程序，这时就转到了内核态的程序执行了。</li>
-</ul>
-<p>如果要从内核态返回用户态，可以通过执行指令iret来完成，指令iret会将先前压栈的进入内核态前的cs,eip,eflags,ss,esp信息从栈里弹出，加载到各个对应的寄存器中，重新开始执行用户态的程序</p>
-<blockquote>
-<p>EIP寄存器里存储的是CPU下次要执行的指令的地址。</p>
-<p>ESP寄存器里存储的是在调用函数fun()之后，栈的栈顶。</p>
-</blockquote>
 <h3 id="内核空间和用户空间"><a href="#内核空间和用户空间" class="headerlink" title="内核空间和用户空间"></a>内核空间和用户空间</h3><p>内核空间总是驻留在内存中，它是<strong>为操作系统的内核保留的</strong>。按访问权限可以分为</p>
 <ul>
 <li>进程私有：每个进程都有单独的<strong>内核栈</strong>、<strong>页表</strong>、<strong>task 结构以及 mem_map 结构</strong>等。</li>
@@ -528,7 +518,7 @@
 <li>已初始化的数据段：<strong>存放已初始化的全局变量</strong>，包括静态全局变量、静态局部变量以及常量。</li>
 <li>内存映射区域：<strong>例如将动态库，共享内存等虚拟空间的内存映射到物理空间的内存</strong>，一般是 mmap 函数所分配的虚拟内存空间。</li>
 </ul>
-<h3 id="系统调用"><a href="#系统调用" class="headerlink" title="系统调用"></a>系统调用</h3><p>根据进程访问资源的特点，分为用户态和系统态。用户程序运行在用户态，通过系统调用使用系统态提供的功能。<strong>系统调用是操作系统对程序员提供的接口</strong>，应用程序通过系统调用来请求内核服务。</p>
+<h3 id="系统调用"><a href="#系统调用" class="headerlink" title="系统调用"></a>系统调用</h3><p><strong>系统调用是操作系统对程序员提供的接口</strong>。根据进程访问资源的特点，分为用户态和系统态。用户程序运行在用户态，通过系统调用使用系统态提供的功能。</p>
 <p>系统调用按功能分为：设备管理、文件管理、进程控制、进程通信、内存管理。</p>
 <h3 id="系统调用和中断的关系"><a href="#系统调用和中断的关系" class="headerlink" title="系统调用和中断的关系"></a>系统调用和中断的关系</h3><p>系统调用：通过系统调用使用内核态的子功能。</p>
 <p>中断：一个硬件或软件发出请求，要求CPU暂停当前工作，处理更加重要的事情。</p>
@@ -540,7 +530,7 @@
 </ul>
 <h2 id="内存管理"><a href="#内存管理" class="headerlink" title="内存管理"></a>内存管理</h2><h3 id="内存管理主要是做什么"><a href="#内存管理主要是做什么" class="headerlink" title="内存管理主要是做什么"></a><strong>内存管理主要是做什么</strong></h3><ul>
 <li>负责内存的分配与回收</li>
-<li>地址转换，将逻辑地址转换成相应的物理地址</li>
+<li>地址转换，将逻辑地址转换成物理地址</li>
 </ul>
 <h3 id="常见的内存管理机制"><a href="#常见的内存管理机制" class="headerlink" title="常见的内存管理机制"></a>常见的内存管理机制</h3><p>连续分配管理，如<strong>块式管理</strong> 。非连续分配管理如<strong>页式管理</strong> 、<strong>段式管理</strong>。</p>
 <ol>
@@ -594,7 +584,7 @@
 <p>段式存储，2次（同上）</p>
 <p><strong>段页式存储，3次：</strong></p>
 <p>第一次：访问内存中的段表查到<strong>页表的起始地址</strong></p>
-<p>第二次：访问内存中的页表<strong>找到页帧号</strong>，<strong>形成物理地址</strong></p>
+<p>第二次：访问内存中的页表找到<strong>页帧号</strong>，<strong>形成物理地址</strong></p>
 <p>第三次：得到<strong>物理地址后，再一次访问内存</strong>，存取指令或者数据</p>
 <p><strong>快表</strong></p>
 <p><img src="tlb.jpeg" alt></p>
@@ -629,31 +619,13 @@
 <h4 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h4><ul>
 <li><strong>地址空间</strong>：提供更大的地址空间，并且地址空间是连续的，使得程序编写、链接更加简单</li>
 <li><strong>进程隔离</strong>：不同进程的虚拟地址之间没有关系，所以一个进程的操作不会对其它进程造成影响</li>
-<li><strong>内存映射</strong>：有了虚拟内存之后，可以直接映射磁盘上的文件到虚拟地址空间。内存吃紧的时候又可以将这部分内存清空掉，提高物理内存利用效率。</li>
+<li><strong>提高物理内存利用率</strong>：直接映射磁盘上的文件到虚拟地址空间，内存吃紧的时候又可以将这部分内存清空掉。</li>
 </ul>
-<h4 id="访问物理内存"><a href="#访问物理内存" class="headerlink" title="访问物理内存"></a>访问物理内存</h4><ol>
-<li>用户进程向操作系统发出内存申请请求</li>
-<li>系统分配虚拟地址</li>
-<li>系统为这块虚拟地址<strong>创建的内存映射</strong>，并将它放进该进程的页表</li>
-<li>系统<strong>返回虚拟地址给用户进程，用户进程开始访问该虚拟地址</strong></li>
-<li>CPU 根据虚拟地址在此进程的页表中找到了相应的内存映射，但是这个内存映<strong>射没有和物理内存关联，于是产生缺页中断</strong></li>
-<li><strong>分配物理内存并将它关联到页表相应的内存映射</strong>。</li>
-</ol>
-<blockquote>
-<p>缺页中断不是每次都会发生，只有系统觉得有必要延迟分配内存的时候才用的着</p>
-<p>很多时候在上面的第 3 步，系统会分配真正的物理内存并和内存映射进行关联</p>
-</blockquote>
 <h4 id="局部性原理"><a href="#局部性原理" class="headerlink" title="局部性原理"></a>局部性原理</h4><ol>
-<li><strong>时间局部性</strong> ：<strong>如果程序中的某条指令一旦执行，不久以后该指令可能再次执行；如果某数据被访问过，不久以后该数据可能再次被访问。</strong></li>
-<li><strong>空间局部性</strong> ：<strong>一旦程序访问了某个存储单元，在不久之后，其附近的存储单元也将被访问</strong></li>
+<li><strong>时间局部性</strong> ：如果程序中的某条指令一旦执行，不久后该指令可能再次执行；如果某数据被访问过，不久以后该数据可能再次被访问。</li>
+<li><strong>空间局部性</strong> ：程序访问了某个存储单元，其附近的存储单元也将被访问</li>
 </ol>
-<h4 id="MMU作用"><a href="#MMU作用" class="headerlink" title="MMU作用"></a>MMU作用</h4><p>内存管理单元，负责<strong>虚拟地址映射为物理地址</strong>，以及提供硬件机制的内存访问授权。页表存储着页（逻辑地址）和页框（物理内存空间）的映射表。</p>
-<blockquote>
-<ol>
-<li>操作系统在初始化或分配、释放内存时会执行一些指令在物理内存中填写页表，然后用指令设置MMU，告诉MMU页表在物理内存中的什么位置。</li>
-<li>设置好之后，CPU每次执行访问内存的指令都会自动引发MMU做查表和地址转换操作，地址转换操作由硬件自动完成。</li>
-</ol>
-</blockquote>
+<h4 id="MMU作用"><a href="#MMU作用" class="headerlink" title="MMU作用"></a>MMU作用</h4><p>内存管理单元，负责<strong>虚拟地址映射为物理地址</strong>。页表存储着页（逻辑地址）和页框（物理内存空间）的映射表。</p>
 <h4 id="逻辑地址和物理地址"><a href="#逻辑地址和物理地址" class="headerlink" title="逻辑地址和物理地址"></a>逻辑地址和物理地址</h4><ul>
 <li>逻辑地址是相对地址，是在编译链接后指明的地址，编程一般只有可能和逻辑地址打交道。</li>
 <li>物理地址是在内存中的实际地址，是装入后指明的位置</li>
@@ -665,35 +637,33 @@
 <li><strong>最不经常使用算法</strong>NFU：置换出访问次数最少的页面</li>
 </ul>
 <h3 id="缺页中断"><a href="#缺页中断" class="headerlink" title="缺页中断"></a>缺页中断</h3><p><strong>概念</strong></p>
-<p>当一个程序访问一个<strong>映射到地址空间却实际并未加载到物理内存</strong>的页时， 硬件向软件发出的一次中断（或异常）就是一个缺页中断或叫页错误（page fault）。</p>
+<p>当程序访问一个<strong>映射到地址空间却实际并未加载到物理内存</strong>的页时， 硬件向软件发出的一次中断（或异常）就是一个缺页中断或叫页错误（page fault）。</p>
 <blockquote>
 <p>缺页中断是一种特殊的中断，它与一般的中断的区别是：</p>
-<p>（1）<strong>缺页中断是在指令执行期间</strong>，发现所要访问的指令或数据不在内存时产生和处理的。</p>
+<p>（1）缺页中断是在指令执行期间，发现所要访问的指令或数据不在内存时产生和处理的。</p>
 <p>（2）可能产生多次缺页中断。</p>
 </blockquote>
 <p><strong>Major/Minor page fault区别</strong></p>
-<p>发生缺页中断时，对应的数据还存在于磁盘上，即会触发一次major page fault；</p>
-<p>发生缺页中断时，对应的数据已经载到了Page Cache中，这种异常即为一次minor page fault。</p>
+<p>发生缺页中断时，对应的数据还存在于磁盘上，即major page fault；</p>
+<p>发生缺页中断时，对应的数据已经载到了Page Cache中，即minor page fault。</p>
 <p><strong>如何查看进程发生缺页中断的次数？</strong></p>
 <p>用<code>ps -o majflt,minflt -C program</code>命令查看</p>
 <p><strong>tcp服务器的系统发生大量缺页中断，可能的原因是什么</strong></p>
 <p>可能是mmap了大文件导致的，或者内存不够用了被频繁换入换出。</p>
 <h3 id="堆和栈的区别"><a href="#堆和栈的区别" class="headerlink" title="堆和栈的区别"></a>堆和栈的区别</h3><ul>
-<li><p>申请方式</p>
-<p>栈：由系统自动分配；</p>
-<p>堆：程序员自己申请</p>
+<li><p><strong>申请方式</strong></p>
+<p> 栈：由系统自动分配；</p>
+<p> 堆：程序员自己申请</p>
 </li>
 <li><p><strong>申请效率的比较</strong></p>
-</li>
-</ul>
 <p>栈：速度较快。</p>
 <p>堆：一般速度比较慢，而且容易产生内存碎片。</p>
-<ul>
-<li><strong>堆和栈中的存储内容</strong></li>
-</ul>
+</li>
+<li><p><strong>堆和栈中的存储内容</strong></p>
 <p>栈：下一条指令的地址，函数的各个参数，函数中的局部变量。 </p>
 <p>堆：堆中的具体内容由程序员安排。</p>
-<h2 id="写时复制"><a href="#写时复制" class="headerlink" title="写时复制"></a>写时复制</h2><p>写时复制指的是当多个进程共享同一块数据时，如果其中一个进程需要对这份数据进行修改，就需要将其拷贝到自己的进程地址空间中。这样做并不影响其他进程对这块数据的操作，每个进程要修改的时候才会进行拷贝，所以叫写时复制。</p>
+</li>
+</ul>
 <h2 id="进程管理"><a href="#进程管理" class="headerlink" title="进程管理"></a>进程管理</h2><h3 id="进程实体的组成"><a href="#进程实体的组成" class="headerlink" title="进程实体的组成"></a>进程实体的组成</h3><ul>
 <li>PCB：面向操作系统，<strong>PCB 是进程存在的唯一标志</strong>，当进程被创建时，操作系统为其创建 PCB，当进程结束时，会回收其 PCB。包含进程描述信息（进程标识符PID，用户标识符UID），进程控制和管理信息（进程当前状态）、资源分配清单（正在使用<strong>文件</strong>、内存区域、IO设备）、寄存器的值（PSW、PC）等</li>
 <li>程序段：程序的代码（指令序列）</li>
@@ -708,35 +678,36 @@
 <li>多线程程序只要有一个线程崩溃，整个程序就崩溃了，但多进程程序中一个进程崩溃并不会对其它进程造成影响，因为进程有自己的独立地址空间，因此多进程更加健壮</li>
 </ul>
 <h3 id="为什么进程切换开销大"><a href="#为什么进程切换开销大" class="headerlink" title="为什么进程切换开销大"></a>为什么进程切换开销大</h3><p><strong>线程的上下文切换只需要保存线程的运行时数据，比如线程的id、寄存器中的值、栈数据</strong>。进程上下文要保存<strong>页表、文件描述符表、信号控制数据和进程信息、数据段、堆</strong>等数据。</p>
-<p>上下文的切换会扰乱处理器的缓存机制。处理器中已经缓存的内存地址都作废了。</p>
-<p>当你改变虚拟内存空间的时候，处理的页表缓冲会被全部刷新，这将导致内存的访问在一段时间内相当的低效。但是在线程的切换中，不会出现这个问题。</p>
+<p>进程的上下文的切换会扰乱处理器的缓存机制。处理器中已经缓存的内存地址都作废了，页表缓冲会被全部刷新。</p>
 <h3 id="进程间通信"><a href="#进程间通信" class="headerlink" title="进程间通信"></a><strong>进程间通信</strong></h3><p>进程拥有独立的内存地址空间，导致了进程之间无法利用直接的内存映射进行进程间通信。</p>
-<h4 id="1-信号"><a href="#1-信号" class="headerlink" title="1.信号"></a>1.信号</h4><p>在软件层次上对中断机制的一种模拟。信号是异步的，一个进程不必通过任何操作来等待信号的到达。<strong>唯一的异步通信机制</strong>。</p>
-<h4 id="2-信号量"><a href="#2-信号量" class="headerlink" title="2.信号量"></a>2.信号量</h4><p>信号量也可以说是一个计数器，常用来处理进程或线程同步的问题，特别是对临界资源的访问同步问题。</p>
-<p>临界资源：为某一时刻只能由一个进程或线程操作的资源，当信号量的值大于或等于0时，表示可以供并发进程访问的临界资源数，当小于0时，表示正在等待使用临界资源的进程数。</p>
+<h4 id="1-信号"><a href="#1-信号" class="headerlink" title="1.信号"></a>1.信号</h4><p>在软件层次上对中断机制的模拟。信号是异步的。<strong>唯一的异步通信机制</strong>。</p>
+<h4 id="2-信号量"><a href="#2-信号量" class="headerlink" title="2.信号量"></a>2.信号量</h4><p>一个计数器，常用来处理进程或线程同步的问题，特别是对临界资源的访问同步问题。</p>
+<p>临界资源：某一时刻只能由一个进程或线程操作的资源，当信号量的值大于或等于0时，表示可以供并发进程访问的临界资源数，当小于0时，表示正在等待使用临界资源的进程数。</p>
 <blockquote>
 <p>由于信号量只能进行等待和发送信号，即<code>P(sv)</code>和<code>V(sv)</code>：</p>
 <ul>
 <li><code>P(sv)</code>：如果sv的值大于零，就给它减1；如果它的值为零，就挂起该进程的执行</li>
 <li><code>V(sv)</code>：如果有其他进程因等待sv而被挂起，就让它恢复运行，如果没有进程因等待sv而挂起，就给它加1.</li>
 </ul>
-<p>在信号量进行PV操作时都为原子操作（因为它需要保护临界资源）在临界区之前执行P（mutex），在临界区之后执行V（mutex）；P、V操作必须成对出现。</p>
+<p>PV操作都为原子操作（因为它需要保护临界资源）；在临界区之前执行P（mutex），在临界区之后执行V（mutex）；P、V操作必须成对出现。</p>
 </blockquote>
-<h4 id="3-消息队列"><a href="#3-消息队列" class="headerlink" title="3.消息队列"></a>3.消息队列</h4><p>消息队列是存放在内核中的消息链表，每个消息队列由消息队列标识符标识，与管道不同的是，消息队列存放在内核中，只有在内核重启时才能删除一个消息队列，内核重启也就是系统重启，同样消息队列的大小也是受限制的。</p>
+<h4 id="3-消息队列"><a href="#3-消息队列" class="headerlink" title="3.消息队列"></a>3.消息队列</h4><p>消息队列是存放在内核中的消息链表，与管道不同的是，消息队列存放在内核中，只有在系统重启时才能删除一个消息队列，消息队列的大小受限制的。</p>
 <h4 id="4-共享内存"><a href="#4-共享内存" class="headerlink" title="4.共享内存"></a>4.共享内存</h4><p><strong>共享内存就是分配一块能被其他进程访问的内存。</strong>共享内存是最快的IPC形式。</p>
-<p><strong>采用共享内存通信的一个显而易见的好处是效率高，因为进程可以直接读写内存，而不需要任何数据的拷贝。</strong>对于像管道和消息队列等通信方式，则需要在内核和用户空间进行四次的数据拷贝，而<strong>共享内存则只拷贝两次数据</strong>：一次从输入文件到共享内存区，另一次从共享内存区到输出文件。</p>
+<p>共享内存则只拷贝两次数据：一次从输入文件到共享内存区，另一次从共享内存区到输出文件。</p>
 <p><strong>不同进程间是如何实现共享内存的</strong></p>
 <ul>
-<li>在Linux中，每个进程都有属于自己的进程控制块（PCB）和地址空间，</li>
-<li>都有一个与之对应的页表，负责将进程的虚拟地址与物理地址进行映射，</li>
-<li>通过内存管理单元进行管理。两个不同的虚拟地址通过页表映射到物理空间的同一区域，它们所指向的这块区域即共享内存。</li>
-<li>这样当一个进程进行写操作，另一个进程读操作就可以实现进程间通信。但是，我们要确保一个进程在写的时候不能被读，因此我们使用信号量来实现同步与互斥。</li>
+<li>每个进程都有属于自己的进程控制块（PCB）和地址空间，</li>
+<li>通过内存管理单元进行管理。两个不同的虚拟地址通过页表映射到物理空间的同一区域。</li>
+<li>这样当一个进程进行写操作，另一个进程读操作就可以实现进程间通信。</li>
 </ul>
+<blockquote>
+<p>确保一个进程在写的时候不能被读，使用信号量来实现同步与互斥。</p>
+</blockquote>
 <h4 id="5-管道"><a href="#5-管道" class="headerlink" title="5.管道"></a>5.管道</h4><p>半双工通信方式；只用于有亲缘关系（父子或兄弟进程）的进程间的通信；</p>
 <p><strong>管道通信怎么实现</strong></p>
 <p>内核管理的一个环形的缓冲区。</p>
 <ul>
-<li>管道的一端连接一个进程的输出。这个进程会向管道中放入信息。</li>
+<li>管道的一端连接一个进程的输出。会向管道中放入信息。</li>
 <li>管道的另一端连接一个进程的输入，这个进程取出信息。</li>
 <li>当管道中没有信息的话，从管道中读取的进程会等待，直到另一端的进程放入信息。</li>
 <li>当管道被放满信息的时候，尝试放入信息的进程会等待，直到另一端的进程取出信息。</li>
@@ -754,20 +725,19 @@
 </ul>
 <h4 id="7-套接字"><a href="#7-套接字" class="headerlink" title="7.套接字"></a>7.套接字</h4><p><strong>可用于不同主机间的进程通信。</strong></p>
 <h3 id="线程间的通信"><a href="#线程间的通信" class="headerlink" title="线程间的通信"></a>线程间的通信</h3><h4 id="互斥量"><a href="#互斥量" class="headerlink" title="互斥量"></a>互斥量</h4><ul>
-<li>只有拥有互斥对象的线程才能访问互斥资源。</li>
-<li>因为互斥对象只有一个，所以可以保证互斥资源不会被多个线程同时访问；</li>
+<li>只有拥有互斥对象的线程才能访问互斥资源。因为互斥对象只有一个，所以可以保证互斥资源不会被多个线程同时访问；</li>
 <li>当前拥有互斥对象的线程处理完任务后必须将互斥对象交出，以便其他线程访问该资源。</li>
 </ul>
-<h4 id="信号量"><a href="#信号量" class="headerlink" title="信号量"></a>信号量</h4><ul>
-<li>控制同一时刻访问此资源的最大线程数量。</li>
+<h4 id="信号量"><a href="#信号量" class="headerlink" title="信号量"></a>信号量</h4><p>控制同一时刻访问此资源的最大线程数量。</p>
+<ul>
 <li>信号量对象保存了<strong>最大资源计数</strong>和<strong>当前可用资源计数</strong></li>
 <li>每增加一个线程对共享资源的访问，当前可用资源计数就减1，只要当前可用资源计数大于0，就可以发出信号量信号，如果为0，则将线程放入一个队列中等待。线程处理完共享资源后，将当前可用资源数加1。</li>
 <li>如果信号量的取值只能为0或1，那么信号量就成为了互斥量</li>
 </ul>
-<h4 id="事件"><a href="#事件" class="headerlink" title="事件"></a>事件</h4><p>允许一个线程在处理完一个任务后，主动唤醒另外一个线程执行任务。</p>
+<h4 id="事件"><a href="#事件" class="headerlink" title="事件"></a>事件</h4><p>一个线程在处理完一个任务后，主动唤醒另外一个线程执行任务。</p>
 <h3 id="临界区和临界资源"><a href="#临界区和临界资源" class="headerlink" title="临界区和临界资源"></a>临界区和临界资源</h3><p><strong>临界资源</strong></p>
 <p>临界资源是一次仅允许一个进程使用的共享资源。各进程采取互斥的方式，实现共享的资源称作临界资源。</p>
-<p><strong>临界区</strong><br>每个进程中访问临界资源的那段代码称为临界区，每次只允许一个进程进入临界区，进入后，不允许其他进程进入。</p>
+<p><strong>临界区</strong><br>访问临界资源的代码称为临界区，每次只允许一个进程进入临界区，进入后，不允许其他进程进入。</p>
 <p><strong>互斥量和临界区有什么区别？</strong></p>
 <p>互斥量是可以命名的，可以用于不同进程之间的同步；而临界区只能用于同一进程中线程的同步。</p>
 <p>创建互斥量需要的资源更多，因此临界区的优势是速度快，节省资源。</p>
@@ -807,13 +777,7 @@
 <li>切换内核栈，加入新的内容（PCB控制块，资源相关），硬件上下文切换</li>
 </ul>
 <h3 id="线程切换"><a href="#线程切换" class="headerlink" title="线程切换"></a>线程切换</h3><p>线程在切换的过程中需要保存当前线程Id、线程状态、堆栈、寄存器状态等信息。 </p>
-<blockquote>
-<p>寄存器主要包括SP PC EAX等寄存器，</p>
-<p>SP:堆栈指针，指向当前栈的栈顶地址</p>
-<p>PC:程序计数器，存储下一条将要执行的指令</p>
-<p>EAX:累加寄存器，用于加法乘法的缺省寄存器</p>
-</blockquote>
-<h3 id="进程的调度算法"><a href="#进程的调度算法" class="headerlink" title="进程的调度算法"></a><strong>进程的调度算法</strong></h3><p><strong>批处理系统</strong></p>
+<h3 id="进程的调度算法"><a href="#进程的调度算法" class="headerlink" title="进程的调度算法"></a>进程的调度算法</h3><p><strong>批处理系统</strong></p>
 <ul>
 <li>先到先服务（FCFS） : 按照请求的顺序进行调度。非抢占式，无饥饿问题；对短进程不利。</li>
 <li>短作业优先（SJF） : 按估计运行时间最短的顺序进行调度。非抢占式，可能导致饥饿问题；对长进程不利。</li>
@@ -834,22 +798,24 @@
 <h3 id="抢占式非抢占式的区别"><a href="#抢占式非抢占式的区别" class="headerlink" title="抢占式非抢占式的区别"></a>抢占式非抢占式的区别</h3><ul>
 <li>抢占式：更高优先级的任务出现时，执行优先级更高的进程。</li>
 <li>非抢占式：高优先级的进程不能中止低优先级的进程，抢占CPU运行。</li>
-<li>低优先级的进程必须等待很长时间，并且可能会在抢占式调度中饿死。 </li>
-<li>抢占式有进程调度的开销，非抢占式没有</li>
+<li>饥饿：抢占式，低优先级的进程必须等待很长时间，并且可能会饿死。 </li>
+<li>调度开销：抢占式有进程调度的开销，非抢占式没有</li>
 </ul>
 <h3 id="CFS-完全公平调度算法"><a href="#CFS-完全公平调度算法" class="headerlink" title="CFS 完全公平调度算法"></a>CFS 完全公平调度算法</h3><ul>
 <li>给每一个进程安排一个虚拟时钟，vruntime。</li>
-<li>如果一个进程得以执行，随着时间的增长（也就是一个个tick的到来），其vruntime将不断增大。没有得到执行的进程vruntime不变。</li>
-<li>而调度器总是选择vruntime跑得最慢的那个进程来执行。这就是所谓的完全公平</li>
-<li>CFS的思想就是让每个调度实体（没有组调度的情形下就是进程）的vruntime互相追赶，而每个调度实体的vruntime增加速度不同，权重越大的增加的越慢，这样就能获得更多的cpu执行时间。</li>
-<li>nice值越小, 进程的权重越大，实际运行时间越长。</li>
+<li>如果一个进程得以执行，随着时间的增长，其vruntime将不断增大。没有得到执行的进程vruntime不变。</li>
+<li>而调度器总是选择vruntime最小的那个进程来执行。</li>
 </ul>
+<blockquote>
+<p>CFS的思想就是让每个调度实体（没有组调度的情形下就是进程）的vruntime互相追赶，而每个调度实体的vruntime增加速度不同，权重越大的增加的越慢，这样就能获得更多的cpu执行时间。</p>
+<p>nice值越小, 进程的权重越大，实际运行时间越长。</p>
+</blockquote>
 <p><strong>几个过程</strong></p>
 <ul>
-<li>创建新进程:设置新进程的vruntime值，将新进程加入红黑树中，判断是否需要抢占当前进程</li>
-<li>进程唤醒: 唤醒进程时，调整睡眠进程的vruntime值， 将睡眠进程加入红黑树中，判断是否需要抢占当前进程</li>
-<li>进程的调度: 进程调度时，把当前进程加入红黑树中， 从红黑树中挑选出下一个要运行的进程</li>
-<li>时钟周期中断: 更新当前运行进程的vruntime值，并判断是否需要抢占当前进程</li>
+<li>创建新进程：设置新进程的vruntime值，将新进程加入红黑树中，判断是否需要抢占当前进程</li>
+<li>进程唤醒：调整睡眠进程的vruntime值， 将睡眠进程加入红黑树中，判断是否需要抢占当前进程</li>
+<li>进程的调度： 进程调度时，把当前进程加入红黑树中， 从红黑树中挑选出下一个要运行的进程</li>
+<li>时钟周期中断： 更新当前运行进程的vruntime值，并判断是否需要抢占当前进程</li>
 </ul>
 <h3 id="程序计数器的作用"><a href="#程序计数器的作用" class="headerlink" title="程序计数器的作用"></a><strong>程序计数器的作用</strong></h3><p>为了保证进程能执行下去，需要确定下一条指令的地址。</p>
 <ul>
@@ -857,24 +823,25 @@
 <li>当执行指令时， 处理器将自动修改程序计数器的内容，即每执行一条指令程序计数器增加一个量，以便保持的总是将要执行的下一条指令的地址。</li>
 </ul>
 <h3 id="并发、并行、异步的区别？"><a href="#并发、并行、异步的区别？" class="headerlink" title="并发、并行、异步的区别？"></a>并发、并行、异步的区别？</h3><p>并发：在一个时间段中同时有多个程序在运行，但其实任一时刻，只有一个程序在CPU上运行；</p>
-<p>并行：在多CPU系统中，多个程序同时执行的</p>
+<p>并行：多个程序同时执行的</p>
 <p>异步：同步是顺序执行，异步是在等待某个资源的时候继续做自己的事</p>
 <h3 id="可以用kill-9-关闭进程吗"><a href="#可以用kill-9-关闭进程吗" class="headerlink" title="可以用kill -9 关闭进程吗"></a>可以用kill -9 关闭进程吗</h3><p>kill可将指定的信息送至程序。预设的信息为<code>SIGTERM(15)</code>，可将指定程序终止。若仍无法终止该程序，可使用<code>SIGKILL(9)</code>信息尝试强制删除程序。</p>
 <ul>
 <li>由于kill -9 属于暴力删除，相当于突然断电。</li>
-<li>迫使进程在运行时突然终止，进程在结束后不能自我清理。危害是导致系统资源无法正常释放，一般不推荐使用，除非其他办法都无效。 </li>
+<li>迫使进程在运行时突然终止，进程在结束后不能自我清理。可能导致系统资源无法正常释放，不推荐。 </li>
 </ul>
 <h3 id="kill是靠什么来通信的"><a href="#kill是靠什么来通信的" class="headerlink" title="kill是靠什么来通信的"></a>kill是靠什么来通信的</h3><p>信号。</p>
 <ul>
 <li>ctrl + c，会发送<code>SIGINT</code>的信号，等同于<code>kill -2(interrupt)</code></li>
 <li>ctrl + z，会发送<code>SIGTSTP</code>的信号</li>
 </ul>
+<h3 id="写时复制"><a href="#写时复制" class="headerlink" title="写时复制"></a>写时复制</h3><p>当多个进程共享同一块数据时，每个进程要修改的时候才拷贝到自己的地址空间。</p>
 <h3 id="什么是僵尸进程？大量的僵尸进程如何处理"><a href="#什么是僵尸进程？大量的僵尸进程如何处理" class="headerlink" title="什么是僵尸进程？大量的僵尸进程如何处理"></a>什么是僵尸进程？大量的僵尸进程如何处理</h3><p><strong>what</strong></p>
 <p>父进程使用 fork 创建子进程，如果子进程退出，而父进程并没有调用 wait 或 waitpid 获取子进程的状态信息，那么子进程的进程描述符仍然保存在系统中。这种进程称之为僵尸进程。</p>
 <p><strong>危害</strong></p>
-<p>保留的进程信息就不会释放，其<strong>进程号就会一直被占用</strong>，但是系统所能使用的进程号是有限的，如果大量的产生僵死进程，将因为没有可用的进程号而导致系统不能产生新的进程</p>
+<p><strong>进程号就会一直被占用</strong>，进程号有限的，可能导致系统不能产生新的进程</p>
 <p><strong>处理</strong></p>
-<p>父进程kill。僵尸进程变成孤儿进程，进而被 init 进程接管，init 进程会 <code>wait()</code>这些孤儿进程，释放它们占用的系统进程表中的资源。</p>
+<p>父进程kill。僵尸进程变成孤儿进程，被 init 进程接管，init 进程会 <code>wait()</code>这些孤儿进程，释放它们占用的系统进程表中的资源。</p>
 <h3 id="死锁"><a href="#死锁" class="headerlink" title="死锁"></a>死锁</h3><p>在两个或者多个并发进程中，每个进程持有某种资源而又等待其它进程释放它们保持着的资源，在未改变这种状态之前都不能向前推进，称这一组进程产生了死锁</p>
 <h4 id="必要条件"><a href="#必要条件" class="headerlink" title="必要条件"></a>必要条件</h4><ul>
 <li><strong>互斥</strong>：同一时刻，一个资源只能被一个进程使用；</li>
@@ -905,8 +872,8 @@
 <li><p>信号是一种更高层的软件形式的异常，用来通知进程发生了某种系统事件。</p>
 </li>
 </ul>
-<h2 id="文件系统"><a href="#文件系统" class="headerlink" title="文件系统"></a>文件系统</h2><h3 id="文件描述符"><a href="#文件描述符" class="headerlink" title="文件描述符"></a>文件描述符</h3><p>文件描述符是内核为了管理打开的文件所创建的索引，用于指代被打开的文件，对文件所有 I/O 操作的系统调用都需要通过文件描述符。</p>
-<h3 id="软链接和硬链接？"><a href="#软链接和硬链接？" class="headerlink" title="软链接和硬链接？"></a>软链接和硬链接？</h3><p><strong>硬链接：</strong><br>本质上和源文件没什么不同，和源文件共享同一个inode节点，通过这个inode节点来访问文件数据。</p>
+<h2 id="文件系统"><a href="#文件系统" class="headerlink" title="文件系统"></a>文件系统</h2><h3 id="文件描述符"><a href="#文件描述符" class="headerlink" title="文件描述符"></a>文件描述符</h3><p>内核为了管理打开的文件所创建的索引，用于指代被打开的文件，对文件所有 I/O 操作的系统调用都需要通过文件描述符。</p>
+<h3 id="软链接和硬链接"><a href="#软链接和硬链接" class="headerlink" title="软链接和硬链接"></a>软链接和硬链接</h3><p><strong>硬链接</strong><br>和源文件共享同一个inode节点，通过这个inode节点来访问文件数据。</p>
 <p>文件系统会维护一个引用计数，只要有文件指向这个区块，它就不会从硬盘上消失。只有当最后一个连接被删除后，文件的数据块及目录的连接才会被释放。</p>
 <p><strong>创建方法</strong>：<code>ln [源文件] [链接文件.hard]</code></p>
 <p><strong>软链接（符号链接）：</strong><br>类似windows的快捷方式，给文件创建一个快速的访问路径，它依赖于原文件。当原文件出现问题后，该链接不可用。</p>
@@ -919,10 +886,12 @@
 <h2 id="多路复用"><a href="#多路复用" class="headerlink" title="多路复用"></a>多路复用</h2><p>IO多路复用是指单个进程/线程就可以同时处理多个IO请求。</p>
 <p>实现原理：用户将想要监视的文件描述符添加到select/poll/epoll函数中，由内核监视，函数阻塞。一旦有文件描述符就绪（读就绪或写就绪），或者超时，函数就会返回，然后该进程可以进行相应的读/写操作。</p>
 <h3 id="select"><a href="#select" class="headerlink" title="select"></a><strong>select</strong></h3><ul>
-<li>Socket 是文件描述符，线程盯的所有的 Socket，都放在一个文件描述符集合 fd_set 中，然后调用 select 函数来监听文件描述符集合是否有变化。</li>
-<li>一旦有变化，就会依次查看每个文件描述符。发生变化的文件描述符在 fd_set 对应的位都设为 1，表示 Socket 可读或者可写，从而可以进行读写操作，然后再调用 select，接着盯着下一轮的变化。</li>
-<li>因为每次 Socket 所在的文件描述符集合中有 Socket 发生变化的时候，都需要通过轮询的方式。因而使用 select，能够同时盯的项目数量由 FD_SETSIZE 限制  </li>
+<li>Socket 是文件描述符，线程盯的所有的 Socket，都放在文件描述符集合 fd_set 中，调用 select 函数来监听文件描述符集合是否有变化。</li>
+<li>一旦有变化，依次查看每个文件描述符。发生变化的文件描述符在 fd_set 对应的位都设为 1，表示 Socket 可读或者可写，从而可以进行读写操作，然后再调用 select，接着盯着下一轮的变化。</li>
 </ul>
+<blockquote>
+<p> Socket 所在的文件描述符集合中有 Socket 发生变化的时候，都需要通过轮询的方式。因而能够同时盯的项目数量由 FD_SETSIZE 限制  </p>
+</blockquote>
 <h3 id="epoll"><a href="#epoll" class="headerlink" title="epoll"></a><strong>epoll</strong></h3><p><strong>epoll的使用过程</strong>:</p>
 <ul>
 <li>调用<code>epoll_create()</code>函数创建一个epoll对象</li>
@@ -931,8 +900,9 @@
 </ul>
 <p>通过注册 callback 函数的方式，文件描述符变化时，会主动通知。  </p>
 <ul>
-<li>epoll_create 创建一个 epoll 对象，也是一个文件，也对应一个文件描述符，同样也对应着打开文件列表中的一项。在这项里面有一个红黑树，在红黑树里，要保存这个 epoll要监听的所有 Socket  </li>
-<li>当 epoll_ctl 添加一个 Socket 的时候，其实是加入这个红黑树，同时红黑树里面的节点指向一个结构，将这个结构挂在被监听的 Socket 的事件列表中。当一个 Socket 来了一个事件的时候，可以从这个列表中得到 epoll 对象，并调用 call back 通知它。  </li>
+<li>epoll_create 创建一个 epoll 对象，对应一个文件描述符，同样也对应着打开文件列表中的一项。在这项里面有一个红黑树，保存这个 epoll要监听的所有 Socket  </li>
+<li>epoll_ctl 将新的文件描述符通过epoll_ctl添加到红黑树中，由红黑树这个数据结构来管理所有需要监视的文件描述符</li>
+<li>将新的文件描述符通过epoll_ctl添加到红黑树中，由红黑树这个数据结构来管理所有需要监视的文件描述符。  </li>
 </ul>
 <p><strong>使用场景</strong></p>
 <p>高并发</p>
@@ -965,7 +935,7 @@
 <p><strong>区别</strong></p>
 <p>边缘触发效率更高，减少了被重复触发的次数，函数不会返回大量用户程序可能不需要的文件描述符。</p>
 <h3 id="常见IO模型"><a href="#常见IO模型" class="headerlink" title="常见IO模型"></a>常见IO模型</h3><ul>
-<li>同步阻塞IO（Blocking IO）：用户线程发起IO读/写操作之后，线程阻塞，直到可以开始处理数据；对CPU资源的利用率不够；</li>
+<li>同步阻塞IO（Blocking IO）：用户线程发起IO读/写操作之后，线程阻塞，直到可以开始处理数据；</li>
 <li>同步非阻塞IO（Non-blocking IO）：发起IO请求之后可以立即返回，如果没有就绪的数据，需要不断地发起IO请求直到数据就绪；不断重复请求消耗了大量的CPU资源；</li>
 <li>IO多路复用：是指单个进程/线程就可以同时处理多个IO请求。</li>
 <li>异步IO（Asynchronous IO）：用户线程发出IO请求之后，继续执行，由内核进行数据的读取并放在用户指定的缓冲区内，在IO完成之后通知用户线程直接使用。</li>
@@ -1464,7 +1434,7 @@
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="攻击技术">
+                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="攻击技术">
                         
                         <span class="card-title">攻击技术</span>
                     </div>
@@ -1518,7 +1488,7 @@ JavaS
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="HTTP和HTTPS">
+                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="HTTP和HTTPS">
                         
                         <span class="card-title">HTTP和HTTPS</span>
                     </div>
@@ -1730,7 +1700,7 @@ GET与POST
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">171.6k</span>
+            <span class="white-color">169k</span>
             
 
             <br>
@@ -1868,9 +1838,10 @@ $(function () {
     <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
     <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
     <script src="/js/matery.js"></script>
-
+	<!-- 
     <script type="text/javascript"> var OriginTitile = document.title, st; document.addEventListener("visibilitychange", function () { document.hidden ? (document.title = "Σ(っ °Д °;)っ喔哟，崩溃啦！", clearTimeout(st)) : (document.title = "φ(゜▽゜*)♪咦，又好了！", st = setTimeout(function () { document.title = OriginTitile }, 3e3)) })
-    </script>
+    </script>-->
+	
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
 

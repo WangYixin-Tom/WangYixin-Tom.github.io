@@ -269,7 +269,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/9.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/8.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -424,14 +424,14 @@
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    4.6k
+                    3.4k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    16 分
+                    11 分
                 </div>
                 
                 
@@ -453,10 +453,6 @@
 <p>缺点：基于erlang语言开发的，分析里面的源码有一定门槛，较难进行深层次的源码定制和改造。</p>
 <p>Kafka的优势在于专为超高吞吐量的实时日志采集、实时数据同步、实时数据计算等场景来设计。</p>
 <h2 id="什么是RabbitMQ"><a href="#什么是RabbitMQ" class="headerlink" title="什么是RabbitMQ"></a>什么是RabbitMQ</h2><p>RabbitMQ是一款开源的，Erlang编写的，基于AMQP协议的消息中间件，主要负责接收、存储、转发消息。</p>
-<h2 id="rabbitmq-的使用场景"><a href="#rabbitmq-的使用场景" class="headerlink" title="rabbitmq 的使用场景"></a>rabbitmq 的使用场景</h2><p>（1）服务间异步通信</p>
-<p>（2）顺序消费</p>
-<p>（3）定时任务</p>
-<p>（4）请求削峰</p>
 <h2 id="消息队列中推和拉模式"><a href="#消息队列中推和拉模式" class="headerlink" title="消息队列中推和拉模式"></a>消息队列中推和拉模式</h2><h3 id="push模式"><a href="#push模式" class="headerlink" title="push模式"></a>push模式</h3><p>服务器主动发送到用户的客户端，服务端保存状态。适用于消息量不大、消费能力强要求实时性高的情况下。</p>
 <p><strong>优点</strong></p>
 <ul>
@@ -475,7 +471,7 @@
 <p><strong>缺点</strong></p>
 <ul>
 <li>消息延迟，消费者去拉取消息，只能不断地拉取，但是又不能很频繁地请求，太频繁了就变成消费者在攻击 Broker 了。</li>
-<li><strong>消息忙请求</strong>，忙请求就是比如消息隔了几个小时才有，那么在几个小时之内消费者的请求都是无效的，在做无用功。优化方式：消费者如果尝试拉取失败，不是直接 return，而是把连接挂在那里 wait，服务端如果有新的消息到来，把连接拉起，返回最新消息。</li>
+<li><strong>消息忙请求</strong>，消息隔了几个小时才有，那么在几个小时之内消费者的请求都是无效的，在做无用功。优化方式：消费者如果尝试拉取失败，不是直接 return，而是把连接挂在那里 wait，服务端如果有新的消息到来，把连接拉起，返回最新消息。</li>
 </ul>
 <h2 id="RabbitMQ基本概念"><a href="#RabbitMQ基本概念" class="headerlink" title="RabbitMQ基本概念"></a>RabbitMQ基本概念</h2><p><strong>Producer：生产者</strong>，投递消息的程序</p>
 <p><strong>Consumer：消费者</strong>，接受消息的程序</p>
@@ -493,11 +489,6 @@
 <li>exchange保存binding关系的查找表;</li>
 <li>channel是实际进行路由工作的实体，根据routing_key将消息投递给queue。channel是在tcp连接上的虚拟链接，amqp命令通过channel发送，<br>一个线程允许使用多个channel，多线程共享同一个socket。</li>
 </ul>
-<h2 id="RabbitMQ的工作模式"><a href="#RabbitMQ的工作模式" class="headerlink" title="RabbitMQ的工作模式"></a>RabbitMQ的工作模式</h2><p><strong>简单模式</strong>：它包含一个生产者、一个消费者和一个队列。生产者向队列里发送消息，消费者从队列中获取消息并消费。</p>
-<p><strong>工作模式</strong>：向多个互相竞争的消费者发送消息的模式，它包含一个生产者、两个消费者和一个队列。两个消费者同时绑定到一个队列上去，当消费者获取消息处理耗时任务时，空闲的消费者从队列中获取并消费消息。</p>
-<p><strong>发布/订阅模式</strong>：同时向多个消费者发送消息的模式（类似广播的形式），它包含一个生产者、两个消费者、两个队列和一个交换机。两个消费者监听各自队列，两个队列绑定到交换机上去，生产者通过发送消息到交换机，所有消费者接收并消费消息。</p>
-<p><strong>路由模式</strong>：根据<code>路由键</code>选择性给多个消费者发送消息的模式，它包含一个生产者、两个消费者、两个队列和一个交换机。两个消费者监听各自队列，两个队列通过<code>路由键</code>绑定到交换机上去。生产者发送消息到交换机，交换机通过<code>路由键</code>转发到不同队列，队列绑定的消费者接收并消费消息。</p>
-<p><strong>主题模式</strong>：根据<code>路由键匹配规则</code>选择性给多个消费者发送消息的模式，它包含一个生产者、两个消费者、两个队列和一个交换机。两个消费者监听各自队列，两个队列通过<code>路由键匹配规则</code>绑定到交换机上去。生产者发送消息到交换机，交换机通过<code>路由键匹配规则</code>转发到不同队列，队列绑定的消费者接收并消费消息。</p>
 <h2 id="消息在什么时候会变成死信"><a href="#消息在什么时候会变成死信" class="headerlink" title="消息在什么时候会变成死信?"></a>消息在什么时候会变成死信?</h2><ul>
 <li>消息拒绝并且没有设置重新入队</li>
 <li>消息过期</li>
@@ -505,22 +496,10 @@
 </ul>
 <h2 id="如何保证RabbitMQ消息的顺序性？"><a href="#如何保证RabbitMQ消息的顺序性？" class="headerlink" title="如何保证RabbitMQ消息的顺序性？"></a>如何保证RabbitMQ消息的顺序性？</h2><p>1、需要保证顺序性的消息使用一个queue对应一个 consumer。</p>
 <p>2、消息在被创建时，都将被赋予一个全局唯一的、单调递增的、连续的序列号，可以通过一个全局计数器来实现这一点。可以在消费端实现前一条消息未消费，不处理下一条消息；也可以在生产端实现前一条消息未处理完毕，不发布下一条消息。</p>
-<h2 id="如何保证消息不丢失？"><a href="#如何保证消息不丢失？" class="headerlink" title="如何保证消息不丢失？"></a>如何保证消息不丢失？</h2><ol>
-<li>生产者发送消息至MQ的数据丢失</li>
-</ol>
-<p>解决方法:在生产者端开启comfirm 确认模式，然后如果写入了 RabbitMQ 中，RabbitMQ 会给你回传一个 ack 消息，告诉你说这个消息 ok 了。</p>
-<ol start="2">
-<li>MQ收到消息，暂存内存中，还没消费，自己挂掉，数据会都丢失</li>
-</ol>
-<p>解决方式：MQ设置为持久化。将内存数据持久化到磁盘中</p>
-<ol start="3">
-<li>消费者刚拿到消息，还没处理，挂掉了，MQ又以为消费者处理完</li>
-</ol>
-<p>解决方式：用 RabbitMQ 提供的 ack 机制，每次处理完的时候， ack 一把。</p>
 <h2 id="如何保证消息不被重复消费？"><a href="#如何保证消息不被重复消费？" class="headerlink" title="如何保证消息不被重复消费？"></a>如何保证消息不被重复消费？</h2><p>1、设置操作的幂等性。</p>
 <p>2、生产者发送每条数据的时候，里面加一个全局唯一的 id，消费者通过全局唯一ID检查是否消费过。</p>
 <p>3、基于数据库的唯一键来保证重复数据不会重复插入多条。</p>
-<h2 id="消息如何分发？"><a href="#消息如何分发？" class="headerlink" title="消息如何分发？"></a><strong>消息如何分发？</strong></h2><p>若该队列至少有一个消费者订阅，消息将以循环（round-robin）的方式发送给消费者。每条消息只会分发给一个订阅的消费者。通过路由可实现多消费的功能</p>
+<h2 id="消息如何分发？"><a href="#消息如何分发？" class="headerlink" title="消息如何分发？"></a><strong>消息如何分发？</strong></h2><p>若该队列至少有一个消费者订阅，消息将以循环的方式发送给消费者。每条消息只会分发给一个订阅的消费者。通过路由可实现多消费的功能</p>
 <h2 id="消息怎么路由？"><a href="#消息怎么路由？" class="headerlink" title="消息怎么路由？"></a>消息怎么路由？</h2><p>消息将拥有一个路由键（routing key），在消息创建时设定。通过队列路由键，可以把队列绑定到交换器上。</p>
 <p>消息到达交换器后，RabbitMQ 会将消息的路由键与队列的路由键进行匹配（针对不同的交换器有不同的路由规则）；</p>
 <p>常用的交换器主要分为一下三种：</p>
@@ -541,16 +520,6 @@
 <h2 id="如何保证消息不被重复消费？-1"><a href="#如何保证消息不被重复消费？-1" class="headerlink" title="如何保证消息不被重复消费？"></a>如何保证消息不被重复消费？</h2><p><strong>重复消费场景：</strong>因为网络传输等故障，消费确认信息没有传送到消息队列，导致消息队列不知道已经消费过该消息了，再次将消息分发给其他的消费者。</p>
 <p><strong>解决思路</strong>：保证消息的唯一性，就算是多次传输，不要让消息的多次消费带来影响；保证消息等幂性；</p>
 <p>比如：在写入消息队列的数据做唯一标识，消费消息时，根据唯一标识判断是否消费过；</p>
-<h2 id="如何确保消息正确地发送至-RabbitMQ？-如何确保消息接收方消费了消息？"><a href="#如何确保消息正确地发送至-RabbitMQ？-如何确保消息接收方消费了消息？" class="headerlink" title="如何确保消息正确地发送至 RabbitMQ？ 如何确保消息接收方消费了消息？"></a>如何确保消息正确地发送至 RabbitMQ？ 如何确保消息接收方消费了消息？</h2><p><strong>发送方确认模式</strong></p>
-<p>将信道设置成 confirm 模式（发送方确认模式），则所有在信道上发布的消息都会被指派一个唯一的 ID。</p>
-<p>一旦消息被投递到目的队列后，或者消息被写入磁盘后（可持久化的消息），信道会<strong>发送一个确认给生产者</strong>（包含消息唯一 ID）。</p>
-<p>如果 RabbitMQ 发生内部错误从而导致消息丢失，会发送一条 <strong>nack</strong>（notacknowledged，未确认）消息。</p>
-<p>发送方确认模式是异步的，生产者应用程序在等待确认的同时，可以继续发送消息。当确认消息到达生产者应用程序，生产者应用程序的回调方法就会被触发来处理确认消息。</p>
-<p><strong>接收方确认机制</strong></p>
-<p>消费者接收每一条消息后都必须进行确认（消息接收和消息确认是两个不同操作）。只有消费者确认了消息，RabbitMQ 才能安全地把消息从队列中删除。</p>
-<p>这里并没有用到超时机制，RabbitMQ 仅通过 Consumer 的连接中断来确认是否需要重新发送消息。也就是说，只要连接不中断，RabbitMQ 给了 Consumer 足够长的时间来处理消息。保证数据的最终一致性；</p>
-<p><strong>特殊情况</strong></p>
-<p>如果消费者接收到消息，在确认之前断开了连接或取消订阅，RabbitMQ 会认为消息没有被分发，然后重新分发给下一个订阅的消费者。（可能存在消息重复消费的隐患，需要去重）<br>如果消费者接收到消息却没有确认消息，连接也未断开，则 RabbitMQ 认为该消费者繁忙，将不会给该消费者分发更多的消息。</p>
 <h2 id="如何保证RabbitMQ消息的可靠传输？"><a href="#如何保证RabbitMQ消息的可靠传输？" class="headerlink" title="如何保证RabbitMQ消息的可靠传输？"></a>如何保证RabbitMQ消息的可靠传输？</h2><p>丢失又分为：生产者丢失消息、消息列表丢失消息、消费者丢失消息；</p>
 <p><strong>生产者丢失消息：</strong>RabbitMQ提供transaction和confirm模式来确保生产者不丢消息；</p>
 <p>transaction机制：发送消息前，开启事务,然后发送消息，如果发送过程中出现什么异常，事务就会回滚,如果发送成功则提交事务。然而，这种方式有个缺点：吞吐量下降；</p>
@@ -558,19 +527,22 @@
 <p><strong>消息队列丢数据：消息持久化。</strong>开启持久化磁盘的配置。</p>
 <p>这个持久化配置可以和confirm机制配合使用，你可以在消息持久化磁盘后，再给生产者发送一个Ack信号。</p>
 <p>队列持久化+消息持久化。</p>
+<p><strong>消费者丢失消息</strong></p>
 <p>消费者在收到消息之后，处理消息之前，会自动回复RabbitMQ已收到消息；</p>
 <p>如果这时处理消息失败，就会丢失该消息；</p>
 <p>解决方案：处理消息成功后，<strong>手动回复确认消息</strong>。</p>
 <h2 id="为什么不应该对所有的-message-都使用持久化机制？"><a href="#为什么不应该对所有的-message-都使用持久化机制？" class="headerlink" title="为什么不应该对所有的 message 都使用持久化机制？"></a>为什么不应该对所有的 message 都使用持久化机制？</h2><p>一般仅对关键消息作持久化处理，且应该保证关键消息的量不会导致性能瓶颈。否则会导致性能的下降，因为写磁盘比写 RAM 慢的多。</p>
 <p>其次，message 的持久化机制用在 RabbitMQ 的内置 cluster 方案时会出现“坑爹”问题。</p>
-<h2 id="集群"><a href="#集群" class="headerlink" title="集群"></a>集群</h2><h3 id="如何保证高可用的？RabbitMQ-的集群"><a href="#如何保证高可用的？RabbitMQ-的集群" class="headerlink" title="如何保证高可用的？RabbitMQ 的集群"></a>如何保证高可用的？RabbitMQ 的集群</h3><p>普通集群模式，在多台机器上启动多个 RabbitMQ 实例。 <strong>queue，只会放在一个 RabbitMQ 实例上，但是每个实例都同步 queue 的元数据。</strong>消费的时候，实际上如果连接到了另外一个实例，那么那个实例会从 queue 所在实例上拉取数据过来。这方案主要是提高吞吐量的，就是说让集群中多个节点来服务某个 queue 的读写操作。</p>
-<p><strong>镜像集群模式</strong>： RabbitMQ 的高可用模式。在镜像集群模式下，你创建的 queue，<strong>无论元数据还是 queue 里的消息都会存在于多个实例上</strong>，就是说，每个 RabbitMQ 节点都有这个 queue 的一个完整镜像，包含 queue 的全部数据的。然后每次你写消息到 queue 的时候，都会自动把消息同步到多个实例的 queue 上。</p>
-<p>好处在于，任何一个机器宕机了，其它机器还包含了这个 queue 的完整数据，别的 consumer 都可以到其它节点上去消费数据。</p>
-<p>坏处在于，这个性能开销大，消息需要同步到所有机器上，导致网络带宽压力和消耗很重。</p>
+<h2 id="集群"><a href="#集群" class="headerlink" title="集群"></a>集群</h2><h3 id="如何保证高可用的？RabbitMQ-的集群"><a href="#如何保证高可用的？RabbitMQ-的集群" class="headerlink" title="如何保证高可用的？RabbitMQ 的集群"></a>如何保证高可用的？RabbitMQ 的集群</h3><p>普通集群模式： <strong>queue，只会放在一个 RabbitMQ 实例上，但是每个实例都同步 queue 的元数据。</strong>消费的时候，实际上如果连接到了另外一个实例，那么那个实例会从 queue 所在实例上拉取数据过来。提高吞吐量，集群中多个节点来服务某个 queue 的读写操作。</p>
+<p><strong>镜像集群模式</strong>：高可用模式。在镜像集群模式下，你创建的 queue，<strong>无论元数据还是 queue 里的消息都会存在于多个实例上</strong></p>
+<p><strong>好处</strong></p>
+<p>任何一个机器宕机了，其它机器还包含了这个 queue 的完整数据，别的 consumer 都可以到其它节点上去消费数据。</p>
+<p><strong>坏处</strong></p>
+<p>这个性能开销大，消息需要同步到所有机器上，导致网络带宽压力和消耗很重。</p>
 <h3 id="rabbitmq-对集群节点停止顺序有要求吗"><a href="#rabbitmq-对集群节点停止顺序有要求吗" class="headerlink" title="rabbitmq 对集群节点停止顺序有要求吗?"></a>rabbitmq 对集群节点停止顺序有要求吗?</h3><p>RabbitMQ 对集群的停止的顺序是有要求的，应该先关闭内存节点，最后再关闭磁盘节点.如果顺序恰好相反的话，可能会造成消息的丢失</p>
 <h3 id="rabbitmq-集群有什么用"><a href="#rabbitmq-集群有什么用" class="headerlink" title="rabbitmq 集群有什么用?"></a>rabbitmq 集群有什么用?</h3><ul>
-<li>高可用: 某个服务器出现问题，整个 RabbitMQ 还可以继续使用</li>
-<li>高容量: 集群可以承载更多的消息量</li>
+<li>高可用：某个服务器出现问题，整个 RabbitMQ 还可以继续使用</li>
+<li>高容量： 集群可以承载更多的消息量</li>
 </ul>
 <h3 id="RAM-node-和-disk-node-的区别？"><a href="#RAM-node-和-disk-node-的区别？" class="headerlink" title="RAM node 和 disk node 的区别？"></a>RAM node 和 disk node 的区别？</h3><p>RAM node 仅将相关元数据保存到内存中，</p>
 <p>disk node会在内存和磁盘中均进行存储。</p>
@@ -1084,7 +1056,7 @@
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="kafka面试">
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="kafka面试">
                         
                         <span class="card-title">kafka面试</span>
                     </div>
@@ -1137,7 +1109,7 @@ Kafka 主要有两大应用场景：
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/28.jpg" class="responsive-img" alt="rabbitmq思维导图">
+                        <img src="/medias/featureimages/27.jpg" class="responsive-img" alt="rabbitmq思维导图">
                         
                         <span class="card-title">rabbitmq思维导图</span>
                     </div>
@@ -1342,7 +1314,7 @@ Kafka 主要有两大应用场景：
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">171.6k</span>
+            <span class="white-color">169k</span>
             
 
             <br>
@@ -1480,9 +1452,10 @@ $(function () {
     <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
     <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
     <script src="/js/matery.js"></script>
-
+	<!-- 
     <script type="text/javascript"> var OriginTitile = document.title, st; document.addEventListener("visibilitychange", function () { document.hidden ? (document.title = "Σ(っ °Д °;)っ喔哟，崩溃啦！", clearTimeout(st)) : (document.title = "φ(゜▽゜*)♪咦，又好了！", st = setTimeout(function () { document.title = OriginTitile }, 3e3)) })
-    </script>
+    </script>-->
+	
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
