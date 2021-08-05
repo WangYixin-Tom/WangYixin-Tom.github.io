@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://wangyixin-tom.github.io/2021/06/09/interview-structure/</loc>
+    <loc>https://wangyixin-tom.github.io/2021/04/12/interview-redis/</loc>
     <lastmod>2021-08-05</lastmod>
   </url>  <url>
-    <loc>https://wangyixin-tom.github.io/2021/04/12/interview-redis/</loc>
+    <loc>https://wangyixin-tom.github.io/2021/06/30/interview-http/</loc>
+    <lastmod>2021-08-05</lastmod>
+  </url>  <url>
+    <loc>https://wangyixin-tom.github.io/2021/06/09/interview-structure/</loc>
     <lastmod>2021-08-05</lastmod>
   </url>  <url>
     <loc>https://wangyixin-tom.github.io/2021/04/05/interview-rabbitmq/</loc>
@@ -23,9 +26,6 @@
     <lastmod>2021-08-05</lastmod>
   </url>  <url>
     <loc>https://wangyixin-tom.github.io/2021/04/08/interview-kafka/</loc>
-    <lastmod>2021-08-05</lastmod>
-  </url>  <url>
-    <loc>https://wangyixin-tom.github.io/2021/06/30/interview-http/</loc>
     <lastmod>2021-08-05</lastmod>
   </url>  <url>
     <loc>https://wangyixin-tom.github.io/2021/05/24/interview-changjin/</loc>
