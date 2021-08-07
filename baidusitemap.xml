@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://wangyixin-tom.github.io/2021/05/24/interview-changjin/</loc>
+    <lastmod>2021-08-07</lastmod>
+  </url>  <url>
     <loc>https://wangyixin-tom.github.io/2021/04/12/interview-redis/</loc>
     <lastmod>2021-08-05</lastmod>
   </url>  <url>
@@ -26,9 +29,6 @@
     <lastmod>2021-08-05</lastmod>
   </url>  <url>
     <loc>https://wangyixin-tom.github.io/2021/04/08/interview-kafka/</loc>
-    <lastmod>2021-08-05</lastmod>
-  </url>  <url>
-    <loc>https://wangyixin-tom.github.io/2021/05/24/interview-changjin/</loc>
     <lastmod>2021-08-05</lastmod>
   </url>  <url>
     <loc>https://wangyixin-tom.github.io/2021/06/30/attack/</loc>
@@ -268,10 +268,10 @@
     <loc>https://wangyixin-tom.github.io/2021/03/29/kafka-shou-quan/</loc>
     <lastmod>2021-04-01</lastmod>
   </url>  <url>
-    <loc>https://wangyixin-tom.github.io/2021/03/28/kafka-fu-ben/</loc>
+    <loc>https://wangyixin-tom.github.io/2021/03/23/kafka-lan-jie-qi/</loc>
     <lastmod>2021-04-01</lastmod>
   </url>  <url>
-    <loc>https://wangyixin-tom.github.io/2021/03/23/kafka-lan-jie-qi/</loc>
+    <loc>https://wangyixin-tom.github.io/2021/03/28/kafka-fu-ben/</loc>
     <lastmod>2021-04-01</lastmod>
   </url>  <url>
     <loc>https://wangyixin-tom.github.io/2021/03/28/kafka-broker-qing-qiu-chu-li/</loc>
