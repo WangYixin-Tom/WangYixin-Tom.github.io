@@ -268,7 +268,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/28.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/3.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -423,14 +423,14 @@
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    12.1k
+                    12.6k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    41 分
+                    43 分
                 </div>
                 
                 
@@ -940,6 +940,12 @@
 <li>IO多路复用：是指单个进程/线程就可以同时处理多个IO请求。</li>
 <li>异步IO（Asynchronous IO）：用户线程发出IO请求之后，继续执行，由内核进行数据的读取并放在用户指定的缓冲区内，在IO完成之后通知用户线程直接使用。</li>
 </ul>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h3 id="shell命令运行原理"><a href="#shell命令运行原理" class="headerlink" title="shell命令运行原理"></a>shell命令运行原理</h3><h4 id="什么是shell"><a href="#什么是shell" class="headerlink" title="什么是shell"></a>什么是shell</h4><p>Linux系统的shell作为操作系统的外壳，为用户提供使用操作系统的接口。</p>
+<p>shell是用户和Linux内核之间的接口程序，如果把Linux内核想象成一个球体的中心，shell就是围绕内核的外层。当从shell或其他程序向Linux传递命令时，内核会做出相应的反应。</p>
+<p>shell是一个命令语言解释器，它拥有自己内建的shell命令集，shell也能被系统中其他应用程序所调用。用户在提示符下输入的命令都由shell先解释然后传给Linux核心。</p>
+<h4 id="内部命令和外部命令"><a href="#内部命令和外部命令" class="headerlink" title="内部命令和外部命令"></a>内部命令和外部命令</h4><p>cd，pwd这些内置命令是属于Shell的一部分，当Shell一运行起来就随Shell加载入内存，因此，当我们在命令行上输入这些命令就可以像调用函数一样直接使用，效率非常高。</p>
+<p>而如ls，cat这些外部命令却不是如此，当我们在命令行输入cat，当前的Shell会fork一个子进程，然后调用exec载入这个命令的可执行文件，比如bin/cat，因此效率上稍微低了点。</p>
+<h4 id="命令分析过程"><a href="#命令分析过程" class="headerlink" title="命令分析过程"></a>命令分析过程</h4><p>1、首先，检查用户输入的命令是否是内部命令，如果不是在检查是否是一个应用程序；<br>2、shell在搜索路径或者环境变量中寻找这些应用程序；<br>3、如果键入命令不是一个内部命令并且没有在搜索路径中查找到可执行文件，那么将会显示一条错误信息；<br>4、如果能够成功找到可执行文件，那么该内部命令或者应用程序将会被分解为系统调用传给Linux内核，然后内核在完成相应的工作</p>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://zhuanlan.zhihu.com/p/83398714" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/83398714</a></p>
 <p><a href="https://www.cnblogs.com/javaguide/p/operating-system.html" target="_blank" rel="noopener">https://www.cnblogs.com/javaguide/p/operating-system.html</a></p>
 
@@ -1434,7 +1440,7 @@
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/24.jpg" class="responsive-img" alt="攻击技术">
+                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="攻击技术">
                         
                         <span class="card-title">攻击技术</span>
                     </div>
@@ -1488,7 +1494,7 @@ JavaS
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="HTTP和HTTPS">
+                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="HTTP和HTTPS">
                         
                         <span class="card-title">HTTP和HTTPS</span>
                     </div>
@@ -1700,7 +1706,7 @@ GET与POST
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">168.6k</span>
+            <span class="white-color">169.3k</span>
             
 
             <br>
