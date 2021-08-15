@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://wangyixin-tom.github.io/2021/08/15/yanfa/</loc>
+    
+    <lastmod>2021-08-15T12:37:22.595Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://wangyixin-tom.github.io/2021/06/23/oceanbase/</loc>
+    
+    <lastmod>2021-08-15T12:25:33.378Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://wangyixin-tom.github.io/2021/05/24/interview-changjin/</loc>
     
     <lastmod>2021-08-11T22:42:57.801Z</lastmod>
@@ -625,14 +639,14 @@
   </url>
   
   <url>
-    <loc>https://wangyixin-tom.github.io/2020/10/26/rabbitmq-xiao-xi-chong-fu/</loc>
+    <loc>https://wangyixin-tom.github.io/2020/10/26/rabbitmq-ji-qun/</loc>
     
     <lastmod>2021-04-01T23:01:49.986Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://wangyixin-tom.github.io/2020/10/26/rabbitmq-ji-qun/</loc>
+    <loc>https://wangyixin-tom.github.io/2020/10/26/rabbitmq-xiao-xi-chong-fu/</loc>
     
     <lastmod>2021-04-01T23:01:49.986Z</lastmod>
     
@@ -646,14 +660,14 @@
   </url>
   
   <url>
-    <loc>https://wangyixin-tom.github.io/2021/03/23/kafka-lan-jie-qi/</loc>
+    <loc>https://wangyixin-tom.github.io/2021/03/28/kafka-fu-ben/</loc>
     
     <lastmod>2021-04-01T23:01:49.716Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://wangyixin-tom.github.io/2021/03/28/kafka-fu-ben/</loc>
+    <loc>https://wangyixin-tom.github.io/2021/03/23/kafka-lan-jie-qi/</loc>
     
     <lastmod>2021-04-01T23:01:49.716Z</lastmod>
     
@@ -674,14 +688,14 @@
   </url>
   
   <url>
-    <loc>https://wangyixin-tom.github.io/categories/index.html</loc>
+    <loc>https://wangyixin-tom.github.io/archives/index.html</loc>
     
     <lastmod>2020-04-04T11:43:42.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://wangyixin-tom.github.io/archives/index.html</loc>
+    <loc>https://wangyixin-tom.github.io/categories/index.html</loc>
     
     <lastmod>2020-04-04T11:43:42.000Z</lastmod>
     

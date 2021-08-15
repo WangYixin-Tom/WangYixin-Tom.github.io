@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://wangyixin-tom.github.io/"/>
-  <updated>2021-07-12T13:34:17.434Z</updated>
+  <updated>2021-08-15T12:37:22.595Z</updated>
   <id>https://wangyixin-tom.github.io/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>研发效能</title>
+    <link href="https://wangyixin-tom.github.io/2021/08/15/yanfa/"/>
+    <id>https://wangyixin-tom.github.io/2021/08/15/yanfa/</id>
+    <published>2021-08-15T12:26:07.000Z</published>
+    <updated>2021-08-15T12:37:22.595Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;概念&quot;&gt;&lt;a href=&quot;#概念&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="other" scheme="https://wangyixin-tom.github.io/categories/other/"/>
+    
+    
+      <category term="other" scheme="https://wangyixin-tom.github.io/tags/other/"/>
+    
+  </entry>
   
   <entry>
     <title>一致性哈希</title>
@@ -250,6 +276,33 @@
   </entry>
   
   <entry>
+    <title>oceanbase了解</title>
+    <link href="https://wangyixin-tom.github.io/2021/06/23/oceanbase/"/>
+    <id>https://wangyixin-tom.github.io/2021/06/23/oceanbase/</id>
+    <published>2021-06-23T14:14:45.000Z</published>
+    <updated>2021-08-15T12:25:33.378Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;透明可扩展的企业级数据库&lt;/p&gt;
+&lt;h2 id=&quot;透明可扩展&quot;&gt;&lt;a href=&quot;#透明可扩展&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="other" scheme="https://wangyixin-tom.github.io/categories/other/"/>
+    
+    
+      <category term="other" scheme="https://wangyixin-tom.github.io/tags/other/"/>
+    
+  </entry>
+  
+  <entry>
     <title>CAP和BASE理论</title>
     <link href="https://wangyixin-tom.github.io/2021/06/23/cap-he-base-li-lun/"/>
     <id>https://wangyixin-tom.github.io/2021/06/23/cap-he-base-li-lun/</id>
@@ -481,59 +534,6 @@
     
     
       <category term="算法" scheme="https://wangyixin-tom.github.io/tags/%E7%AE%97%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>场景头脑风暴</title>
-    <link href="https://wangyixin-tom.github.io/2021/05/24/interview-changjin/"/>
-    <id>https://wangyixin-tom.github.io/2021/05/24/interview-changjin/</id>
-    <published>2021-05-24T14:24:00.000Z</published>
-    <updated>2021-08-11T22:42:57.801Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h2 id=&quot;大数据&quot;&gt;&lt;a href=&quot;#大数据&quot; class=&quot;headerlink&quot; title=&quot;大数据&quot;&gt;&lt;/a&gt;大数据&lt;/h2&gt;&lt;h3 id=&quot;布隆过滤器&quot;&gt;&lt;a href=&quot;#布隆过滤器&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-      <category term="interview" scheme="https://wangyixin-tom.github.io/categories/interview/"/>
-    
-    
-      <category term="interview" scheme="https://wangyixin-tom.github.io/tags/interview/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>网络必知必会</title>
-    <link href="https://wangyixin-tom.github.io/2021/05/20/interview-network/"/>
-    <id>https://wangyixin-tom.github.io/2021/05/20/interview-network/</id>
-    <published>2021-05-19T22:20:37.000Z</published>
-    <updated>2021-08-05T13:38:35.053Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h2 id=&quot;计算机网络体系结构&quot;&gt;&lt;a href=&quot;#计算机网络体系结构&quot; class=&quot;headerlink&quot; title=&quot;计算机网络体系结构&quot;&gt;&lt;/a&gt;计算机网络体系结构&lt;/h2&gt;&lt;p&gt;&lt;img src=&quot;stru.png&quot; alt&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img
-        
-      
-    
-    </summary>
-    
-      <category term="interview" scheme="https://wangyixin-tom.github.io/categories/interview/"/>
-    
-    
-      <category term="interview" scheme="https://wangyixin-tom.github.io/tags/interview/"/>
     
   </entry>
   

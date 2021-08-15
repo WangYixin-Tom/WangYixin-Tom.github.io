@@ -1,3 +1,4 @@
+https://wangyixin-tom.github.io/2021/08/15/yanfa/
 https://wangyixin-tom.github.io/2021/07/12/c-hash/
 https://wangyixin-tom.github.io/2021/07/08/linux-youhua/
 https://wangyixin-tom.github.io/2021/07/07/interview-docker/
@@ -7,6 +8,7 @@ https://wangyixin-tom.github.io/2021/06/30/interview-http/
 https://wangyixin-tom.github.io/2021/06/26/python-thread/
 https://wangyixin-tom.github.io/2021/06/25/paxos-yu-raft/
 https://wangyixin-tom.github.io/2021/06/23/2pc-yu-3pc/
+https://wangyixin-tom.github.io/2021/06/23/oceanbase/
 https://wangyixin-tom.github.io/2021/06/23/cap-he-base-li-lun/
 https://wangyixin-tom.github.io/2021/06/09/interview-structure/
 https://wangyixin-tom.github.io/2021/06/07/docker-multistage/
